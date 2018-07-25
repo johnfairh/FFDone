@@ -1,9 +1,8 @@
 //
 //  FFDoneUITests.swift
-//  FFDoneUITests
+//  FFDoneTests
 //
-//  Created by John Fairhurst on 23/07/2018.
-//  Copyright © 2018 Too Many Ladybirds. All rights reserved.
+//  Distributed under the MIT license, see LICENSE.
 //
 
 import XCTest
