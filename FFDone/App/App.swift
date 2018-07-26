@@ -51,6 +51,6 @@ final class App {
     func initComplete(model: Model) {
         Log.log("Init complete!")
         // write cookie
-        // director.modelIsReady
+        director.modelIsReady(model: model)
     }
 }
