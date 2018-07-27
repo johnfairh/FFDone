@@ -56,7 +56,7 @@
 		021309F3210A2F0300410451 /* GoalsTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsTablePresenter.swift; sourceTree = "<group>"; };
 		021309F5210A300B00410451 /* GoalsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsTableViewController.swift; sourceTree = "<group>"; };
 		021309F7210A328500410451 /* Queries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queries.swift; sourceTree = "<group>"; };
-		021309FA210B5E7200410451 /* DebugGoals.yaml */ = {isa = PBXFileReference; lastKnownFileType = text; path = DebugGoals.yaml; sourceTree = "<group>"; };
+		021309FA210B5E7200410451 /* DebugGoals.yaml */ = {isa = PBXFileReference; lastKnownFileType = file; path = DebugGoals.yaml; sourceTree = "<group>"; };
 		021309FE210B686600410451 /* Yams.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Yams.framework; path = Carthage/Build/iOS/Yams.framework; sourceTree = "<group>"; };
 		02130A00210B6B7C00410451 /* DebugInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInit.swift; sourceTree = "<group>"; };
 		027F63712105FF93001C9738 /* FFDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
