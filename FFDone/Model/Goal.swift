@@ -10,5 +10,5 @@ import TMLPresentation
 final class Goal : NSManagedObject, ModelObject {
 
     static let defaultSortDescriptor = NSSortDescriptor(key: "sortOrder", ascending: true)
-
+    static let primarySortOrder = ModelSortOrder(keyName: "sortOrder")
 }

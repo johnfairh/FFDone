@@ -46,6 +46,12 @@ final class App {
     }
 
     func initDebugSampleObjects(model: Model) {
+
+        let goal = Goal.create(from: model)
+        goal.name = "A goal"
+        goal.sortOrder = 1
+        goal.cdTotalSteps = 5
+        goal.cdCurrentSteps = 2
     }
 
     func initComplete(model: Model) {

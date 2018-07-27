@@ -11,8 +11,10 @@
 		021309EB210A162500410451 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309EA210A162500410451 /* Goal.swift */; };
 		021309EE210A176200410451 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309ED210A176200410451 /* App.swift */; };
 		021309F0210A1D2E00410451 /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309EF210A1D2E00410451 /* Director.swift */; };
+		021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309F3210A2F0300410451 /* GoalsTablePresenter.swift */; };
+		021309F6210A300B00410451 /* GoalsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309F5210A300B00410451 /* GoalsTableViewController.swift */; };
+		021309F8210A328500410451 /* Queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309F7210A328500410451 /* Queries.swift */; };
 		027F63752105FF93001C9738 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027F63742105FF93001C9738 /* AppDelegate.swift */; };
-		027F63772105FF93001C9738 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027F63762105FF93001C9738 /* ViewController.swift */; };
 		027F637A2105FF94001C9738 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027F63782105FF94001C9738 /* Main.storyboard */; };
 		027F637C2105FF95001C9738 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027F637B2105FF95001C9738 /* Assets.xcassets */; };
 		027F637F2105FF95001C9738 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027F637D2105FF95001C9738 /* LaunchScreen.storyboard */; };
@@ -48,9 +50,11 @@
 		021309EA210A162500410451 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		021309ED210A176200410451 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		021309EF210A1D2E00410451 /* Director.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
+		021309F3210A2F0300410451 /* GoalsTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsTablePresenter.swift; sourceTree = "<group>"; };
+		021309F5210A300B00410451 /* GoalsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsTableViewController.swift; sourceTree = "<group>"; };
+		021309F7210A328500410451 /* Queries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queries.swift; sourceTree = "<group>"; };
 		027F63712105FF93001C9738 /* FFDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027F63742105FF93001C9738 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		027F63762105FF93001C9738 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		027F63792105FF94001C9738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		027F637B2105FF95001C9738 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		027F637E2105FF95001C9738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -100,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				021309EA210A162500410451 /* Goal.swift */,
+				021309F7210A328500410451 /* Queries.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -112,6 +117,22 @@
 				021309EF210A1D2E00410451 /* Director.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		021309F1210A2ECD00410451 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				021309F3210A2F0300410451 /* GoalsTablePresenter.swift */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		021309F2210A2EE500410451 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				021309F5210A300B00410451 /* GoalsTableViewController.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		027F63682105FF93001C9738 = {
@@ -141,7 +162,8 @@
 			children = (
 				021309E6210A13CC00410451 /* Model */,
 				021309EC210A171300410451 /* App */,
-				027F63762105FF93001C9738 /* ViewController.swift */,
+				021309F1210A2ECD00410451 /* Presenters */,
+				021309F2210A2EE500410451 /* Views */,
 				027F63782105FF94001C9738 /* Main.storyboard */,
 				027F637D2105FF95001C9738 /* LaunchScreen.storyboard */,
 				021309E7210A13F700410451 /* DataModel.xcdatamodeld */,
@@ -327,10 +349,12 @@
 			files = (
 				021309EB210A162500410451 /* Goal.swift in Sources */,
 				021309F0210A1D2E00410451 /* Director.swift in Sources */,
+				021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */,
 				021309E9210A13F700410451 /* DataModel.xcdatamodeld in Sources */,
-				027F63772105FF93001C9738 /* ViewController.swift in Sources */,
+				021309F8210A328500410451 /* Queries.swift in Sources */,
 				021309EE210A176200410451 /* App.swift in Sources */,
 				027F63752105FF93001C9738 /* AppDelegate.swift in Sources */,
+				021309F6210A300B00410451 /* GoalsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

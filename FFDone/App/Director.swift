@@ -18,6 +18,10 @@ protocol DirectorInterface {
 
 class Director {
 
+    enum Tab: Int {
+        case goals = 0
+    }
+
     weak var services: TabbedDirectorServices<DirectorInterface>!
     private var rootModel: Model!
 
@@ -30,9 +34,27 @@ class Director {
         Log.log("Director.modelIsReady")
 
         // set tabs
+        initTab(.goals,
+                queryResults: model.allGoalsResults.asModelResultsSet,
+                presenterFn: GoalsTablePresenter.init) { [unowned self] goal in
+                    Log.log("Selected: \(self) \(goal!)")
+        }
 
         // Turn on the actual UI replacing the loading screen
         services.presentUI()
+    }
+
+    /// Helper to load + config the top-level table controllers
+    private func initTab<ModelObjectType, PresenterType>(_ tab: Tab,
+                                                         queryResults: ModelResultsSet,
+                                                         presenterFn: MultiPresenterFn<DirectorInterface, ModelObjectType, PresenterType>,
+                                                         picked: @escaping PresenterDone<ModelObjectType>)
+        where ModelObjectType: ModelObject,PresenterType: Presenter {
+            services.initTab(tabIndex: tab.rawValue,
+                             rootModel: rootModel!,
+                             queryResults: queryResults,
+                             presenterFn: presenterFn,
+                             picked: picked)
     }
 }
 
