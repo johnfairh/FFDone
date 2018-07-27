@@ -1,0 +1,9 @@
+- name: "Unstarted 1-step goal"
+  totalSteps: 1
+  currentSteps: 0
+- name: "Completed goal"
+  totalSteps: 4
+  currentSteps: 4
+- name: "Active goal"
+  totalSteps: 8
+  currentSteps: 2

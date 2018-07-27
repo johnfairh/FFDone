@@ -14,6 +14,9 @@
 		021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309F3210A2F0300410451 /* GoalsTablePresenter.swift */; };
 		021309F6210A300B00410451 /* GoalsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309F5210A300B00410451 /* GoalsTableViewController.swift */; };
 		021309F8210A328500410451 /* Queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309F7210A328500410451 /* Queries.swift */; };
+		021309FD210B632400410451 /* DebugGoals.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 021309FA210B5E7200410451 /* DebugGoals.yaml */; };
+		021309FF210B686700410451 /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021309FE210B686600410451 /* Yams.framework */; };
+		02130A01210B6B7C00410451 /* DebugInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A00210B6B7C00410451 /* DebugInit.swift */; };
 		027F63752105FF93001C9738 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027F63742105FF93001C9738 /* AppDelegate.swift */; };
 		027F637A2105FF94001C9738 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027F63782105FF94001C9738 /* Main.storyboard */; };
 		027F637C2105FF95001C9738 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027F637B2105FF95001C9738 /* Assets.xcassets */; };
@@ -53,6 +56,9 @@
 		021309F3210A2F0300410451 /* GoalsTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsTablePresenter.swift; sourceTree = "<group>"; };
 		021309F5210A300B00410451 /* GoalsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsTableViewController.swift; sourceTree = "<group>"; };
 		021309F7210A328500410451 /* Queries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queries.swift; sourceTree = "<group>"; };
+		021309FA210B5E7200410451 /* DebugGoals.yaml */ = {isa = PBXFileReference; lastKnownFileType = text; path = DebugGoals.yaml; sourceTree = "<group>"; };
+		021309FE210B686600410451 /* Yams.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Yams.framework; path = Carthage/Build/iOS/Yams.framework; sourceTree = "<group>"; };
+		02130A00210B6B7C00410451 /* DebugInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInit.swift; sourceTree = "<group>"; };
 		027F63712105FF93001C9738 /* FFDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027F63742105FF93001C9738 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		027F63792105FF94001C9738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -74,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				021309FF210B686700410451 /* Yams.framework in Frameworks */,
 				027F63A721065289001C9738 /* TMLPresentation.framework in Frameworks */,
 				027F63A321065271001C9738 /* TMLPersistentContainer.framework in Frameworks */,
 			);
@@ -114,6 +121,7 @@
 			children = (
 				027F63742105FF93001C9738 /* AppDelegate.swift */,
 				021309ED210A176200410451 /* App.swift */,
+				02130A00210B6B7C00410451 /* DebugInit.swift */,
 				021309EF210A1D2E00410451 /* Director.swift */,
 			);
 			path = App;
@@ -135,6 +143,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		021309F9210B5DF300410451 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				027F637B2105FF95001C9738 /* Assets.xcassets */,
+				021309FA210B5E7200410451 /* DebugGoals.yaml */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		027F63682105FF93001C9738 = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +159,7 @@
 				027F63882105FF96001C9738 /* FFDoneTests */,
 				027F63932105FF96001C9738 /* FFDoneUITests */,
 				027F63722105FF93001C9738 /* Products */,
+				021309FE210B686600410451 /* Yams.framework */,
 				027F63A621065289001C9738 /* TMLPresentation.framework */,
 				027F63A221065271001C9738 /* TMLPersistentContainer.framework */,
 			);
@@ -167,7 +185,7 @@
 				027F63782105FF94001C9738 /* Main.storyboard */,
 				027F637D2105FF95001C9738 /* LaunchScreen.storyboard */,
 				021309E7210A13F700410451 /* DataModel.xcdatamodeld */,
-				027F637B2105FF95001C9738 /* Assets.xcassets */,
+				021309F9210B5DF300410451 /* Resources */,
 				027F63802105FF95001C9738 /* Info.plist */,
 			);
 			path = FFDone;
@@ -296,6 +314,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				021309FD210B632400410451 /* DebugGoals.yaml in Resources */,
 				027F637F2105FF95001C9738 /* LaunchScreen.storyboard in Resources */,
 				027F637C2105FF95001C9738 /* Assets.xcassets in Resources */,
 				027F637A2105FF94001C9738 /* Main.storyboard in Resources */,
@@ -329,12 +348,14 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/TMLPersistentContainer.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/TMLPresentation.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Yams.framework",
 			);
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TMLPersistentContainer.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TMLPresentation.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Yams.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -347,6 +368,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02130A01210B6B7C00410451 /* DebugInit.swift in Sources */,
 				021309EB210A162500410451 /* Goal.swift in Sources */,
 				021309F0210A1D2E00410451 /* Director.swift in Sources */,
 				021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */,

@@ -35,7 +35,9 @@ final class App {
         }
 
         initRunOnceSetup(model: model)
-        initDebugSampleObjects(model: model)
+
+        /// If debug mode....
+        DebugObjects.create(model: model)
 
         model.save {
             self.initComplete(model: model)
@@ -43,15 +45,6 @@ final class App {
     }
 
     func initRunOnceSetup(model: Model) {
-    }
-
-    func initDebugSampleObjects(model: Model) {
-
-        let goal = Goal.create(from: model)
-        goal.name = "A goal"
-        goal.sortOrder = 1
-        goal.cdTotalSteps = 5
-        goal.cdCurrentSteps = 2
     }
 
     func initComplete(model: Model) {

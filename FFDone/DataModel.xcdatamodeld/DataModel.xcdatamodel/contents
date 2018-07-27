@@ -3,12 +3,13 @@
     <entity name="Goal" representedClassName="FFDone.Goal" syncable="YES" codeGenerationType="category">
         <attribute name="cdCurrentSteps" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cdTotalSteps" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="completionDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="creationDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <fetchRequest name="AllGoals" entity="Goal"/>
     <elements>
-        <element name="Goal" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="Goal" positionX="-63" positionY="-18" width="128" height="135"/>
     </elements>
 </model>
