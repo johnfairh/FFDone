@@ -18,15 +18,18 @@ extension Dictionary where Key == String, Value == Any {
         return value
     }
 
-    func uint32(_ key: String) -> UInt32 {
-        guard let value = self[key] as? UInt32 else {
+    func int(_ key: String) -> Int {
+        guard let value = self[key] as? Int else {
             return 0
         }
         return value
     }
 
     func date(_ key: String) -> Date {
-        return Date()
+        guard let value = self[key] as? Date else {
+            return Date()
+        }
+        return value
     }
 }
 
@@ -62,10 +65,10 @@ enum DebugObjects {
             let goal = Goal.create(from: model)
 
             goal.name = def.str("name")
-            goal.cdCurrentSteps = Int32(def.uint32("cdCurrentSteps"))
-            goal.cdTotalSteps = Int32(def.uint32("cdTotalSteps"))
-            goal.creationDate = def.date("creationDate").timeIntervalSinceReferenceDate
-            goal.completionDate = def.date("completionDate").timeIntervalSinceReferenceDate
+            goal.currentSteps = def.int("currentSteps")
+            goal.totalSteps = def.int("totalSteps")
+            goal.creationDate = def.date("creationDate")
+            goal.completionDate = def.date("completionDate")
 
             goal.sortOrder = Int64(index)
         }
