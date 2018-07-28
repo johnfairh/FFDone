@@ -56,6 +56,28 @@ enum DebugObjects {
         }
     }
 
+    private static func initIcons(model: Model) {
+        let defs = readYaml(file: "DefaultIcons")
+
+        for (index, def) in defs.enumerated() {
+
+            let assetName = "DefGoal_\(def.str("name"))"
+
+            guard let image = UIImage(named: assetName) else {
+                Log.log("Can't find default image \(assetName)")
+                continue
+            }
+
+            let icon = Icon.create(from: model)
+
+            icon.nativeImage = image
+            icon.isBuiltin = true
+            icon.isDefault = (index == 0)
+            icon.name = def.str("desc")
+            icon.sortOrder = Int64(index)
+        }
+    }
+
     /// Create the debug goals from the yaml file
     private static func initGoals(model: Model) {
         let defs = readYaml(file: "DebugGoals")
@@ -76,6 +98,7 @@ enum DebugObjects {
 
     /// Entrypoint -- create all the debug objects
     static func create(model: Model) {
+        initIcons(model: model)
         initGoals(model: model)
     }
 }

@@ -46,16 +46,7 @@ extension Goal {
 // MARK: - Steps and completion
 
 extension Goal {
-    var currentSteps: Int {
-        get {
-            return Int(cdCurrentSteps)
-        }
-        set {
-            Log.assert(newValue >= 0)
-            mayComplete { self.cdCurrentSteps = Int32(newValue) }
-        }
-    }
-
+    /// How many steps make up the goal.
     var totalSteps: Int {
         get {
             return Int(cdTotalSteps)
@@ -66,11 +57,34 @@ extension Goal {
         }
     }
 
+    /// We treat goals with just one step slightly differently in the UI.
+    var hasSteps: Bool {
+        return totalSteps > 1
+    }
+
+    /// How many steps of the goal have been done.
+    var currentSteps: Int {
+        get {
+            return Int(cdCurrentSteps)
+        }
+        set {
+            Log.assert(newValue >= 0)
+            mayComplete { self.cdCurrentSteps = Int32(newValue) }
+        }
+    }
+
+    /// How many steps left to complete? >= 0
+    var stepsToGo: Int {
+        return totalSteps - currentSteps
+    }
+
+    /// Are all the steps of the goal done?
     var isComplete: Bool {
         return totalSteps == currentSteps
     }
 
-    func mayComplete(call: () -> Void) {
+    /// Helper to wrap up a transition that may complete the goal.
+    private func mayComplete(call: () -> Void) {
         let wasComplete = isComplete
         call()
         if !wasComplete && isComplete {
@@ -78,7 +92,8 @@ extension Goal {
         }
     }
 
-    func completed() {
+    /// Perform processing when the goal gets completed.
+    private func completed() {
         completionDate = Date()
     }
 }

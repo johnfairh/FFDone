@@ -8,8 +8,17 @@
         <attribute name="name" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
+    <entity name="Icon" representedClassName="FFDone.Icon" syncable="YES" codeGenerationType="category">
+        <attribute name="imageData" attributeType="Transformable" valueTransformerName="IconImageTransformer" syncable="YES"/>
+        <attribute name="isBuiltin" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isDefault" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="sortOrder" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
     <fetchRequest name="AllGoals" entity="Goal"/>
+    <fetchRequest name="DefaultIcons" entity="Icon" predicateString="isDefault == 1"/>
     <elements>
         <element name="Goal" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="Icon" positionX="-54" positionY="36" width="128" height="120"/>
     </elements>
 </model>

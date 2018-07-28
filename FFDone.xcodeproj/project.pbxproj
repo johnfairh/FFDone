@@ -17,6 +17,8 @@
 		021309FD210B632400410451 /* DebugGoals.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 021309FA210B5E7200410451 /* DebugGoals.yaml */; };
 		021309FF210B686700410451 /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021309FE210B686600410451 /* Yams.framework */; };
 		02130A01210B6B7C00410451 /* DebugInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A00210B6B7C00410451 /* DebugInit.swift */; };
+		02130A03210CD37600410451 /* DefaultIcons.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02130A02210CD37600410451 /* DefaultIcons.yaml */; };
+		02130A05210CD65F00410451 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A04210CD65F00410451 /* Icon.swift */; };
 		027F63752105FF93001C9738 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027F63742105FF93001C9738 /* AppDelegate.swift */; };
 		027F637A2105FF94001C9738 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027F63782105FF94001C9738 /* Main.storyboard */; };
 		027F637C2105FF95001C9738 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027F637B2105FF95001C9738 /* Assets.xcassets */; };
@@ -59,6 +61,8 @@
 		021309FA210B5E7200410451 /* DebugGoals.yaml */ = {isa = PBXFileReference; lastKnownFileType = file; path = DebugGoals.yaml; sourceTree = "<group>"; };
 		021309FE210B686600410451 /* Yams.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Yams.framework; path = Carthage/Build/iOS/Yams.framework; sourceTree = "<group>"; };
 		02130A00210B6B7C00410451 /* DebugInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInit.swift; sourceTree = "<group>"; };
+		02130A02210CD37600410451 /* DefaultIcons.yaml */ = {isa = PBXFileReference; lastKnownFileType = text; path = DefaultIcons.yaml; sourceTree = "<group>"; };
+		02130A04210CD65F00410451 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		027F63712105FF93001C9738 /* FFDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027F63742105FF93001C9738 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		027F63792105FF94001C9738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -111,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				021309EA210A162500410451 /* Goal.swift */,
+				02130A04210CD65F00410451 /* Icon.swift */,
 				021309F7210A328500410451 /* Queries.swift */,
 			);
 			path = Model;
@@ -147,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				027F637B2105FF95001C9738 /* Assets.xcassets */,
+				02130A02210CD37600410451 /* DefaultIcons.yaml */,
 				021309FA210B5E7200410451 /* DebugGoals.yaml */,
 			);
 			path = Resources;
@@ -315,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				021309FD210B632400410451 /* DebugGoals.yaml in Resources */,
+				02130A03210CD37600410451 /* DefaultIcons.yaml in Resources */,
 				027F637F2105FF95001C9738 /* LaunchScreen.storyboard in Resources */,
 				027F637C2105FF95001C9738 /* Assets.xcassets in Resources */,
 				027F637A2105FF94001C9738 /* Main.storyboard in Resources */,
@@ -376,6 +383,7 @@
 				021309F8210A328500410451 /* Queries.swift in Sources */,
 				021309EE210A176200410451 /* App.swift in Sources */,
 				027F63752105FF93001C9738 /* AppDelegate.swift in Sources */,
+				02130A05210CD65F00410451 /* Icon.swift in Sources */,
 				021309F6210A300B00410451 /* GoalsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
