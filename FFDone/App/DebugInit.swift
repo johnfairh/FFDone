@@ -92,6 +92,11 @@ enum DebugObjects {
             goal.creationDate = def.date("creationDate")
             goal.completionDate = def.date("completionDate")
 
+            let iconName = def.str("iconName")
+            if iconName.isEmpty {
+                goal.icon = Icon.findFirst(from: model, fetchReqName: "DefaultIcons")
+            }
+
             goal.sortOrder = Int64(index)
         }
     }

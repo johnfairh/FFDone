@@ -7,6 +7,7 @@
         <attribute name="cdTotalSteps" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="icon" maxCount="1" deletionRule="Nullify" destinationEntity="Icon" inverseName="usingGoals" inverseEntity="Icon" syncable="YES"/>
     </entity>
     <entity name="Icon" representedClassName="FFDone.Icon" syncable="YES" codeGenerationType="category">
         <attribute name="imageData" attributeType="Transformable" valueTransformerName="IconImageTransformer" syncable="YES"/>
@@ -14,11 +15,12 @@
         <attribute name="isDefault" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="sortOrder" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="usingGoals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Goal" inverseName="icon" inverseEntity="Goal" syncable="YES"/>
     </entity>
     <fetchRequest name="AllGoals" entity="Goal"/>
     <fetchRequest name="DefaultIcons" entity="Icon" predicateString="isDefault == 1"/>
     <elements>
-        <element name="Goal" positionX="-63" positionY="-18" width="128" height="135"/>
-        <element name="Icon" positionX="-54" positionY="36" width="128" height="120"/>
+        <element name="Goal" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="Icon" positionX="-54" positionY="36" width="128" height="135"/>
     </elements>
 </model>
