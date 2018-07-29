@@ -18,6 +18,7 @@
         <relationship name="usingGoals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Goal" inverseName="icon" inverseEntity="Goal" syncable="YES"/>
     </entity>
     <fetchRequest name="AllGoals" entity="Goal"/>
+    <fetchRequest name="AllIcons" entity="Icon"/>
     <fetchRequest name="DefaultIcons" entity="Icon" predicateString="isDefault == 1"/>
     <elements>
         <element name="Goal" positionX="-63" positionY="-18" width="128" height="150"/>

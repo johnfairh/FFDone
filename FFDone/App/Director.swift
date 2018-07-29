@@ -20,6 +20,7 @@ class Director {
 
     enum Tab: Int {
         case goals = 0
+        case icons = 1
     }
 
     weak var services: TabbedDirectorServices<DirectorInterface>!
@@ -38,6 +39,12 @@ class Director {
                 queryResults: model.allGoalsResults.asModelResultsSet,
                 presenterFn: GoalsTablePresenter.init) { [unowned self] goal in
                     Log.log("Selected: \(self) \(goal!)")
+        }
+
+        initTab(.icons,
+                queryResults: model.allIconsResults.asModelResultsSet,
+                presenterFn: IconsTablePresenter.init) { [unowned self] icon in
+                    Log.log("Selected: \(self) \(icon!)")
         }
 
         // Turn on the actual UI replacing the loading screen

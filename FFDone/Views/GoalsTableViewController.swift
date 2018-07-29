@@ -17,12 +17,6 @@ class GoalCell: UITableViewCell, TableCell {
         } else {
             imageView?.image = modelObject.icon?.getStandardImage()
         }
-//
-//        switch modelObject.sortOrder {
-//        case 0: imageView?.image = UIImage(named: "DefGoal_Bard")!.imageWithSize(CGSize(width: 43, height: 43))
-//        case 1: imageView?.image = UIImage(named: "DefGoal_Crafting")!.imageWithSize(CGSize(width: 43, height: 43))
-//        default: imageView?.image = UIImage(named: "DefGoal_UnlockQuest")!.imageWithSize(CGSize(width: 43, height: 43))
-//        }
     }
 }
 

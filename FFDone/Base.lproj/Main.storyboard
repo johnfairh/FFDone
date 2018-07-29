@@ -45,6 +45,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="8kL-Rh-YRf" kind="relationship" relationship="viewControllers" id="IQG-lb-fyn"/>
+                        <segue destination="t9e-FB-5qQ" kind="relationship" relationship="viewControllers" id="7oE-kE-4Gx"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RjA-pY-aAM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -60,7 +61,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GoalCell" textLabel="q9q-Kh-gMj" detailTextLabel="mhd-zy-R6T" style="IBUITableViewCellStyleSubtitle" id="lEE-pN-8Va" customClass="GoalCell" customModule="FFDone" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="GoalCell" textLabel="q9q-Kh-gMj" detailTextLabel="mhd-zy-R6T" style="IBUITableViewCellStyleSubtitle" id="lEE-pN-8Va" customClass="GoalCell" customModule="FFDone" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lEE-pN-8Va" id="kyD-dX-VKy">
@@ -96,11 +97,49 @@
             </objects>
             <point key="canvasLocation" x="410" y="-287"/>
         </scene>
+        <!--Icons Table-->
+        <scene sceneID="WUU-l0-EgO">
+            <objects>
+                <tableViewController storyboardIdentifier="IconsTable" title="Icons Table" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l2p-Uk-BCD" customClass="IconsTableViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="u3N-gc-A9o">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" showsReorderControl="YES" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="IconCell" textLabel="Txj-rw-KQh" style="IBUITableViewCellStyleDefault" id="AzK-jF-NjW" customClass="IconCell" customModule="FFDone" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AzK-jF-NjW" id="Zyr-nR-cTV">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Txj-rw-KQh">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="l2p-Uk-BCD" id="y51-Od-k1J"/>
+                            <outlet property="delegate" destination="l2p-Uk-BCD" id="Mct-jL-Oux"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Icons" id="pF0-kB-Go5"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lFD-Ui-lTD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="409" y="404"/>
+        </scene>
         <!--Goals Tab-->
         <scene sceneID="mgA-19-4FI">
             <objects>
                 <navigationController title="Goals Tab" id="8kL-Rh-YRf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="more" id="4t2-rd-y77"/>
+                    <tabBarItem key="tabBarItem" title="Goals" image="TabGoalsIcon" id="4t2-rd-y77"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Xbs-9k-dVV">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -113,5 +152,28 @@
             </objects>
             <point key="canvasLocation" x="-362" y="-287"/>
         </scene>
+        <!--Icons Tab-->
+        <scene sceneID="MYJ-oP-SLe">
+            <objects>
+                <navigationController title="Icons Tab" automaticallyAdjustsScrollViewInsets="NO" id="t9e-FB-5qQ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Icons" image="TabIconsIcon" id="Aoy-QT-dO9"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ClZ-qd-Ut8">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="l2p-Uk-BCD" kind="relationship" relationship="rootViewController" id="CDR-Xs-zcV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MZT-ez-wNq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-362" y="404"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="TabGoalsIcon" width="30" height="30"/>
+        <image name="TabIconsIcon" width="30" height="30"/>
+    </resources>
 </document>

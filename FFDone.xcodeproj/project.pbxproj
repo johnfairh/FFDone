@@ -19,6 +19,8 @@
 		02130A01210B6B7C00410451 /* DebugInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A00210B6B7C00410451 /* DebugInit.swift */; };
 		02130A03210CD37600410451 /* DefaultIcons.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02130A02210CD37600410451 /* DefaultIcons.yaml */; };
 		02130A05210CD65F00410451 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A04210CD65F00410451 /* Icon.swift */; };
+		02130A09210E100D00410451 /* IconsTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A08210E100D00410451 /* IconsTablePresenter.swift */; };
+		02130A0B210E113600410451 /* IconsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A0A210E113600410451 /* IconsTableViewController.swift */; };
 		027F63752105FF93001C9738 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027F63742105FF93001C9738 /* AppDelegate.swift */; };
 		027F637A2105FF94001C9738 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027F63782105FF94001C9738 /* Main.storyboard */; };
 		027F637C2105FF95001C9738 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027F637B2105FF95001C9738 /* Assets.xcassets */; };
@@ -63,6 +65,8 @@
 		02130A00210B6B7C00410451 /* DebugInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInit.swift; sourceTree = "<group>"; };
 		02130A02210CD37600410451 /* DefaultIcons.yaml */ = {isa = PBXFileReference; lastKnownFileType = text; path = DefaultIcons.yaml; sourceTree = "<group>"; };
 		02130A04210CD65F00410451 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
+		02130A08210E100D00410451 /* IconsTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsTablePresenter.swift; sourceTree = "<group>"; };
+		02130A0A210E113600410451 /* IconsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsTableViewController.swift; sourceTree = "<group>"; };
 		027F63712105FF93001C9738 /* FFDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027F63742105FF93001C9738 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		027F63792105FF94001C9738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -136,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				021309F3210A2F0300410451 /* GoalsTablePresenter.swift */,
+				02130A08210E100D00410451 /* IconsTablePresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -144,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				021309F5210A300B00410451 /* GoalsTableViewController.swift */,
+				02130A0A210E113600410451 /* IconsTableViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -379,9 +385,11 @@
 				021309EB210A162500410451 /* Goal.swift in Sources */,
 				021309F0210A1D2E00410451 /* Director.swift in Sources */,
 				021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */,
+				02130A09210E100D00410451 /* IconsTablePresenter.swift in Sources */,
 				021309E9210A13F700410451 /* DataModel.xcdatamodeld in Sources */,
 				021309F8210A328500410451 /* Queries.swift in Sources */,
 				021309EE210A176200410451 /* App.swift in Sources */,
+				02130A0B210E113600410451 /* IconsTableViewController.swift in Sources */,
 				027F63752105FF93001C9738 /* AppDelegate.swift in Sources */,
 				02130A05210CD65F00410451 /* Icon.swift in Sources */,
 				021309F6210A300B00410451 /* GoalsTableViewController.swift in Sources */,

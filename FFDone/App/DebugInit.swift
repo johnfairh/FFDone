@@ -93,7 +93,10 @@ enum DebugObjects {
             goal.completionDate = def.date("completionDate")
 
             let iconName = def.str("iconName")
-            if iconName.isEmpty {
+            if !iconName.isEmpty,
+                let icon = Icon.find(from: model, named: iconName) {
+                goal.icon = icon
+            } else {
                 goal.icon = Icon.findFirst(from: model, fetchReqName: "DefaultIcons")
             }
 
