@@ -7,9 +7,11 @@
 
 import TMLPresentation
 
-final class Goal : NSManagedObject, ModelObject {
+extension Goal: ModelObject {
+    /// This is used by the framework in some way I don't really remember
+    public static let defaultSortDescriptor = NSSortDescriptor(key: "sortOrder", ascending: true)
 
-    static let defaultSortDescriptor = NSSortDescriptor(key: "sortOrder", ascending: true)
+    /// Allow for user reordering
     static let primarySortOrder = ModelSortOrder(keyName: "sortOrder")
 
     static func createWithDefaults(model: Model) -> Goal {
@@ -24,6 +26,7 @@ final class Goal : NSManagedObject, ModelObject {
 // MARK: - Timestamp wrapper utilities, allow `Date` in code and convert to TIs
 
 extension Goal {
+    /// Timestamp the goal was created
     var creationDate: Date {
         get {
             return Date(timeIntervalSinceReferenceDate: cdCreationDate)
@@ -33,6 +36,7 @@ extension Goal {
         }
     }
 
+    /// Timestamp the goal was [last] completed
     var completionDate: Date {
         get {
             return Date(timeIntervalSinceReferenceDate: cdCompletionDate)

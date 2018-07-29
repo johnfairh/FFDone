@@ -12,7 +12,11 @@ class GoalCell: UITableViewCell, TableCell {
         textLabel?.text       = modelObject.name
         detailTextLabel?.text = "details here"
 
-        imageView?.image = modelObject.icon?.getStandardImage()
+        if modelObject.hasSteps && !modelObject.isComplete {
+            imageView?.image = modelObject.icon?.getStandardImage(withBadge: String(modelObject.stepsToGo))
+        } else {
+            imageView?.image = modelObject.icon?.getStandardImage()
+        }
 //
 //        switch modelObject.sortOrder {
 //        case 0: imageView?.image = UIImage(named: "DefGoal_Bard")!.imageWithSize(CGSize(width: 43, height: 43))

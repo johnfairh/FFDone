@@ -7,39 +7,11 @@
 
 import TMLPresentation
 
-//
-// ValueTransformer to store images as JPEGs in the database
-//
-final class IconImageTransformer : ValueTransformer {
-    override class func transformedValueClass() -> AnyClass {
-        return UIImage.self
-    }
+extension Icon : ModelObject {
+    /// Framework sort order for defaults?
+    public static let defaultSortDescriptor = NSSortDescriptor(key: "sortOrder", ascending: true)
 
-    override class func allowsReverseTransformation() -> Bool {
-        return true
-    }
-
-    override func transformedValue(_ value: Any?) -> Any? {
-        guard let image = value as? UIImage else {
-            fatalError("Image transformer confused")
-        }
-        return image.jpegData(compressionQuality: 1.0)
-    }
-
-    override func reverseTransformedValue(_ value: Any?) -> Any? {
-        guard let data = value as? Data else {
-            fatalError("Image transformer confused")
-        }
-        return UIImage(data: data)
-    }
-
-    static func startup() {
-        ValueTransformer.setValueTransformer(IconImageTransformer(), forName: NSValueTransformerName(rawValue: "IconImageTransformer"))
-    }
-}
-
-final class Icon : NSManagedObject, ModelObject {
-    static let defaultSortDescriptor = NSSortDescriptor(key: "sortOrder", ascending: true)
+    /// Allow user reordering
     static let primarySortOrder = ModelSortOrder(keyName: "sortOrder")
 
     /// The Icon's image at its native size.
@@ -60,4 +32,3 @@ final class Icon : NSManagedObject, ModelObject {
         return nativeImage.imageWithSize(Icon.standardSize, andBadge: badge)
     }
 }
-

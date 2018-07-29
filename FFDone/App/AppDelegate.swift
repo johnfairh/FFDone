@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
-        IconImageTransformer.startup()
+        ImageTransformer.install()
         
         app = App(window: window!)
 
