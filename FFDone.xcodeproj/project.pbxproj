@@ -16,7 +16,7 @@
 		021309F8210A328500410451 /* Queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309F7210A328500410451 /* Queries.swift */; };
 		021309FD210B632400410451 /* DebugGoals.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 021309FA210B5E7200410451 /* DebugGoals.yaml */; };
 		021309FF210B686700410451 /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021309FE210B686600410451 /* Yams.framework */; };
-		02130A01210B6B7C00410451 /* DebugInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A00210B6B7C00410451 /* DebugInit.swift */; };
+		02130A01210B6B7C00410451 /* DatabaseInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A00210B6B7C00410451 /* DatabaseInit.swift */; };
 		02130A03210CD37600410451 /* DefaultIcons.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02130A02210CD37600410451 /* DefaultIcons.yaml */; };
 		02130A05210CD65F00410451 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A04210CD65F00410451 /* Icon.swift */; };
 		02130A09210E100D00410451 /* IconsTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A08210E100D00410451 /* IconsTablePresenter.swift */; };
@@ -62,7 +62,7 @@
 		021309F7210A328500410451 /* Queries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queries.swift; sourceTree = "<group>"; };
 		021309FA210B5E7200410451 /* DebugGoals.yaml */ = {isa = PBXFileReference; lastKnownFileType = file; path = DebugGoals.yaml; sourceTree = "<group>"; };
 		021309FE210B686600410451 /* Yams.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Yams.framework; path = Carthage/Build/iOS/Yams.framework; sourceTree = "<group>"; };
-		02130A00210B6B7C00410451 /* DebugInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInit.swift; sourceTree = "<group>"; };
+		02130A00210B6B7C00410451 /* DatabaseInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseInit.swift; sourceTree = "<group>"; };
 		02130A02210CD37600410451 /* DefaultIcons.yaml */ = {isa = PBXFileReference; lastKnownFileType = text; path = DefaultIcons.yaml; sourceTree = "<group>"; };
 		02130A04210CD65F00410451 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		02130A08210E100D00410451 /* IconsTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsTablePresenter.swift; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 			children = (
 				027F63742105FF93001C9738 /* AppDelegate.swift */,
 				021309ED210A176200410451 /* App.swift */,
-				02130A00210B6B7C00410451 /* DebugInit.swift */,
+				02130A00210B6B7C00410451 /* DatabaseInit.swift */,
 				021309EF210A1D2E00410451 /* Director.swift */,
 			);
 			path = App;
@@ -381,7 +381,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02130A01210B6B7C00410451 /* DebugInit.swift in Sources */,
+				02130A01210B6B7C00410451 /* DatabaseInit.swift in Sources */,
 				021309EB210A162500410451 /* Goal.swift in Sources */,
 				021309F0210A1D2E00410451 /* Director.swift in Sources */,
 				021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */,

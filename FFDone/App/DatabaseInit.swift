@@ -1,5 +1,5 @@
 //
-//  DebugInit.swift
+//  DatabaseInit.swift
 //  FFDone
 //
 //  Distributed under the MIT license, see LICENSE.
@@ -8,9 +8,9 @@
 import TMLPresentation
 import Yams
 
-// Utilities to decode and populate the database with sample objects
+// Utilities to decode and populate the database with objects
 
-extension Dictionary where Key == String, Value == Any {
+private extension Dictionary where Key == String, Value == Any {
     func str(_ key: String) -> String {
         guard let value = self[key] as? String else {
             return ""
@@ -34,7 +34,7 @@ extension Dictionary where Key == String, Value == Any {
 }
 
 /// Namespace
-enum DebugObjects {
+enum DatabaseObjects {
 
     /// Grab a yaml file and decode it
     private static func readYaml(file: String) -> [[String: Any]] {
@@ -56,7 +56,8 @@ enum DebugObjects {
         }
     }
 
-    private static func initIcons(model: Model) {
+    /// Set up the built-in icons
+    private static func createIcons(model: Model) {
         let defs = readYaml(file: "DefaultIcons")
 
         for (index, def) in defs.enumerated() {
@@ -79,7 +80,7 @@ enum DebugObjects {
     }
 
     /// Create the debug goals from the yaml file
-    private static func initGoals(model: Model) {
+    private static func createDebugGoals(model: Model) {
         let defs = readYaml(file: "DebugGoals")
 
         for (index, def) in defs.enumerated() {
@@ -104,9 +105,11 @@ enum DebugObjects {
         }
     }
 
-    /// Entrypoint -- create all the debug objects
-    static func create(model: Model) {
-        initIcons(model: model)
-        initGoals(model: model)
+    /// Entrypoint -- create all the default objects
+    static func create(model: Model, debugMode: Bool) {
+        createIcons(model: model)
+        if debugMode {
+            createDebugGoals(model: model)
+        }
     }
 }

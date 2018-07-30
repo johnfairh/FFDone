@@ -12,11 +12,18 @@ import TMLPresentation
 /// Most of the code here is to do with the initialization dance.
 final class App {
 
+    static let debugMode = true
+
     private var modelProvider: ModelProvider
     private var director: Director
     private var directorServices: TabbedDirectorServices<DirectorInterface>
 
     init(window: UIWindow) {
+        if App.debugMode {
+            Log.log("App launching **** IN DEBUG MODE **** RESETTING DATABASE ***")
+            Prefs.runBefore = false
+        }
+
         modelProvider = ModelProvider(userDbName: "DataModel")
         director = Director()
         directorServices = TabbedDirectorServices(director: director,
@@ -24,8 +31,9 @@ final class App {
                                                   tabBarVcName: "TabBarViewController")
         director.services = directorServices
 
+
         Log.log("App.init loading model and store")
-        modelProvider.load(createFreshStore: true, initModelLoaded)
+        modelProvider.load(createFreshStore: App.debugMode, initModelLoaded)
     }
 
     func initModelLoaded() {
@@ -34,22 +42,30 @@ final class App {
             Log.fatal("Model not available")
         }
 
-        initRunOnceSetup(model: model)
-
-        /// If debug mode....
-        DebugObjects.create(model: model)
+        if !Prefs.runBefore {
+            DatabaseObjects.create(model: model, debugMode: App.debugMode)
+        }
 
         model.save {
             self.initComplete(model: model)
         }
     }
 
-    func initRunOnceSetup(model: Model) {
-    }
-
     func initComplete(model: Model) {
         Log.log("Init complete!")
-        // write cookie
+        Prefs.runBefore = true
         director.modelIsReady(model: model)
+    }
+}
+
+/// Helper around app preferences
+extension Prefs {
+    static var runBefore: Bool {
+        set {
+            Prefs.set("RunBefore", to: newValue)
+        }
+        get {
+            return Prefs.bool("RunBefore")
+        }
     }
 }
