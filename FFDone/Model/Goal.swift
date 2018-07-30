@@ -101,3 +101,46 @@ extension Goal {
         completionDate = Date()
     }
 }
+
+// MARK: - View text helpers
+
+extension Goal {
+
+    private var stepsStatusText: String {
+        return "\(currentSteps) out of \(totalSteps)"
+    }
+
+    private var completionTimeText: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        return dateFormatter.string(from: completionDate)
+    }
+
+    var progressText: String {
+        if isComplete {
+            return "Completed \(completionTimeText)"
+        } else if currentSteps == 0 {
+            return "Unstarted"
+        } else {
+            return stepsStatusText
+        }
+    }
+}
+
+// MARK: - View icon helpers
+
+extension Goal {
+
+    /// Image for general use representing the goal.
+    var image: UIImage {
+        let badgeText: String?
+        if hasSteps && !isComplete {
+            badgeText = String(stepsToGo)
+        } else {
+            badgeText = nil
+        }
+
+        return icon!.getStandardImage(withBadge: badgeText)
+    }
+}

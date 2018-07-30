@@ -10,13 +10,8 @@ import TMLPresentation
 class GoalCell: UITableViewCell, TableCell {
     func configure(_ modelObject: Goal) {
         textLabel?.text       = modelObject.name
-        detailTextLabel?.text = "details here"
-
-        if modelObject.hasSteps && !modelObject.isComplete {
-            imageView?.image = modelObject.icon?.getStandardImage(withBadge: String(modelObject.stepsToGo))
-        } else {
-            imageView?.image = modelObject.icon?.getStandardImage()
-        }
+        detailTextLabel?.text = modelObject.progressText
+        imageView?.image      = modelObject.image
     }
 }
 
