@@ -31,6 +31,13 @@ private extension Dictionary where Key == String, Value == Any {
         }
         return value
     }
+
+    func bool(_ key: String) -> Bool {
+        guard let value = self[key] as? Bool else {
+            return false
+        }
+        return value
+    }
 }
 
 /// Namespace
@@ -92,6 +99,7 @@ enum DatabaseObjects {
             goal.totalSteps = def.int("totalSteps")
             goal.creationDate = def.date("creationDate")
             goal.completionDate = def.date("completionDate")
+            goal.isFav = def.bool("fav")
 
             let iconName = def.str("iconName")
             if !iconName.isEmpty,

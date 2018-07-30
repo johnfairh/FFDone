@@ -5,6 +5,7 @@
         <attribute name="cdCreationDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cdCurrentSteps" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cdTotalSteps" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isFav" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="icon" maxCount="1" deletionRule="Nullify" destinationEntity="Icon" inverseName="usingGoals" inverseEntity="Icon" syncable="YES"/>
@@ -21,7 +22,7 @@
     <fetchRequest name="AllIcons" entity="Icon"/>
     <fetchRequest name="DefaultIcons" entity="Icon" predicateString="isDefault == 1"/>
     <elements>
-        <element name="Goal" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="Goal" positionX="-63" positionY="-18" width="128" height="165"/>
         <element name="Icon" positionX="-54" positionY="36" width="128" height="135"/>
     </elements>
 </model>
