@@ -29,6 +29,10 @@ class Director {
     init() {
     }
 
+    func editGoal(goal: Goal) {
+        request(.editGoal(goal, rootModel))
+    }
+
     func modelIsReady(model: Model) {
         rootModel = model
 
@@ -37,8 +41,9 @@ class Director {
         // set tabs
         initTab(.goals,
                 queryResults: model.allGoalsResults.asModelResultsSet,
-                presenterFn: GoalsTablePresenter.init) { [unowned self] goal in
-                    Log.log("Selected: \(self) \(goal!)")
+                presenterFn: GoalsTablePresenter.init) {
+                    [unowned self] goal in
+                    self.editGoal(goal: goal!)
         }
 
         initTab(.icons,
@@ -70,7 +75,7 @@ extension Director: DirectorInterface {
     func request(_ request: DirectorRequest) {
         switch request {
         case let .editGoal(goal, model):
-            Log.fatal("No idea how to edit a goal \(goal) \(model)")
+            services.editThing("GoalEditViewController", model: model, object: goal, presenterFn: GoalEditPresenter.init, done: { _ in })
 
         case let .editGoalAndThen(goal, model, continuation):
             Log.fatal("Still no idea how to edit a goal \(goal) \(model) \(continuation)")
