@@ -11,7 +11,7 @@ class GoalCell: UITableViewCell, TableCell {
     func configure(_ modelObject: Goal) {
         textLabel?.text       = modelObject.name
         detailTextLabel?.text = modelObject.progressText
-        imageView?.image      = modelObject.image
+        imageView?.image      = modelObject.badgedImage
     }
 }
 
@@ -32,10 +32,6 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
                                 fetchedResultsController: queryResults,
                                 delegate: self)
         tableModel.start()
-    }
-
-    func createNewObject() {
-        presenter.createNewObject()
     }
 
     func canDeleteObject(_ modelObject: Goal) -> Bool {

@@ -28,10 +28,6 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
         super.init(director: director, model: model, object: object, mode: mode)
     }
 
-    func createNewObject() {
-        Log.log("CREATE NEW GOAL")
-    }
-
     func canDeleteGoal(_ goal: Goal) -> Bool {
         return isEditable
     }
@@ -52,5 +48,9 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
 
     func selectGoal(_ goal: Goal) {
         selectedCallback(goal)
+    }
+
+    func createNewObject() {
+        director.request(.createGoal(model))
     }
 }

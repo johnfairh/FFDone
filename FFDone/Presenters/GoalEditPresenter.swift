@@ -9,9 +9,24 @@ import TMLPresentation
 
 /// Presenter inputs, commands, outputs
 protocol GoalEditPresenterInterface {
-    /// Is the goal being editted actually being created now?
-    /// (refactor?  used by view to decide what can be editted)
-    var goalIsNew: Bool { get }
+
+    /// Callback to refresh the view
+    var refresh: (Goal) -> () { get set }
+
+    /// Should view allow editting of 'current steps'?
+    var canEditCurrentSteps: Bool { get }
+
+    /// Is the current state good to save?
+    var isSaveAllowed: Bool { get }
+
+    /// Various properties - will likely cause `refresh` reentrantly
+    func setGoalName(name: String)
+    func setCurrentSteps(steps: Int)
+    func setTotalSteps(steps: Int)
+    func setFav(fav: Bool)
+
+    /// Let the user choose the icon
+    func pickIcon()
 
     /// Dismiss the view without committing and changes
     func cancel()
@@ -26,13 +41,19 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
 
     typealias ViewInterfaceType = GoalEditPresenterInterface
 
-    let goalIsNew: Bool
-
     private let goal: Goal
     private let model: Model
     private let director: DirectorInterface
-
     private let dismissFn: PresenterDone<Goal>
+
+    var refresh: (Goal) -> () = { _ in } {
+        didSet {
+            refresh(goal)
+        }
+    }
+
+    /// For 'create' don't allow the current steps to be editted
+    let canEditCurrentSteps: Bool
 
     required init(director: DirectorInterface,
                   model: Model,
@@ -42,11 +63,11 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
         if let object = object {
             Log.assert(mode.isSingleType(.edit))
             goal = object
-            goalIsNew = false
+            canEditCurrentSteps = true
         } else {
             Log.assert(mode.isSingleType(.create))
             goal = Goal.createWithDefaults(model: model)
-            goalIsNew = true
+            canEditCurrentSteps = false
         }
 
         self.model     = model
@@ -54,9 +75,48 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
         self.dismissFn = dismiss
     }
 
+    /// Validation
+    var isSaveAllowed: Bool {
+        return goal.name != ""
+    }
+
+    func setGoalName(name: String) {
+        goal.name = name
+        refresh(goal)
+    }
+
+    func setCurrentSteps(steps: Int) {
+        goal.currentSteps = steps
+        if goal.totalSteps < goal.currentSteps {
+            goal.totalSteps = goal.currentSteps
+        }
+        refresh(goal)
+    }
+
+    func setTotalSteps(steps: Int) {
+        goal.totalSteps = steps
+        if goal.totalSteps < goal.currentSteps {
+            goal.currentSteps = goal.totalSteps
+        }
+        refresh(goal)
+    }
+
+    func setFav(fav: Bool) {
+        goal.isFav = fav
+        refresh(goal)
+    }
+
+    /// Let the user choose the icon
+    func pickIcon() {
+    }
+
     func cancel() {
+        dismissFn(nil)
     }
 
     func save() {
+        model.save {
+            self.dismissFn(self.goal)
+        }
     }
 }

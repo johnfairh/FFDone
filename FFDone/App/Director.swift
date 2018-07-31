@@ -9,7 +9,9 @@ import TMLPresentation
 
 enum DirectorRequest {
     case editGoal(Goal, Model)
-    case editGoalAndThen(Goal, Model, (Goal) -> Void)
+//    case editGoalAndThen(Goal, Model, (Goal) -> Void)
+    case createGoal(Model)
+//    case createGoalAndThen(Model, (Goal) -> Void)
 }
 
 protocol DirectorInterface {
@@ -29,10 +31,6 @@ class Director {
     init() {
     }
 
-    func editGoal(goal: Goal) {
-        request(.editGoal(goal, rootModel))
-    }
-
     func modelIsReady(model: Model) {
         rootModel = model
 
@@ -42,8 +40,7 @@ class Director {
         initTab(.goals,
                 queryResults: model.allGoalsResults.asModelResultsSet,
                 presenterFn: GoalsTablePresenter.init) {
-                    [unowned self] goal in
-                    self.editGoal(goal: goal!)
+                    [unowned self] goal in self.request(.editGoal(goal!, model))
         }
 
         initTab(.icons,
@@ -75,10 +72,17 @@ extension Director: DirectorInterface {
     func request(_ request: DirectorRequest) {
         switch request {
         case let .editGoal(goal, model):
-            services.editThing("GoalEditViewController", model: model, object: goal, presenterFn: GoalEditPresenter.init, done: { _ in })
+            services.editThing("GoalEditViewController",
+                               model: model,
+                               object: goal,
+                               presenterFn: GoalEditPresenter.init,
+                               done: { _ in })
 
-        case let .editGoalAndThen(goal, model, continuation):
-            Log.fatal("Still no idea how to edit a goal \(goal) \(model) \(continuation)")
+        case let .createGoal(model):
+            services.createThing("GoalEditViewController",
+                                 model: model,
+                                 presenterFn: GoalEditPresenter.init,
+                                 done: { _ in })
         }
     }
 }

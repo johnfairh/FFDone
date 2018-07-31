@@ -31,4 +31,12 @@ extension Icon : ModelObject {
     func getStandardImage(withBadge badge: String? = nil) -> UIImage {
         return nativeImage.imageWithSize(Icon.standardSize, andBadge: badge)
     }
+
+    /// Default goal icon
+    static func getGoalDefault(model: Model) -> Icon {
+        guard let defaultIcon = findFirst(from: model, fetchReqName: "DefaultIcons") else {
+            Log.fatal("No default icon")
+        }
+        return defaultIcon
+    }
 }

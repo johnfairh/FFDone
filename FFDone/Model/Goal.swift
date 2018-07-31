@@ -16,9 +16,12 @@ extension Goal: ModelObject {
 
     static func createWithDefaults(model: Model) -> Goal {
         let goal = Goal.create(from: model)
+        goal.name = ""
         goal.totalSteps = 1
         goal.sortOrder = Goal.getNextSortOrderValue(primarySortOrder, from: model)
         goal.creationDate = Date()
+        goal.completionDate = .distantPast
+        goal.icon = Icon.getGoalDefault(model: model)
         return goal
     }
 }
@@ -132,8 +135,8 @@ extension Goal {
 
 extension Goal {
 
-    /// Image for general use representing the goal.
-    var image: UIImage {
+    /// Image for general use representing the goal & its status, including badges
+    var badgedImage: UIImage {
         let badgeText: String?
         if hasSteps && !isComplete {
             badgeText = String(stepsToGo)
@@ -142,5 +145,10 @@ extension Goal {
         }
 
         return icon!.getStandardImage(withBadge: badgeText)
+    }
+
+    /// Just the image, no annotations, may need scaling
+    var nativeImage: UIImage {
+        return icon!.nativeImage
     }
 }
