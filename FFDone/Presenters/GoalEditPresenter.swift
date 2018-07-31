@@ -108,6 +108,10 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
 
     /// Let the user choose the icon
     func pickIcon() {
+        director.request(.pickIcon(model, { newIcon in
+            self.goal.icon = newIcon
+            self.refresh(self.goal)
+        }))
     }
 
     func cancel() {

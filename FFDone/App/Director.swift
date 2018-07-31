@@ -12,6 +12,8 @@ enum DirectorRequest {
 //    case editGoalAndThen(Goal, Model, (Goal) -> Void)
     case createGoal(Model)
 //    case createGoalAndThen(Model, (Goal) -> Void)
+
+    case pickIcon(Model, (Icon) -> Void)
 }
 
 protocol DirectorInterface {
@@ -83,6 +85,13 @@ extension Director: DirectorInterface {
                                  model: model,
                                  presenterFn: GoalEditPresenter.init,
                                  done: { _ in })
+
+        case let .pickIcon(model, continuation):
+            services.pickThing("IconsTableViewController",
+                               model: model,
+                               results: model.allIconsResults,
+                               presenterFn: IconsTablePresenter.init,
+                               done: continuation)
         }
     }
 }

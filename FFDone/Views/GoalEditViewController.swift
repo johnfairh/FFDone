@@ -88,6 +88,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
     private var totalStepsListener: NotificationListener!
 
     public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         nameListener = NotificationListener(
             name: UITextField.textDidChangeNotification,
             from: nameTextField) { [unowned self] _ in

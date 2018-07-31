@@ -343,10 +343,10 @@
             </objects>
             <point key="canvasLocation" x="1197.5999999999999" y="-287.40629685157421"/>
         </scene>
-        <!--Icons Table-->
+        <!--IconsTableViewController-->
         <scene sceneID="WUU-l0-EgO">
             <objects>
-                <tableViewController storyboardIdentifier="IconsTable" title="Icons Table" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l2p-Uk-BCD" customClass="IconsTableViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="IconsTableViewController" title="IconsTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="l2p-Uk-BCD" customClass="IconsTableViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="u3N-gc-A9o">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

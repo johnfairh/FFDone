@@ -17,6 +17,7 @@ extension Goal: ModelObject {
     static func createWithDefaults(model: Model) -> Goal {
         let goal = Goal.create(from: model)
         goal.name = ""
+        goal.isFav = false
         goal.totalSteps = 1
         goal.sortOrder = Goal.getNextSortOrderValue(primarySortOrder, from: model)
         goal.creationDate = Date()
