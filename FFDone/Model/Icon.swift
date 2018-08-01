@@ -8,14 +8,14 @@
 import TMLPresentation
 
 extension Icon : ModelObject {
-    /// Framework sort order for defaults?
+    /// Framework default sort order for find/query
     public static let defaultSortDescriptor = NSSortDescriptor(key: "sortOrder", ascending: true)
 
     /// Allow user reordering
     static let primarySortOrder = ModelSortOrder(keyName: "sortOrder")
 
     /// The Icon's image at its native size.
-    var nativeImage : UIImage {
+    var nativeImage: UIImage {
         get {
             return imageData as! UIImage
         }
@@ -34,7 +34,8 @@ extension Icon : ModelObject {
 
     /// Default goal icon
     static func getGoalDefault(model: Model) -> Icon {
-        guard let defaultIcon = findFirst(from: model, fetchReqName: "DefaultIcons") else {
+        let predicate = NSPredicate(format: "isDefault == 1")
+        guard let defaultIcon = findFirst(model: model, predicate: predicate) else {
             Log.fatal("No default icon")
         }
         return defaultIcon

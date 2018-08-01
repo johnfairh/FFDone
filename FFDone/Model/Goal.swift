@@ -8,11 +8,11 @@
 import TMLPresentation
 
 extension Goal: ModelObject {
-    /// This is used by the framework in some way I don't really remember
-    public static let defaultSortDescriptor = NSSortDescriptor(key: "sortOrder", ascending: true)
+    /// Framework default sort order for find/query
+    public static let defaultSortDescriptor = NSSortDescriptor(key: #keyPath(sortOrder), ascending: true)
 
     /// Allow for user reordering
-    static let primarySortOrder = ModelSortOrder(keyName: "sortOrder")
+    static let primarySortOrder = ModelSortOrder(keyName: #keyPath(sortOrder))
 
     static func createWithDefaults(model: Model) -> Goal {
         let goal = Goal.create(from: model)
@@ -151,5 +151,15 @@ extension Goal {
     /// Just the image, no annotations, may need scaling
     var nativeImage: UIImage {
         return icon!.nativeImage
+    }
+}
+
+// MARK: - Queries
+
+extension Goal {
+    /// For searching in the goals view
+    static func allMatchingGoals(model: Model, string: String) -> ModelResultsSet {
+        let predicate = NSPredicate(format: "\(#keyPath(name)) CONTAINS[cd] \"\(string)\"")
+        return createFetchedResults(model: model, predicate: predicate).asModelResultsSet
     }
 }

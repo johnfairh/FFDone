@@ -64,11 +64,9 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
 
     func updateSearchResults(text: String) {
         if text.isEmpty {
-            print("Search Empty")
             filteredResults = nil
         } else {
-            print("Searching for \(text)")
-            filteredResults = Goal.allMatchingGoals(model: model, name: text).asModelResultsSet
+            filteredResults = Goal.allMatchingGoals(model: model, string: text)
         }
     }
 }

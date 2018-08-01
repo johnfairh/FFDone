@@ -13,7 +13,6 @@
 		021309F0210A1D2E00410451 /* Director.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309EF210A1D2E00410451 /* Director.swift */; };
 		021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309F3210A2F0300410451 /* GoalsTablePresenter.swift */; };
 		021309F6210A300B00410451 /* GoalsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309F5210A300B00410451 /* GoalsTableViewController.swift */; };
-		021309F8210A328500410451 /* Queries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309F7210A328500410451 /* Queries.swift */; };
 		021309FD210B632400410451 /* DebugGoals.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 021309FA210B5E7200410451 /* DebugGoals.yaml */; };
 		021309FF210B686700410451 /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021309FE210B686600410451 /* Yams.framework */; };
 		02130A01210B6B7C00410451 /* DatabaseInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A00210B6B7C00410451 /* DatabaseInit.swift */; };
@@ -23,6 +22,7 @@
 		02130A0B210E113600410451 /* IconsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A0A210E113600410451 /* IconsTableViewController.swift */; };
 		02130A0D210F773A00410451 /* GoalEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A0C210F773A00410451 /* GoalEditViewController.swift */; };
 		02130A0F210F777400410451 /* GoalEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A0E210F777400410451 /* GoalEditPresenter.swift */; };
+		0218D95F2112259100E78C56 /* TMLPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0218D95E2112259100E78C56 /* TMLPresentation.framework */; };
 		027F63752105FF93001C9738 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027F63742105FF93001C9738 /* AppDelegate.swift */; };
 		027F637A2105FF94001C9738 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027F63782105FF94001C9738 /* Main.storyboard */; };
 		027F637C2105FF95001C9738 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027F637B2105FF95001C9738 /* Assets.xcassets */; };
@@ -32,9 +32,6 @@
 		027F63A321065271001C9738 /* TMLPersistentContainer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027F63A221065271001C9738 /* TMLPersistentContainer.framework */; };
 		027F63A421065271001C9738 /* TMLPersistentContainer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027F63A221065271001C9738 /* TMLPersistentContainer.framework */; };
 		027F63A521065271001C9738 /* TMLPersistentContainer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027F63A221065271001C9738 /* TMLPersistentContainer.framework */; };
-		027F63A721065289001C9738 /* TMLPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027F63A621065289001C9738 /* TMLPresentation.framework */; };
-		027F63A821065289001C9738 /* TMLPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027F63A621065289001C9738 /* TMLPresentation.framework */; };
-		027F63A921065289001C9738 /* TMLPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027F63A621065289001C9738 /* TMLPresentation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,8 +58,7 @@
 		021309EF210A1D2E00410451 /* Director.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Director.swift; sourceTree = "<group>"; };
 		021309F3210A2F0300410451 /* GoalsTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsTablePresenter.swift; sourceTree = "<group>"; };
 		021309F5210A300B00410451 /* GoalsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsTableViewController.swift; sourceTree = "<group>"; };
-		021309F7210A328500410451 /* Queries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queries.swift; sourceTree = "<group>"; };
-		021309FA210B5E7200410451 /* DebugGoals.yaml */ = {isa = PBXFileReference; lastKnownFileType = file; path = DebugGoals.yaml; sourceTree = "<group>"; };
+		021309FA210B5E7200410451 /* DebugGoals.yaml */ = {isa = PBXFileReference; lastKnownFileType = text; path = DebugGoals.yaml; sourceTree = "<group>"; };
 		021309FE210B686600410451 /* Yams.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Yams.framework; path = Carthage/Build/iOS/Yams.framework; sourceTree = "<group>"; };
 		02130A00210B6B7C00410451 /* DatabaseInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseInit.swift; sourceTree = "<group>"; };
 		02130A02210CD37600410451 /* DefaultIcons.yaml */ = {isa = PBXFileReference; lastKnownFileType = text; path = DefaultIcons.yaml; sourceTree = "<group>"; };
@@ -71,6 +67,7 @@
 		02130A0A210E113600410451 /* IconsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsTableViewController.swift; sourceTree = "<group>"; };
 		02130A0C210F773A00410451 /* GoalEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditViewController.swift; sourceTree = "<group>"; };
 		02130A0E210F777400410451 /* GoalEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditPresenter.swift; sourceTree = "<group>"; };
+		0218D95E2112259100E78C56 /* TMLPresentation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TMLPresentation.framework; path = Carthage/Build/iOS/TMLPresentation.framework; sourceTree = "<group>"; };
 		027F63712105FF93001C9738 /* FFDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027F63742105FF93001C9738 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		027F63792105FF94001C9738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -84,7 +81,6 @@
 		027F63942105FF96001C9738 /* FFDoneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFDoneUITests.swift; sourceTree = "<group>"; };
 		027F63962105FF96001C9738 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		027F63A221065271001C9738 /* TMLPersistentContainer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TMLPersistentContainer.framework; path = Carthage/Build/iOS/TMLPersistentContainer.framework; sourceTree = "<group>"; };
-		027F63A621065289001C9738 /* TMLPresentation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TMLPresentation.framework; path = Carthage/Build/iOS/TMLPresentation.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +89,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				021309FF210B686700410451 /* Yams.framework in Frameworks */,
-				027F63A721065289001C9738 /* TMLPresentation.framework in Frameworks */,
+				0218D95F2112259100E78C56 /* TMLPresentation.framework in Frameworks */,
 				027F63A321065271001C9738 /* TMLPersistentContainer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,7 +98,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				027F63A821065289001C9738 /* TMLPresentation.framework in Frameworks */,
 				027F63A421065271001C9738 /* TMLPersistentContainer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,7 +106,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				027F63A921065289001C9738 /* TMLPresentation.framework in Frameworks */,
 				027F63A521065271001C9738 /* TMLPersistentContainer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,7 +118,6 @@
 			children = (
 				021309EA210A162500410451 /* Goal.swift */,
 				02130A04210CD65F00410451 /* Icon.swift */,
-				021309F7210A328500410451 /* Queries.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -177,8 +170,8 @@
 				027F63882105FF96001C9738 /* FFDoneTests */,
 				027F63932105FF96001C9738 /* FFDoneUITests */,
 				027F63722105FF93001C9738 /* Products */,
+				0218D95E2112259100E78C56 /* TMLPresentation.framework */,
 				021309FE210B686600410451 /* Yams.framework */,
-				027F63A621065289001C9738 /* TMLPresentation.framework */,
 				027F63A221065271001C9738 /* TMLPersistentContainer.framework */,
 			);
 			sourceTree = "<group>";
@@ -394,7 +387,6 @@
 				021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */,
 				02130A09210E100D00410451 /* IconsTablePresenter.swift in Sources */,
 				021309E9210A13F700410451 /* DataModel.xcdatamodeld in Sources */,
-				021309F8210A328500410451 /* Queries.swift in Sources */,
 				021309EE210A176200410451 /* App.swift in Sources */,
 				02130A0B210E113600410451 /* IconsTableViewController.swift in Sources */,
 				027F63752105FF93001C9738 /* AppDelegate.swift in Sources */,

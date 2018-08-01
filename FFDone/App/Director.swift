@@ -40,13 +40,13 @@ class Director {
 
         // set tabs
         initTab(.goals,
-                queryResults: model.allGoalsResults.asModelResultsSet,
+                queryResults: Goal.createAllResultsSet(model: model),
                 presenterFn: GoalsTablePresenter.init) {
                     [unowned self] goal in self.request(.editGoal(goal!, model))
         }
 
         initTab(.icons,
-                queryResults: model.allIconsResults.asModelResultsSet,
+                queryResults: Icon.createAllResultsSet(model: model),
                 presenterFn: IconsTablePresenter.init) { [unowned self] icon in
                     Log.log("Selected: \(self) \(icon!)")
         }
@@ -89,7 +89,7 @@ extension Director: DirectorInterface {
         case let .pickIcon(model, continuation):
             services.pickThing("IconsTableViewController",
                                model: model,
-                               results: model.allIconsResults,
+                               results: Icon.createAllResults(model: model),
                                presenterFn: IconsTablePresenter.init,
                                done: continuation)
         }

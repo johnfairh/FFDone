@@ -18,10 +18,6 @@
         <attribute name="sortOrder" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="usingGoals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Goal" inverseName="icon" inverseEntity="Goal" syncable="YES"/>
     </entity>
-    <fetchRequest name="AllGoals" entity="Goal"/>
-    <fetchRequest name="AllIcons" entity="Icon"/>
-    <fetchRequest name="DefaultIcons" entity="Icon" predicateString="isDefault == 1"/>
-    <fetchRequest name="GoalsMatching" entity="Goal" predicateString="name CONTAINS[cd] $MATCH"/>
     <elements>
         <element name="Goal" positionX="-63" positionY="-18" width="128" height="165"/>
         <element name="Icon" positionX="-54" positionY="36" width="128" height="135"/>
