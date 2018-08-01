@@ -17,3 +17,14 @@ extension Model {
         return createFetchedResults(fetchReqName: "AllIcons", sortedBy: [Icon.defaultSortDescriptor])
     }
 }
+
+extension Goal {
+
+    static func allMatchingGoals(model: Model, name: String) -> ModelResults {
+        let nsString = name as NSString
+        return model.createFetchedResults(fetchReqName: "GoalsMatching",
+                                          sortedBy: [defaultSortDescriptor],
+                                          substitutionVariables: ["MATCH" : nsString],
+                                          sectionNameKeyPath: nil)
+    }
+}

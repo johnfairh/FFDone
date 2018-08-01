@@ -16,12 +16,22 @@ class GoalCell: UITableViewCell, TableCell {
 }
 
 class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
-    TableModelDelegate
+    TableModelDelegate,
+    UISearchResultsUpdating
 {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
+        }
+
+        if presenter.isSearchable {
+            let searchController = UISearchController(searchResultsController: nil)
+            searchController.obscuresBackgroundDuringPresentation = false
+            searchController.searchBar.autocapitalizationType = .none
+            searchController.searchResultsUpdater = self
+            navigationItem.searchController = searchController
+            definesPresentationContext = true
         }
     }
 
@@ -52,5 +62,12 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
 
     func selectObject(_ modelObject: ModelObject) {
         presenter.selectGoal(modelObject as! Goal)
+    }
+
+    // MARK: - Search
+
+    public func updateSearchResults(for searchController: UISearchController) {
+        let text = searchController.searchBar.text ?? ""
+        presenter.updateSearchResults(text: text)
     }
 }

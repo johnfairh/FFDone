@@ -9,11 +9,15 @@ import TMLPresentation
 
 /// Interface from the Goal Table VC to presenter -- requirements unique to goal table.
 protocol GoalsTablePresenterInterface: TablePresenterInterface {
+    var isSearchable: Bool { get }
+
     func canDeleteGoal(_ goal: Goal) -> Bool
     func deleteGoal(_ goal: Goal)
     func canMoveGoal(_ goal: Goal) -> Bool
     func moveGoal(_ goal: Goal, fromRow: Int, toRow: Int)
     func selectGoal(_ goal: Goal)
+
+    func updateSearchResults(text: String)
 }
 
 // MARK: - Presenter
@@ -26,6 +30,10 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
     required init(director: DirectorInterface, model: Model, object: ModelResultsSet?, mode: PresenterMode, dismiss: @escaping PresenterDone<Goal>) {
         self.selectedCallback = dismiss
         super.init(director: director, model: model, object: object, mode: mode)
+    }
+
+    var isSearchable: Bool {
+        return shouldEnableExtraControls
     }
 
     func canDeleteGoal(_ goal: Goal) -> Bool {
@@ -52,5 +60,15 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
 
     func createNewObject() {
         director.request(.createGoal(model))
+    }
+
+    func updateSearchResults(text: String) {
+        if text.isEmpty {
+            print("Search Empty")
+            filteredResults = nil
+        } else {
+            print("Searching for \(text)")
+            filteredResults = Goal.allMatchingGoals(model: model, name: text).asModelResultsSet
+        }
     }
 }
