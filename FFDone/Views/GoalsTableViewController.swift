@@ -41,6 +41,7 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         tableModel = TableModel(tableView: tableView,
                                 fetchedResultsController: queryResults,
                                 delegate: self)
+        tableModel.configureSections(titleMap: GoalSection.titleMap)
         tableModel.start()
     }
 

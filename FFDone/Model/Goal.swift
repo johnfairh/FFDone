@@ -19,12 +19,10 @@ enum GoalSection: String {
     case active = "1"
     case complete = "2"
 
-    var title: String {
-        switch self {
-        case .fav: return "Favourites"
-        case .active: return "Active"
-        case .complete: return "Complete"
-        }
+    static var titleMap: [String : String] {
+        return ["0" : "Favourites",
+                "1" : "Active",
+                "2" : "Complete"]
     }
 }
 
@@ -219,7 +217,7 @@ extension Goal {
     /// For the main goals view
     static func allSortedResultsSet(model: Model) -> ModelResultsSet {
         // Fav -> Incomplete -> Complete
-        let sectionOrder = NSSortDescriptor(key: "sectionOrder", ascending: true)
+        let sectionsOrder = NSSortDescriptor(key: #keyPath(sectionOrder), ascending: true)
 
         // Completed more recently before older ones.
         // Should affect only completed goals.
@@ -230,8 +228,8 @@ extension Goal {
 
         return createFetchedResults(model: model,
                                     predicate: nil,
-                                    sortedBy: [sectionOrder, completionOrder, userSortOrder],
-                                    sectionNameKeyPath: nil).asModelResultsSet
+                                    sortedBy: [sectionsOrder, completionOrder, userSortOrder],
+                                    sectionNameKeyPath: #keyPath(sectionOrder)).asModelResultsSet
     }
 
     /// For searching in the goals view
