@@ -92,7 +92,7 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
 
     func delaySearch() {
         searchDelayState = .delaying
-        Dispatch.toForegroundAfter(1, block: updateSearchResultsDelayed)
+        Dispatch.toForegroundAfter(milliseconds: 150, block: updateSearchResultsDelayed)
     }
 
     func updateSearchResultsDelayed() {

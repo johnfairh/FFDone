@@ -11,13 +11,10 @@ import TMLPresentation
 protocol GoalEditPresenterInterface {
 
     /// Callback to refresh the view
-    var refresh: (Goal) -> () { get set }
+    var refresh: (Goal, Bool) -> () { get set }
 
     /// Should view allow editting of 'current steps'?
     var canEditCurrentSteps: Bool { get }
-
-    /// Is the current state good to save?
-    var isSaveAllowed: Bool { get }
 
     /// Various properties - will likely cause `refresh` reentrantly
     func setGoalName(name: String)
@@ -46,10 +43,14 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
     private let director: DirectorInterface
     private let dismissFn: PresenterDone<Goal>
 
-    var refresh: (Goal) -> () = { _ in } {
+    var refresh: (Goal, Bool) -> () = { _, _ in } {
         didSet {
-            refresh(goal)
+            doRefresh()
         }
+    }
+
+    func doRefresh() {
+        refresh(goal, isSaveAllowed)
     }
 
     /// For 'create' don't allow the current steps to be editted
@@ -82,7 +83,7 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
 
     func setGoalName(name: String) {
         goal.name = name
-        refresh(goal)
+        doRefresh()
     }
 
     func setCurrentSteps(steps: Int) {
@@ -90,7 +91,7 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
         if goal.totalSteps < goal.currentSteps {
             goal.totalSteps = goal.currentSteps
         }
-        refresh(goal)
+        doRefresh()
     }
 
     func setTotalSteps(steps: Int) {
@@ -98,19 +99,19 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
         if goal.totalSteps < goal.currentSteps {
             goal.currentSteps = goal.totalSteps
         }
-        refresh(goal)
+        doRefresh()
     }
 
     func setFav(fav: Bool) {
         goal.isFav = fav
-        refresh(goal)
+        doRefresh()
     }
 
     /// Let the user choose the icon
     func pickIcon() {
         director.request(.pickIcon(model, { newIcon in
             self.goal.icon = newIcon
-            self.refresh(self.goal)
+            self.doRefresh()
         }))
     }
 

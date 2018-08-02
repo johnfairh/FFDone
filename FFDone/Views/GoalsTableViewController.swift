@@ -64,6 +64,17 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         presenter.selectGoal(modelObject as! Goal)
     }
 
+    func leadingSwipeActionsForObject(_ goal: Goal) -> UISwipeActionsConfiguration? {
+        guard !goal.isComplete else {
+            return nil
+        }
+        let action = UIContextualAction(style: .normal, title: "+1") { _, _, continuation in
+            print("+1 this goal!")
+            continuation(false)
+        }
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+
     // MARK: - Search
 
     public func updateSearchResults(for searchController: UISearchController) {

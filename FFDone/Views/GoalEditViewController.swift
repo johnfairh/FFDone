@@ -39,7 +39,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
         currentStepsTextField.delegate = self
         totalStepsTextField.delegate = self
 
-        presenter.refresh = { [unowned self] goal in
+        presenter.refresh = { [unowned self] goal, isSaveOK in
             self.nameTextField.text = goal.name
             self.iconImage.image = goal.nativeImage
             self.currentStepsTextField.text = String(goal.currentSteps)
@@ -47,7 +47,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
             self.totalStepsTextField.text = String(goal.totalSteps)
             self.totalStepsStepper.value = Double(goal.totalSteps)
             self.favToggle.isOn = goal.isFav
-            self.doneButton.isEnabled = self.presenter.isSaveAllowed
+            self.doneButton.isEnabled = isSaveOK
         }
     }
 
