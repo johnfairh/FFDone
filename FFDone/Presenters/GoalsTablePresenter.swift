@@ -62,11 +62,48 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
         director.request(.createGoal(model))
     }
 
+    enum SearchDelayState {
+        case idle
+        case delaying
+        case delaying_again
+    }
+
+    var searchDelayState: SearchDelayState = .idle
+    var searchText: String = ""
+
     func updateSearchResults(text: String) {
         if text.isEmpty {
-            filteredResults = nil
+            searchDelayState = .idle
+            if filteredResults != nil {
+                filteredResults = nil
+            }
         } else {
-            filteredResults = Goal.allMatchingGoals(model: model, string: text)
+            searchText = text
+            switch searchDelayState {
+            case .idle:
+                delaySearch()
+            case .delaying:
+                searchDelayState = .delaying_again
+            case .delaying_again:
+                break
+            }
+        }
+    }
+
+    func delaySearch() {
+        searchDelayState = .delaying
+        Dispatch.toForegroundAfter(1, block: updateSearchResultsDelayed)
+    }
+
+    func updateSearchResultsDelayed() {
+        switch searchDelayState {
+        case .idle:
+            break
+        case .delaying_again:
+            delaySearch()
+        case .delaying:
+            searchDelayState = .idle
+            filteredResults = Goal.allMatchingGoals(model: model, string: searchText)
         }
     }
 }
