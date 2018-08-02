@@ -40,7 +40,7 @@ class Director {
 
         // set tabs
         initTab(.goals,
-                queryResults: Goal.createAllResultsSet(model: model),
+                queryResults: Goal.allSortedResultsSet(model: model),
                 presenterFn: GoalsTablePresenter.init) {
                     [unowned self] goal in self.request(.editGoal(goal!, model))
         }

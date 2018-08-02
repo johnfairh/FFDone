@@ -7,6 +7,40 @@
 
 import TMLPresentation
 
+/// Because Core Data is a special flower we need to have some weird stuff.
+///
+/// To do the section sorting we need a dedicated 'section' field.  We can't
+/// use the section titles because CD insists on alphabetically sorting them.
+///
+/// So we have a `sectionOrder` String field that is updated whenever the `fav`
+/// and `complete` states change.
+enum GoalSection: String {
+    case fav = "0"
+    case active = "1"
+    case complete = "2"
+
+    var title: String {
+        switch self {
+        case .fav: return "Favourites"
+        case .active: return "Active"
+        case .complete: return "Complete"
+        }
+    }
+}
+
+extension Goal {
+    fileprivate func updateSectionOrder() {
+        let section: GoalSection
+
+        switch (isComplete, isFav) {
+        case (false, true):  section = .fav
+        case (false, false): section = .active
+        case (true, _):      section = .complete
+        }
+        sectionOrder = section.rawValue
+    }
+}
+
 extension Goal: ModelObject {
     /// Framework default sort order for find/query
     public static let defaultSortDescriptor = NSSortDescriptor(key: #keyPath(sortOrder), ascending: true)
@@ -21,7 +55,7 @@ extension Goal: ModelObject {
         goal.totalSteps = 1
         goal.sortOrder = Goal.getNextSortOrderValue(primarySortOrder, from: model)
         goal.creationDate = Date()
-        goal.completionDate = .distantPast
+//        goal.completionDate = .distantPast
         goal.icon = Icon.getGoalDefault(model: model)
         return goal
     }
@@ -95,17 +129,41 @@ extension Goal {
     private func mayComplete(call: () -> Void) {
         let wasComplete = isComplete
         call()
-        if !wasComplete && isComplete {
+        let nowComplete = isComplete
+        if !wasComplete && nowComplete {
             completed()
+        } else if wasComplete && !nowComplete {
+            uncompleted()
         }
     }
 
     /// Perform processing when the goal gets completed.
     private func completed() {
         completionDate = Date()
+        updateSectionOrder()
+    }
+
+    /// Perform processing when the goal gets uncompleted.
+    private func uncompleted() {
+        completionDate = .distantPast
+        updateSectionOrder()
     }
 }
 
+// MARK: - Fav
+
+extension Goal {
+    /// Wrap this to allow updating the section ID
+    var isFav: Bool {
+        get {
+            return cdIsFav
+        }
+        set {
+            cdIsFav = newValue
+            updateSectionOrder()
+        }
+    }
+}
 // MARK: - View text helpers
 
 extension Goal {
@@ -157,6 +215,25 @@ extension Goal {
 // MARK: - Queries
 
 extension Goal {
+
+    /// For the main goals view
+    static func allSortedResultsSet(model: Model) -> ModelResultsSet {
+        // Fav -> Incomplete -> Complete
+        let sectionOrder = NSSortDescriptor(key: "sectionOrder", ascending: true)
+
+        // Completed more recently before older ones.
+        // Should affect only completed goals.
+        let completionOrder = NSSortDescriptor(key: #keyPath(cdCompletionDate), ascending: false)
+
+        // Finally user sort order, mostly affect incomplete goals.
+        let userSortOrder = NSSortDescriptor(key: #keyPath(sortOrder), ascending: true)
+
+        return createFetchedResults(model: model,
+                                    predicate: nil,
+                                    sortedBy: [sectionOrder, completionOrder, userSortOrder],
+                                    sectionNameKeyPath: nil).asModelResultsSet
+    }
+
     /// For searching in the goals view
     static func allMatchingGoals(model: Model, string: String) -> ModelResultsSet {
         let predicate = NSPredicate(format: "\(#keyPath(name)) CONTAINS[cd] \"\(string)\"")

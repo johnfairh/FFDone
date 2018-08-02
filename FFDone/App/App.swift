@@ -31,6 +31,7 @@ final class App {
                                                   tabBarVcName: "TabBarViewController")
         director.services = directorServices
 
+        Log.enableDebugLogs = App.debugMode
 
         Log.log("App.init loading model and store")
         modelProvider.load(createFreshStore: App.debugMode, initModelLoaded)

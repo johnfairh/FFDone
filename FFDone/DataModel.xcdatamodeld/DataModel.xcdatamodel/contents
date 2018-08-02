@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14308.2" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V1">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.2.4" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V1">
     <entity name="Goal" representedClassName=".Goal" syncable="YES" codeGenerationType="class">
-        <attribute name="cdCompletionDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="cdCompletionDate" attributeType="Date" defaultDateTimeInterval="-31618800" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cdCreationDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cdCurrentSteps" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="cdIsFav" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cdTotalSteps" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isFav" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="sectionOrder" attributeType="String" minValueString="1" maxValueString="1" defaultValueString="0" syncable="YES"/>
         <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="icon" maxCount="1" deletionRule="Nullify" destinationEntity="Icon" inverseName="usingGoals" inverseEntity="Icon" syncable="YES"/>
     </entity>
@@ -19,7 +20,7 @@
         <relationship name="usingGoals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Goal" inverseName="icon" inverseEntity="Goal" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Goal" positionX="-63" positionY="-18" width="128" height="165"/>
+        <element name="Goal" positionX="-63" positionY="-18" width="128" height="180"/>
         <element name="Icon" positionX="-54" positionY="36" width="128" height="135"/>
     </elements>
 </model>

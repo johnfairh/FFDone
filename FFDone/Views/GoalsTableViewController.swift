@@ -68,6 +68,7 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         guard !goal.isComplete else {
             return nil
         }
+        // TODO: these things should move to `Goal`
         let title = (goal.stepsToGo == 1) ? "Complete" : "Progress"
         let action = UIContextualAction(style: .normal, title: title) { _, _, continuation in
             goal.currentSteps = goal.currentSteps + 1
