@@ -98,7 +98,11 @@ enum DatabaseObjects {
             goal.currentSteps = def.int("currentSteps")
             goal.totalSteps = def.int("totalSteps")
             goal.creationDate = def.date("creationDate")
-            goal.completionDate = def.date("completionDate")
+            if goal.isComplete {
+                goal.completionDate = def.date("completionDate")
+            } else {
+                goal.completionDate = Goal.incompleteDate
+            }
             goal.isFav = def.bool("fav")
 
             let iconName = def.str("iconName")

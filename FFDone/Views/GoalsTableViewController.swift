@@ -10,7 +10,7 @@ import TMLPresentation
 class GoalCell: UITableViewCell, TableCell {
     func configure(_ modelObject: Goal) {
         textLabel?.text       = modelObject.name
-        detailTextLabel?.text = modelObject.progressText
+        detailTextLabel?.text = modelObject.progressText + modelObject.debugText
         imageView?.image      = modelObject.badgedImage
     }
 }

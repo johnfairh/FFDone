@@ -46,6 +46,9 @@ extension Goal: ModelObject {
     /// Allow for user reordering
     static let primarySortOrder = ModelSortOrder(keyName: #keyPath(sortOrder))
 
+    /// Magic value for completion date for incomplete goals - need this for consistent sorting
+    static let incompleteDate = Date(timeIntervalSinceReferenceDate: 0)
+
     static func createWithDefaults(model: Model) -> Goal {
         let goal = Goal.create(from: model)
         goal.name = ""
@@ -53,7 +56,7 @@ extension Goal: ModelObject {
         goal.totalSteps = 1
         goal.sortOrder = Goal.getNextSortOrderValue(primarySortOrder, from: model)
         goal.creationDate = Date()
-//        goal.completionDate = .distantPast
+        goal.completionDate = Goal.incompleteDate
         goal.icon = Icon.getGoalDefault(model: model)
         return goal
     }
@@ -143,7 +146,7 @@ extension Goal {
 
     /// Perform processing when the goal gets uncompleted.
     private func uncompleted() {
-        completionDate = .distantPast
+        completionDate = Goal.incompleteDate
         updateSectionOrder()
     }
 }
@@ -175,6 +178,10 @@ extension Goal {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         return dateFormatter.string(from: completionDate)
+    }
+
+    var debugText: String {
+        return "[so=\(sortOrder) cdCompl=\(cdCompletionDate)]"
     }
 
     var progressText: String {
