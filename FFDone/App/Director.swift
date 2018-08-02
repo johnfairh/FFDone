@@ -72,26 +72,30 @@ class Director {
 extension Director: DirectorInterface {
 
     func request(_ request: DirectorRequest) {
-        switch request {
-        case let .editGoal(goal, model):
-            services.editThing("GoalEditViewController",
-                               model: model,
-                               object: goal,
-                               presenterFn: GoalEditPresenter.init,
-                               done: { _ in })
+        // We add a fibre break here to avoid very odd behaviours, eg.
+        // multi-second delays on selecting a table row.
+        Dispatch.toForeground {
+            switch request {
+            case let .editGoal(goal, model):
+                self.services.editThing("GoalEditViewController",
+                                        model: model,
+                                        object: goal,
+                                        presenterFn: GoalEditPresenter.init,
+                                        done: { _ in })
 
-        case let .createGoal(model):
-            services.createThing("GoalEditViewController",
-                                 model: model,
-                                 presenterFn: GoalEditPresenter.init,
-                                 done: { _ in })
+            case let .createGoal(model):
+                self.services.createThing("GoalEditViewController",
+                                          model: model,
+                                          presenterFn: GoalEditPresenter.init,
+                                          done: { _ in })
 
-        case let .pickIcon(model, continuation):
-            services.pickThing("IconsTableViewController",
-                               model: model,
-                               results: Icon.createAllResults(model: model),
-                               presenterFn: IconsTablePresenter.init,
-                               done: continuation)
+            case let .pickIcon(model, continuation):
+                self.services.pickThing("IconsTableViewController",
+                                        model: model,
+                                        results: Icon.createAllResults(model: model),
+                                        presenterFn: IconsTablePresenter.init,
+                                        done: continuation)
+            }
         }
     }
 }

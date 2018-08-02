@@ -68,10 +68,12 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         guard !goal.isComplete else {
             return nil
         }
-        let action = UIContextualAction(style: .normal, title: "+1") { _, _, continuation in
-            print("+1 this goal!")
-            continuation(false)
+        let title = (goal.stepsToGo == 1) ? "Complete" : "Progress"
+        let action = UIContextualAction(style: .normal, title: title) { _, _, continuation in
+            goal.currentSteps = goal.currentSteps + 1
+            continuation(true)
         }
+        action.backgroundColor = UIColor(named: "StepSwipeColour") ?? .green
         return UISwipeActionsConfiguration(actions: [action])
     }
 
