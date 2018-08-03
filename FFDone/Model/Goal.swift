@@ -19,11 +19,10 @@ enum GoalSection: String {
     case active = "1"
     case complete = "2"
 
-    static var titleMap: [String : String] {
-        return ["0" : "Favourites",
-                "1" : "Active",
-                "2" : "Complete"]
-    }
+    static var titleMap: [String : String] =
+        ["0" : "Favourites",
+         "1" : "Active",
+         "2" : "Complete"]
 }
 
 extension Goal {

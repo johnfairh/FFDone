@@ -41,9 +41,19 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         tableModel = TableModel(tableView: tableView,
                                 fetchedResultsController: queryResults,
                                 delegate: self)
-        tableModel.configureSections(titleMap: GoalSection.titleMap)
         tableModel.start()
     }
+
+    // MARK: - Section config
+    func getSectionTitle(name: String) -> String {
+        return GoalSection.titleMap[name]!
+    }
+
+    func getSectionObject(name: String) -> GoalSection {
+        return GoalSection(rawValue: name)!
+    }
+
+    // MARK: - Delete
 
     func canDeleteObject(_ modelObject: Goal) -> Bool {
         return presenter.canDeleteGoal(modelObject)
@@ -53,13 +63,22 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         presenter.deleteGoal(modelObject)
     }
 
+    // MARK: - Move
+
     func canMoveObject(_ modelObject: Goal) -> Bool {
         return presenter.canMoveGoal(modelObject)
     }
 
-    func moveObject(_ from: Goal, fromRow: Int, toRow: Int) {
-        presenter.moveGoal(from, fromRow: fromRow, toRow: toRow)
+    func canMoveObjectTo(_ modelObject: Goal, toSection: GoalSection, toRowInSection: Int) -> Bool {
+        return true
     }
+
+    func moveObject(_ goal: Goal, fromRowInSection: Int,
+                    toSection: GoalSection, toRowInSection: Int) {
+        presenter.moveGoal(goal, fromRow: fromRowInSection, toRow: toRowInSection)
+    }
+
+    // MARK: - Select
 
     func selectObject(_ modelObject: ModelObject) {
         presenter.selectGoal(modelObject as! Goal)
