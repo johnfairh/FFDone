@@ -43,7 +43,7 @@ extension Goal: ModelObject {
     public static let defaultSortDescriptor = NSSortDescriptor(key: #keyPath(sortOrder), ascending: true)
 
     /// Allow for user reordering
-    static let primarySortOrder = ModelSortOrder(keyName: #keyPath(sortOrder))
+    static let primarySortOrder = ModelSortOrder(keyName: #keyPath(sortOrder), ascending: false)
 
     /// Magic value for completion date for incomplete goals - need this for consistent sorting
     static let incompleteDate = Date(timeIntervalSinceReferenceDate: 0)
@@ -229,8 +229,8 @@ extension Goal {
         // Should affect only completed goals.
         let completionOrder = NSSortDescriptor(key: #keyPath(cdCompletionDate), ascending: false)
 
-        // Finally user sort order, mostly affect incomplete goals.
-        let userSortOrder = NSSortDescriptor(key: #keyPath(sortOrder), ascending: true)
+        // Finally user sort order, mostly affect incomplete goals, newer before older.
+        let userSortOrder = NSSortDescriptor(key: #keyPath(sortOrder), ascending: false)
 
         return createFetchedResults(model: model,
                                     predicate: nil,

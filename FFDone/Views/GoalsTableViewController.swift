@@ -73,9 +73,12 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         return true
     }
 
-    func moveObject(_ goal: Goal, fromRowInSection: Int,
+    func moveObject(_ goal: Goal,
+                    fromSection: GoalSection, fromRowInSection: Int,
                     toSection: GoalSection, toRowInSection: Int) {
-        presenter.moveGoal(goal, fromRow: fromRowInSection, toRow: toRowInSection)
+        presenter.moveGoal(goal,
+                           fromSection: fromSection, fromRowInSection: fromRowInSection,
+                           toSection: toSection, toRowInSection: toRowInSection)
     }
 
     // MARK: - Select

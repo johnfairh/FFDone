@@ -47,7 +47,7 @@ class IconsTablePresenter: TablePresenter<DirectorInterface>, Presenter, IconsTa
 
     func moveIcon(_ icon: Icon, fromRow: Int, toRow: Int) {
         moveAndRenumber(fromRow: fromRow, toRow: toRow, sortOrder: Icon.primarySortOrder)
-        model.save()
+        model.saveAndWait()
     }
 
     func selectIcon(_ icon: Icon) {

@@ -13,8 +13,10 @@ protocol GoalsTablePresenterInterface: TablePresenterInterface {
 
     func canDeleteGoal(_ goal: Goal) -> Bool
     func deleteGoal(_ goal: Goal)
+
     func canMoveGoal(_ goal: Goal) -> Bool
-    func moveGoal(_ goal: Goal, fromRow: Int, toRow: Int)
+    func canMoveGoalTo(_ goal: Goal, toSection: GoalSection, toRowInSection: Int) -> Bool
+    func moveGoal(_ goal: Goal, fromSection: GoalSection, fromRowInSection: Int, toSection: GoalSection, toRowInSection: Int)
     func selectGoal(_ goal: Goal)
 
     func updateSearchResults(text: String)
@@ -49,9 +51,23 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
         return isEditable
     }
 
-    func moveGoal(_ goal: Goal, fromRow: Int, toRow: Int) {
-        moveAndRenumber(fromRow: fromRow, toRow: toRow, sortOrder: Goal.primarySortOrder)
-        model.save()
+    func canMoveGoalTo(_ goal: Goal, toSection: GoalSection, toRowInSection: Int) -> Bool {
+        if goal.isComplete {
+            // Can't move complete -> complete, order fixed
+            return toSection != .complete
+        } else if toSection != .complete {
+            return true
+        } else {
+            // fav/active -> complete, only allow top slot
+            return toRowInSection == 0
+        }
+    }
+
+    func moveGoal(_ goal: Goal, fromSection: GoalSection, fromRowInSection: Int, toSection: GoalSection, toRowInSection: Int) {
+        moveAndRenumber(fromSectionName: fromSection.rawValue, fromRowInSection: fromRowInSection,
+                        toSectionName: toSection.rawValue, toRowInSection: toRowInSection,
+                        sortOrder: Goal.primarySortOrder)
+        model.saveAndWait()
     }
 
     func selectGoal(_ goal: Goal) {
