@@ -16,7 +16,7 @@ protocol GoalsTablePresenterInterface: TablePresenterInterface {
 
     func canMoveGoal(_ goal: Goal) -> Bool
     func canMoveGoalTo(_ goal: Goal, toSection: GoalSection, toRowInSection: Int) -> Bool
-    func moveGoal(_ goal: Goal, fromSection: GoalSection, fromRowInSection: Int, toSection: GoalSection, toRowInSection: Int)
+    func moveGoal(_ goal: Goal, fromSection: GoalSection, fromRowInSection: Int, toSection: GoalSection, toRowInSection: Int, tableView: UITableView)
     func selectGoal(_ goal: Goal)
 
     func updateSearchResults(text: String)
@@ -63,10 +63,54 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
         }
     }
 
-    func moveGoal(_ goal: Goal, fromSection: GoalSection, fromRowInSection: Int, toSection: GoalSection, toRowInSection: Int) {
+    func moveGoal(_ goal: Goal, fromSection: GoalSection, fromRowInSection: Int, toSection: GoalSection, toRowInSection: Int, tableView: UITableView) {
         moveAndRenumber(fromSectionName: fromSection.rawValue, fromRowInSection: fromRowInSection,
                         toSectionName: toSection.rawValue, toRowInSection: toRowInSection,
                         sortOrder: Goal.primarySortOrder)
+
+        // If we are changing section then there is additional stuff to do to preserve
+        // the sort-order invariants.
+        if fromSection != toSection {
+            switch (fromSection, toSection) {
+            case (.complete, .active):
+                goal.currentSteps = 0
+                goal.isFav = false
+            case (.complete, .fav):
+                goal.currentSteps = 0
+                goal.isFav = true
+            case (_, .complete):
+                goal.currentSteps = goal.totalSteps
+            case (.fav, .active):
+                goal.isFav = false
+            case (.active, .fav):
+                goal.isFav = true
+
+            case (.fav, .fav), (.active, .active):
+                Log.fatal("Shouldn't be reachable")
+            }
+            Log.assert(toSection == goal.section, message: "Messed up the model section transition")
+
+            // And we must also refresh the UI - core data feedback will not do this
+            // because it is our job as part of the 'move' protocol.
+            // And we can't do it right now because we are deep inside a tableview
+            // callback/edit sequence.
+            //
+            let fromSectionRowCount = getSectionRowCount(sectionName: fromSection.rawValue)
+            let fromSectionIndex    = getSectionIndex(sectionName: fromSection.rawValue)
+
+            Dispatch.toForeground {
+
+                if fromSectionRowCount == 1 { // ie. before the move
+                    // We emptied the section - have to delete it and adjust...
+                    Log.log("Deleted section '\(fromSection.rawValue)' current index \(fromSectionIndex)")
+                    tableView.deleteSections(IndexSet(integer: fromSectionIndex), with: .none)
+                }
+
+                Log.log("Sending refresh for section '\(toSection.rawValue)', row \(toRowInSection)")
+                self.refreshRow(sectionName: toSection.rawValue, row: toRowInSection)
+            }
+        }
+
         model.saveAndWait()
     }
 

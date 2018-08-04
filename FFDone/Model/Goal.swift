@@ -26,14 +26,15 @@ enum GoalSection: String {
 }
 
 extension Goal {
-    fileprivate func updateSectionOrder() {
-        let section: GoalSection
-
+    var section: GoalSection {
         switch (isComplete, isFav) {
-        case (false, true):  section = .fav
-        case (false, false): section = .active
-        case (true, _):      section = .complete
+        case (false, true):  return .fav
+        case (false, false): return .active
+        case (true, _):      return .complete
         }
+    }
+
+    fileprivate func updateSectionOrder() {
         sectionOrder = section.rawValue
     }
 }

@@ -25,6 +25,10 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
             self?.reloadTable(queryResults: queryResults)
         }
 
+        presenter.reloadRow = { [weak self] indexPath in
+            self?.tableModel.refreshCell(indexPath: indexPath)
+        }
+
         if presenter.isSearchable {
             let searchController = UISearchController(searchResultsController: nil)
             searchController.obscuresBackgroundDuringPresentation = false
@@ -70,7 +74,16 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
     }
 
     func canMoveObjectTo(_ modelObject: Goal, toSection: GoalSection, toRowInSection: Int) -> Bool {
-        return true
+        // Always OK to move to a non-complete section
+        if toSection != .complete {
+            return true
+        }
+        // Not OK to rearrange complete goals
+        if modelObject.isComplete {
+            return false
+        }
+        // So we are moving incomplete -> complete, must go to the top row only
+        return toRowInSection == 0
     }
 
     func moveObject(_ goal: Goal,
@@ -78,7 +91,8 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
                     toSection: GoalSection, toRowInSection: Int) {
         presenter.moveGoal(goal,
                            fromSection: fromSection, fromRowInSection: fromRowInSection,
-                           toSection: toSection, toRowInSection: toRowInSection)
+                           toSection: toSection, toRowInSection: toRowInSection,
+                           tableView: tableView)
     }
 
     // MARK: - Select
