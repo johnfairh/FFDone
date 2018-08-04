@@ -119,7 +119,7 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
             delaySearch()
         case .delaying:
             searchDelayState = .idle
-            filteredResults = Goal.allMatchingGoals(model: model, string: searchText)
+            filteredResults = Goal.matchingSortedResultsSet(model: model, string: searchText)
         }
     }
 }

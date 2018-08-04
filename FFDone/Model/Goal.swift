@@ -222,6 +222,17 @@ extension Goal {
 
     /// For the main goals view
     static func allSortedResultsSet(model: Model) -> ModelResultsSet {
+        return sectionatedResultsSet(model: model, predicate: nil)
+    }
+
+    /// For searching in the goals view
+    static func matchingSortedResultsSet(model: Model, string: String) -> ModelResultsSet {
+        let predicate = NSPredicate(format: "\(#keyPath(name)) CONTAINS[cd] \"\(string)\"")
+        return sectionatedResultsSet(model: model, predicate: predicate)
+    }
+
+    /// Carefully sorted order to drive main table
+    private static func sectionatedResultsSet(model: Model, predicate: NSPredicate?) -> ModelResultsSet {
         // Fav -> Incomplete -> Complete
         let sectionsOrder = NSSortDescriptor(key: #keyPath(sectionOrder), ascending: true)
 
@@ -233,14 +244,9 @@ extension Goal {
         let userSortOrder = NSSortDescriptor(key: #keyPath(sortOrder), ascending: false)
 
         return createFetchedResults(model: model,
-                                    predicate: nil,
+                                    predicate: predicate,
                                     sortedBy: [sectionsOrder, completionOrder, userSortOrder],
                                     sectionNameKeyPath: #keyPath(sectionOrder)).asModelResultsSet
     }
 
-    /// For searching in the goals view
-    static func allMatchingGoals(model: Model, string: String) -> ModelResultsSet {
-        let predicate = NSPredicate(format: "\(#keyPath(name)) CONTAINS[cd] \"\(string)\"")
-        return createFetchedResults(model: model, predicate: predicate).asModelResultsSet
-    }
 }
