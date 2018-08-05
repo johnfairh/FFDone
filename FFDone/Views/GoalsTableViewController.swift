@@ -25,10 +25,6 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
             self?.reloadTable(queryResults: queryResults)
         }
 
-        presenter.reloadRow = { [weak self] indexPath in
-            self?.tableModel.refreshCell(indexPath: indexPath)
-        }
-
         if presenter.isSearchable {
             let searchController = UISearchController(searchResultsController: nil)
             searchController.obscuresBackgroundDuringPresentation = false
@@ -37,6 +33,8 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
             navigationItem.searchController = searchController
             definesPresentationContext = true
         }
+
+        navigationItem.leftBarButtonItem = nil
     }
 
     private var tableModel: TableModel<GoalCell, GoalsTableViewController>!

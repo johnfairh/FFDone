@@ -79,27 +79,28 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
         if fromSection != toSection {
             goal.userMove(newSection: toSection)
 
-            // And we must also refresh the UI - core data feedback will not do this
-            // because it is our job as part of the 'move' protocol.
-            // And we can't do it right now because we are deep inside a tableview
-            // callback/edit sequence.
+            // Using row-move to empty a section is problematic.
+            //
+            // It worked perfectly in the "edit mode -> drag the ear" world by throwing this
+            // next `deleteSections` onto a fibre.
+            //
+            // But this crashes in the "drag and drop" world in iOS11 and iOS12 (Xcode 10b5)
+            // in different ways depending on when it's called -- see TableModel.swift.
+            //
+            // So we prevent this ever from happening instead, again see TableModel.swift.
             //
             let fromSectionRowCount = getSectionRowCount(sectionName: fromSection.rawValue)
             let fromSectionIndex    = getSectionIndex(sectionName: fromSection.rawValue)
 
-            Dispatch.toForeground {
-
-                if fromSectionRowCount == 1 { // ie. before the move
-                    // We emptied the section - have to delete it and adjust...
-                    Log.log("Deleted section '\(fromSection.rawValue)' current index \(fromSectionIndex)")
-                    tableView.deleteSections(IndexSet(integer: fromSectionIndex), with: .none)
-                }
-
-                Log.log("Sending refresh for section '\(toSection.rawValue)', row \(toRowInSection)")
-                self.refreshRow(sectionName: toSection.rawValue, row: toRowInSection)
+            if fromSectionRowCount == 1 { // ie. before the move
+                Log.fatal("Help, shouldn't be allowed to empty a section using move")
+                #if false
+                // We emptied the section - have to delete it and adjust...
+                Log.log("Deleted section '\(fromSection.rawValue)' current index \(fromSectionIndex)")
+                tableView.deleteSections(IndexSet(integer: fromSectionIndex), with: .none)
+                #endif
             }
         }
-
         model.saveAndWait()
     }
 
