@@ -8,10 +8,15 @@
 import TMLPresentation
 
 class GoalCell: UITableViewCell, TableCell {
+
+    @IBOutlet weak var customImageView: UIImageView!
+    @IBOutlet weak var customTextLabel: UILabel!
+    @IBOutlet weak var customDetailTextLabel: UILabel!
+
     func configure(_ modelObject: Goal) {
-        textLabel?.text       = modelObject.name
-        detailTextLabel?.text = modelObject.progressText + modelObject.debugText
-        imageView?.image      = modelObject.badgedImage
+        customTextLabel?.text       = modelObject.name
+        customDetailTextLabel?.text = modelObject.progressText + modelObject.debugText
+        customImageView?.image      = modelObject.badgedImage
     }
 }
 
