@@ -15,8 +15,8 @@ protocol GoalsTablePresenterInterface: TablePresenterInterface {
     func deleteGoal(_ goal: Goal)
 
     func canMoveGoal(_ goal: Goal) -> Bool
-    func canMoveGoalTo(_ goal: Goal, toSection: GoalSection, toRowInSection: Int) -> Bool
-    func moveGoal(_ goal: Goal, fromSection: GoalSection, fromRowInSection: Int, toSection: GoalSection, toRowInSection: Int, tableView: UITableView)
+    func canMoveGoalTo(_ goal: Goal, toSection: Goal.Section, toRowInSection: Int) -> Bool
+    func moveGoal(_ goal: Goal, fromRowInSection: Int, toSection: Goal.Section, toRowInSection: Int, tableView: UITableView)
     func selectGoal(_ goal: Goal)
 
     func updateSearchResults(text: String)
@@ -51,7 +51,8 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
         return isEditable
     }
 
-    func canMoveGoalTo(_ goal: Goal, toSection: GoalSection, toRowInSection: Int) -> Bool {
+    /// Check whether move is permitted
+    func canMoveGoalTo(_ goal: Goal, toSection: Goal.Section, toRowInSection: Int) -> Bool {
         if goal.isComplete {
             // Can't move complete -> complete, order fixed
             return toSection != .complete
@@ -63,7 +64,12 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
         }
     }
 
-    func moveGoal(_ goal: Goal, fromSection: GoalSection, fromRowInSection: Int, toSection: GoalSection, toRowInSection: Int, tableView: UITableView) {
+    /// Process the move.
+    func moveGoal(_ goal: Goal, fromRowInSection: Int, toSection: Goal.Section, toRowInSection: Int, tableView: UITableView) {
+        Log.assert(canMoveGoalTo(goal, toSection: toSection, toRowInSection: toRowInSection))
+
+        let fromSection = goal.section
+
         moveAndRenumber(fromSectionName: fromSection.rawValue, fromRowInSection: fromRowInSection,
                         toSectionName: toSection.rawValue, toRowInSection: toRowInSection,
                         sortOrder: Goal.primarySortOrder)
@@ -71,24 +77,7 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
         // If we are changing section then there is additional stuff to do to preserve
         // the sort-order invariants.
         if fromSection != toSection {
-            switch (fromSection, toSection) {
-            case (.complete, .active):
-                goal.currentSteps = 0
-                goal.isFav = false
-            case (.complete, .fav):
-                goal.currentSteps = 0
-                goal.isFav = true
-            case (_, .complete):
-                goal.currentSteps = goal.totalSteps
-            case (.fav, .active):
-                goal.isFav = false
-            case (.active, .fav):
-                goal.isFav = true
-
-            case (.fav, .fav), (.active, .active):
-                Log.fatal("Shouldn't be reachable")
-            }
-            Log.assert(toSection == goal.section, message: "Messed up the model section transition")
+            goal.userMove(newSection: toSection)
 
             // And we must also refresh the UI - core data feedback will not do this
             // because it is our job as part of the 'move' protocol.

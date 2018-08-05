@@ -7,38 +7,6 @@
 
 import TMLPresentation
 
-/// Because Core Data is a special flower we need to have some weird stuff.
-///
-/// To do the section sorting we need a dedicated 'section' field.  We can't
-/// use the section titles because CD insists on alphabetically sorting them.
-///
-/// So we have a `sectionOrder` String field that is updated whenever the `fav`
-/// and `complete` states change.
-enum GoalSection: String {
-    case fav = "0"
-    case active = "1"
-    case complete = "2"
-
-    static var titleMap: [String : String] =
-        ["0" : "Favourites",
-         "1" : "Active",
-         "2" : "Complete"]
-}
-
-extension Goal {
-    var section: GoalSection {
-        switch (isComplete, isFav) {
-        case (false, true):  return .fav
-        case (false, false): return .active
-        case (true, _):      return .complete
-        }
-    }
-
-    fileprivate func updateSectionOrder() {
-        sectionOrder = section.rawValue
-    }
-}
-
 extension Goal: ModelObject {
     /// Framework default sort order for find/query
     public static let defaultSortDescriptor = NSSortDescriptor(key: #keyPath(sortOrder), ascending: true)
@@ -216,6 +184,71 @@ extension Goal {
         return icon!.nativeImage
     }
 }
+
+// MARK: - Sections
+
+/// Because Core Data is a special flower we need to have some weird stuff.
+///
+/// To do the section sorting we need a dedicated 'section' field.  We can't
+/// use the section titles because CD insists on alphabetically sorting them.
+///
+/// So we have a `sectionOrder` String field that is updated whenever the `fav`
+/// and `complete` states change.
+extension Goal {
+
+    /// Section type, raw string used as core data primary index/section name.
+    enum Section: String {
+        case fav = "0"
+        case active = "1"
+        case complete = "2"
+
+        static var titleMap: [String : String] =
+            ["0" : "Favourites",
+             "1" : "Active",
+             "2" : "Complete"]
+    }
+
+    var section: Goal.Section {
+        switch (isComplete, isFav) {
+        case (false, true):  return .fav
+        case (false, false): return .active
+        case (true, _):      return .complete
+        }
+    }
+
+    fileprivate func updateSectionOrder() {
+        sectionOrder = section.rawValue
+    }
+
+    /// Handle the user modifying the section of a goal, update internal
+    /// state to meet their desired one.  Sort order taken care of elsewhere.
+    func userMove(newSection: Goal.Section) {
+        let currentSection = section
+        guard currentSection != newSection else {
+            return
+        }
+
+        switch (currentSection, newSection) {
+        case (.complete, .active):
+            currentSteps = 0
+            isFav = false
+        case (.complete, .fav):
+            currentSteps = 0
+            isFav = true
+        case (_, .complete):
+            currentSteps = totalSteps
+        case (.fav, .active):
+            isFav = false
+        case (.active, .fav):
+            isFav = true
+
+        case (.fav, .fav), (.active, .active):
+            Log.fatal("Shouldn't be reachable")
+        }
+        Log.assert(section == newSection, message: "Messed up a goal section transition")
+    }
+}
+
 
 // MARK: - Queries
 

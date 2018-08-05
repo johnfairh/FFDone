@@ -50,11 +50,11 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
 
     // MARK: - Section config
     func getSectionTitle(name: String) -> String {
-        return GoalSection.titleMap[name]!
+        return Goal.Section.titleMap[name]!
     }
 
-    func getSectionObject(name: String) -> GoalSection {
-        return GoalSection(rawValue: name)!
+    func getSectionObject(name: String) -> Goal.Section {
+        return Goal.Section(rawValue: name)!
     }
 
     // MARK: - Delete
@@ -73,24 +73,15 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         return presenter.canMoveGoal(modelObject)
     }
 
-    func canMoveObjectTo(_ modelObject: Goal, toSection: GoalSection, toRowInSection: Int) -> Bool {
-        // Always OK to move to a non-complete section
-        if toSection != .complete {
-            return true
-        }
-        // Not OK to rearrange complete goals
-        if modelObject.isComplete {
-            return false
-        }
-        // So we are moving incomplete -> complete, must go to the top row only
-        return toRowInSection == 0
+    func canMoveObjectTo(_ goal: Goal, toSection: Goal.Section, toRowInSection: Int) -> Bool {
+        return presenter.canMoveGoalTo(goal, toSection: toSection, toRowInSection: toRowInSection)
     }
 
     func moveObject(_ goal: Goal,
-                    fromSection: GoalSection, fromRowInSection: Int,
-                    toSection: GoalSection, toRowInSection: Int) {
+                    fromRowInSection: Int,
+                    toSection: Goal.Section, toRowInSection: Int) {
         presenter.moveGoal(goal,
-                           fromSection: fromSection, fromRowInSection: fromRowInSection,
+                           fromRowInSection: fromRowInSection,
                            toSection: toSection, toRowInSection: toRowInSection,
                            tableView: tableView)
     }
