@@ -19,7 +19,13 @@ protocol GoalsTablePresenterInterface: TablePresenterInterface {
     func moveGoal(_ goal: Goal, fromRowInSection: Int, toSection: Goal.Section, toRowInSection: Int, tableView: UITableView)
     func selectGoal(_ goal: Goal)
 
-    func updateSearchResults(text: String)
+    func updateSearchResults(text: String, type: GoalsTableSearchType)
+}
+
+enum GoalsTableSearchType {
+    case name
+    case tag
+    case either
 }
 
 // MARK: - Presenter
@@ -120,8 +126,9 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
 
     var searchDelayState: SearchDelayState = .idle
     var searchText: String = ""
+    var searchType: GoalsTableSearchType = .either
 
-    func updateSearchResults(text: String) {
+    func updateSearchResults(text: String, type: GoalsTableSearchType) {
         if text.isEmpty {
             searchDelayState = .idle
             if filteredResults != nil {
@@ -129,6 +136,7 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
             }
         } else {
             searchText = text
+            searchType = type
             switch searchDelayState {
             case .idle:
                 delaySearch()
@@ -153,7 +161,14 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
             delaySearch()
         case .delaying:
             searchDelayState = .idle
-            filteredResults = Goal.matchingSortedResultsSet(model: model, string: searchText)
+            switch searchType {
+            case .either:
+                filteredResults = Goal.searchByAnythingSortedResultsSet(model: model, text: searchText)
+            case .name:
+                filteredResults = Goal.searchByNameSortedResultsSet(model: model, name: searchText)
+            case .tag:
+                filteredResults = Goal.searchByTagSortedResultsSet(model: model, tag: searchText)
+            }
         }
     }
 }

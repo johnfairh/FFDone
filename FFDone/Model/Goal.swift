@@ -254,15 +254,44 @@ extension Goal {
 
 extension Goal {
 
-    /// For the main goals view
+    /// For the main goals view -- all goals.
     static func allSortedResultsSet(model: Model) -> ModelResultsSet {
         return sectionatedResultsSet(model: model, predicate: nil)
     }
 
-    /// For searching in the goals view
-    static func matchingSortedResultsSet(model: Model, string: String) -> ModelResultsSet {
-        let predicate = NSPredicate(format: "\(#keyPath(name)) CONTAINS[cd] \"\(string)\"")
-        return sectionatedResultsSet(model: model, predicate: predicate)
+    // To do searching we need various different queries depending on the
+    // scope bar setting for name/tag/either.
+
+    /// Predicate to match goal name - contains
+    static func getNameMatchPredicate(name str: String) -> NSPredicate {
+        return NSPredicate(format: "\(#keyPath(name)) CONTAINS[cd] \"\(str)\"")
+    }
+
+    /// Predicate to match tag - supports exact with '=' prefix
+    static func getTagMatchPredicate(tag str: String) -> NSPredicate {
+        if str.first == "=" {
+            return NSPredicate(format: "\(#keyPath(tag)) LIKE[cd] \"\(str.dropFirst())\"")
+        } else {
+            return NSPredicate(format: "\(#keyPath(tag)) CONTAINS[cd] \"\(str)\"")
+        }
+    }
+
+    /// Query - search by name
+    static func searchByNameSortedResultsSet(model: Model, name: String) -> ModelResultsSet {
+        return sectionatedResultsSet(model: model, predicate: getNameMatchPredicate(name: name))
+    }
+
+    /// Query - search by tag
+    static func searchByTagSortedResultsSet(model: Model, tag: String) -> ModelResultsSet {
+        return sectionatedResultsSet(model: model, predicate: getTagMatchPredicate(tag: tag))
+    }
+
+    /// Query - search by either
+    static func searchByAnythingSortedResultsSet(model: Model, text: String) -> ModelResultsSet {
+        let namePredicate = getNameMatchPredicate(name: text)
+        let tagPredicate = getTagMatchPredicate(tag: text)
+        let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [namePredicate, tagPredicate])
+        return sectionatedResultsSet(model: model, predicate: orPredicate)
     }
 
     /// Carefully sorted order to drive main table

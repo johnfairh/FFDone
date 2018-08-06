@@ -13,7 +13,23 @@ class GoalCell: UITableViewCell, TableCell {
     @IBOutlet weak var customTextLabel: UILabel!
     @IBOutlet weak var customDetailTextLabel: UILabel!
     @IBOutlet weak var customTagTextLabel: UILabel!
-    
+    var tagText: String = ""
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        customTagTextLabel?.backgroundColor = UIColor(named: "TagBackgroundColour")
+        customTagTextLabel?.layer.cornerRadius = 6
+        customTagTextLabel?.layer.masksToBounds = true
+        customTagTextLabel?.isUserInteractionEnabled = true
+
+        let tagGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTagTextLabel(_:)))
+        customTagTextLabel.addGestureRecognizer(tagGestureRecognizer)
+    }
+
+    @IBAction func didTapTagTextLabel(_ sender: UIGestureRecognizer) {
+        GoalsTableViewController.shared?.doSearchForTag(tag: tagText)
+    }
+
     func configure(_ modelObject: Goal) {
         customTextLabel?.text       = modelObject.name
         customDetailTextLabel?.text = modelObject.progressText + modelObject.debugText
@@ -21,9 +37,7 @@ class GoalCell: UITableViewCell, TableCell {
         if let tagText = modelObject.tag {
             customTagTextLabel?.isHidden = false
             customTagTextLabel?.text = " \(tagText) "
-            customTagTextLabel?.backgroundColor = UIColor(named: "TagBackgroundColour")
-            customTagTextLabel?.layer.cornerRadius = 6
-            customTagTextLabel?.layer.masksToBounds = true
+            self.tagText = tagText
         } else {
             customTagTextLabel?.isHidden = true
         }
@@ -32,8 +46,13 @@ class GoalCell: UITableViewCell, TableCell {
 
 class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
     TableModelDelegate,
-    UISearchResultsUpdating
+    UISearchResultsUpdating,
+    UISearchBarDelegate
 {
+    fileprivate static var shared: GoalsTableViewController?
+
+    private static let searchScopes = ["Both", "Name", "Tag"]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.reload = { [weak self] queryResults in
@@ -44,14 +63,22 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
             let searchController = UISearchController(searchResultsController: nil)
             searchController.obscuresBackgroundDuringPresentation = false
             searchController.searchBar.autocapitalizationType = .none
+            searchController.searchBar.scopeButtonTitles = GoalsTableViewController.searchScopes
+            searchController.searchBar.selectedScopeButtonIndex = -1
+            searchController.searchBar.showsScopeBar = true
+            searchController.searchBar.delegate = self
             searchController.searchResultsUpdater = self
             navigationItem.searchController = searchController
             definesPresentationContext = true
         }
 
         navigationItem.leftBarButtonItem = nil
-    }
 
+        if GoalsTableViewController.shared == nil {
+            GoalsTableViewController.shared = self
+        }
+    }
+    
     private var tableModel: TableModel<GoalCell, GoalsTableViewController>!
 
     private func reloadTable(queryResults: ModelResults) {
@@ -121,8 +148,45 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
 
     // MARK: - Search
 
+    public func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        if searchBar.selectedScopeButtonIndex == -1 {
+            searchBar.selectedScopeButtonIndex = 0
+        }
+    }
+
+    public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.selectedScopeButtonIndex = -1
+    }
+
+    public func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        Dispatch.toForeground {
+            self.updateSearchResults(for: self.navigationItem.searchController!)
+        }
+    }
+
     public func updateSearchResults(for searchController: UISearchController) {
-        let text = searchController.searchBar.text ?? ""
-        presenter.updateSearchResults(text: text)
+        let searchBar = searchController.searchBar
+        let text = searchBar.text ?? ""
+        func scopeToSearchType(scope: Int) -> GoalsTableSearchType {
+            switch scope {
+            case 0: return .either
+            case 1: return .name
+            case 2: return .tag
+            default: return .either
+            }
+        }
+        presenter.updateSearchResults(text: text,
+                                      type: scopeToSearchType(scope: searchBar.selectedScopeButtonIndex))
+    }
+
+    public func doSearchForTag(tag: String) {
+        Log.log("Searching for tag \(tag)")
+        guard let searchController = navigationItem.searchController else {
+            Log.fatal("Lost the searchcontroller")
+        }
+        searchController.isActive = true
+        searchController.searchBar.text = "=\(tag)"
+        searchController.searchBar.selectedScopeButtonIndex = 2
+        updateSearchResults(for: searchController)
     }
 }
