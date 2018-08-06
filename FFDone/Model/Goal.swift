@@ -312,4 +312,8 @@ extension Goal {
                                     sectionNameKeyPath: #keyPath(sectionOrder)).asModelResultsSet
     }
 
+    /// For the list of tags
+    static func tagListResults(model: Model) -> ModelFieldResults {
+        return createFieldResults(model: model, keyPath: #keyPath(tag), unique: true)
+    }
 }

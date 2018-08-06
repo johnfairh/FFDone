@@ -17,6 +17,7 @@ final class App {
     private var modelProvider: ModelProvider
     private var director: Director
     private var directorServices: TabbedDirectorServices<DirectorInterface>
+    private var tagFieldResultsDecoder: ModelFieldResultsDecoder?
 
     init(window: UIWindow) {
         if App.debugMode {
@@ -48,6 +49,7 @@ final class App {
         }
 
         model.save {
+            initTagList(model: model)
             self.initComplete(model: model)
         }
     }
@@ -56,6 +58,32 @@ final class App {
         Log.log("Init complete!")
         Prefs.runBefore = true
         director.modelIsReady(model: model)
+    }
+
+    // MARK: Tag List
+
+    // This maintains a live query of the tags defined in the root `Model`.
+    // This is queryable via `App.shared.tags` which is a good-enough view
+    // for populating autocomplete etc.
+    private func initTagList(model: Model) {
+        let modelFieldResults = Goal.tagListResults(model: model)
+        
+        do {
+            try modelFieldResults.performFetch()
+            tagFieldResultsDecoder = ModelFieldResultsDecoder(results: modelFieldResults)
+        } catch {
+            Log.log("Tag Results fetch failed: \(error) - pressing on")
+        }
+    }
+
+    var tags: [String] {
+        return tagFieldResultsDecoder?.getFields() ?? []
+    }
+
+    // MARK: Shared instance
+
+    static var shared: App {
+        return (UIApplication.shared.delegate as! AppDelegate).app
     }
 }
 
