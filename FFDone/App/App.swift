@@ -49,7 +49,7 @@ final class App {
         }
 
         model.save {
-            initTagList(model: model)
+            self.initTagList(model: model)
             self.initComplete(model: model)
         }
     }

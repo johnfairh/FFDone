@@ -164,6 +164,19 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         }
     }
 
+    public func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        guard searchBar.selectedScopeButtonIndex == 2 else {
+            return true
+        }
+        guard searchBar.textField.autoCompleteText(newText: text, suggestions: App.shared.tags) else {
+            return true
+        }
+        Dispatch.toForeground {
+            self.updateSearchResults(for: self.navigationItem.searchController!)
+        }
+        return false
+    }
+
     public func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         let text = searchBar.text ?? ""

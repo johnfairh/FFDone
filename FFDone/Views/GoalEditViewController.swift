@@ -80,10 +80,19 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
 
     // Close the keyboard when appropriate, plus listen live for changes
     // to the fields and update everything, sanitizing the step entries.
+    //
+    // Autocomplete the tag field against existing tags.
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard textField === tagTextField else {
+            return true
+        }
+        return !textField.autoCompleteText(newText: string, suggestions: App.shared.tags)
     }
 
     private var nameListener: NotificationListener!
