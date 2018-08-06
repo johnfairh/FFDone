@@ -12,11 +12,21 @@ class GoalCell: UITableViewCell, TableCell {
     @IBOutlet weak var customImageView: UIImageView!
     @IBOutlet weak var customTextLabel: UILabel!
     @IBOutlet weak var customDetailTextLabel: UILabel!
-
+    @IBOutlet weak var customTagTextLabel: UILabel!
+    
     func configure(_ modelObject: Goal) {
         customTextLabel?.text       = modelObject.name
         customDetailTextLabel?.text = modelObject.progressText + modelObject.debugText
         customImageView?.image      = modelObject.badgedImage
+        if let tagText = modelObject.tag {
+            customTagTextLabel?.isHidden = false
+            customTagTextLabel?.text = " \(tagText) "
+            customTagTextLabel?.backgroundColor = UIColor(named: "TagBackgroundColour")
+            customTagTextLabel?.layer.cornerRadius = 6
+            customTagTextLabel?.layer.masksToBounds = true
+        } else {
+            customTagTextLabel?.isHidden = true
+        }
     }
 }
 

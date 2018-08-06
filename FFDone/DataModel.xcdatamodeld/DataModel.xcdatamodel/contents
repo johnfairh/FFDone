@@ -9,6 +9,7 @@
         <attribute name="name" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="sectionOrder" attributeType="String" minValueString="1" maxValueString="1" defaultValueString="0" syncable="YES"/>
         <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="icon" maxCount="1" deletionRule="Nullify" destinationEntity="Icon" inverseName="usingGoals" inverseEntity="Icon" syncable="YES"/>
     </entity>
     <entity name="Icon" representedClassName=".Icon" syncable="YES" codeGenerationType="class">
@@ -20,7 +21,7 @@
         <relationship name="usingGoals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Goal" inverseName="icon" inverseEntity="Goal" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Goal" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="Goal" positionX="-63" positionY="-18" width="128" height="195"/>
         <element name="Icon" positionX="-54" positionY="36" width="128" height="135"/>
     </elements>
 </model>

@@ -114,6 +114,11 @@ enum DatabaseObjects {
             }
 
             goal.sortOrder = Int64(index)
+
+            let tag = def.str("tag")
+            if !tag.isEmpty {
+                goal.tag = tag
+            }
         }
     }
 

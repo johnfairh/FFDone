@@ -31,13 +31,15 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
     @IBOutlet weak var totalStepsStepper: UIStepper!
     @IBOutlet weak var favToggle: UISwitch!
     @IBOutlet weak var doneButton: UIBarButtonItem!
-
+    @IBOutlet weak var tagTextField: UITextField!
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         nameTextField.delegate = self
         currentStepsTextField.delegate = self
         totalStepsTextField.delegate = self
+        tagTextField.delegate = self
 
         presenter.refresh = { [unowned self] goal, isSaveOK in
             self.nameTextField.text = goal.name
@@ -47,6 +49,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
             self.totalStepsTextField.text = String(goal.totalSteps)
             self.totalStepsStepper.value = Double(goal.totalSteps)
             self.favToggle.isOn = goal.isFav
+            self.tagTextField.text = goal.tag
             self.doneButton.isEnabled = isSaveOK
         }
     }
@@ -86,6 +89,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
     private var nameListener: NotificationListener!
     private var currentStepsListener: NotificationListener!
     private var totalStepsListener: NotificationListener!
+    private var tagListener: NotificationListener!
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -111,6 +115,17 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
                     self.presenter.setTotalSteps(steps: newValue)
                 }
         }
+
+        tagListener = NotificationListener(
+            name: UITextField.textDidChangeNotification,
+            from: tagTextField) { [unowned self] _ in
+                let text = self.tagTextField.text
+                if text == nil || text!.isEmpty {
+                    self.presenter.setTag(tag: nil)
+                } else {
+                    self.presenter.setTag(tag: text!)
+                }
+        }
     }
 
     public override func viewWillDisappear(_ animated: Bool) {
@@ -118,6 +133,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
         nameListener.stopListening()
         currentStepsListener.stopListening()
         totalStepsListener.stopListening()
+        tagListener.stopListening()
     }
 
     // MARK: Table stuff

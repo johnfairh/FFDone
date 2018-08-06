@@ -21,6 +21,7 @@ protocol GoalEditPresenterInterface {
     func setCurrentSteps(steps: Int)
     func setTotalSteps(steps: Int)
     func setFav(fav: Bool)
+    func setTag(tag: String?)
 
     /// Let the user choose the icon
     func pickIcon()
@@ -104,6 +105,11 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
 
     func setFav(fav: Bool) {
         goal.isFav = fav
+        doRefresh()
+    }
+
+    func setTag(tag: String?) {
+        goal.tag = tag
         doRefresh()
     }
 
