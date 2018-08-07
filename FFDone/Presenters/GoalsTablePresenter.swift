@@ -19,6 +19,8 @@ protocol GoalsTablePresenterInterface: TablePresenterInterface {
     func moveGoal(_ goal: Goal, fromRowInSection: Int, toSection: Goal.Section, toRowInSection: Int, tableView: UITableView)
     func selectGoal(_ goal: Goal)
 
+    func swipeActionForGoal(_ goal: Goal) -> TableSwipeAction?
+
     func updateSearchResults(text: String, type: GoalsTableSearchType)
 }
 
@@ -116,6 +118,21 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
 
     func createNewObject() {
         director.request(.createGoal(model))
+    }
+
+    // MARK: - Swipe
+
+    func swipeActionForGoal(_ goal: Goal) -> TableSwipeAction? {
+        guard !goal.isComplete else {
+            return nil
+        }
+
+        let title = (goal.stepsToGo == 1) ? "Complete" : "Progress"
+
+        return TableSwipeAction(text: title, colorName: "StepSwipeColour", action: {
+            goal.currentSteps = goal.currentSteps + 1
+            self.model.save()
+        })
     }
 
     enum SearchDelayState {

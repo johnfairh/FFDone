@@ -13,7 +13,7 @@ class GoalCell: UITableViewCell, TableCell {
     @IBOutlet weak var customTextLabel: UILabel!
     @IBOutlet weak var customDetailTextLabel: UILabel!
     @IBOutlet weak var customTagTextLabel: UILabel!
-    var tagText: String = ""
+    private var tagText = ""
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -132,18 +132,8 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         presenter.selectGoal(modelObject as! Goal)
     }
 
-    func leadingSwipeActionsForObject(_ goal: Goal) -> UISwipeActionsConfiguration? {
-        guard !goal.isComplete else {
-            return nil
-        }
-        // TODO: these things should move to `Goal`
-        let title = (goal.stepsToGo == 1) ? "Complete" : "Progress"
-        let action = UIContextualAction(style: .normal, title: title) { _, _, continuation in
-            goal.currentSteps = goal.currentSteps + 1
-            continuation(true)
-        }
-        action.backgroundColor = UIColor(named: "StepSwipeColour") ?? .green
-        return UISwipeActionsConfiguration(actions: [action])
+    func leadingSwipeActionsForObject(_ goal: Goal) -> TableSwipeAction? {
+        return presenter.swipeActionForGoal(goal)
     }
 
     // MARK: - Search
