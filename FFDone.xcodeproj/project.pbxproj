@@ -33,6 +33,8 @@
 		027F63A321065271001C9738 /* TMLPersistentContainer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027F63A221065271001C9738 /* TMLPersistentContainer.framework */; };
 		027F63A421065271001C9738 /* TMLPersistentContainer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027F63A221065271001C9738 /* TMLPersistentContainer.framework */; };
 		027F63A521065271001C9738 /* TMLPersistentContainer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027F63A221065271001C9738 /* TMLPersistentContainer.framework */; };
+		02867EA32119ED7D004D3122 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EA22119ED7D004D3122 /* Note.swift */; };
+		02867EA52119FC17004D3122 /* DebugNotes.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02867EA42119FC17004D3122 /* DebugNotes.yaml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +98,8 @@
 		027F63942105FF96001C9738 /* FFDoneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFDoneUITests.swift; sourceTree = "<group>"; };
 		027F63962105FF96001C9738 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		027F63A221065271001C9738 /* TMLPersistentContainer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TMLPersistentContainer.framework; path = Carthage/Build/iOS/TMLPersistentContainer.framework; sourceTree = "<group>"; };
+		02867EA22119ED7D004D3122 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		02867EA42119FC17004D3122 /* DebugNotes.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DebugNotes.yaml; path = ../../../FFDoneResources/Resources/DebugNotes.yaml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				021309EA210A162500410451 /* Goal.swift */,
+				02867EA22119ED7D004D3122 /* Note.swift */,
 				02130A04210CD65F00410451 /* Icon.swift */,
 			);
 			path = Model;
@@ -174,6 +179,7 @@
 				027F637B2105FF95001C9738 /* Assets.xcassets */,
 				02130A02210CD37600410451 /* DefaultIcons.yaml */,
 				021309FA210B5E7200410451 /* DebugGoals.yaml */,
+				02867EA42119FC17004D3122 /* DebugNotes.yaml */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -351,6 +357,7 @@
 			files = (
 				021309FD210B632400410451 /* DebugGoals.yaml in Resources */,
 				02130A03210CD37600410451 /* DefaultIcons.yaml in Resources */,
+				02867EA52119FC17004D3122 /* DebugNotes.yaml in Resources */,
 				027F637F2105FF95001C9738 /* LaunchScreen.storyboard in Resources */,
 				027F637C2105FF95001C9738 /* Assets.xcassets in Resources */,
 				027F637A2105FF94001C9738 /* Main.storyboard in Resources */,
@@ -411,6 +418,7 @@
 				021309E9210A13F700410451 /* DataModel.xcdatamodeld in Sources */,
 				021309EE210A176200410451 /* App.swift in Sources */,
 				02130A0B210E113600410451 /* IconsTableViewController.swift in Sources */,
+				02867EA32119ED7D004D3122 /* Note.swift in Sources */,
 				027F63752105FF93001C9738 /* AppDelegate.swift in Sources */,
 				02130A05210CD65F00410451 /* Icon.swift in Sources */,
 				021309F6210A300B00410451 /* GoalsTableViewController.swift in Sources */,

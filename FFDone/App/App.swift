@@ -55,7 +55,7 @@ final class App {
     }
 
     func initComplete(model: Model) {
-        Log.log("Init complete!")
+        Log.log("App.init complete!")
         Prefs.runBefore = true
         director.modelIsReady(model: model)
     }

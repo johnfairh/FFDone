@@ -122,11 +122,31 @@ enum DatabaseObjects {
         }
     }
 
+    /// Create the debug notes from the yaml file
+    private static func createDebugNotes(model: Model) {
+        let defs = readYaml(file: "DebugNotes")
+
+        defs.forEach { def in
+            let goalName = def.str("goal")
+            guard let goal = Goal.find(from: model, named: goalName) else {
+                Log.log("Debug load failed, can't find goal for note \(goalName)")
+                return
+            }
+
+            let note = Note.create(from: model)
+            note.goal = goal
+            note.creationDate = def.date("creationDate")
+            note.text = def.str("text")
+        }
+    }
+
     /// Entrypoint -- create all the default objects
     static func create(model: Model, debugMode: Bool) {
         createIcons(model: model)
         if debugMode {
             createDebugGoals(model: model)
+            model.saveAndWait()
+            createDebugNotes(model: model)
         }
     }
 }
