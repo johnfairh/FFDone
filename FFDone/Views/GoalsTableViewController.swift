@@ -30,11 +30,11 @@ class GoalCell: UITableViewCell, TableCell {
         GoalsTableViewController.shared?.doSearchForTag(tag: tagText)
     }
 
-    func configure(_ modelObject: Goal) {
-        customTextLabel?.text       = modelObject.name
-        customDetailTextLabel?.text = modelObject.progressText + modelObject.debugText
-        customImageView?.image      = modelObject.badgedImage
-        if let tagText = modelObject.tag {
+    func configure(_ goal: Goal) {
+        customTextLabel?.text       = goal.name
+        customDetailTextLabel?.text = goal.progressText + goal.debugText
+        customImageView?.image      = goal.badgedImage
+        if let tagText = goal.tag {
             customTagTextLabel?.isHidden = false
             customTagTextLabel?.text = " \(tagText) "
             self.tagText = tagText
@@ -45,13 +45,10 @@ class GoalCell: UITableViewCell, TableCell {
 }
 
 class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
-    TableModelDelegate,
-    UISearchResultsUpdating,
-    UISearchBarDelegate
-{
-    fileprivate static var shared: GoalsTableViewController?
+    TableModelDelegate {
 
-    private static let searchScopes = ["Both", "Name", "Tag"]
+    /// Slight hack to locate this VC from a cell...
+    fileprivate static var shared: GoalsTableViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,16 +57,7 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         }
 
         if presenter.isSearchable {
-            let searchController = UISearchController(searchResultsController: nil)
-            searchController.obscuresBackgroundDuringPresentation = false
-            searchController.searchBar.autocapitalizationType = .none
-            searchController.searchBar.scopeButtonTitles = GoalsTableViewController.searchScopes
-            searchController.searchBar.selectedScopeButtonIndex = -1
-            searchController.searchBar.showsScopeBar = true
-            searchController.searchBar.delegate = self
-            searchController.searchResultsUpdater = self
-            navigationItem.searchController = searchController
-            definesPresentationContext = true
+            enableSearch(scopes: ["Both", "Name", "Tag"])
         }
 
         navigationItem.leftBarButtonItem = nil
@@ -126,7 +114,7 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
                            tableView: tableView)
     }
 
-    // MARK: - Select
+    // MARK: - Row actions
 
     func selectObject(_ modelObject: ModelObject) {
         presenter.selectGoal(modelObject as! Goal)
@@ -138,24 +126,9 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
 
     // MARK: - Search
 
-    public func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if searchBar.selectedScopeButtonIndex == -1 {
-            searchBar.selectedScopeButtonIndex = 0
-        }
-    }
-
-    public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.selectedScopeButtonIndex = -1
-    }
-
-    public func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        Dispatch.toForeground {
-            self.updateSearchResults(for: self.navigationItem.searchController!)
-        }
-    }
-
-    public func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard searchBar.selectedScopeButtonIndex == 2 else {
+    /// Autocomplete against the tag list if we are searching tags
+    public override func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        guard searchBar.selectedScopeButtonIndex == GoalsTableSearchType.tag.rawValue else {
             return true
         }
         guard searchBar.textField.autoCompleteText(newText: text, suggestions: App.shared.tags) else {
@@ -167,23 +140,14 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         return false
     }
 
-    public func updateSearchResults(for searchController: UISearchController) {
-        let searchBar = searchController.searchBar
-        let text = searchBar.text ?? ""
-        func scopeToSearchType(scope: Int) -> GoalsTableSearchType {
-            switch scope {
-            case 0: return .either
-            case 1: return .name
-            case 2: return .tag
-            default: return .either
-            }
-        }
-        presenter.updateSearchResults(text: text,
-                                      type: scopeToSearchType(scope: searchBar.selectedScopeButtonIndex))
+    /// The actual search prompt
+    public override func updateTableForSearch(text: String, scopeIndex: Int) {
+        presenter.updateSearchResults(text: text, type: GoalsTableSearchType(rawValue: scopeIndex) ?? .both)
     }
 
+    /// API up from `GoalTableCell` to implement the filter-by-tag usecase when a tag
+    /// label gets clicked.
     public func doSearchForTag(tag: String) {
-        Log.log("Searching for tag \(tag)")
         guard let searchController = navigationItem.searchController else {
             Log.fatal("Lost the searchcontroller")
         }

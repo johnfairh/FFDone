@@ -24,10 +24,11 @@ protocol GoalsTablePresenterInterface: TablePresenterInterface {
     func updateSearchResults(text: String, type: GoalsTableSearchType)
 }
 
-enum GoalsTableSearchType {
-    case name
-    case tag
-    case either
+/// What is being searched for
+enum GoalsTableSearchType: Int {
+    case both = 0
+    case name = 1
+    case tag = 2
 }
 
 // MARK: - Presenter
@@ -135,56 +136,17 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
         })
     }
 
-    enum SearchDelayState {
-        case idle
-        case delaying
-        case delaying_again
-    }
-
-    var searchDelayState: SearchDelayState = .idle
-    var searchText: String = ""
-    var searchType: GoalsTableSearchType = .either
+    // MARK: - Search
 
     func updateSearchResults(text: String, type: GoalsTableSearchType) {
-        if text.isEmpty {
-            searchDelayState = .idle
-            if filteredResults != nil {
-                filteredResults = nil
-            }
-        } else {
-            searchText = text
-            searchType = type
-            switch searchDelayState {
-            case .idle:
-                delaySearch()
-            case .delaying:
-                searchDelayState = .delaying_again
-            case .delaying_again:
-                break
-            }
-        }
-    }
-
-    func delaySearch() {
-        searchDelayState = .delaying
-        Dispatch.toForegroundAfter(milliseconds: 150, block: updateSearchResultsDelayed)
-    }
-
-    func updateSearchResultsDelayed() {
-        switch searchDelayState {
-        case .idle:
-            break
-        case .delaying_again:
-            delaySearch()
-        case .delaying:
-            searchDelayState = .idle
-            switch searchType {
-            case .either:
-                filteredResults = Goal.searchByAnythingSortedResultsSet(model: model, text: searchText)
+        handleSearchUpdate(text: text, type: type.rawValue) { text, typeInt in
+            switch GoalsTableSearchType(rawValue: typeInt)! {
+            case .both:
+                return Goal.searchByAnythingSortedResultsSet(model: self.model, text: text)
             case .name:
-                filteredResults = Goal.searchByNameSortedResultsSet(model: model, name: searchText)
+                return Goal.searchByNameSortedResultsSet(model: self.model, name: text)
             case .tag:
-                filteredResults = Goal.searchByTagSortedResultsSet(model: model, tag: searchText)
+                return Goal.searchByTagSortedResultsSet(model: self.model, tag: text)
             }
         }
     }
