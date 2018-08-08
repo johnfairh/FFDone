@@ -35,6 +35,8 @@
 		027F63A521065271001C9738 /* TMLPersistentContainer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027F63A221065271001C9738 /* TMLPersistentContainer.framework */; };
 		02867EA32119ED7D004D3122 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EA22119ED7D004D3122 /* Note.swift */; };
 		02867EA52119FC17004D3122 /* DebugNotes.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02867EA42119FC17004D3122 /* DebugNotes.yaml */; };
+		02867EA7211AD3EF004D3122 /* NotesTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EA6211AD3EF004D3122 /* NotesTablePresenter.swift */; };
+		02867EA9211AD48C004D3122 /* NotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EA8211AD48C004D3122 /* NotesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +102,8 @@
 		027F63A221065271001C9738 /* TMLPersistentContainer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TMLPersistentContainer.framework; path = Carthage/Build/iOS/TMLPersistentContainer.framework; sourceTree = "<group>"; };
 		02867EA22119ED7D004D3122 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		02867EA42119FC17004D3122 /* DebugNotes.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DebugNotes.yaml; path = ../../../FFDoneResources/Resources/DebugNotes.yaml; sourceTree = "<group>"; };
+		02867EA6211AD3EF004D3122 /* NotesTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTablePresenter.swift; sourceTree = "<group>"; };
+		02867EA8211AD48C004D3122 /* NotesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				021309F3210A2F0300410451 /* GoalsTablePresenter.swift */,
+				02867EA6211AD3EF004D3122 /* NotesTablePresenter.swift */,
 				02130A08210E100D00410451 /* IconsTablePresenter.swift */,
 				02130A0E210F777400410451 /* GoalEditPresenter.swift */,
 			);
@@ -167,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				021309F5210A300B00410451 /* GoalsTableViewController.swift */,
+				02867EA8211AD48C004D3122 /* NotesTableViewController.swift */,
 				02130A0A210E113600410451 /* IconsTableViewController.swift */,
 				02130A0C210F773A00410451 /* GoalEditViewController.swift */,
 			);
@@ -418,11 +424,13 @@
 				021309E9210A13F700410451 /* DataModel.xcdatamodeld in Sources */,
 				021309EE210A176200410451 /* App.swift in Sources */,
 				02130A0B210E113600410451 /* IconsTableViewController.swift in Sources */,
+				02867EA9211AD48C004D3122 /* NotesTableViewController.swift in Sources */,
 				02867EA32119ED7D004D3122 /* Note.swift in Sources */,
 				027F63752105FF93001C9738 /* AppDelegate.swift in Sources */,
 				02130A05210CD65F00410451 /* Icon.swift in Sources */,
 				021309F6210A300B00410451 /* GoalsTableViewController.swift in Sources */,
 				02130A0D210F773A00410451 /* GoalEditViewController.swift in Sources */,
+				02867EA7211AD3EF004D3122 /* NotesTablePresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
