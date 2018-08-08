@@ -105,7 +105,11 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
         guard textField === tagTextField else {
             return true
         }
-        return !textField.autoCompleteText(newText: string, suggestions: App.shared.tags)
+        guard textField.autoCompleteText(newText: string, suggestions: App.shared.tags) else {
+            return true
+        }
+        presenter.setTag(tag: textField.text!)
+        return false
     }
 
     private var nameListener: NotificationListener!
@@ -244,8 +248,5 @@ class GoalNotesTableViewController: PresentableTableVC<GoalNotesTablePresenter>,
 
     func deleteObject(_ note: Note) {
         presenter.deleteNote(note)
-        Dispatch.toForegroundAfter(milliseconds: 200) {
-            self.contentDidChange?()
-        }
     }
 }
