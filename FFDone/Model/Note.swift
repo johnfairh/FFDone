@@ -84,7 +84,14 @@ extension Note {
         return sectionatedResultsSet(model: model, predicate: nil)
     }
 
-    /// Carefully sorted order to drive main table
+    /// For the search view -- search note text content.
+    static func searchByTextSortedResultsSet(model: Model, str: String) -> ModelResultsSet {
+        let textMatchPredicate = NSPredicate(format: "\(#keyPath(text)) CONTAINS[cd] \"\(str)\"")
+
+        return sectionatedResultsSet(model: model, predicate: textMatchPredicate)
+    }
+
+    /// Carefully sorted to drive the table
     private static func sectionatedResultsSet(model: Model, predicate: NSPredicate?) -> ModelResultsSet {
         // Day, most recent first
         let dayOrder = NSSortDescriptor(key: #keyPath(dayStamp), ascending: false)

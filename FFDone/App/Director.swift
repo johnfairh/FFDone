@@ -88,13 +88,13 @@ extension Director: DirectorInterface {
                                         model: model,
                                         object: goal,
                                         presenterFn: GoalEditPresenter.init,
-                                        done: { _ in })
+                                        done: { _ in App.shared.refreshTags() })
 
             case let .createGoal(model):
                 self.services.createThing("GoalEditViewController",
                                           model: model,
                                           presenterFn: GoalEditPresenter.init,
-                                          done: { _ in })
+                                          done: { _ in App.shared.refreshTags() })
 
             case let .pickIcon(model, continuation):
                 self.services.pickThing("IconsTableViewController",

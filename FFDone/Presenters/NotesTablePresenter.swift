@@ -10,6 +10,7 @@ import TMLPresentation
 /// Interface from the Icons Table VC to presenter -- requirements unique to icons table.
 protocol NotesTablePresenterInterface: TablePresenterInterface {
     func selectNote(_ note: Note)
+    func updateSearchResults(text: String)
 }
 
 // MARK: - Presenter
@@ -26,5 +27,13 @@ class NotesTablePresenter: TablePresenter<DirectorInterface>, Presenter, NotesTa
 
     func selectNote(_ note: Note) {
         selectedCallback(note)
+    }
+
+    // MARK: - Search
+
+    func updateSearchResults(text: String) {
+        handleSearchUpdate(text: text, type: 0) { text, typeInt in
+            return Note.searchByTextSortedResultsSet(model: self.model, str: text)
+        }
     }
 }

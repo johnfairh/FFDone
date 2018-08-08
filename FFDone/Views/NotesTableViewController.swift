@@ -31,7 +31,10 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
         }
-        navigationItem.leftBarButtonItem = nil
+        if presenter.shouldEnableExtraControls {
+            navigationItem.leftBarButtonItem = nil
+            enableSearch(scopes: [])
+        }
     }
 
     private var tableModel: TableModel<NoteCell, NotesTableViewController>!
@@ -49,5 +52,9 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
 
     func selectObject(_ modelObject: ModelObject) {
         presenter.selectNote(modelObject as! Note)
+    }
+
+    public override func updateTableForSearch(text: String, scopeIndex: Int) {
+        presenter.updateSearchResults(text: text)
     }
 }

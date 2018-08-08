@@ -67,13 +67,12 @@ final class App {
     // for populating autocomplete etc.
     private func initTagList(model: Model) {
         let modelFieldResults = Goal.tagListResults(model: model)
-        
-        do {
-            try modelFieldResults.performFetch()
-            tagFieldResultsDecoder = ModelFieldResultsDecoder(results: modelFieldResults)
-        } catch {
-            Log.log("Tag Results fetch failed: \(error) - pressing on")
-        }
+        tagFieldResultsDecoder = ModelFieldResultsDecoder(results: modelFieldResults)
+        tagFieldResultsDecoder?.refresh()
+    }
+
+    func refreshTags() {
+        tagFieldResultsDecoder?.refresh()
     }
 
     var tags: [String] {
