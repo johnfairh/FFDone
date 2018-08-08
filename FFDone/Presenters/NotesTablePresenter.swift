@@ -7,7 +7,7 @@
 
 import TMLPresentation
 
-/// Interface from the Icons Table VC to presenter -- requirements unique to icons table.
+/// Interface from the Notes Table VC to presenter -- requirements unique to notes table.
 protocol NotesTablePresenterInterface: TablePresenterInterface {
     func selectNote(_ note: Note)
     func updateSearchResults(text: String)

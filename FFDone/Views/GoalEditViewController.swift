@@ -16,6 +16,10 @@ private extension IndexPath {
     var isIconRow: Bool {
         return section == 0 && row == 1
     }
+
+    var isNotesTableRow: Bool {
+        return section == 1 && row == 1
+    }
 }
 
 /// VC for goal create/edit
@@ -32,6 +36,15 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
     @IBOutlet weak var favToggle: UISwitch!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var tagTextField: UITextField!
+
+    @IBAction func addNoteButtonTapped(_ sender: UIButton) {
+        presenter.addNote()
+        Dispatch.toForeground {
+            self.refreshRowHeights()
+        }
+    }
+    
+    private weak var notesTableVC: GoalNotesTableViewController!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,10 +160,22 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
 
     // MARK: Table stuff
 
+    // Dealing with the embedded notes table is a bit tricksy, can't figure out how to autolink
+    // the content size of the embedded tableview to the preferred height of the cell.
+    //
+    // So we notice when things change and manually refresh the layout.
+    func refreshRowHeights() {
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+
     // Hide the 'current steps' control in the create-new use case
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if !presenter.canEditCurrentSteps && indexPath.isCurrentStepsRow {
             return 0
+        }
+        if indexPath.isNotesTableRow {
+            return notesTableVC.tableView.contentSize.height
         }
         return super.tableView(tableView, heightForRowAt: indexPath)
     }
@@ -164,6 +189,63 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.isIconRow {
             presenter.pickIcon()
+        }
+    }
+
+    /// This gets called (for the embed segue) before viewDidLoad()
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let notesTableVC = segue.destination as? GoalNotesTableViewController {
+            self.notesTableVC = notesTableVC
+            notesTableVC.contentDidChange = { [weak self] in self?.refreshRowHeights() }
+            PresenterUI.bind(viewController: notesTableVC, presenter: presenter.createNotesPresenter())
+        }
+    }
+}
+
+
+class GoalNoteCell: UITableViewCell, TableCell {
+
+    @IBOutlet weak var noteLabel: UILabel!
+    
+    func configure(_ note: Note) {
+        noteLabel.text = note.text
+    }
+}
+
+class GoalNotesTableViewController: PresentableTableVC<GoalNotesTablePresenter>,
+    TableModelDelegate
+{
+
+    var contentDidChange: (() -> Void)?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        presenter.reload = { [weak self] queryResults in
+            self?.reloadTable(queryResults: queryResults)
+        }
+    }
+
+    private var tableModel: TableModel<GoalNoteCell, GoalNotesTableViewController>!
+
+    private func reloadTable(queryResults: ModelResults) {
+        tableModel = TableModel(tableView: tableView,
+                                fetchedResultsController: queryResults,
+                                delegate: self)
+        tableModel.start()
+    }
+
+    func getSectionTitle(name: String) -> String {
+        return Note.dayStampToUserString(dayStamp: name)
+    }
+
+    func canDeleteObject(_ note: Note) -> Bool {
+        return true
+    }
+
+    func deleteObject(_ note: Note) {
+        presenter.deleteNote(note)
+        Dispatch.toForegroundAfter(milliseconds: 200) {
+            self.contentDidChange?()
         }
     }
 }

@@ -26,11 +26,17 @@ protocol GoalEditPresenterInterface {
     /// Let the user choose the icon
     func pickIcon()
 
+    /// Let the user add a new note
+    func addNote()
+
     /// Dismiss the view without committing and changes
     func cancel()
 
     /// Dismiss the view and save all changes
     func save()
+
+    /// Create a child presenter for the notes table
+    func createNotesPresenter() -> GoalNotesTablePresenter
 }
 
 // MARK: - Presenter
@@ -121,6 +127,13 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
         }))
     }
 
+    /// Let the user add a new note
+    func addNote() {
+        let note = Note.createWithDefaults(model: model)
+        note.text = "New note being created"
+        note.goal = goal
+    }
+
     func cancel() {
         dismissFn(nil)
     }
@@ -129,5 +142,35 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
         model.save {
             self.dismissFn(self.goal)
         }
+    }
+
+    /// Create the notes table presenter
+    func createNotesPresenter() -> GoalNotesTablePresenter {
+        return GoalNotesTablePresenter(
+            director: director,
+            model: model,
+            object: Note.allSortedResultsSet(model: model),//goal.createSubgoalsResults(from: model).asModelResultsSet,
+            mode: .multi(.embed)) { _ in }
+    }
+}
+
+
+/// Interface from the Notes Table VC to presenter -- requirements unique to notes table.
+protocol GoalNotesTablePresenterInterface: TablePresenterInterface {
+    func deleteNote(_ note: Note)
+}
+
+class GoalNotesTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalNotesTablePresenterInterface {
+    typealias ViewInterfaceType = GoalNotesTablePresenter//Interface --- XXX weird swift generics vs. protocols runtime crash workaround XXX
+
+    private let selectedCallback: PresenterDone<Note>
+
+    required init(director: DirectorInterface, model: Model, object: ModelResultsSet?, mode: PresenterMode, dismiss: @escaping PresenterDone<Note>) {
+        self.selectedCallback = dismiss
+        super.init(director: director, model: model, object: object, mode: mode)
+    }
+
+    func deleteNote(_ note: Note) {
+        note.delete(from: model)
     }
 }
