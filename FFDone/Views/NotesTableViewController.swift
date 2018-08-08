@@ -8,8 +8,16 @@
 import TMLPresentation
 
 class NoteCell: UITableViewCell, TableCell {
-    func configure(_ modelObject: Note) {
-        textLabel?.text  = modelObject.text
+
+    @IBOutlet weak var goalStackView: UIStackView!
+    @IBOutlet weak var goalImageView: UIImageView!
+    @IBOutlet weak var goalNameButton: UIButton!
+    @IBOutlet weak var noteLabel: UILabel!
+
+    func configure(_ note: Note) {
+        goalImageView.image = note.goal?.nativeImage
+        goalNameButton.setTitle(note.goal?.name ?? "??", for: .normal)
+        noteLabel.text = note.text
     }
 }
 
@@ -23,6 +31,7 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
         }
+        navigationItem.leftBarButtonItem = nil
     }
 
     private var tableModel: TableModel<NoteCell, NotesTableViewController>!
@@ -32,6 +41,10 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
                                 fetchedResultsController: queryResults,
                                 delegate: self)
         tableModel.start()
+    }
+
+    func getSectionTitle(name: String) -> String {
+        return Note.dayStampToUserString(dayStamp: name)
     }
 
     func selectObject(_ modelObject: ModelObject) {

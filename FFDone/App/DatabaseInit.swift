@@ -134,9 +134,9 @@ enum DatabaseObjects {
             }
 
             let note = Note.create(from: model)
+            note.text = def.str("text")
             note.goal = goal
             note.creationDate = def.date("creationDate")
-            note.text = def.str("text")
         }
     }
 

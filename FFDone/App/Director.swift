@@ -43,7 +43,7 @@ class Director {
         initTab(.goals,
                 queryResults: Goal.allSortedResultsSet(model: model),
                 presenterFn: GoalsTablePresenter.init) {
-                    [unowned self] goal in self.request(.editGoal(goal!, model))
+                    [unowned self] goal in self.request(.editGoal(goal!, model))        /// TODO - view-goal
         }
 
         initTab(.icons,
@@ -53,9 +53,9 @@ class Director {
         }
 
         initTab(.notes,
-                queryResults: Note.createAllResultsSet(model: model),
-                presenterFn: NotesTablePresenter.init) { [unowned self] note in
-                    Log.log("Selected \(self) \(note!)")
+                queryResults: Note.allSortedResultsSet(model: model),
+                presenterFn: NotesTablePresenter.init) {
+                    [unowned self] note in self.request(.editGoal(note!.goal!, model))  /// TODO - view-goal
         }
 
         // Turn on the actual UI replacing the loading screen

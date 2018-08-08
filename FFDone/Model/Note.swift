@@ -74,3 +74,28 @@ extension Note: ModelObject {
         }
     }
 }
+
+// MARK: - Queries
+
+extension Note {
+
+    /// For the main history view -- all notes.
+    static func allSortedResultsSet(model: Model) -> ModelResultsSet {
+        return sectionatedResultsSet(model: model, predicate: nil)
+    }
+
+    /// Carefully sorted order to drive main table
+    private static func sectionatedResultsSet(model: Model, predicate: NSPredicate?) -> ModelResultsSet {
+        // Day, most recent first
+        let dayOrder = NSSortDescriptor(key: #keyPath(dayStamp), ascending: false)
+
+        // Time within day, most recent first
+        let timeOrder = NSSortDescriptor(key: #keyPath(cdCreationDate), ascending: false)
+
+        return createFetchedResults(model: model,
+                                    predicate: predicate,
+                                    sortedBy: [dayOrder, timeOrder],
+                                    sectionNameKeyPath: #keyPath(dayStamp)).asModelResultsSet
+    }
+
+}
