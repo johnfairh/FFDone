@@ -330,20 +330,29 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tag" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="qAW-57-sXs">
-                                                    <rect key="frame" x="16" y="7" width="343" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="XfL-2G-ILF"/>
-                                                    </constraints>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                                </textField>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="f6s-2E-6z8">
+                                                    <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oCQ-pJ-JKH">
+                                                            <rect key="frame" x="0.0" y="11.5" width="28" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="None" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qAW-57-sXs">
+                                                            <rect key="frame" x="30" y="11.5" width="313" height="21"/>
+                                                            <nil key="textColor"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                            <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                        </textField>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="qAW-57-sXs" secondAttribute="trailing" id="0MP-eH-pzf"/>
-                                                <constraint firstItem="qAW-57-sXs" firstAttribute="leading" secondItem="zkM-Vr-OLO" secondAttribute="leadingMargin" id="Hii-Zx-GYC"/>
-                                                <constraint firstItem="qAW-57-sXs" firstAttribute="centerY" secondItem="zkM-Vr-OLO" secondAttribute="centerY" id="se9-Ag-MIk"/>
+                                                <constraint firstAttribute="bottom" secondItem="f6s-2E-6z8" secondAttribute="bottom" id="2XH-Nd-dut"/>
+                                                <constraint firstItem="f6s-2E-6z8" firstAttribute="leading" secondItem="zkM-Vr-OLO" secondAttribute="leadingMargin" id="CPn-NX-wGe"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="f6s-2E-6z8" secondAttribute="trailing" id="RIl-C6-OtP"/>
+                                                <constraint firstItem="f6s-2E-6z8" firstAttribute="top" secondItem="zkM-Vr-OLO" secondAttribute="top" id="mmG-X6-I3o"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
