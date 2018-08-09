@@ -37,13 +37,6 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var tagTextField: UITextField!
 
-    @IBAction func addNoteButtonTapped(_ sender: UIButton) {
-        presenter.addNote()
-        Dispatch.toForeground {
-            self.refreshRowHeights()
-        }
-    }
-    
     private weak var notesTableVC: GoalNotesTableViewController!
     
     public override func viewDidLoad() {
@@ -65,6 +58,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
             self.tagTextField.text = goal.tag
             self.doneButton.isEnabled = isSaveOK
         }
+        refreshRowHeights()
     }
 
     // MARK: Simple control reactions
@@ -87,6 +81,11 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
 
     @IBAction func doneButtonDidTap(_ sender: UIBarButtonItem) {
         presenter.save()
+    }
+
+    @IBAction func addNoteButtonTapped(_ sender: UIButton) {
+        presenter.addNote()
+        refreshRowHeights()
     }
 
     // MARK: Text stuff
@@ -167,10 +166,19 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
     // Dealing with the embedded notes table is a bit tricksy, can't figure out how to autolink
     // the content size of the embedded tableview to the preferred height of the cell.
     //
-    // So we notice when things change and manually refresh the layout.
+    // So we notice when things change and manually refresh the layout.  Not at all proud of
+    // this, but empirically it's what's needed, something to do with the section headers in
+    // the embedded table means that it takes two rounds for everything to come out with the
+    // right values.  And of course I have no idea what is up with the timed delay.  Argh.
     func refreshRowHeights() {
-        tableView.beginUpdates()
-        tableView.endUpdates()
+        Dispatch.toForegroundAfter(milliseconds: 100) {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+            Dispatch.toForeground {
+                self.tableView.beginUpdates()
+                self.tableView.endUpdates()
+            }
+        }
     }
 
     // Hide the 'current steps' control in the create-new use case
@@ -248,5 +256,6 @@ class GoalNotesTableViewController: PresentableTableVC<GoalNotesTablePresenter>,
 
     func deleteObject(_ note: Note) {
         presenter.deleteNote(note)
+        contentDidChange?()
     }
 }
