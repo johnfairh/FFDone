@@ -81,28 +81,39 @@ extension Note {
 
     /// For the main history view -- all notes.
     static func allSortedResultsSet(model: Model) -> ModelResultsSet {
-        return sectionatedResultsSet(model: model, predicate: nil)
+        return sectionatedResultsSet(model: model, predicate: nil, latestFirst: false)
     }
 
     /// For the search view -- search note text content.
     static func searchByTextSortedResultsSet(model: Model, str: String) -> ModelResultsSet {
         let textMatchPredicate = NSPredicate(format: "\(#keyPath(text)) CONTAINS[cd] \"\(str)\"")
 
-        return sectionatedResultsSet(model: model, predicate: textMatchPredicate)
+        return sectionatedResultsSet(model: model, predicate: textMatchPredicate, latestFirst: false)
+    }
+
+    /// For the per-note view.
+    static func perGoalResultsSet(model: Model, goal ofGoal: Goal) -> ModelResultsSet {
+        let goalMatchPredicate = NSPredicate(format: "\(#keyPath(goal)) == %@", ofGoal)
+        return sectionatedResultsSet(model: model, predicate: goalMatchPredicate, latestFirst: !ofGoal.isComplete)
     }
 
     /// Carefully sorted to drive the table
-    private static func sectionatedResultsSet(model: Model, predicate: NSPredicate?) -> ModelResultsSet {
+    private static func sectionatedResultsSet(model: Model, predicate: NSPredicate?, latestFirst: Bool) -> ModelResultsSet {
         // Day, most recent first
-        let dayOrder = NSSortDescriptor(key: #keyPath(dayStamp), ascending: false)
+        let dayOrder = NSSortDescriptor(key: #keyPath(dayStamp), ascending: !latestFirst)
 
         // Time within day, most recent first
-        let timeOrder = NSSortDescriptor(key: #keyPath(cdCreationDate), ascending: false)
+        let timeOrder = NSSortDescriptor(key: #keyPath(cdCreationDate), ascending: !latestFirst)
 
         return createFetchedResults(model: model,
                                     predicate: predicate,
                                     sortedBy: [dayOrder, timeOrder],
                                     sectionNameKeyPath: #keyPath(dayStamp)).asModelResultsSet
     }
+}
 
+extension Goal {
+    func notesResults(model: Model) -> ModelResultsSet {
+        return Note.perGoalResultsSet(model: model, goal: self)
+    }
 }

@@ -149,7 +149,7 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
         return GoalNotesTablePresenter(
             director: director,
             model: model,
-            object: Note.allSortedResultsSet(model: model),//goal.createSubgoalsResults(from: model).asModelResultsSet,
+            object: goal.notesResults(model: model),
             mode: .multi(.embed)) { _ in }
     }
 }
