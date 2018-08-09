@@ -11,11 +11,26 @@ import TMLPresentation
 class NoteEditViewController: PresentableVC<NoteEditPresenterInterface> {
     
     @IBOutlet weak var textView: UITextView!
-
+    @IBOutlet weak var goalImageView: UIImageView!
+    @IBOutlet weak var goalNameButton: UIButton!
+    @IBOutlet weak var dateLabel: UILabel!
+    
     // MARK: - Functional stuff
 
     override public func viewDidLoad() {
         textView.text = presenter.text
+        dateLabel.text = presenter.date
+        if let goal = presenter.goal {
+            goalImageView.image = goal.nativeImage
+            goalNameButton.setTitle(goal.name, for: .normal)
+        } else {
+            goalImageView.isHidden = true
+            goalNameButton.isHidden = true
+            navigationItem.title = "New Note"
+        }
+        if textView.text.isEmpty {
+            textView.becomeFirstResponder()
+        }
     }
 
     @IBAction func cancelButtonDidTap(_ sender: UIBarButtonItem) {
@@ -26,6 +41,10 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface> {
         presenter.save(text: textView.text)
     }
 
+    @IBAction func goalButtonDidTap(_ sender: Any) {
+        presenter.showGoal()
+    }
+    
     // MARK: - Keyboard dance :-(
 
     private var keyboardShowListener: NotificationListener?
