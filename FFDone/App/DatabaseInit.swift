@@ -113,7 +113,12 @@ enum DatabaseObjects {
                 goal.icon = Icon.findFirst(from: model, fetchReqName: "DefaultIcons")
             }
 
-            goal.sortOrder = Int64(index)
+            let yamlSortOrder = def.int("sortOrder")
+            if yamlSortOrder == 0 {
+                goal.sortOrder = Int64(index)
+            } else {
+                goal.sortOrder = Int64(yamlSortOrder)
+            }
 
             let tag = def.str("tag")
             if !tag.isEmpty {

@@ -32,7 +32,7 @@ class GoalCell: UITableViewCell, TableCell {
 
     func configure(_ goal: Goal) {
         customTextLabel?.text       = goal.name
-        customDetailTextLabel?.text = goal.progressText + goal.debugText
+        customDetailTextLabel?.text = goal.progressText + (App.debugMode ? goal.debugText : "")
         customImageView?.image      = goal.badgedImage
         if let tagText = goal.tag {
             customTagTextLabel?.isHidden = false
@@ -153,7 +153,7 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         }
         searchController.isActive = true
         searchController.searchBar.text = "=\(tag)"
-        searchController.searchBar.selectedScopeButtonIndex = 2
+        searchController.searchBar.selectedScopeButtonIndex = GoalsTableSearchType.tag.rawValue
         updateSearchResults(for: searchController)
     }
 }
