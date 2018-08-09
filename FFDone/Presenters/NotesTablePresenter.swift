@@ -11,6 +11,7 @@ import TMLPresentation
 protocol NotesTablePresenterInterface: TablePresenterInterface {
     func selectNote(_ note: Note)
     func updateSearchResults(text: String)
+    func deleteNote(_ note: Note)
 }
 
 // MARK: - Presenter
@@ -27,6 +28,11 @@ class NotesTablePresenter: TablePresenter<DirectorInterface>, Presenter, NotesTa
 
     func selectNote(_ note: Note) {
         selectedCallback(note)
+    }
+
+    func deleteNote(_ note: Note) {
+        note.delete(from: model)
+        model.save()
     }
 
     // MARK: - Search
