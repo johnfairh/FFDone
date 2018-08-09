@@ -104,6 +104,7 @@
 		02867EA42119FC17004D3122 /* DebugNotes.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DebugNotes.yaml; path = ../../../FFDoneResources/Resources/DebugNotes.yaml; sourceTree = "<group>"; };
 		02867EA6211AD3EF004D3122 /* NotesTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTablePresenter.swift; sourceTree = "<group>"; };
 		02867EA8211AD48C004D3122 /* NotesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewController.swift; sourceTree = "<group>"; };
+		02867EAC211C531C004D3122 /* DataModel-2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-2.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -786,9 +787,10 @@
 		021309E7210A13F700410451 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				02867EAC211C531C004D3122 /* DataModel-2.xcdatamodel */,
 				021309E8210A13F700410451 /* DataModel.xcdatamodel */,
 			);
-			currentVersion = 021309E8210A13F700410451 /* DataModel.xcdatamodel */;
+			currentVersion = 02867EAC211C531C004D3122 /* DataModel-2.xcdatamodel */;
 			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
