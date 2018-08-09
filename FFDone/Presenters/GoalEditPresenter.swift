@@ -129,9 +129,7 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
 
     /// Let the user add a new note
     func addNote() {
-        let note = Note.createWithDefaults(model: model)
-        note.text = "New note being created"
-        note.goal = goal
+        director.request(.createNote(goal, model))
     }
 
     func cancel() {
@@ -150,13 +148,14 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
             director: director,
             model: model,
             object: goal.notesResults(model: model),
-            mode: .multi(.embed)) { _ in }
+            mode: .multi(.embed)) { note in self.director.request(.editNote(note!, self.model))}
     }
 }
 
 
 /// Interface from the Notes Table VC to presenter -- requirements unique to notes table.
 protocol GoalNotesTablePresenterInterface: TablePresenterInterface {
+    func selectNote(_ note: Note)
     func deleteNote(_ note: Note)
 }
 
@@ -168,6 +167,10 @@ class GoalNotesTablePresenter: TablePresenter<DirectorInterface>, Presenter, Goa
     required init(director: DirectorInterface, model: Model, object: ModelResultsSet?, mode: PresenterMode, dismiss: @escaping PresenterDone<Note>) {
         self.selectedCallback = dismiss
         super.init(director: director, model: model, object: object, mode: mode)
+    }
+
+    func selectNote(_ note: Note) {
+        selectedCallback(note)
     }
 
     func deleteNote(_ note: Note) {

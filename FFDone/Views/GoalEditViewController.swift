@@ -250,6 +250,10 @@ class GoalNotesTableViewController: PresentableTableVC<GoalNotesTablePresenter>,
         return Note.dayStampToUserString(dayStamp: name)
     }
 
+    func selectObject(_ modelObject: ModelObject) {
+        presenter.selectNote(modelObject as! Note)
+    }
+
     func canDeleteObject(_ note: Note) -> Bool {
         return true
     }

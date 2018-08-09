@@ -547,10 +547,45 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="History" id="KdT-Qg-pJl"/>
+                    <connections>
+                        <segue destination="55r-Pa-JyC" kind="show" identifier="D" id="tdN-NL-wqK"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LC8-1n-oYq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="408.80000000000001" y="1111.3943028485758"/>
+            <point key="canvasLocation" x="409" y="1110"/>
+        </scene>
+        <!--NoteEditViewController-->
+        <scene sceneID="scj-FJ-rx1">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wey-Te-hn7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="NoteEditViewController" title="NoteEditViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="55r-Pa-JyC" customClass="NoteEditViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
+                    <textView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" textAlignment="natural" adjustsFontForContentSizeCategory="YES" id="Wp3-fm-AKl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                    <navigationItem key="navigationItem" title="Note" largeTitleDisplayMode="never" id="NcD-E3-yXd">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="GHm-Kj-JNe">
+                            <connections>
+                                <action selector="cancelButtonDidTap:" destination="55r-Pa-JyC" id="2cd-SQ-hHf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="X1T-EV-H3N">
+                            <connections>
+                                <action selector="doneButtonDidTap:" destination="55r-Pa-JyC" id="6yE-GG-fwp"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="textView" destination="Wp3-fm-AKl" id="HQz-Ou-zIe"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1198" y="1111"/>
         </scene>
         <!--Goals Tab-->
         <scene sceneID="mgA-19-4FI">
@@ -611,7 +646,7 @@
         <scene sceneID="jar-i0-FCX">
             <objects>
                 <tableViewController storyboardIdentifier="GoalEditNotesViewController" title="GoalEditNotesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="z6z-81-z51" customClass="GoalNotesTableViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gSF-Th-Gg1">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gSF-Th-Gg1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

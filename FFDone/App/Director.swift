@@ -14,6 +14,9 @@ enum DirectorRequest {
 //    case createGoalAndThen(Model, (Goal) -> Void)
 
     case pickIcon(Model, (Icon) -> Void)
+
+    case editNote(Note, Model)
+    case createNote(Goal, Model)
 }
 
 protocol DirectorInterface {
@@ -49,7 +52,7 @@ class Director {
         initTab(.notes,
                 queryResults: Note.allSortedResultsSet(model: model),
                 presenterFn: NotesTablePresenter.init) {
-                    [unowned self] note in self.request(.editGoal(note!.goal!, model))  /// TODO - view-goal
+                    [unowned self] note in self.request(.editNote(note!, model))
         }
 
         initTab(.icons,
@@ -102,6 +105,19 @@ extension Director: DirectorInterface {
                                         results: Icon.createAllResults(model: model),
                                         presenterFn: IconsTablePresenter.init,
                                         done: continuation)
+
+            case let .editNote(note, model):
+                self.services.editThing("NoteEditViewController",
+                                        model: model,
+                                        object: note,
+                                        presenterFn: NoteEditPresenter.init,
+                                        done: { _ in })
+
+            case let .createNote(goal, model):
+                self.services.createThing("NoteEditViewController",
+                                          model: model,
+                                          presenterFn: NoteEditPresenter.init,
+                                          done: { note in note.goal = goal })
             }
         }
     }

@@ -37,6 +37,8 @@
 		02867EA52119FC17004D3122 /* DebugNotes.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02867EA42119FC17004D3122 /* DebugNotes.yaml */; };
 		02867EA7211AD3EF004D3122 /* NotesTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EA6211AD3EF004D3122 /* NotesTablePresenter.swift */; };
 		02867EA9211AD48C004D3122 /* NotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EA8211AD48C004D3122 /* NotesTableViewController.swift */; };
+		02867EAE211C996F004D3122 /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EAD211C996F004D3122 /* NoteEditViewController.swift */; };
+		02867EB0211C99A9004D3122 /* NoteEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EAF211C99A9004D3122 /* NoteEditPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +107,8 @@
 		02867EA6211AD3EF004D3122 /* NotesTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTablePresenter.swift; sourceTree = "<group>"; };
 		02867EA8211AD48C004D3122 /* NotesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewController.swift; sourceTree = "<group>"; };
 		02867EAC211C531C004D3122 /* DataModel-2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-2.xcdatamodel"; sourceTree = "<group>"; };
+		02867EAD211C996F004D3122 /* NoteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditViewController.swift; sourceTree = "<group>"; };
+		02867EAF211C99A9004D3122 /* NoteEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,7 @@
 				02867EA6211AD3EF004D3122 /* NotesTablePresenter.swift */,
 				02130A08210E100D00410451 /* IconsTablePresenter.swift */,
 				02130A0E210F777400410451 /* GoalEditPresenter.swift */,
+				02867EAF211C99A9004D3122 /* NoteEditPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -176,6 +181,7 @@
 				02867EA8211AD48C004D3122 /* NotesTableViewController.swift */,
 				02130A0A210E113600410451 /* IconsTableViewController.swift */,
 				02130A0C210F773A00410451 /* GoalEditViewController.swift */,
+				02867EAD211C996F004D3122 /* NoteEditViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -418,7 +424,9 @@
 			files = (
 				02130A01210B6B7C00410451 /* DatabaseInit.swift in Sources */,
 				02130A0F210F777400410451 /* GoalEditPresenter.swift in Sources */,
+				02867EAE211C996F004D3122 /* NoteEditViewController.swift in Sources */,
 				021309EB210A162500410451 /* Goal.swift in Sources */,
+				02867EB0211C99A9004D3122 /* NoteEditPresenter.swift in Sources */,
 				021309F0210A1D2E00410451 /* Director.swift in Sources */,
 				021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */,
 				02130A09210E100D00410451 /* IconsTablePresenter.swift in Sources */,
