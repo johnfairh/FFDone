@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.2.4" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V3">
+    <entity name="Goal" representedClassName=".Goal" syncable="YES" codeGenerationType="class">
+        <attribute name="cdCompletionDate" attributeType="Date" defaultDateTimeInterval="-31618800" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="cdCreationDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="cdCurrentSteps" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="cdIsFav" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="cdTotalSteps" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="sectionOrder" attributeType="String" minValueString="1" maxValueString="1" defaultValueString="0" syncable="YES"/>
+        <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="icon" maxCount="1" deletionRule="Nullify" destinationEntity="Icon" inverseName="usingGoals" inverseEntity="Icon" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Note" inverseName="goal" inverseEntity="Note" syncable="YES"/>
+        <fetchIndex name="BySectionOrder">
+            <fetchIndexElement property="sectionOrder" type="Binary" order="ascending"/>
+            <fetchIndexElement property="sortOrder" type="Binary" order="descending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="Icon" representedClassName=".Icon" syncable="YES" codeGenerationType="class">
+        <attribute name="imageData" attributeType="Transformable" valueTransformerName="ImageTransformer" syncable="YES"/>
+        <attribute name="isBuiltin" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isDefault" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="sortOrder" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="usingGoals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Goal" inverseName="icon" inverseEntity="Goal" syncable="YES"/>
+    </entity>
+    <entity name="Note" representedClassName=".Note" syncable="YES" codeGenerationType="class">
+        <attribute name="cdCreationDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="dayStamp" attributeType="String" minValueString="8" maxValueString="8" syncable="YES"/>
+        <attribute name="text" attributeType="String" syncable="YES"/>
+        <relationship name="goal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Goal" inverseName="notes" inverseEntity="Goal" syncable="YES"/>
+        <fetchIndex name="ByDayStamp">
+            <fetchIndexElement property="dayStamp" type="Binary" order="descending"/>
+            <fetchIndexElement property="cdCreationDate" type="Binary" order="descending"/>
+        </fetchIndex>
+    </entity>
+    <elements>
+        <element name="Goal" positionX="-63" positionY="-18" width="128" height="210"/>
+        <element name="Icon" positionX="-54" positionY="36" width="128" height="135"/>
+        <element name="Note" positionX="-54" positionY="63" width="128" height="105"/>
+    </elements>
+</model>
