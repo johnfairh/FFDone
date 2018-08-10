@@ -78,13 +78,17 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
     @IBAction func didTapCalendarButton(_ sender: UIBarButtonItem) {
         datePicker.show("Skip to date",
                         doneButtonTitle: "OK",
-                        cancelButtonTitle: "Cancel",
                         defaultDate: Date(),
-                        datePickerMode: .date) { newDate in
+                        datePickerMode: .date) { [weak self] newDate in
                             if let newDate = newDate {
-                                print("New date: \(newDate)")
+                                self?.jumpTo(date: newDate)
                             }
         }
+    }
+
+    private func jumpTo(date: Date) {
+        let sectionIndex = presenter.sectionIndexFor(date: date)
+        tableView.scrollToRow(at: IndexPath(row: 0, section: sectionIndex), at: .top, animated: true)
     }
 
     @IBAction func didTapReverseButton(_ sender: UIBarButtonItem) {

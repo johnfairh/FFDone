@@ -14,6 +14,8 @@ protocol NotesTablePresenterInterface: TablePresenterInterface {
 
     func updateSearchResults(text: String)
     func reverseNoteOrder()
+
+    func sectionIndexFor(date: Date) -> Int
 }
 
 // MARK: - Presenter
@@ -45,11 +47,65 @@ class NotesTablePresenter: TablePresenter<DirectorInterface>, Presenter, NotesTa
         }
     }
 
+    // MARK: - Reverse button, luckily inaccessible in search mode!
+
     func reverseNoteOrder() {
         if filteredResults != nil {
             filteredResults = nil
         } else {
             filteredResults = Note.allReverseSortedResultsSet(model: model)
         }
+    }
+
+    /// Normally table is old->new.  Reversed means new->old, newest at the top.
+    private var isReverseOrder: Bool {
+        return filteredResults != nil
+    }
+
+    // MARK: - Jump-to-date
+
+    func sectionIndexFor(date: Date) -> Int {
+        guard let sections = currentResults.sections,
+            sections.count > 1 else {
+                return 0
+        }
+
+        let dayStamp = Note.dateToDayStamp(date: date)
+        Log.log("Searching for dayStamp \(dayStamp)")
+
+        // Binary search through the sections.
+        var lower = 0
+        var upper = sections.count - 1
+
+        while upper > lower {
+            let mid = (upper + lower) / 2
+            let midStamp = sections[mid].name
+            Log.log(" Trying \(midStamp) index \(mid)")
+            switch midStamp.compare(dayStamp) {
+            case .orderedAscending:
+                if !isReverseOrder {
+                    Log.debugLog("  Try smaller than sought, !reversed, going up")
+                    lower = mid + 1
+                } else {
+                    Log.debugLog("  Try smaller than sought, reversed, going down")
+                    upper = mid - 1
+                }
+            case .orderedDescending:
+                if !isReverseOrder {
+                    Log.debugLog("  Try bigger than sought, !reversed, going down")
+                    upper = mid - 1
+                } else {
+                    Log.debugLog("  Try bigger than sought, reversed, going up")
+                    lower = mid + 1
+                }
+            case .orderedSame:
+                Log.debugLog("  Found it, stopping")
+                upper = mid
+                lower = mid
+            }
+        }
+        Log.log("Finished: index \(upper) value \(sections[upper].name)")
+
+        return upper
     }
 }

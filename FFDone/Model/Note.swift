@@ -62,6 +62,11 @@ extension Note: ModelObject {
         return Note.userDayStampFormatter.string(from: date)
     }
 
+    /// Convert a `Date` to an 8-char datestamp
+    static func dateToDayStamp(date: Date) -> String {
+        return dayStampFormatter.string(from: date)
+    }
+
     /// Full timestamp associated with the date - used mostly for sorting.
     /// As a side effect, update the daystamp.
     var creationDate: Date {
@@ -70,7 +75,7 @@ extension Note: ModelObject {
         }
         set {
             cdCreationDate = newValue.timeIntervalSinceReferenceDate
-            dayStamp = Note.dayStampFormatter.string(from: newValue)
+            dayStamp = Note.dateToDayStamp(date: newValue)
         }
     }
 }
