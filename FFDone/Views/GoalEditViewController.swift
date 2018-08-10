@@ -58,7 +58,6 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
             self.tagTextField.text = goal.tag
             self.doneButton.isEnabled = isSaveOK
         }
-        refreshRowHeights()
     }
 
     // MARK: Simple control reactions
@@ -85,7 +84,6 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
 
     @IBAction func addNoteButtonTapped(_ sender: UIButton) {
         presenter.addNote()
-        refreshRowHeights()
     }
 
     // MARK: Text stuff
@@ -118,6 +116,8 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        refreshRowHeights()
+        
         nameListener = NotificationListener(
             name: UITextField.textDidChangeNotification,
             from: nameTextField) { [unowned self] _ in
