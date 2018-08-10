@@ -6,6 +6,7 @@
 //
 
 import TMLPresentation
+import DatePickerDialog
 
 class NoteCell: UITableViewCell, TableCell {
 
@@ -24,6 +25,8 @@ class NoteCell: UITableViewCell, TableCell {
 class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
     TableModelDelegate
 {
+    private var datePicker: DatePickerDialog!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.reload = { [weak self] queryResults in
@@ -33,6 +36,10 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
             navigationItem.leftBarButtonItem = nil
             enableSearch(scopes: [])
         }
+        datePicker = DatePickerDialog(textColor: .darkText,
+                                      buttonColor: UIButton(type: .system).currentTitleColor,
+                                      font: .systemFont(ofSize: 15.0),
+                                      showCancelButton: false)
     }
 
     private var tableModel: TableModel<NoteCell, NotesTableViewController>!
@@ -69,6 +76,15 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
     }
 
     @IBAction func didTapCalendarButton(_ sender: UIBarButtonItem) {
+        datePicker.show("Skip to date",
+                        doneButtonTitle: "OK",
+                        cancelButtonTitle: "Cancel",
+                        defaultDate: Date(),
+                        datePickerMode: .date) { newDate in
+                            if let newDate = newDate {
+                                print("New date: \(newDate)")
+                            }
+        }
     }
 
     @IBAction func didTapReverseButton(_ sender: UIBarButtonItem) {

@@ -1,2 +1,3 @@
 github "johnfairh/TMLPersistentContainer" ~> 3.0
 github "jpsim/Yams"
+github "squimer/DatePickerDialog-iOS-Swift"

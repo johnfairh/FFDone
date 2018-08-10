@@ -39,6 +39,7 @@
 		02867EA9211AD48C004D3122 /* NotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EA8211AD48C004D3122 /* NotesTableViewController.swift */; };
 		02867EAE211C996F004D3122 /* NoteEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EAD211C996F004D3122 /* NoteEditViewController.swift */; };
 		02867EB0211C99A9004D3122 /* NoteEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EAF211C99A9004D3122 /* NoteEditPresenter.swift */; };
+		02867EB3211D9474004D3122 /* DatePickerDialog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02867EB2211D9474004D3122 /* DatePickerDialog.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +111,7 @@
 		02867EAD211C996F004D3122 /* NoteEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditViewController.swift; sourceTree = "<group>"; };
 		02867EAF211C99A9004D3122 /* NoteEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditPresenter.swift; sourceTree = "<group>"; };
 		02867EB1211D7CDE004D3122 /* DataModel-3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-3.xcdatamodel"; sourceTree = "<group>"; };
+		02867EB2211D9474004D3122 /* DatePickerDialog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DatePickerDialog.framework; path = Carthage/Build/iOS/DatePickerDialog.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 			files = (
 				021309FF210B686700410451 /* Yams.framework in Frameworks */,
 				0253339F2112FE3D00AF8E7B /* TMLPresentation.framework in Frameworks */,
+				02867EB3211D9474004D3122 /* DatePickerDialog.framework in Frameworks */,
 				027F63A321065271001C9738 /* TMLPersistentContainer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,6 +216,7 @@
 				027F63882105FF96001C9738 /* FFDoneTests */,
 				027F63932105FF96001C9738 /* FFDoneUITests */,
 				027F63722105FF93001C9738 /* Products */,
+				02867EB2211D9474004D3122 /* DatePickerDialog.framework */,
 				021309FE210B686600410451 /* Yams.framework */,
 				027F63A221065271001C9738 /* TMLPersistentContainer.framework */,
 				025333992112FB9A00AF8E7B /* Frameworks */,
@@ -405,12 +409,14 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/TMLPersistentContainer.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Yams.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/DatePickerDialog.framework",
 			);
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TMLPersistentContainer.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Yams.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/DatePickerDialog.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
