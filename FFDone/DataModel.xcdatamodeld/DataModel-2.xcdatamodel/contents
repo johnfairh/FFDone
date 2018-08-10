@@ -29,7 +29,7 @@
         <attribute name="cdCreationDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="dayStamp" attributeType="String" minValueString="8" maxValueString="8" syncable="YES"/>
         <attribute name="text" attributeType="String" syncable="YES"/>
-        <relationship name="goal" maxCount="1" deletionRule="Nullify" destinationEntity="Goal" inverseName="notes" inverseEntity="Goal" syncable="YES"/>
+        <relationship name="goal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Goal" inverseName="notes" inverseEntity="Goal" syncable="YES"/>
         <fetchIndex name="ByDayStamp">
             <fetchIndexElement property="dayStamp" type="Binary" order="descending"/>
             <fetchIndexElement property="cdCreationDate" type="Binary" order="descending"/>
