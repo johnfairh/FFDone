@@ -24,8 +24,6 @@ class NoteCell: UITableViewCell, TableCell {
 class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
     TableModelDelegate
 {
-    typealias ModelType = Note
-
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.reload = { [weak self] queryResults in
@@ -50,6 +48,8 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
         return Note.dayStampToUserString(dayStamp: name)
     }
 
+    // MARK: - Object actions
+
     func canDeleteObject(_ modelObject: Note) -> Bool {
         return true
     }
@@ -62,7 +62,16 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
         presenter.selectNote(modelObject as! Note)
     }
 
+    // MARK: - UI fanciness
+
     public override func updateTableForSearch(text: String, scopeIndex: Int) {
         presenter.updateSearchResults(text: text)
+    }
+
+    @IBAction func didTapCalendarButton(_ sender: UIBarButtonItem) {
+    }
+
+    @IBAction func didTapReverseButton(_ sender: UIBarButtonItem) {
+        presenter.reverseNoteOrder()
     }
 }

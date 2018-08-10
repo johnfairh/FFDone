@@ -10,8 +10,10 @@ import TMLPresentation
 /// Interface from the Notes Table VC to presenter -- requirements unique to notes table.
 protocol NotesTablePresenterInterface: TablePresenterInterface {
     func selectNote(_ note: Note)
-    func updateSearchResults(text: String)
     func deleteNote(_ note: Note)
+
+    func updateSearchResults(text: String)
+    func reverseNoteOrder()
 }
 
 // MARK: - Presenter
@@ -40,6 +42,14 @@ class NotesTablePresenter: TablePresenter<DirectorInterface>, Presenter, NotesTa
     func updateSearchResults(text: String) {
         handleSearchUpdate(text: text, type: 0) { text, typeInt in
             return Note.searchByTextSortedResultsSet(model: self.model, str: text)
+        }
+    }
+
+    func reverseNoteOrder() {
+        if filteredResults != nil {
+            filteredResults = nil
+        } else {
+            filteredResults = Note.allReverseSortedResultsSet(model: model)
         }
     }
 }

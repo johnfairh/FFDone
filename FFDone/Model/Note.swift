@@ -84,6 +84,10 @@ extension Note {
         return sectionatedResultsSet(model: model, predicate: nil, latestFirst: false)
     }
 
+    static func allReverseSortedResultsSet(model: Model) -> ModelResultsSet {
+        return sectionatedResultsSet(model: model, predicate: nil, latestFirst: true)
+    }
+
     /// For the search view -- search note text content.
     static func searchByTextSortedResultsSet(model: Model, str: String) -> ModelResultsSet {
         let textMatchPredicate = NSPredicate(format: "\(#keyPath(text)) CONTAINS[cd] \"\(str)\"")

@@ -546,7 +546,22 @@
                             <outlet property="delegate" destination="mvI-A8-pLB" id="Qw7-MC-lgH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="History" id="KdT-Qg-pJl"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="History" id="KdT-Qg-pJl">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="ActionReverseIcon" id="gl3-eQ-IKf">
+                                <connections>
+                                    <action selector="didTapReverseButton:" destination="mvI-A8-pLB" id="EM9-jg-pAL"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="ActionCalendarIcon" id="Snz-yd-n7N">
+                                <connections>
+                                    <action selector="didTapCalendarButton:" destination="mvI-A8-pLB" id="pi5-8e-RDK"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="55r-Pa-JyC" kind="show" identifier="DummySegue2" id="tdN-NL-wqK"/>
                     </connections>
@@ -558,7 +573,6 @@
         <!--NoteEditViewController-->
         <scene sceneID="scj-FJ-rx1">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Wey-Te-hn7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="NoteEditViewController" title="NoteEditViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="55r-Pa-JyC" customClass="NoteEditViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KrC-RD-dG9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -594,7 +608,7 @@
                                 </subviews>
                             </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7MS-62-Ctc">
-                                <rect key="frame" x="0.0" y="96" width="375" height="522"/>
+                                <rect key="frame" x="0.0" y="96" width="375" height="478"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -632,6 +646,7 @@
                         <outlet property="textView" destination="7MS-62-Ctc" id="Oc1-bl-1ie"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wey-Te-hn7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1197.5999999999999" y="1110.4947526236883"/>
         </scene>
@@ -737,6 +752,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ActionCalendarIcon" width="25" height="25"/>
+        <image name="ActionReverseIcon" width="25" height="25"/>
         <image name="TabGoalsIcon" width="30" height="30"/>
         <image name="TabIconsIcon" width="30" height="30"/>
     </resources>

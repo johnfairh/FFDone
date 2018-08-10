@@ -12,7 +12,11 @@ import TMLPresentation
 /// Most of the code here is to do with the initialization dance.
 final class App {
 
+    #if targetEnvironment(simulator)
     static let debugMode = true
+    #else
+    static let debugMode = false
+    #endif
 
     private var modelProvider: ModelProvider
     private var director: Director
