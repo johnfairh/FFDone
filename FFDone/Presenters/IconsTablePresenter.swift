@@ -29,7 +29,7 @@ class IconsTablePresenter: TablePresenter<DirectorInterface>, Presenter, IconsTa
     }
 
     func createNewObject() {
-        Log.log("CREATE NEW ICON")
+        director.request(.createIcon(model))
     }
 
     func canDeleteIcon(_ icon: Icon) -> Bool {

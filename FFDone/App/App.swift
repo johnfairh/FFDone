@@ -49,8 +49,9 @@ final class App {
         }
 
         if !Prefs.runBefore {
-            DatabaseObjects.create(model: model, debugMode: App.debugMode)
+            DatabaseObjects.createOneTime(model: model, debugMode: App.debugMode)
         }
+        DatabaseObjects.createEachTime(model: model, debugMode: App.debugMode)
 
         model.save {
             self.initTagList(model: model)

@@ -23,6 +23,7 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
         }
+        navigationItem.leftBarButtonItem = nil
     }
 
     private var tableModel: TableModel<IconCell, IconsTableViewController>!
@@ -32,10 +33,6 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
                                 fetchedResultsController: queryResults,
                                 delegate: self)
         tableModel.start()
-    }
-
-    func createNewObject() {
-        presenter.createNewObject()
     }
 
     func canDeleteObject(_ modelObject: Icon) -> Bool {

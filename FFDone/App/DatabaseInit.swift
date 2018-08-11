@@ -145,13 +145,32 @@ enum DatabaseObjects {
         }
     }
 
-    /// Entrypoint -- create all the default objects
-    static func create(model: Model, debugMode: Bool) {
+    /// Create the icon source templates from the yaml file
+    private static func createIconSources() {
+        let defs = readYaml(file: "DefaultIconSources")
+
+        defs.forEach { def in
+            let template = IconSourceTemplate(name: def.str("name"),
+                                              isSimple: def.bool("simple"),
+                                              urlBase: def.str("urlBase"),
+                                              urlExtension: def.str("urlExtension"),
+                                              isUserName: def.bool("userName"))
+            IconSourceBuilder.addTemplate(template)
+        }
+    }
+
+    /// Entrypoint -- create all the default objects, called only on first run
+    static func createOneTime(model: Model, debugMode: Bool) {
         createIcons(model: model)
         if debugMode {
             createDebugGoals(model: model)
             model.saveAndWait()
             createDebugNotes(model: model)
         }
+    }
+
+    /// Entrypoint -- create objects etc. on every run
+    static func createEachTime(model: Model, debugMode: Bool) {
+        createIconSources()
     }
 }

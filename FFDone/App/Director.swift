@@ -13,6 +13,7 @@ enum DirectorRequest {
     case createGoal(Model)
 //    case createGoalAndThen(Model, (Goal) -> Void)
 
+    case createIcon(Model)
     case pickIcon(Model, (Icon) -> Void)
 
     case editNote(Note, Model)
@@ -98,6 +99,12 @@ extension Director: DirectorInterface {
                                           model: model,
                                           presenterFn: GoalEditPresenter.init,
                                           done: { _ in App.shared.refreshTags() })
+
+            case let .createIcon(model):
+                self.services.createThing("IconEditViewController",
+                                          model: model,
+                                          presenterFn: IconEditPresenter.init,
+                                          done: { _ in })
 
             case let .pickIcon(model, continuation):
                 self.services.pickThing("IconsTableViewController",
