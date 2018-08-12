@@ -44,6 +44,8 @@
 		02867EB7211F37E0004D3122 /* IconEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EB6211F37E0004D3122 /* IconEditPresenter.swift */; };
 		02867EBB211F6323004D3122 /* IconSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EBA211F6323004D3122 /* IconSource.swift */; };
 		02867EBD211F6398004D3122 /* DefaultIconSources.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02867EBC211F6397004D3122 /* DefaultIconSources.yaml */; };
+		02867EBF21209D18004D3122 /* GoalViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EBE21209D18004D3122 /* GoalViewPresenter.swift */; };
+		02867EC121209EAF004D3122 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EC021209EAF004D3122 /* GoalViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +122,8 @@
 		02867EB6211F37E0004D3122 /* IconEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconEditPresenter.swift; sourceTree = "<group>"; };
 		02867EBA211F6323004D3122 /* IconSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSource.swift; sourceTree = "<group>"; };
 		02867EBC211F6397004D3122 /* DefaultIconSources.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DefaultIconSources.yaml; path = ../../../FFDoneResources/Resources/DefaultIconSources.yaml; sourceTree = "<group>"; };
+		02867EBE21209D18004D3122 /* GoalViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewPresenter.swift; sourceTree = "<group>"; };
+		02867EC021209EAF004D3122 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +185,7 @@
 				021309F3210A2F0300410451 /* GoalsTablePresenter.swift */,
 				02867EA6211AD3EF004D3122 /* NotesTablePresenter.swift */,
 				02130A08210E100D00410451 /* IconsTablePresenter.swift */,
+				02867EBE21209D18004D3122 /* GoalViewPresenter.swift */,
 				02130A0E210F777400410451 /* GoalEditPresenter.swift */,
 				02867EAF211C99A9004D3122 /* NoteEditPresenter.swift */,
 				02867EB6211F37E0004D3122 /* IconEditPresenter.swift */,
@@ -194,6 +199,7 @@
 				021309F5210A300B00410451 /* GoalsTableViewController.swift */,
 				02867EA8211AD48C004D3122 /* NotesTableViewController.swift */,
 				02130A0A210E113600410451 /* IconsTableViewController.swift */,
+				02867EC021209EAF004D3122 /* GoalViewController.swift */,
 				02130A0C210F773A00410451 /* GoalEditViewController.swift */,
 				02867EAD211C996F004D3122 /* NoteEditViewController.swift */,
 				02867EB4211F37B7004D3122 /* IconEditViewController.swift */,
@@ -442,12 +448,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02867EC121209EAF004D3122 /* GoalViewController.swift in Sources */,
 				02130A01210B6B7C00410451 /* DatabaseInit.swift in Sources */,
 				02130A0F210F777400410451 /* GoalEditPresenter.swift in Sources */,
 				02867EAE211C996F004D3122 /* NoteEditViewController.swift in Sources */,
 				021309EB210A162500410451 /* Goal.swift in Sources */,
 				02867EB0211C99A9004D3122 /* NoteEditPresenter.swift in Sources */,
 				021309F0210A1D2E00410451 /* Director.swift in Sources */,
+				02867EBF21209D18004D3122 /* GoalViewPresenter.swift in Sources */,
 				021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */,
 				02130A09210E100D00410451 /* IconsTablePresenter.swift in Sources */,
 				021309E9210A13F700410451 /* DataModel.xcdatamodeld in Sources */,

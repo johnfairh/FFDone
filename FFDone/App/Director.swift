@@ -10,6 +10,7 @@ import TMLPresentation
 enum DirectorRequest {
     case createGoal(Model)
     case editGoal(Goal, Model)
+    case viewGoal(Goal, Model)
 
     case createIcon(Model)
     case editIcon(Icon, Model)
@@ -46,7 +47,7 @@ class Director {
         initTab(.goals,
                 queryResults: Goal.allSortedResultsSet(model: model),
                 presenterFn: GoalsTablePresenter.init) {
-                    [unowned self] goal in self.request(.editGoal(goal!, model))        /// TODO - view-goal
+                    [unowned self] goal in self.request(.viewGoal(goal!, model))        /// TODO - view-goal
         }
 
         initTab(.notes,
@@ -92,6 +93,12 @@ extension Director: DirectorInterface {
                                         object: goal,
                                         presenterFn: GoalEditPresenter.init,
                                         done: { _ in App.shared.refreshTags() })
+
+            case let .viewGoal(goal, model):
+                self.services.viewThing("GoalViewController",
+                                        model: model,
+                                        object: goal,
+                                        presenterFn: GoalViewPresenter.init)
 
             case let .createGoal(model):
                 self.services.createThing("GoalEditViewController",
