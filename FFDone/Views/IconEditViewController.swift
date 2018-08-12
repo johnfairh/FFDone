@@ -8,7 +8,9 @@
 import TMLPresentation
 
 /// VC for icon edit
-class IconEditViewController: PresentableVC<IconEditPresenterInterface>, UITextFieldDelegate, IconSourceDelegate {
+class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
+                              UITextFieldDelegate,
+                              IconSourceDelegate {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var iconImageView: UIImageView!
 
@@ -22,13 +24,10 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>, UITextF
 
     var iconSources: [IconSource]?
 
-    var hasIcon: Bool = false
-
     static let unknownIconImage = UIImage(named: "UnknownIcon")
     static let errorIconImage = UIImage(named: "ErrorIcon")
 
     override func viewDidLoad() {
-        iconImageView.image = IconEditViewController.unknownIconImage
         nameTextField.delegate = self
 
         let firstSourceUI = IconSourceUI(label: firstSourceLabel,
@@ -40,37 +39,38 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>, UITextF
 
         iconSources = IconSourceBuilder.createSources(uiList: [firstSourceUI, secondSourceUI],
                                                       delegate: self)
-        updateControls()
-        firstSourceTextField.becomeFirstResponder()
-    }
 
-    // Update button states based on content
-    func updateControls() {
-        if let doneBarButton = navigationItem.rightBarButtonItem {
-            doneBarButton.isEnabled = (!newIconName.isEmpty && hasIcon)
+        presenter.refresh = { [unowned self] icon, canSave in
+            self.nameTextField.text = icon.name ?? ""
+            if icon.hasImage {
+                self.iconImageView.image = icon.nativeImage
+            } else if self.iconImageView.image != IconEditViewController.errorIconImage {
+                self.iconImageView.image = IconEditViewController.unknownIconImage
+            }
+            if let doneBarButton = self.navigationItem.rightBarButtonItem {
+                doneBarButton.isEnabled = canSave
+            }
         }
+        firstSourceTextField.becomeFirstResponder()
     }
 
     // MARK: - IconSourceDelegate interface
 
     func setIconImage(iconSource: IconSource, image: UIImage) {
-        hasIcon = true
-        iconImageView.image = image
+        presenter.setImage(image: image)
         if newIconName.isEmpty {
             if iconSource.textIsSuitableIconName {
-                nameTextField.text = iconSource.text
+                presenter.setName(name: iconSource.text)
             } else {
                 nameTextField.becomeFirstResponder()
             }
         }
-        updateControls()
     }
 
     func setIconError(iconSource: IconSource, message: String) {
-        hasIcon = false
         iconImageView.image = IconEditViewController.errorIconImage
+        presenter.clearImage()
         Log.log(message)
-        updateControls()
     }
 
     // MARK: - Name text field
@@ -79,9 +79,8 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>, UITextF
         return nameTextField.text ?? ""
     }
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        updateControls()
-        return true
+    @IBAction func nameTextFieldDidChange(_ sender: UITextField) {
+        presenter.setName(name: newIconName)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -97,6 +96,6 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>, UITextF
     }
 
     @IBAction func didTapDoneButton(_ sender: UIBarButtonItem) {
-        presenter.save(name: newIconName, image: iconImageView.image!)
+        presenter.save()
     }
 }

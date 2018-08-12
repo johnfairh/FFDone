@@ -8,16 +8,15 @@
 import TMLPresentation
 
 enum DirectorRequest {
-    case editGoal(Goal, Model)
-//    case editGoalAndThen(Goal, Model, (Goal) -> Void)
     case createGoal(Model)
-//    case createGoalAndThen(Model, (Goal) -> Void)
+    case editGoal(Goal, Model)
 
     case createIcon(Model)
+    case editIcon(Icon, Model)
     case pickIcon(Model, (Icon) -> Void)
 
-    case editNote(Note, Model)
     case createNote(Goal, Model)
+    case editNote(Note, Model)
 }
 
 protocol DirectorInterface {
@@ -58,8 +57,8 @@ class Director {
 
         initTab(.icons,
                 queryResults: Icon.createAllResultsSet(model: model),
-                presenterFn: IconsTablePresenter.init) { [unowned self] icon in
-                    Log.log("Selected: \(self) \(icon!)")
+                presenterFn: IconsTablePresenter.init) {
+                    [unowned self] icon in self.request(.editIcon(icon!, model))
         }
 
         // Turn on the actual UI replacing the loading screen
@@ -105,6 +104,13 @@ extension Director: DirectorInterface {
                                           model: model,
                                           presenterFn: IconEditPresenter.init,
                                           done: { _ in })
+
+            case let .editIcon(icon, model):
+                self.services.editThing("IconEditViewController",
+                                        model: model,
+                                        object: icon,
+                                        presenterFn: IconEditPresenter.init,
+                                        done: { _ in } )
 
             case let .pickIcon(model, continuation):
                 self.services.pickThing("IconsTableViewController",

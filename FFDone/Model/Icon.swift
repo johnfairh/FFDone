@@ -14,6 +14,16 @@ extension Icon : ModelObject {
     /// Allow user reordering
     static let primarySortOrder = ModelSortOrder(keyName: "sortOrder")
 
+    /// Default properties, no image or name.
+    static func createWithDefaults(model: Model) -> Icon {
+        let icon = Icon.create(from: model)
+        icon.name = ""
+        icon.isDefault = false
+        icon.isBuiltin = false
+        icon.sortOrder = getNextSortOrderValue(primarySortOrder, from: model)
+        return icon
+    }
+
     /// The Icon's image at its native size.
     var nativeImage: UIImage {
         get {
@@ -22,6 +32,16 @@ extension Icon : ModelObject {
         set {
             imageData = newValue
         }
+    }
+
+    /// Has the Icon been configured with an image?  Used during create/edit.
+    var hasImage: Bool {
+        return imageData != nil
+    }
+
+    /// Has the Icon been configured with a name?
+    var hasName: Bool {
+        return name != nil && !name!.isEmpty
     }
 
     /// Standard Icon size is 43x43, fits nicely in a standard `UITableView` row.
