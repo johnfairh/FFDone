@@ -14,6 +14,7 @@ protocol IconsTablePresenterInterface: TablePresenterInterface {
     func canMoveIcon(_ icon: Icon) -> Bool
     func moveIcon(_ icon: Icon, fromRow: Int, toRow: Int)
     func selectIcon(_ icon: Icon)
+    func updateSearchResults(text: String)
 }
 
 // MARK: - Presenter
@@ -52,5 +53,11 @@ class IconsTablePresenter: TablePresenter<DirectorInterface>, Presenter, IconsTa
 
     func selectIcon(_ icon: Icon) {
         selectedCallback(icon)
+    }
+
+    func updateSearchResults(text: String) {
+        handleSearchUpdate(text: text, type: 0) { text, typeInt in
+            return Icon.searchByNameSortedResultsSet(model: self.model, str: text)
+        }
     }
 }

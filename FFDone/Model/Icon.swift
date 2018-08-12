@@ -60,4 +60,14 @@ extension Icon : ModelObject {
         }
         return defaultIcon
     }
+
+    /// For the search view -- search icon name.
+    static func searchByNameSortedResultsSet(model: Model, str: String) -> ModelResultsSet {
+        let nameMatchPredicate = NSPredicate(format: "\(#keyPath(name)) CONTAINS[cd] \"\(str)\"")
+
+        return createFetchedResults(model: model,
+                                    predicate: nameMatchPredicate,
+                                    sortedBy: [defaultSortDescriptor],
+                                    sectionNameKeyPath: nil).asModelResultsSet
+    }
 }

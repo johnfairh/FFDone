@@ -23,7 +23,10 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
         }
-        navigationItem.leftBarButtonItem = nil
+        if presenter.shouldEnableExtraControls {
+            navigationItem.leftBarButtonItem = nil
+        }
+        enableSearch(scopes: [])
     }
 
     private var tableModel: TableModel<IconCell, IconsTableViewController>!
@@ -53,5 +56,9 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
 
     func selectObject(_ modelObject: ModelObject) {
         presenter.selectIcon(modelObject as! Icon)
+    }
+
+    public override func updateTableForSearch(text: String, scopeIndex: Int) {
+        presenter.updateSearchResults(text: text)
     }
 }
