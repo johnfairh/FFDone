@@ -10,6 +10,7 @@ import TMLPresentation
 enum DirectorRequest {
     case createGoal(Model)
     case editGoal(Goal, Model)
+    case editGoalAndThen(Goal, Model, (Goal) -> Void)
     case viewGoal(Goal, Model)
 
     case createIcon(Model)
@@ -93,6 +94,16 @@ extension Director: DirectorInterface {
                                         object: goal,
                                         presenterFn: GoalEditPresenter.init,
                                         done: { _ in App.shared.refreshTags() })
+
+            case let .editGoalAndThen(goal, model, continuation):
+                self.services.editThing("GoalEditViewController",
+                                        model: model,
+                                        object: goal,
+                                        presenterFn: GoalEditPresenter.init,
+                                        done: { editGoal in
+                                            App.shared.refreshTags()
+                                            continuation(editGoal)
+                })
 
             case let .viewGoal(goal, model):
                 self.services.viewThing("GoalViewController",

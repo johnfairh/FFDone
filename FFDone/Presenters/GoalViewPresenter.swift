@@ -76,7 +76,7 @@ class GoalViewPresenter: Presenter, GoalViewPresenterInterface {
     }
 
     func edit() {
-        director.request(.editGoal(goal, model)) // XXX and refresh self
+        director.request(.editGoalAndThen(goal, model, { [unowned self] _ in self.doRefresh() }))
     }
 
     /// Create the notes table presenter
