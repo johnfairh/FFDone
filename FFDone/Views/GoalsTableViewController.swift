@@ -32,7 +32,7 @@ class GoalCell: UITableViewCell, TableCell {
 
     func configure(_ goal: Goal) {
         customTextLabel?.text       = goal.name
-        customDetailTextLabel?.text = goal.progressText + (App.debugMode ? goal.debugText : "")
+        customDetailTextLabel?.text = goal.shortProgressText + (App.debugMode ? goal.debugText : "")
         customImageView?.image      = goal.badgedImage
         if let tagText = goal.tag {
             customTagTextLabel?.isHidden = false

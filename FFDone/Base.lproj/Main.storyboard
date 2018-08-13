@@ -180,55 +180,51 @@
                                 <rect key="frame" x="12" y="176.5" width="351" height="64"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Tik-JV-kjI">
-                                        <rect key="frame" x="75.5" y="0.0" width="200.5" height="29"/>
+                                        <rect key="frame" x="73" y="0.0" width="205" height="29"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="42 out of 100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yzu-Mb-4T1">
-                                                <rect key="frame" x="0.0" y="4.5" width="102.5" height="20.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="42 out of 100" textAlignment="right" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3UC-Sb-dgt">
+                                                <rect key="frame" x="0.0" y="4" width="107" height="21"/>
                                                 <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                            </textField>
                                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Ll3-gZ-Twh">
-                                                <rect key="frame" x="106.5" y="0.0" width="94" height="29"/>
+                                                <rect key="frame" x="111" y="0.0" width="94" height="29"/>
+                                                <connections>
+                                                    <action selector="didChangeMultiStepper:" destination="jhi-Pr-pg1" eventType="valueChanged" id="W5V-ke-mFe"/>
+                                                </connections>
                                             </stepper>
                                         </subviews>
                                     </stackView>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bB5-xr-26A">
                                         <rect key="frame" x="151" y="33" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="didChangeSingleStepSwitch:" destination="jhi-Pr-pg1" eventType="valueChanged" id="Irn-rA-lxE"/>
+                                        </connections>
                                     </switch>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="AqL-NQ-3QR">
-                                <rect key="frame" x="12" y="248.5" width="351" height="33"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dac-UQ-ugt">
-                                        <rect key="frame" x="0.0" y="0.0" width="45.5" height="33"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cO9-9A-Xih">
-                                        <rect key="frame" x="71.5" y="0.0" width="279.5" height="33"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <state key="normal" title="Add"/>
-                                        <connections>
-                                            <action selector="didTapAddNoteButton:" destination="jhi-Pr-pg1" eventType="touchUpInside" id="Mon-Mt-uNm"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cO9-9A-Xih">
+                                <rect key="frame" x="12" y="248.5" width="351" height="25"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="2"/>
+                                <state key="normal" title="Add note"/>
+                                <connections>
+                                    <action selector="didTapAddNoteButton:" destination="jhi-Pr-pg1" eventType="touchUpInside" id="Mon-Mt-uNm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="AqL-NQ-3QR" firstAttribute="leading" secondItem="RgJ-hb-DLx" secondAttribute="leading" constant="12" id="0Bs-jR-CaC"/>
                             <constraint firstItem="VM3-Z0-jNn" firstAttribute="top" secondItem="RgJ-hb-DLx" secondAttribute="top" constant="12" id="E5E-Jx-eDU"/>
-                            <constraint firstItem="RgJ-hb-DLx" firstAttribute="trailing" secondItem="AqL-NQ-3QR" secondAttribute="trailing" constant="12" id="F3n-9n-L1F"/>
                             <constraint firstItem="L4w-9N-mpC" firstAttribute="top" secondItem="VM3-Z0-jNn" secondAttribute="bottom" constant="8" id="JJz-xO-Le1"/>
                             <constraint firstItem="VZw-v4-4B5" firstAttribute="top" secondItem="L4w-9N-mpC" secondAttribute="bottom" constant="8" id="Knd-sc-kV3"/>
+                            <constraint firstItem="RgJ-hb-DLx" firstAttribute="trailing" secondItem="cO9-9A-Xih" secondAttribute="trailing" constant="12" id="Pp2-01-6dA"/>
                             <constraint firstItem="RgJ-hb-DLx" firstAttribute="trailing" secondItem="VM3-Z0-jNn" secondAttribute="trailing" constant="12" id="Wiq-RW-sMR"/>
                             <constraint firstItem="VM3-Z0-jNn" firstAttribute="leading" secondItem="RgJ-hb-DLx" secondAttribute="leading" constant="12" id="bHS-i0-K9J"/>
-                            <constraint firstItem="AqL-NQ-3QR" firstAttribute="top" secondItem="VZw-v4-4B5" secondAttribute="bottom" constant="8" id="bbk-qM-Kz2"/>
+                            <constraint firstItem="cO9-9A-Xih" firstAttribute="leading" secondItem="RgJ-hb-DLx" secondAttribute="leading" constant="12" id="bie-ou-fE0"/>
                             <constraint firstItem="RgJ-hb-DLx" firstAttribute="trailing" secondItem="L4w-9N-mpC" secondAttribute="trailing" constant="12" id="lWq-LE-eZo"/>
+                            <constraint firstItem="cO9-9A-Xih" firstAttribute="top" secondItem="VZw-v4-4B5" secondAttribute="bottom" constant="8" id="nKj-ed-aH2"/>
                             <constraint firstItem="RgJ-hb-DLx" firstAttribute="trailing" secondItem="VZw-v4-4B5" secondAttribute="trailing" constant="12" id="qSF-GW-Nvf"/>
                             <constraint firstItem="VZw-v4-4B5" firstAttribute="leading" secondItem="RgJ-hb-DLx" secondAttribute="leading" constant="12" id="xdJ-k1-my2"/>
                             <constraint firstItem="L4w-9N-mpC" firstAttribute="leading" secondItem="RgJ-hb-DLx" secondAttribute="leading" constant="12" id="ycM-H6-2ML"/>
@@ -244,9 +240,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="imageView" destination="xKb-vc-vyF" id="KNH-Tv-gt3"/>
-                        <outlet property="multistepLabel" destination="Yzu-Mb-4T1" id="IrZ-bq-Feu"/>
                         <outlet property="multistepStackView" destination="Tik-JV-kjI" id="KNq-EI-UoL"/>
                         <outlet property="multistepStepper" destination="Ll3-gZ-Twh" id="CF9-Bj-U97"/>
+                        <outlet property="multistepTextField" destination="3UC-Sb-dgt" id="5YF-UZ-jvp"/>
                         <outlet property="progressLabel" destination="L4w-9N-mpC" id="1Sk-Yf-jJB"/>
                         <outlet property="singleStepSwitch" destination="bB5-xr-26A" id="ORn-gg-v9d"/>
                         <outlet property="titleLabel" destination="cMd-Bs-q2j" id="1MC-gj-sxU"/>

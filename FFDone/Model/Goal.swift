@@ -137,28 +137,53 @@ extension Goal {
 
 extension Goal {
 
-    private var stepsStatusText: String {
+    var stepsStatusText: String {
         return "\(currentSteps) out of \(totalSteps)"
     }
 
-    private var completionTimeText: String {
+    private func getFormattedDate(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
-        return dateFormatter.string(from: completionDate)
+        return dateFormatter.string(from: date)
+    }
+
+    private var creationTimeText: String {
+        return getFormattedDate(date: creationDate)
+    }
+
+    private var completionTimeText: String {
+        return getFormattedDate(date: completionDate)
+    }
+
+    private var durationTimeText: String {
+        let dateIntervalFormatter = DateIntervalFormatter()
+        dateIntervalFormatter.dateStyle = .medium
+        dateIntervalFormatter.timeStyle = .none
+        return dateIntervalFormatter.string(from: creationDate, to: completionDate)
     }
 
     var debugText: String {
         return "[so=\(sortOrder) cdCompl=\(cdCompletionDate)]"
     }
 
-    var progressText: String {
+    /// For table view
+    var shortProgressText: String {
         if isComplete {
             return "Completed \(completionTimeText)"
         } else if currentSteps == 0 {
             return "Unstarted"
         } else {
             return stepsStatusText
+        }
+    }
+
+    /// For view
+    var longProgressText: String {
+        if isComplete {
+            return durationTimeText
+        } else {
+            return "Created \(creationTimeText)"
         }
     }
 }

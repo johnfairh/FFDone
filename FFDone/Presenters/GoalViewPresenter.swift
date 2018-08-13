@@ -13,7 +13,8 @@ protocol GoalViewPresenterInterface {
     /// Callback to refresh the view
     var refresh: (Goal) -> () { get set }
 
-    func addStep()
+    /// Change the current steps value
+    func setCurrentSteps(steps: Int)
 
     /// Let the user add a new note
     func addNote()
@@ -62,7 +63,11 @@ class GoalViewPresenter: Presenter, GoalViewPresenterInterface {
         self.dismissFn = dismiss
     }
 
-    func addStep() {
+    func setCurrentSteps(steps: Int) {
+        let pinnedSteps = min(steps, goal.totalSteps)
+        goal.currentSteps = pinnedSteps
+        model.save()
+        doRefresh()
     }
 
     /// Let the user add a new note
