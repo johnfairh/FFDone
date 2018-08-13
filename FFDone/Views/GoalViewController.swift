@@ -21,10 +21,14 @@ UITextFieldDelegate {
 
     @IBOutlet weak var singleStepSwitch: UISwitch!
 
+    @IBOutlet weak var notesTableHeightConstraint: NSLayoutConstraint!
+    weak var notesTableVC: GoalNotesTableViewController!
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         imageView.enableRoundCorners()
         multistepTextField.delegate = self
+        notesTableVC.tableView.isScrollEnabled = true
 
         presenter.refresh = { [unowned self] goal in
             self.imageView.image = goal.getBadgedImage(size: self.imageView.frame.size)
@@ -46,6 +50,11 @@ UITextFieldDelegate {
         }
     }
 
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshNotesTableHeight()
+    }
+
     // MARK: - Control actions
     
     @IBAction func didChangeMultiStepper(_ sender: UIStepper) {
@@ -61,6 +70,7 @@ UITextFieldDelegate {
     }
     
     @IBAction func didTapAddNoteButton(_ sender: UIButton) {
+        presenter.addNote()
     }
 
     // MARK: - Textfield
@@ -84,4 +94,40 @@ UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+
+    // MARK: - Notes table
+
+    // Again this is a hot mess, tableview seems to need two passes to sort out the
+    // height with the section headings.
+
+    var maxTableViewHeight: CGFloat {
+        let margin = CGFloat(8)
+        let notesTableOrigin: CGPoint = notesTableVC.tableView.convert(.zero, to: view)
+        return view.frame.height - notesTableOrigin.y - view.safeAreaInsets.bottom - margin
+    }
+
+    private func updateTableHeight() {
+        let desiredTableHeight = notesTableVC.tableView.contentSize.height
+        notesTableHeightConstraint.constant = min(desiredTableHeight, maxTableViewHeight)
+        updateViewConstraints()
+    }
+
+    func refreshNotesTableHeight() {
+        Dispatch.toForegroundAfter(milliseconds: 100) {
+            self.updateTableHeight()
+            Dispatch.toForeground {
+                self.updateTableHeight()
+            }
+        }
+    }
+
+    /// This gets called (for the embed segue) before viewDidLoad()
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let notesTableVC = segue.destination as? GoalNotesTableViewController {
+            self.notesTableVC = notesTableVC
+            notesTableVC.contentDidChange = { [weak self] in self?.refreshNotesTableHeight() }
+            PresenterUI.bind(viewController: notesTableVC, presenter: presenter.createNotesPresenter())
+        }
+    }
+
 }

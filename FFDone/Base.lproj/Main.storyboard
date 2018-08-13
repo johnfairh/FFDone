@@ -213,6 +213,15 @@
                                     <action selector="didTapAddNoteButton:" destination="jhi-Pr-pg1" eventType="touchUpInside" id="Mon-Mt-uNm"/>
                                 </connections>
                             </button>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qxs-Af-RSL">
+                                <rect key="frame" x="12" y="281.5" width="351" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="Mwh-YS-gEX"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="z6z-81-z51" kind="embed" id="CKj-jx-yca"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -223,9 +232,12 @@
                             <constraint firstItem="RgJ-hb-DLx" firstAttribute="trailing" secondItem="VM3-Z0-jNn" secondAttribute="trailing" constant="12" id="Wiq-RW-sMR"/>
                             <constraint firstItem="VM3-Z0-jNn" firstAttribute="leading" secondItem="RgJ-hb-DLx" secondAttribute="leading" constant="12" id="bHS-i0-K9J"/>
                             <constraint firstItem="cO9-9A-Xih" firstAttribute="leading" secondItem="RgJ-hb-DLx" secondAttribute="leading" constant="12" id="bie-ou-fE0"/>
+                            <constraint firstItem="qxs-Af-RSL" firstAttribute="leading" secondItem="RgJ-hb-DLx" secondAttribute="leading" constant="12" id="dSH-tn-DSN"/>
                             <constraint firstItem="RgJ-hb-DLx" firstAttribute="trailing" secondItem="L4w-9N-mpC" secondAttribute="trailing" constant="12" id="lWq-LE-eZo"/>
                             <constraint firstItem="cO9-9A-Xih" firstAttribute="top" secondItem="VZw-v4-4B5" secondAttribute="bottom" constant="8" id="nKj-ed-aH2"/>
                             <constraint firstItem="RgJ-hb-DLx" firstAttribute="trailing" secondItem="VZw-v4-4B5" secondAttribute="trailing" constant="12" id="qSF-GW-Nvf"/>
+                            <constraint firstItem="qxs-Af-RSL" firstAttribute="top" secondItem="cO9-9A-Xih" secondAttribute="bottom" constant="8" id="vAu-cm-q8j"/>
+                            <constraint firstItem="RgJ-hb-DLx" firstAttribute="trailing" secondItem="qxs-Af-RSL" secondAttribute="trailing" constant="12" id="vSr-Zp-Loc"/>
                             <constraint firstItem="VZw-v4-4B5" firstAttribute="leading" secondItem="RgJ-hb-DLx" secondAttribute="leading" constant="12" id="xdJ-k1-my2"/>
                             <constraint firstItem="L4w-9N-mpC" firstAttribute="leading" secondItem="RgJ-hb-DLx" secondAttribute="leading" constant="12" id="ycM-H6-2ML"/>
                         </constraints>
@@ -243,6 +255,7 @@
                         <outlet property="multistepStackView" destination="Tik-JV-kjI" id="KNq-EI-UoL"/>
                         <outlet property="multistepStepper" destination="Ll3-gZ-Twh" id="CF9-Bj-U97"/>
                         <outlet property="multistepTextField" destination="3UC-Sb-dgt" id="5YF-UZ-jvp"/>
+                        <outlet property="notesTableHeightConstraint" destination="Mwh-YS-gEX" id="xwV-NV-7CG"/>
                         <outlet property="progressLabel" destination="L4w-9N-mpC" id="1Sk-Yf-jJB"/>
                         <outlet property="singleStepSwitch" destination="bB5-xr-26A" id="ORn-gg-v9d"/>
                         <outlet property="titleLabel" destination="cMd-Bs-q2j" id="1MC-gj-sxU"/>
@@ -824,15 +837,15 @@
             <objects>
                 <tableViewController storyboardIdentifier="GoalEditNotesViewController" title="GoalEditNotesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="z6z-81-z51" customClass="GoalNotesTableViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gSF-Th-Gg1">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="351" height="128"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GoalNoteCell" rowHeight="69" id="BDP-nA-1Zg" customClass="GoalNoteCell" customModule="FFDone" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="69"/>
+                                <rect key="frame" x="0.0" y="28" width="351" height="69"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BDP-nA-1Zg" id="BYr-nh-zw2">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="68.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="351" height="68.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukb-fP-qSr">
@@ -991,4 +1004,7 @@
         <image name="TabGoalsIcon" width="30" height="30"/>
         <image name="TabIconsIcon" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="CKj-jx-yca"/>
+    </inferredMetricsTieBreakers>
 </document>
