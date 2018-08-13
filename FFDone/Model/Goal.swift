@@ -167,21 +167,26 @@ extension Goal {
 
 extension Goal {
 
-    /// Image for general use representing the goal & its status, including badges
-    var badgedImage: UIImage {
-        let badgeText: String?
-        if hasSteps && !isComplete {
-            badgeText = String(stepsToGo)
-        } else {
-            badgeText = nil
+    private var imageAnnotationText: String? {
+        guard hasSteps && !isComplete else {
+            return nil
         }
+        return String(stepsToGo)
+    }
 
-        return icon!.getStandardImage(withBadge: badgeText)
+    /// Image for table use representing the goal & its status, including badges
+    var badgedImage: UIImage {
+        return icon!.getStandardImage(withBadge: imageAnnotationText)
     }
 
     /// Just the image, no annotations, may need scaling
     var nativeImage: UIImage {
         return icon!.nativeImage
+    }
+
+    /// Image with annotation at some size
+    func getBadgedImage(size: CGSize) -> UIImage {
+        return icon!.getBadgedImage(size: size, badge: imageAnnotationText)
     }
 }
 

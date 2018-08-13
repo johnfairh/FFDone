@@ -24,9 +24,10 @@ UITextFieldDelegate {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        imageView.enableRoundCorners()
 
         presenter.refresh = { [unowned self] goal in
-            self.imageView.image = goal.badgedImage
+            self.imageView.image = goal.getBadgedImage(size: self.imageView.frame.size)
             self.titleLabel.text = goal.name
             self.progressLabel.text = "Progress"
 

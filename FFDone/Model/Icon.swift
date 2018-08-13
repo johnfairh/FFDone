@@ -52,6 +52,10 @@ extension Icon : ModelObject {
         return nativeImage.imageWithSize(Icon.standardSize, andBadge: badge)
     }
 
+    func getBadgedImage(size: CGSize, badge: String? = nil) -> UIImage {
+        return nativeImage.imageWithSize(size, andBadge: badge)
+    }
+
     /// Default goal icon
     static func getGoalDefault(model: Model) -> Icon {
         let predicate = NSPredicate(format: "isDefault == 1")

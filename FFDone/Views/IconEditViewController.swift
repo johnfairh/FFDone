@@ -29,6 +29,7 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
 
     override func viewDidLoad() {
         nameTextField.delegate = self
+        iconImageView.enableRoundCorners()
 
         let firstSourceUI = IconSourceUI(label: firstSourceLabel,
                                          textField: firstSourceTextField,
