@@ -19,6 +19,12 @@ class GoalNoteCell: UITableViewCell, TableCell {
 }
 
 class GoalNotesTableViewController: PresentableTableVC<GoalNotesTablePresenter>, TableModelDelegate {
+
+    /// How big the table would like to be -- could be bigger than the screen.
+    var desiredHeight: CGFloat {
+        return tableView.contentSize.height
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.reload = { [weak self] queryResults in

@@ -28,7 +28,7 @@ UITextFieldDelegate {
         super.viewDidLoad()
         imageView.enableRoundCorners()
         multistepTextField.delegate = self
-        notesTableVC.tableView.isScrollEnabled = true
+        notesTableVC.tableView.isScrollEnabled = true // enabled=f by default
 
         presenter.refresh = { [unowned self] goal in
             self.imageView.image = goal.getBadgedImage(size: self.imageView.frame.size)
@@ -110,7 +110,7 @@ UITextFieldDelegate {
     }
 
     private func updateTableHeight() {
-        let desiredTableHeight = notesTableVC.tableView.contentSize.height
+        let desiredTableHeight = notesTableVC.desiredHeight
         notesTableHeightConstraint.constant = min(desiredTableHeight, maxTableViewHeight)
         updateViewConstraints()
     }

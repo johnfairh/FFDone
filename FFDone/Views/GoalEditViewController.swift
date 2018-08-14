@@ -110,56 +110,29 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
         return false
     }
 
-    private var nameListener: NotificationListener!
-    private var currentStepsListener: NotificationListener!
-    private var totalStepsListener: NotificationListener!
-    private var tagListener: NotificationListener!
+    @IBAction func nameTextFieldDidChange(_ sender: UITextField, forEvent event: UIEvent) {
+        presenter.setGoalName(name: sender.text!)
+    }
 
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        refreshRowHeights()
-        
-        nameListener = NotificationListener(
-            name: UITextField.textDidChangeNotification,
-            from: nameTextField) { [unowned self] _ in
-                self.presenter.setGoalName(name: self.nameTextField.text!)
-        }
-
-        currentStepsListener = NotificationListener(
-            name: UITextField.textDidChangeNotification,
-            from: currentStepsTextField) { [unowned self] _ in
-                if let newValue = Int(self.currentStepsTextField.text!) {
-                    self.presenter.setCurrentSteps(steps: newValue)
-                }
-        }
-
-        totalStepsListener = NotificationListener(
-            name: UITextField.textDidChangeNotification,
-            from: totalStepsTextField) { [unowned self] _ in
-                /// Here we allow a transient zero to happen during editting
-                if let newValue = Int(self.totalStepsTextField.text!), newValue > 0 {
-                    self.presenter.setTotalSteps(steps: newValue)
-                }
-        }
-
-        tagListener = NotificationListener(
-            name: UITextField.textDidChangeNotification,
-            from: tagTextField) { [unowned self] _ in
-                let text = self.tagTextField.text
-                if text == nil || text!.isEmpty {
-                    self.presenter.setTag(tag: nil)
-                } else {
-                    self.presenter.setTag(tag: text!)
-                }
+    @IBAction func currentStepsTextFieldDidChange(_ sender: UITextField) {
+        if let newValue = Int(sender.text!) {
+            presenter.setCurrentSteps(steps: newValue)
         }
     }
 
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        nameListener.stopListening()
-        currentStepsListener.stopListening()
-        totalStepsListener.stopListening()
-        tagListener.stopListening()
+    @IBAction func totalStepsTextFieldDidChange(_ sender: UITextField) {
+        /// Here we allow a transient zero to happen during editting
+        if let newValue = Int(sender.text!), newValue > 0 {
+            presenter.setTotalSteps(steps: newValue)
+        }
+    }
+    
+    @IBAction func tagTextFieldDidChange(_ sender: UITextField) {
+        if let text = sender.text, !text.isEmpty {
+            presenter.setTag(tag: text)
+        } else {
+            presenter.setTag(tag: nil)
+        }
     }
 
     // MARK: Table stuff
@@ -171,6 +144,11 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
     // this, but empirically it's what's needed, something to do with the section headers in
     // the embedded table means that it takes two rounds for everything to come out with the
     // right values.  And of course I have no idea what is up with the timed delay.  Argh.
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshRowHeights()
+    }
+
     func refreshRowHeights() {
         Dispatch.toForegroundAfter(milliseconds: 100) {
             self.tableView.beginUpdates()
@@ -188,7 +166,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
             return 0
         }
         if indexPath.isNotesTableRow {
-            return notesTableVC.tableView.contentSize.height
+            return notesTableVC.desiredHeight
         }
         return super.tableView(tableView, heightForRowAt: indexPath)
     }
