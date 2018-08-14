@@ -32,9 +32,10 @@ protocol DirectorInterface {
 class Director {
 
     enum Tab: Int {
-        case goals = 0
-        case notes = 1
-        case icons = 2
+        case home = 0
+        case goals = 1
+        case notes = 2
+        case icons = 3
     }
 
     weak var services: TabbedDirectorServices<DirectorInterface>!
@@ -49,6 +50,10 @@ class Director {
         Log.log("Director.modelIsReady")
 
         // set tabs
+        initTab(.home,
+                queryResults: Goal.allSortedResultsSet(model: model),
+                presenterFn: HomePresenter.init)
+
         initTab(.goals,
                 queryResults: Goal.allSortedResultsSet(model: model),
                 presenterFn: GoalsTablePresenter.init) {
@@ -75,7 +80,7 @@ class Director {
     private func initTab<ModelObjectType, PresenterType>(_ tab: Tab,
                                                          queryResults: ModelResultsSet,
                                                          presenterFn: MultiPresenterFn<DirectorInterface, ModelObjectType, PresenterType>,
-                                                         picked: @escaping PresenterDone<ModelObjectType>)
+                                                         picked: @escaping PresenterDone<ModelObjectType> = { _ in })
         where ModelObjectType: ModelObject,PresenterType: Presenter {
             services.initTab(tabIndex: tab.rawValue,
                              rootModel: rootModel!,

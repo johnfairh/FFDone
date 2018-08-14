@@ -45,6 +45,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
+                        <segue destination="3i4-tO-qwZ" kind="relationship" relationship="viewControllers" id="elD-F9-E6Y"/>
                         <segue destination="8kL-Rh-YRf" kind="relationship" relationship="viewControllers" id="IQG-lb-fyn"/>
                         <segue destination="Qhz-hz-oV4" kind="relationship" relationship="viewControllers" id="X5m-HC-0Fg"/>
                         <segue destination="t9e-FB-5qQ" kind="relationship" relationship="viewControllers" id="7oE-kE-4Gx"/>
@@ -709,6 +710,23 @@
             </objects>
             <point key="canvasLocation" x="409" y="1110"/>
         </scene>
+        <!--HomeViewController-->
+        <scene sceneID="CK0-Yi-tLk">
+            <objects>
+                <viewController storyboardIdentifier="HomeViewController" title="HomeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3i4-tO-qwZ" customClass="HomeViewController" customModule="FFDone" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bUW-Jg-NDR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="cGg-Bu-3Uw"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Home" image="TabHomeIcon" id="sy9-1Q-KgC"/>
+                    <navigationItem key="navigationItem" id="SQE-IJ-8Gc"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tyj-O4-pqz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-362" y="1791"/>
+        </scene>
         <!--NoteEditViewController-->
         <scene sceneID="scj-FJ-rx1">
             <objects>
@@ -1014,6 +1032,7 @@
         <image name="ActionCalendarIcon" width="25" height="25"/>
         <image name="ActionReverseIcon" width="25" height="25"/>
         <image name="TabGoalsIcon" width="30" height="30"/>
+        <image name="TabHomeIcon" width="30" height="30"/>
         <image name="TabIconsIcon" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
