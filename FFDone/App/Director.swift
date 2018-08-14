@@ -7,6 +7,8 @@
 
 import TMLPresentation
 
+// MARK: - Use-case request interface
+
 enum DirectorRequest {
     case createGoal(Model)
     case editGoal(Goal, Model)
@@ -24,6 +26,8 @@ enum DirectorRequest {
 protocol DirectorInterface {
     func request(_ request: DirectorRequest)
 }
+
+// MARK: - Concrete director class
 
 class Director {
 
@@ -48,7 +52,7 @@ class Director {
         initTab(.goals,
                 queryResults: Goal.allSortedResultsSet(model: model),
                 presenterFn: GoalsTablePresenter.init) {
-                    [unowned self] goal in self.request(.viewGoal(goal!, model))        /// TODO - view-goal
+                    [unowned self] goal in self.request(.viewGoal(goal!, model))
         }
 
         initTab(.notes,
@@ -81,75 +85,83 @@ class Director {
     }
 }
 
-extension Director: DirectorInterface {
+// MARK: - DirectorRequest processing
 
+extension DirectorRequest {
+    func handle(services: DirectorServices<DirectorInterface>) {
+        switch self {
+        case let .editGoal(goal, model):
+            services.editThing("GoalEditViewController",
+                               model: model,
+                               object: goal,
+                               presenterFn: GoalEditPresenter.init,
+                               done: { _ in App.shared.refreshTags() })
+
+        case let .editGoalAndThen(goal, model, continuation):
+            services.editThing("GoalEditViewController",
+                               model: model,
+                               object: goal,
+                               presenterFn: GoalEditPresenter.init,
+                               done: { editGoal in
+                                App.shared.refreshTags()
+                                continuation(editGoal)
+            })
+
+        case let .viewGoal(goal, model):
+            services.viewThing("GoalViewController",
+                               model: model,
+                               object: goal,
+                               presenterFn: GoalViewPresenter.init)
+
+        case let .createGoal(model):
+            services.createThing("GoalEditViewController",
+                                 model: model,
+                                 presenterFn: GoalEditPresenter.init,
+                                 done: { _ in App.shared.refreshTags() })
+
+        case let .createIcon(model):
+            services.createThing("IconEditViewController",
+                                 model: model,
+                                 presenterFn: IconEditPresenter.init,
+                                 done: { _ in })
+
+        case let .editIcon(icon, model):
+            services.editThing("IconEditViewController",
+                               model: model,
+                               object: icon,
+                               presenterFn: IconEditPresenter.init,
+                               done: { _ in } )
+
+        case let .pickIcon(model, continuation):
+            services.pickThing("IconsTableViewController",
+                               model: model,
+                               results: Icon.createAllResults(model: model),
+                               presenterFn: IconsTablePresenter.init,
+                               done: continuation)
+
+        case let .editNote(note, model):
+            services.editThing("NoteEditViewController",
+                               model: model,
+                               object: note,
+                               presenterFn: NoteEditPresenter.init,
+                               done: { _ in })
+
+        case let .createNote(goal, model):
+            services.createThing("NoteEditViewController",
+                                 model: model,
+                                 presenterFn: NoteEditPresenter.init,
+                                 done: { note in note.goal = goal })
+        }
+    }
+}
+
+extension Director: DirectorInterface {
+    /// Called from presenters to begin a new use-case
     func request(_ request: DirectorRequest) {
         // We add a fibre break here to avoid very odd behaviours, eg.
         // multi-second delays on selecting a table row.
         Dispatch.toForeground {
-            switch request {
-            case let .editGoal(goal, model):
-                self.services.editThing("GoalEditViewController",
-                                        model: model,
-                                        object: goal,
-                                        presenterFn: GoalEditPresenter.init,
-                                        done: { _ in App.shared.refreshTags() })
-
-            case let .editGoalAndThen(goal, model, continuation):
-                self.services.editThing("GoalEditViewController",
-                                        model: model,
-                                        object: goal,
-                                        presenterFn: GoalEditPresenter.init,
-                                        done: { editGoal in
-                                            App.shared.refreshTags()
-                                            continuation(editGoal)
-                })
-
-            case let .viewGoal(goal, model):
-                self.services.viewThing("GoalViewController",
-                                        model: model,
-                                        object: goal,
-                                        presenterFn: GoalViewPresenter.init)
-
-            case let .createGoal(model):
-                self.services.createThing("GoalEditViewController",
-                                          model: model,
-                                          presenterFn: GoalEditPresenter.init,
-                                          done: { _ in App.shared.refreshTags() })
-
-            case let .createIcon(model):
-                self.services.createThing("IconEditViewController",
-                                          model: model,
-                                          presenterFn: IconEditPresenter.init,
-                                          done: { _ in })
-
-            case let .editIcon(icon, model):
-                self.services.editThing("IconEditViewController",
-                                        model: model,
-                                        object: icon,
-                                        presenterFn: IconEditPresenter.init,
-                                        done: { _ in } )
-
-            case let .pickIcon(model, continuation):
-                self.services.pickThing("IconsTableViewController",
-                                        model: model,
-                                        results: Icon.createAllResults(model: model),
-                                        presenterFn: IconsTablePresenter.init,
-                                        done: continuation)
-
-            case let .editNote(note, model):
-                self.services.editThing("NoteEditViewController",
-                                        model: model,
-                                        object: note,
-                                        presenterFn: NoteEditPresenter.init,
-                                        done: { _ in })
-
-            case let .createNote(goal, model):
-                self.services.createThing("NoteEditViewController",
-                                          model: model,
-                                          presenterFn: NoteEditPresenter.init,
-                                          done: { note in note.goal = goal })
-            }
+            request.handle(services: self.services)
         }
     }
 }

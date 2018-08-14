@@ -69,7 +69,7 @@ class NoteEditPresenter: Presenter, NoteEditPresenterInterface {
 
     func showGoal() {
         if let goal = note.goal {
-            director.request(.editGoal(goal, model))  // TODO - SHOW-GOAL
+            director.request(.viewGoal(goal, model))  // TODO - SHOW-GOAL
         }
     }
     
