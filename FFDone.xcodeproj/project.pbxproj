@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		020825EA2122C7AA007578C7 /* GoalNotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825E92122C7AA007578C7 /* GoalNotesTableViewController.swift */; };
 		020825EC2122CC53007578C7 /* GoalNotesTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825EB2122CC53007578C7 /* GoalNotesTablePresenter.swift */; };
+		020825EE2122E0BE007578C7 /* PieCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020825ED2122E0BD007578C7 /* PieCharts.framework */; };
 		021309E9210A13F700410451 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 021309E7210A13F700410451 /* DataModel.xcdatamodeld */; };
 		021309EB210A162500410451 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309EA210A162500410451 /* Goal.swift */; };
 		021309EE210A176200410451 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309ED210A176200410451 /* App.swift */; };
@@ -84,6 +85,7 @@
 /* Begin PBXFileReference section */
 		020825E92122C7AA007578C7 /* GoalNotesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalNotesTableViewController.swift; sourceTree = "<group>"; };
 		020825EB2122CC53007578C7 /* GoalNotesTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalNotesTablePresenter.swift; sourceTree = "<group>"; };
+		020825ED2122E0BD007578C7 /* PieCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PieCharts.framework; path = Carthage/Build/iOS/PieCharts.framework; sourceTree = "<group>"; };
 		021309E8210A13F700410451 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		021309EA210A162500410451 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		021309ED210A176200410451 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				021309FF210B686700410451 /* Yams.framework in Frameworks */,
+				020825EE2122E0BE007578C7 /* PieCharts.framework in Frameworks */,
 				0253339F2112FE3D00AF8E7B /* TMLPresentation.framework in Frameworks */,
 				02867EB3211D9474004D3122 /* DatePickerDialog.framework in Frameworks */,
 				027F63A321065271001C9738 /* TMLPersistentContainer.framework in Frameworks */,
@@ -240,6 +243,7 @@
 				027F63882105FF96001C9738 /* FFDoneTests */,
 				027F63932105FF96001C9738 /* FFDoneUITests */,
 				027F63722105FF93001C9738 /* Products */,
+				020825ED2122E0BD007578C7 /* PieCharts.framework */,
 				02867EB2211D9474004D3122 /* DatePickerDialog.framework */,
 				021309FE210B686600410451 /* Yams.framework */,
 				027F63A221065271001C9738 /* TMLPersistentContainer.framework */,
@@ -435,6 +439,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/TMLPersistentContainer.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Yams.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/DatePickerDialog.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/PieCharts.framework",
 			);
 			outputFileListPaths = (
 			);
@@ -442,6 +447,7 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TMLPersistentContainer.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Yams.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/DatePickerDialog.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PieCharts.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
