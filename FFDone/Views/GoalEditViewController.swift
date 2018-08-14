@@ -57,6 +57,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
             self.favToggle.isOn = goal.isFav
             self.tagTextField.text = goal.tag
             self.doneButton.isEnabled = isSaveOK
+            self.refreshRowHeights()
         }
     }
 
@@ -208,58 +209,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let notesTableVC = segue.destination as? GoalNotesTableViewController {
             self.notesTableVC = notesTableVC
-            notesTableVC.contentDidChange = { [weak self] in self?.refreshRowHeights() }
             PresenterUI.bind(viewController: notesTableVC, presenter: presenter.createNotesPresenter())
         }
-    }
-}
-
-
-class GoalNoteCell: UITableViewCell, TableCell {
-
-    @IBOutlet weak var noteLabel: UILabel!
-    
-    func configure(_ note: Note) {
-        noteLabel.text = note.text
-    }
-}
-
-class GoalNotesTableViewController: PresentableTableVC<GoalNotesTablePresenter>,
-    TableModelDelegate
-{
-
-    var contentDidChange: (() -> Void)?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        presenter.reload = { [weak self] queryResults in
-            self?.reloadTable(queryResults: queryResults)
-        }
-    }
-
-    private var tableModel: TableModel<GoalNoteCell, GoalNotesTableViewController>!
-
-    private func reloadTable(queryResults: ModelResults) {
-        tableModel = TableModel(tableView: tableView,
-                                fetchedResultsController: queryResults,
-                                delegate: self)
-        tableModel.start()
-    }
-
-    func getSectionTitle(name: String) -> String {
-        return Note.dayStampToUserString(dayStamp: name)
-    }
-
-    func selectObject(_ modelObject: ModelObject) {
-        presenter.selectNote(modelObject as! Note)
-    }
-
-    func canDeleteObject(_ note: Note) -> Bool {
-        return true
-    }
-
-    func deleteObject(_ note: Note) {
-        presenter.deleteNote(note)
-        contentDidChange?()
     }
 }

@@ -41,7 +41,7 @@ protocol GoalEditPresenterInterface {
 
 // MARK: - Presenter
 
-class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
+class GoalEditPresenter: Presenter, GoalEditPresenterInterface, GoalNotesTablePresenterDelegate {
 
     typealias ViewInterfaceType = GoalEditPresenterInterface
 
@@ -132,6 +132,11 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
         director.request(.createNote(goal, model))
     }
 
+    /// Callback from nested presenter that a note has been deleted from the table.
+    func didDeleteNote() {
+        doRefresh()
+    }
+
     func cancel() {
         dismissFn(nil)
     }
@@ -144,36 +149,12 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface {
 
     /// Create the notes table presenter
     func createNotesPresenter() -> GoalNotesTablePresenter {
-        return GoalNotesTablePresenter(
+        let presenter =  GoalNotesTablePresenter(
             director: director,
             model: model,
             object: goal.notesResults(model: model),
             mode: .multi(.embed)) { note in self.director.request(.editNote(note!, self.model))}
-    }
-}
-
-
-/// Interface from the Notes Table VC to presenter -- requirements unique to notes table.
-protocol GoalNotesTablePresenterInterface: TablePresenterInterface {
-    func selectNote(_ note: Note)
-    func deleteNote(_ note: Note)
-}
-
-class GoalNotesTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalNotesTablePresenterInterface {
-    typealias ViewInterfaceType = GoalNotesTablePresenter//Interface --- XXX weird swift generics vs. protocols runtime crash workaround XXX
-
-    private let selectedCallback: PresenterDone<Note>
-
-    required init(director: DirectorInterface, model: Model, object: ModelResultsSet?, mode: PresenterMode, dismiss: @escaping PresenterDone<Note>) {
-        self.selectedCallback = dismiss
-        super.init(director: director, model: model, object: object, mode: mode)
-    }
-
-    func selectNote(_ note: Note) {
-        selectedCallback(note)
-    }
-
-    func deleteNote(_ note: Note) {
-        note.delete(from: model)
+        presenter.delegate = self
+        return presenter
     }
 }

@@ -40,13 +40,16 @@ UITextFieldDelegate {
                 self.multistepStackView.isHidden = true
                 self.singleStepSwitch.isHidden = true
             } else if goal.hasSteps {
+                self.multistepStackView.isHidden = false
                 self.multistepTextField.text = goal.stepsStatusText
                 self.multistepStepper.value = Double(goal.currentSteps)
                 self.singleStepSwitch.isHidden = true
             } else {
-                self.singleStepSwitch.isOn = false // because goal !complete
+                self.singleStepSwitch.isHidden = false
+                self.singleStepSwitch.isOn = true // switch look tempting to press
                 self.multistepStackView.isHidden = true
             }
+            self.refreshNotesTableHeight()
         }
     }
 
@@ -125,9 +128,7 @@ UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let notesTableVC = segue.destination as? GoalNotesTableViewController {
             self.notesTableVC = notesTableVC
-            notesTableVC.contentDidChange = { [weak self] in self?.refreshNotesTableHeight() }
             PresenterUI.bind(viewController: notesTableVC, presenter: presenter.createNotesPresenter())
         }
     }
-
 }

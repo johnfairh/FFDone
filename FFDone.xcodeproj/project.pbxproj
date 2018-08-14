@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020825EA2122C7AA007578C7 /* GoalNotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825E92122C7AA007578C7 /* GoalNotesTableViewController.swift */; };
+		020825EC2122CC53007578C7 /* GoalNotesTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825EB2122CC53007578C7 /* GoalNotesTablePresenter.swift */; };
 		021309E9210A13F700410451 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 021309E7210A13F700410451 /* DataModel.xcdatamodeld */; };
 		021309EB210A162500410451 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309EA210A162500410451 /* Goal.swift */; };
 		021309EE210A176200410451 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309ED210A176200410451 /* App.swift */; };
@@ -80,6 +82,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		020825E92122C7AA007578C7 /* GoalNotesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalNotesTableViewController.swift; sourceTree = "<group>"; };
+		020825EB2122CC53007578C7 /* GoalNotesTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalNotesTablePresenter.swift; sourceTree = "<group>"; };
 		021309E8210A13F700410451 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		021309EA210A162500410451 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		021309ED210A176200410451 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 				021309F3210A2F0300410451 /* GoalsTablePresenter.swift */,
 				02867EA6211AD3EF004D3122 /* NotesTablePresenter.swift */,
 				02130A08210E100D00410451 /* IconsTablePresenter.swift */,
+				020825EB2122CC53007578C7 /* GoalNotesTablePresenter.swift */,
 				02867EBE21209D18004D3122 /* GoalViewPresenter.swift */,
 				02130A0E210F777400410451 /* GoalEditPresenter.swift */,
 				02867EAF211C99A9004D3122 /* NoteEditPresenter.swift */,
@@ -199,6 +204,7 @@
 				021309F5210A300B00410451 /* GoalsTableViewController.swift */,
 				02867EA8211AD48C004D3122 /* NotesTableViewController.swift */,
 				02130A0A210E113600410451 /* IconsTableViewController.swift */,
+				020825E92122C7AA007578C7 /* GoalNotesTableViewController.swift */,
 				02867EC021209EAF004D3122 /* GoalViewController.swift */,
 				02130A0C210F773A00410451 /* GoalEditViewController.swift */,
 				02867EAD211C996F004D3122 /* NoteEditViewController.swift */,
@@ -462,8 +468,10 @@
 				021309EE210A176200410451 /* App.swift in Sources */,
 				02867EBB211F6323004D3122 /* IconSource.swift in Sources */,
 				02130A0B210E113600410451 /* IconsTableViewController.swift in Sources */,
+				020825EC2122CC53007578C7 /* GoalNotesTablePresenter.swift in Sources */,
 				02867EB5211F37B7004D3122 /* IconEditViewController.swift in Sources */,
 				02867EA9211AD48C004D3122 /* NotesTableViewController.swift in Sources */,
+				020825EA2122C7AA007578C7 /* GoalNotesTableViewController.swift in Sources */,
 				02867EA32119ED7D004D3122 /* Note.swift in Sources */,
 				027F63752105FF93001C9738 /* AppDelegate.swift in Sources */,
 				02130A05210CD65F00410451 /* Icon.swift in Sources */,

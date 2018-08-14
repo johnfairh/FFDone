@@ -28,7 +28,10 @@ protocol GoalViewPresenterInterface {
 
 // MARK: - Presenter
 
-class GoalViewPresenter: Presenter, GoalViewPresenterInterface {
+/// This is a slightly odd view because it has some edit-y characteristics
+/// but no explicit save button: changes made have to take effect + be saved
+/// immediately.  We cheat a bit on the synchronization.
+class GoalViewPresenter: Presenter, GoalViewPresenterInterface, GoalNotesTablePresenterDelegate {
 
     typealias ViewInterfaceType = GoalViewPresenterInterface
 
@@ -75,16 +78,25 @@ class GoalViewPresenter: Presenter, GoalViewPresenterInterface {
         director.request(.createNote(goal, model))
     }
 
+    /// Callback a note has been deleted from the table.
+    func didDeleteNote() {
+        model.save()
+        doRefresh()
+    }
+
+    /// Edit this goal.
     func edit() {
         director.request(.editGoalAndThen(goal, model, { [unowned self] _ in self.doRefresh() }))
     }
 
     /// Create the notes table presenter
     func createNotesPresenter() -> GoalNotesTablePresenter {
-        return GoalNotesTablePresenter(
+        let presenter = GoalNotesTablePresenter(
             director: director,
             model: model,
             object: goal.notesResults(model: model),
             mode: .multi(.embed)) { note in self.director.request(.editNote(note!, self.model))}
+        presenter.delegate = self
+        return presenter
     }
 }
