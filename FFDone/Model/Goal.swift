@@ -343,7 +343,7 @@ extension Goal {
     }
 
     /// For the list of tags
-    static func tagListResults(model: Model) -> ModelFieldResults {
-        return createFieldResults(model: model, keyPath: #keyPath(tag), unique: true)
+    static var tagListFieldFetchRequest: ModelFieldFetchRequest {
+        return createFieldFetchRequest(fields: [#keyPath(tag)], unique: true)
     }
 }

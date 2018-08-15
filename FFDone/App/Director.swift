@@ -100,17 +100,14 @@ extension DirectorRequest {
                                model: model,
                                object: goal,
                                presenterFn: GoalEditPresenter.init,
-                               done: { _ in App.shared.refreshTags() })
+                               done: { _ in  })
 
         case let .editGoalAndThen(goal, model, continuation):
             services.editThing("GoalEditViewController",
                                model: model,
                                object: goal,
                                presenterFn: GoalEditPresenter.init,
-                               done: { editGoal in
-                                App.shared.refreshTags()
-                                continuation(editGoal)
-            })
+                               done: { editGoal in continuation(editGoal) })
 
         case let .viewGoal(goal, model):
             services.viewThing("GoalViewController",
@@ -122,7 +119,7 @@ extension DirectorRequest {
             services.createThing("GoalEditViewController",
                                  model: model,
                                  presenterFn: GoalEditPresenter.init,
-                                 done: { _ in App.shared.refreshTags() })
+                                 done: { _ in })
 
         case let .createIcon(model):
             services.createThing("IconEditViewController",
