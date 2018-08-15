@@ -717,15 +717,41 @@
                     <view key="view" contentMode="scaleToFill" id="bUW-Jg-NDR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0yd-DE-IVh" customClass="PieChart" customModule="PieCharts">
+                                <rect key="frame" x="56.5" y="188" width="262.5" height="262.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="0yd-DE-IVh" secondAttribute="height" multiplier="1:1" id="saT-26-GJl"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8V-Wy-Buw">
+                                <rect key="frame" x="152" y="301" width="71" height="36"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0yd-DE-IVh" firstAttribute="centerY" secondItem="cGg-Bu-3Uw" secondAttribute="centerY" id="8C8-bS-gFQ"/>
+                            <constraint firstItem="0yd-DE-IVh" firstAttribute="width" secondItem="cGg-Bu-3Uw" secondAttribute="width" multiplier="0.7" id="AK6-um-kNF"/>
+                            <constraint firstItem="N8V-Wy-Buw" firstAttribute="centerX" secondItem="bUW-Jg-NDR" secondAttribute="centerX" id="EF6-VN-fiu"/>
+                            <constraint firstItem="N8V-Wy-Buw" firstAttribute="centerY" secondItem="0yd-DE-IVh" secondAttribute="centerY" id="qwO-HU-4nr"/>
+                            <constraint firstItem="0yd-DE-IVh" firstAttribute="centerX" secondItem="bUW-Jg-NDR" secondAttribute="centerX" id="vRC-c9-JOA"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="cGg-Bu-3Uw"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="TabHomeIcon" id="sy9-1Q-KgC"/>
                     <navigationItem key="navigationItem" id="SQE-IJ-8Gc"/>
+                    <connections>
+                        <outlet property="pieChartView" destination="0yd-DE-IVh" id="aqh-0J-cON"/>
+                        <outlet property="progressLabel" destination="N8V-Wy-Buw" id="9hl-0z-DIz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tyj-O4-pqz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-362" y="1791"/>
+            <point key="canvasLocation" x="-362.39999999999998" y="1790.5547226386807"/>
         </scene>
         <!--NoteEditViewController-->
         <scene sceneID="scj-FJ-rx1">

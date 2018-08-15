@@ -347,3 +347,43 @@ extension Goal {
         return createFieldFetchRequest(fields: [#keyPath(tag)], unique: true)
     }
 }
+
+// MARK: - Summary steps for home screen
+
+extension Goal {
+
+    /// Private strings used to collect results
+    private static let totalSumName = "sumCdTotalSteps"
+    private static let currentSumName = "sumCdCurrentSteps"
+
+    /// Helper
+    private static func getSumExpressionDescription(keyPath: String, sumFieldName: String) -> NSExpressionDescription {
+        let sumDescription = NSExpressionDescription()
+        sumDescription.name = sumFieldName
+        sumDescription.expression = NSExpression(format: "@sum.\(keyPath)")
+        sumDescription.expressionResultType = .integer32AttributeType
+        return sumDescription
+    }
+
+    /// For the total number of completed and current steps
+    static var stepsSummaryFieldFetchRequest: ModelFieldFetchRequest {
+        let totalSumDescr = getSumExpressionDescription(keyPath: #keyPath(cdTotalSteps),
+                                                        sumFieldName: totalSumName)
+
+        let currentSumDescr = getSumExpressionDescription(keyPath: #keyPath(cdCurrentSteps),
+                                                          sumFieldName: currentSumName)
+
+        return createFieldFetchRequest(fields: [totalSumDescr, currentSumDescr])
+    }
+
+    /// Decode the results when back from the DB
+    static func decodeStepsSummary(results: ModelFieldResults) -> (current: Int, total: Int) {
+        guard results.count == 1,
+            let current = results[0][currentSumName] as? Int32,
+            let total = results[0][totalSumName] as? Int32 else {
+                Log.log("Odd steps summary data back from DB: \(results)")
+                return (current: 0, total: 0)
+        }
+        return (current: Int(current), total: Int(total))
+    }
+}
