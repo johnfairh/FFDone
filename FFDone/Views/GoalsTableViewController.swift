@@ -131,7 +131,7 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         guard searchBar.selectedScopeButtonIndex == GoalsTableSearchType.tag.rawValue else {
             return true
         }
-        guard searchBar.textField.autoCompleteText(newText: text, suggestions: App.shared.tags) else {
+        guard searchBar.textField.autoCompleteText(newText: text, suggestions: presenter.tags) else {
             return true
         }
         Dispatch.toForeground {

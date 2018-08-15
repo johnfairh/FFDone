@@ -21,6 +21,7 @@ protocol GoalsTablePresenterInterface: TablePresenterInterface {
 
     func swipeActionForGoal(_ goal: Goal) -> TableSwipeAction?
 
+    var tags: [String] { get }
     func updateSearchResults(text: String, type: GoalsTableSearchType)
 }
 
@@ -137,6 +138,10 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
     }
 
     // MARK: - Search
+
+    var tags: [String] {
+        return director.tags
+    }
 
     func updateSearchResults(text: String, type: GoalsTableSearchType) {
         handleSearchUpdate(text: text, type: type.rawValue) { text, typeInt in

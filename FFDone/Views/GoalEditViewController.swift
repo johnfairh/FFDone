@@ -103,7 +103,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
         guard textField === tagTextField else {
             return true
         }
-        guard textField.autoCompleteText(newText: string, suggestions: App.shared.tags) else {
+        guard textField.autoCompleteText(newText: string, suggestions: presenter.tags) else {
             return true
         }
         presenter.setTag(tag: textField.text!)

@@ -12,6 +12,7 @@
 		020825EE2122E0BE007578C7 /* PieCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020825ED2122E0BD007578C7 /* PieCharts.framework */; };
 		020825F02122E2D8007578C7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825EF2122E2D8007578C7 /* HomeViewController.swift */; };
 		020825F22122E310007578C7 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825F12122E310007578C7 /* HomePresenter.swift */; };
+		020825F621246F24007578C7 /* TagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825F521246F24007578C7 /* TagList.swift */; };
 		021309E9210A13F700410451 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 021309E7210A13F700410451 /* DataModel.xcdatamodeld */; };
 		021309EB210A162500410451 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309EA210A162500410451 /* Goal.swift */; };
 		021309EE210A176200410451 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309ED210A176200410451 /* App.swift */; };
@@ -90,6 +91,7 @@
 		020825ED2122E0BD007578C7 /* PieCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PieCharts.framework; path = Carthage/Build/iOS/PieCharts.framework; sourceTree = "<group>"; };
 		020825EF2122E2D8007578C7 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		020825F12122E310007578C7 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
+		020825F521246F24007578C7 /* TagList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagList.swift; sourceTree = "<group>"; };
 		021309E8210A13F700410451 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		021309EA210A162500410451 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		021309ED210A176200410451 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				02130A00210B6B7C00410451 /* DatabaseInit.swift */,
 				021309EF210A1D2E00410451 /* Director.swift */,
 				02867EBA211F6323004D3122 /* IconSource.swift */,
+				020825F521246F24007578C7 /* TagList.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				02867EB0211C99A9004D3122 /* NoteEditPresenter.swift in Sources */,
 				021309F0210A1D2E00410451 /* Director.swift in Sources */,
 				02867EBF21209D18004D3122 /* GoalViewPresenter.swift in Sources */,
+				020825F621246F24007578C7 /* TagList.swift in Sources */,
 				021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */,
 				02130A09210E100D00410451 /* IconsTablePresenter.swift in Sources */,
 				021309E9210A13F700410451 /* DataModel.xcdatamodeld in Sources */,

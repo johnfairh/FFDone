@@ -23,6 +23,9 @@ protocol GoalEditPresenterInterface {
     func setFav(fav: Bool)
     func setTag(tag: String?)
 
+    /// Query current tags
+    var tags: [String] { get }
+
     /// Let the user choose the icon
     func pickIcon()
 
@@ -117,6 +120,11 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface, GoalNotesTablePr
     func setTag(tag: String?) {
         goal.tag = tag
         doRefresh()
+    }
+
+    /// Query the defined tags for autocomplete
+    var tags: [String] {
+        return director.tags
     }
 
     /// Let the user choose the icon

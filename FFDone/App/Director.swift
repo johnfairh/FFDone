@@ -7,6 +7,14 @@
 
 import TMLPresentation
 
+// The Director is the top-level Presenter for the application.
+//
+// It is roughly associated with the tab bar view and is responsible for
+// configuring each tab with its own presenter.
+//
+// It offers services to all presenters to begin other use cases or access
+// app-wide function.
+
 // MARK: - Use-case request interface
 
 enum DirectorRequest {
@@ -24,7 +32,11 @@ enum DirectorRequest {
 }
 
 protocol DirectorInterface {
+    /// Start a new usecase
     func request(_ request: DirectorRequest)
+    
+    /// What tags are defined?
+    var tags: [String] { get }
 }
 
 // MARK: - Concrete director class
@@ -40,12 +52,14 @@ class Director {
 
     weak var services: TabbedDirectorServices<DirectorInterface>!
     private var rootModel: Model!
+    private var tagList: TagList?
 
     init() {
     }
 
     func modelIsReady(model: Model) {
         rootModel = model
+        tagList = TagList(model: model)
 
         Log.log("Director.modelIsReady")
 
@@ -165,5 +179,10 @@ extension Director: DirectorInterface {
         Dispatch.toForeground {
             request.handle(services: self.services)
         }
+    }
+
+    /// Call from presenter to query list of user-defined goal tags
+    var tags: [String] {
+        return tagList?.tags ?? []
     }
 }

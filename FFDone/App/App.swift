@@ -21,7 +21,6 @@ final class App {
     private var modelProvider: ModelProvider
     private var director: Director
     private var directorServices: TabbedDirectorServices<DirectorInterface>
-    private let tagManager: TagManager
 
     init(window: UIWindow) {
         if App.debugMode {
@@ -30,7 +29,6 @@ final class App {
         }
 
         modelProvider = ModelProvider(userDbName: "DataModel")
-        tagManager = TagManager(provider: modelProvider)
         director = Director()
         directorServices = TabbedDirectorServices(director: director,
                                                   window: window,
@@ -61,36 +59,10 @@ final class App {
 
     func initComplete(model: Model) {
         Log.log("App.init complete!")
-        tagManager.start()
         Prefs.runBefore = true
         director.modelIsReady(model: model)
     }
-
-    // MARK: Tag List
-
-    class TagManager: ModelFieldWatcherDelegate {
-        var tags: [String]
-        var runner: ModelFieldWatcher
-
-        init(provider: ModelProvider) {
-            tags = []
-            runner = ModelFieldWatcher(modelProvider: provider,
-                                       fetchRequest: Goal.tagListFieldFetchRequest)
-        }
-
-        func start() {
-            runner.delegate = self
-        }
-
-        func updateQueryResults(results: ModelFieldResults) {
-            tags = results.compactMap { $0.values.first as? String }
-        }
-    }
-
-    var tags: [String] { // get rid of this, should come to views via presenter -> director-req
-        return tagManager.tags
-    }
-
+    
     // MARK: Shared instance
 
     static var shared: App {
