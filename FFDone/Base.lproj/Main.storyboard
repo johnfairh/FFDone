@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.1"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -719,9 +718,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9X-5D-kxz" userLabel="Tag cloud view">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9X-5D-kxz" userLabel="Tag cloud view" customClass="DBSphereView" customModule="DBSphereTagCloud_Framework">
                                 <rect key="frame" x="67.5" y="260" width="240" height="240"/>
-                                <color key="backgroundColor" name="StepSwipeColour"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="240" id="BKf-Wi-k4R"/>
                                     <constraint firstAttribute="width" secondItem="f9X-5D-kxz" secondAttribute="height" multiplier="1:1" id="kGa-4L-Ff5"/>
@@ -771,7 +769,7 @@
                         <outlet property="pieChartView" destination="0yd-DE-IVh" id="aqh-0J-cON"/>
                         <outlet property="pieChartViewTopConstraint" destination="xZF-hn-cwB" id="H7g-5J-1gP"/>
                         <outlet property="progressLabel" destination="N8V-Wy-Buw" id="9hl-0z-DIz"/>
-                        <outlet property="tagCloudView" destination="f9X-5D-kxz" id="owr-Pg-Zrb"/>
+                        <outlet property="tagCloudView" destination="f9X-5D-kxz" id="sbR-JP-4yV"/>
                         <outlet property="tagCloudViewHeightConstraint" destination="BKf-Wi-k4R" id="Os8-91-xec"/>
                         <outlet property="tagCloudViewTopConstraint" destination="FTI-7M-yqw" id="hjH-XO-AbW"/>
                     </connections>
@@ -1087,9 +1085,6 @@
         <image name="TabGoalsIcon" width="30" height="30"/>
         <image name="TabHomeIcon" width="30" height="30"/>
         <image name="TabIconsIcon" width="30" height="30"/>
-        <namedColor name="StepSwipeColour">
-            <color red="0.15294117647058825" green="0.68235294117647061" blue="0.37647058823529411" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="xWc-Nd-r2L"/>

@@ -7,6 +7,7 @@
 
 import TMLPresentation
 import PieCharts
+import DBSphereTagCloud_Framework
 
 /// VC for the home screen
 class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegate {
@@ -16,7 +17,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
     @IBOutlet weak var tagCloudViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tagCloudViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var tagCloudView: UIView!
+    @IBOutlet weak var tagCloudView: DBSphereView!
 
     @IBOutlet weak var alertsTableHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var alertsTableView: UIView!
@@ -36,6 +37,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+
         if safeAreaSize == nil {
             safeAreaSize = view.safeAreaLayoutGuide.layoutFrame.size
 
@@ -140,5 +142,17 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
     func updateTagCloud(complete: Bool) {
         Log.log("Tag cloud now shows \(complete ? "complete" : "incomplete") tags")
+        var buttons: [UIButton] = []
+
+        for i in 1..<50 {
+            let btn = UIButton(type: .system)
+            btn.setTitle("\(i)", for: .normal)
+            btn.setTitleColor(.darkGray, for: .normal)
+            btn.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.light)
+            btn.frame = CGRect(x: 0, y: 0, width: 60, height: 20)
+            buttons.append(btn)
+            tagCloudView.addSubview(btn)
+        }
+        tagCloudView.setCloudTags(buttons)
     }
 }

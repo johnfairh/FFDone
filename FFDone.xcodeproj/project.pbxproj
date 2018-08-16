@@ -52,6 +52,7 @@
 		02867EBD211F6398004D3122 /* DefaultIconSources.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02867EBC211F6397004D3122 /* DefaultIconSources.yaml */; };
 		02867EBF21209D18004D3122 /* GoalViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EBE21209D18004D3122 /* GoalViewPresenter.swift */; };
 		02867EC121209EAF004D3122 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EC021209EAF004D3122 /* GoalViewController.swift */; };
+		02C61D9F2125EAD500073B7D /* DBSphereTagCloud_Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +137,7 @@
 		02867EBC211F6397004D3122 /* DefaultIconSources.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DefaultIconSources.yaml; path = ../../../FFDoneResources/Resources/DefaultIconSources.yaml; sourceTree = "<group>"; };
 		02867EBE21209D18004D3122 /* GoalViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewPresenter.swift; sourceTree = "<group>"; };
 		02867EC021209EAF004D3122 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
+		02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DBSphereTagCloud_Framework.framework; path = Carthage/Build/iOS/DBSphereTagCloud_Framework.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 				0253339F2112FE3D00AF8E7B /* TMLPresentation.framework in Frameworks */,
 				02867EB3211D9474004D3122 /* DatePickerDialog.framework in Frameworks */,
 				027F63A321065271001C9738 /* TMLPersistentContainer.framework in Frameworks */,
+				02C61D9F2125EAD500073B7D /* DBSphereTagCloud_Framework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +255,7 @@
 				027F63882105FF96001C9738 /* FFDoneTests */,
 				027F63932105FF96001C9738 /* FFDoneUITests */,
 				027F63722105FF93001C9738 /* Products */,
+				02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */,
 				020825ED2122E0BD007578C7 /* PieCharts.framework */,
 				02867EB2211D9474004D3122 /* DatePickerDialog.framework */,
 				021309FE210B686600410451 /* Yams.framework */,
@@ -449,6 +453,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Yams.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/DatePickerDialog.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PieCharts.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/DBSphereTagCloud_Framework.framework",
 			);
 			outputFileListPaths = (
 			);
@@ -457,6 +462,7 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Yams.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/DatePickerDialog.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PieCharts.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/DBSphereTagCloud_Framework.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

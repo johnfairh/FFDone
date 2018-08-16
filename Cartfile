@@ -2,3 +2,4 @@ github "johnfairh/TMLPersistentContainer" ~> 3.0
 github "jpsim/Yams"
 github "squimer/DatePickerDialog-iOS-Swift"
 github "i-schuetz/PieCharts"
+github "apparition47/DBSphereTagCloudSwift" "master"
