@@ -13,46 +13,75 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
     @IBOutlet weak var pieChartViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var pieChartView: PieChart!
     @IBOutlet weak var progressLabel: UILabel!
+
     @IBOutlet weak var tagCloudViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tagCloudViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tagCloudView: UIView!
+
     @IBOutlet weak var alertsTableHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var alertsTableView: UIView!
 
-    var origTagHeight: CGFloat = 0.0
     public override func viewDidLoad() {
-        // start with just pie visible
-        alertsTableHeightConstraint.constant = 0 /// this is just a constant
-        origTagHeight = tagCloudViewHeightConstraint.constant
-        tagCloudViewHeightConstraint.constant = 0
-
-
         presenter.refresh = { [unowned self] current, total in
-            self.relayout(current: current, total: total)
+            self.recalculateSlices(current: current, total: total)
         }
-        // 1-time pie configuration
+        // 1-time pie view configuration
         pieChartView.referenceAngle = CGFloat(270)
         pieChartView.delegate = self
         pieChartView.layer.borderWidth  = 1
         pieChartView.layer.borderColor  = UIColor.lightGray.cgColor
     }
 
-    var firstRun: Bool = false
-    var pieCH: CGFloat = 0.0
+    var safeAreaSize: CGSize?
 
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if !firstRun {
-            firstRun = true
-            let safeAreaHeight = view.safeAreaLayoutGuide.layoutFrame.height
-            let pieHeight = pieChartView.frame.height
+        if safeAreaSize == nil {
+            safeAreaSize = view.safeAreaLayoutGuide.layoutFrame.size
 
-            pieCH = (safeAreaHeight - pieHeight) / 2
-            pieChartViewTopConstraint.constant = pieCH
+            // Initial layout pass
+            alertsTableHeightConstraint.constant = 80 // from subvc
+            positionChartOnlyView()
         }
     }
 
-    private func relayout(current: Int, total: Int) {
+    func positionChartOnlyView() {
+        guard let safeAreaSize = safeAreaSize else { return }
+
+        tagCloudViewHeightConstraint.constant = 0
+        pieChartViewTopConstraint.constant =
+            (safeAreaSize.height -
+             alertsTableHeightConstraint.constant -
+             pieChartView.frame.height) / 2
+    }
+
+    var isTagCloudVisible: Bool {
+        return tagCloudViewHeightConstraint.constant > 0
+    }
+
+    func positionChartAndTagsView() {
+        guard let safeAreaSize = safeAreaSize else { return }
+
+        var spaceAboveAlerts = safeAreaSize.height - alertsTableHeightConstraint.constant
+        if alertsTableHeightConstraint.constant > 0 {
+            spaceAboveAlerts -= 4 // margin
+        }
+
+        let maxTagCloudSide = spaceAboveAlerts - pieChartView.frame.height
+        let tagCloudSide = min(maxTagCloudSide, safeAreaSize.width)
+
+        pieChartViewTopConstraint.constant =
+            (spaceAboveAlerts - tagCloudSide - pieChartView.frame.height) / 2
+        tagCloudViewHeightConstraint.constant = tagCloudSide
+        tagCloudViewTopConstraint.constant =
+            pieChartViewTopConstraint.constant + pieChartView.frame.height
+    }
+
+    private static let kIncompleteSliceId = 0
+    private static let kCompleteSliceId = 1
+    private static let kSliceCount = 2
+
+    private func recalculateSlices(current: Int, total: Int) {
         let stepsToDo: Double
         let stepsDone: Double
 
@@ -67,27 +96,49 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         let donePercent = Int((stepsDone * 100) / (stepsDone + stepsToDo))
         progressLabel.text = "\(donePercent)%"
 
+        // Try to suppress weirdness during pie population... not 100% successful :/
         pieChartView.clear()
         let oldAnimDuration = pieChartView.animDuration
         pieChartView.animDuration = 0
-        pieChartView.models = [
-            PieSliceModel(value: stepsDone, color: .green),
-            PieSliceModel(value: stepsToDo, color: .red)
-        ]
-        pieChartView.slices.forEach { $0.view.selectedOffset = CGFloat(5.0) }
-        pieChartView.animDuration = oldAnimDuration
+        defer { pieChartView.animDuration = oldAnimDuration }
+
+        // Add slices
+        pieChartView.models =
+            [PieSliceModel(value: stepsDone, color: .green), // kIncompleteSliceId
+             PieSliceModel(value: stepsToDo, color: .red)]   // kCompleteSliceId
+
+        // Configure how far out the slice pops when clicked
+        pieChartView.slices.forEach { $0.view.selectedOffset = CGFloat(2.0) }
     }
 
+    var ignoreNextOnSelected = false
+
     func onSelected(slice: PieSlice, selected: Bool) {
+        guard !ignoreNextOnSelected else {
+            ignoreNextOnSelected = false
+            return
+        }
+
+        if selected && isTagCloudVisible {
+            ignoreNextOnSelected = true
+            Dispatch.toForeground {
+                self.pieChartView.slices[1 - slice.data.id].view.selected = false
+            }
+        }
         UIView.animate(withDuration: 0.2) {
-            if selected {
-                self.pieChartViewTopConstraint.constant = 0
-                self.tagCloudViewHeightConstraint.constant = self.origTagHeight
+            if !selected {
+                self.positionChartOnlyView()
             } else {
-                self.pieChartViewTopConstraint.constant = self.pieCH
-                self.tagCloudViewHeightConstraint.constant = 0
+                if !self.isTagCloudVisible {
+                    self.positionChartAndTagsView()
+                }
+                self.updateTagCloud(complete: slice.data.id == HomeViewController.kCompleteSliceId)
             }
             self.view.layoutIfNeeded()
         }
+    }
+
+    func updateTagCloud(complete: Bool) {
+        Log.log("Tag cloud now shows \(complete ? "complete" : "incomplete") tags")
     }
 }
