@@ -52,6 +52,7 @@
 		02867EBD211F6398004D3122 /* DefaultIconSources.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02867EBC211F6397004D3122 /* DefaultIconSources.yaml */; };
 		02867EBF21209D18004D3122 /* GoalViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EBE21209D18004D3122 /* GoalViewPresenter.swift */; };
 		02867EC121209EAF004D3122 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EC021209EAF004D3122 /* GoalViewController.swift */; };
+		02990A6621270F4C00BF1CEC /* TagCloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A6521270F4C00BF1CEC /* TagCloudView.swift */; };
 		02C61D9F2125EAD500073B7D /* DBSphereTagCloud_Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */; };
 /* End PBXBuildFile section */
 
@@ -137,6 +138,7 @@
 		02867EBC211F6397004D3122 /* DefaultIconSources.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DefaultIconSources.yaml; path = ../../../FFDoneResources/Resources/DefaultIconSources.yaml; sourceTree = "<group>"; };
 		02867EBE21209D18004D3122 /* GoalViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewPresenter.swift; sourceTree = "<group>"; };
 		02867EC021209EAF004D3122 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
+		02990A6521270F4C00BF1CEC /* TagCloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCloudView.swift; sourceTree = "<group>"; };
 		02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DBSphereTagCloud_Framework.framework; path = Carthage/Build/iOS/DBSphereTagCloud_Framework.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,6 +226,7 @@
 				02867EAD211C996F004D3122 /* NoteEditViewController.swift */,
 				02867EB4211F37B7004D3122 /* IconEditViewController.swift */,
 				020825EF2122E2D8007578C7 /* HomeViewController.swift */,
+				02990A6521270F4C00BF1CEC /* TagCloudView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -498,6 +501,7 @@
 				02867EA32119ED7D004D3122 /* Note.swift in Sources */,
 				027F63752105FF93001C9738 /* AppDelegate.swift in Sources */,
 				02130A05210CD65F00410451 /* Icon.swift in Sources */,
+				02990A6621270F4C00BF1CEC /* TagCloudView.swift in Sources */,
 				021309F6210A300B00410451 /* GoalsTableViewController.swift in Sources */,
 				02867EB7211F37E0004D3122 /* IconEditPresenter.swift in Sources */,
 				020825F22122E310007578C7 /* HomePresenter.swift in Sources */,

@@ -7,7 +7,6 @@
 
 import TMLPresentation
 import PieCharts
-import DBSphereTagCloud_Framework
 
 /// VC for the home screen
 class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegate {
@@ -17,20 +16,25 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
     @IBOutlet weak var tagCloudViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tagCloudViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var tagCloudView: DBSphereView!
+    @IBOutlet weak var tagCloudView: TagCloudView!
 
     @IBOutlet weak var alertsTableHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var alertsTableView: UIView!
 
     public override func viewDidLoad() {
-        presenter.refresh = { [unowned self] current, total in
+        presenter.refreshSteps = { [unowned self] current, total in
             self.recalculateSlices(current: current, total: total)
         }
         // 1-time pie view configuration
         pieChartView.referenceAngle = CGFloat(270)
         pieChartView.delegate = self
+
         pieChartView.layer.borderWidth  = 1
         pieChartView.layer.borderColor  = UIColor.lightGray.cgColor
+        pieChartView.backgroundColor    = UIColor.init(white: 0.0, alpha: 0.0)
+
+        tagCloudView.layer.borderWidth  = 1
+        tagCloudView.layer.borderColor  = UIColor.lightGray.cgColor
     }
 
     var safeAreaSize: CGSize?
@@ -45,6 +49,16 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
             alertsTableHeightConstraint.constant = 80 // from subvc
             positionChartOnlyView()
         }
+    }
+
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tagCloudView.timerStart()
+    }
+
+    public override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        tagCloudView.timerStop()
     }
 
     func positionChartOnlyView() {
@@ -71,7 +85,10 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
         let maxTagCloudSide = spaceAboveAlerts - pieChartView.frame.height
         let tagCloudSide = min(maxTagCloudSide, safeAreaSize.width)
+           /// Need to chuck a decent margin on either side for tag overflow - about what we
+           /// have in this 80pt alerts demo, reduce sAS.width.
 
+        /// Need extra margin of maybe 10pt vertically to deal with tag height overlap.
         pieChartViewTopConstraint.constant =
             (spaceAboveAlerts - tagCloudSide - pieChartView.frame.height) / 2
         tagCloudViewHeightConstraint.constant = tagCloudSide
@@ -113,6 +130,10 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         pieChartView.slices.forEach { $0.view.selectedOffset = CGFloat(2.0) }
     }
 
+    // If a slice is selected and the user clicks the other slice, we have
+    // to programatically deselect the former slice.  This is slightly hacky
+    // because we still get the 'onSelected' callback made reentrantly, and
+    // have to ignore it....
     var ignoreNextOnSelected = false
 
     func onSelected(slice: PieSlice, selected: Bool) {
@@ -127,32 +148,54 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
                 self.pieChartView.slices[1 - slice.data.id].view.selected = false
             }
         }
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.2, animations: {
             if !selected {
+                self.tagCloudView.clearCloudTags()
                 self.positionChartOnlyView()
             } else {
                 if !self.isTagCloudVisible {
                     self.positionChartAndTagsView()
                 }
-                self.updateTagCloud(complete: slice.data.id == HomeViewController.kCompleteSliceId)
             }
             self.view.layoutIfNeeded()
-        }
+        }, completion: { _ in
+            if selected {
+                self.updateTagCloud(complete: slice.data.id == HomeViewController.kCompleteSliceId)
+            }
+        })
     }
 
     func updateTagCloud(complete: Bool) {
-        Log.log("Tag cloud now shows \(complete ? "complete" : "incomplete") tags")
-        var buttons: [UIButton] = []
+        let tags = [ "levelling", "crafting", "gathering", "arr", "zone", "heavensward", "legacy", "(untagged)"]
 
-        for i in 1..<50 {
-            let btn = UIButton(type: .system)
-            btn.setTitle("\(i)", for: .normal)
-            btn.setTitleColor(.darkGray, for: .normal)
-            btn.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.light)
-            btn.frame = CGRect(x: 0, y: 0, width: 60, height: 20)
-            buttons.append(btn)
-            tagCloudView.addSubview(btn)
+        let buttons = tags.map { tag -> UIButton in
+            let button = UIButton(type: .system).configureForTagCloud(tag: tag)
+            button.addTarget(self, action: #selector(tagCloudButtonTapped), for: .touchUpInside)
+            return button
         }
         tagCloudView.setCloudTags(buttons)
+    }
+
+    @objc func tagCloudButtonTapped(_ sender: UIButton) {
+        guard let tag = sender.titleLabel?.text else {
+            return
+        }
+        Log.log("GO TO TAG \(tag)")
+    }
+}
+
+extension UIButton {
+
+    func configureForTagCloud(tag: String) -> UIButton {
+        Log.assert(buttonType == .system)
+        setTitle(tag, for: .normal)
+        setTitleColor(.darkText, for: .normal)
+        titleLabel?.font = .systemFont(ofSize: 24, weight: .light)
+        backgroundColor = UIColor(named: "TagBackgroundColour")
+        sizeToFit()
+        frame.size.width += 8
+        layer.cornerRadius = 6
+        layer.masksToBounds = true
+        return self
     }
 }

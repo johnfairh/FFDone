@@ -10,7 +10,7 @@ import TMLPresentation
 /// Presenter inputs, commands, outputs
 protocol HomePresenterInterface {
 
-    var refresh: (_ current: Int, _ total: Int) -> Void { get set }
+    var refreshSteps: (_ current: Int, _ total: Int) -> Void { get set }
 }
 
 class HomePresenter: Presenter, HomePresenterInterface, ModelFieldWatcherDelegate {
@@ -21,9 +21,9 @@ class HomePresenter: Presenter, HomePresenterInterface, ModelFieldWatcherDelegat
     private let director: DirectorInterface
     private let fieldWatcher: ModelFieldWatcher
 
-    var refresh: (_ current: Int, _ total: Int) -> Void = { _, _ in } {
+    var refreshSteps: (_ current: Int, _ total: Int) -> Void = { _, _ in } {
         didSet {
-            doRefresh()
+            doRefreshSteps()
         }
     }
 
@@ -45,11 +45,11 @@ class HomePresenter: Presenter, HomePresenterInterface, ModelFieldWatcherDelegat
         let decoded = Goal.decodeStepsSummary(results: results)
         current = decoded.current
         total = decoded.total
-        doRefresh()
+        doRefreshSteps()
     }
 
     // Push new state to the view
-    private func doRefresh() {
-        refresh(current, total)
+    private func doRefreshSteps() {
+        refreshSteps(current, total)
     }
 }
