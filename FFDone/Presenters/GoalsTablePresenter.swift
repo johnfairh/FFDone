@@ -155,4 +155,40 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
             }
         }
     }
+
+    // MARK: - Invocation
+
+    // Painfully this can happen before the view has loaded and so we need
+    // to deal with that ordering of events as well as the more convenient
+    // one.
+
+    enum InvocationState {
+        case idle
+        case waiting(String)
+        case ready((String) -> Void)
+
+        mutating func send(tag: String) {
+            switch self {
+            case .idle, .waiting(_): self = .waiting(tag)
+            case .ready(let uiFn): uiFn(tag)
+            }
+        }
+
+        mutating func register(uiFunc: @escaping (String) -> Void) {
+            if case .waiting(let tag) = self {
+                uiFunc(tag)
+            }
+            self = .ready(uiFunc)
+        }
+    }
+
+    var invocationState: InvocationState = .idle
+
+    func registerInvocation(uifn: @escaping (String) -> Void) {
+        invocationState.register(uiFunc: uifn)
+    }
+
+    func invoke(with data: String) {
+        invocationState.send(tag: data)
+    }
 }

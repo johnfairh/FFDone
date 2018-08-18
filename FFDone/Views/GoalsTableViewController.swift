@@ -65,6 +65,10 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         if GoalsTableViewController.shared == nil {
             GoalsTableViewController.shared = self
         }
+
+        presenter.registerInvocation() { [weak self] tag in
+            self?.doSearchForTag(tag: tag)
+        }
     }
     
     private var tableModel: TableModel<GoalCell, GoalsTableViewController>!

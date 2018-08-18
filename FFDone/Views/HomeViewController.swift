@@ -41,7 +41,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
             // Initial layout pass
             alertsTableHeightConstraint.constant = 0 // from subvc
-            positionChartOnlyView()
+            layoutChartOnlyView()
         }
     }
 
@@ -171,7 +171,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         guard let tag = sender.titleLabel?.text else {
             return
         }
-        Log.log("GO TO TAG \(tag)")
+        presenter.displayTag(tag)
     }
 }
 

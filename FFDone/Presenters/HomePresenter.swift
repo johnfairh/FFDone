@@ -11,6 +11,8 @@ import TMLPresentation
 protocol HomePresenterInterface {
 
     var refreshSteps: (_ current: Int, _ total: Int) -> Void { get set }
+
+    func displayTag(_ tag: String)
 }
 
 class HomePresenter: Presenter, HomePresenterInterface, ModelFieldWatcherDelegate {
@@ -51,5 +53,10 @@ class HomePresenter: Presenter, HomePresenterInterface, ModelFieldWatcherDelegat
     // Push new state to the view
     private func doRefreshSteps() {
         refreshSteps(current, total)
+    }
+
+    // user clicks tag
+    func displayTag(_ tag: String) {
+        director.request(.switchToGoals(tag))
     }
 }

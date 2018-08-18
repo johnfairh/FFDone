@@ -23,6 +23,8 @@ enum DirectorRequest {
     case editGoalAndThen(Goal, Model, (Goal) -> Void)
     case viewGoal(Goal, Model)
 
+    case switchToGoals(String)
+
     case createIcon(Model)
     case editIcon(Icon, Model)
     case pickIcon(Model, (Icon) -> Void)
@@ -65,7 +67,7 @@ class Director {
 
         // set tabs
         initTab(.home,
-                queryResults: Goal.allSortedResultsSet(model: model),
+                queryResults: Goal.allSortedResultsSet(model: model), // TODO: wot?
                 presenterFn: HomePresenter.init)
 
         initTab(.goals,
@@ -107,7 +109,7 @@ class Director {
 // MARK: - DirectorRequest processing
 
 extension DirectorRequest {
-    func handle(services: DirectorServices<DirectorInterface>) {
+    func handle(services: TabbedDirectorServices<DirectorInterface>) {
         switch self {
         case let .editGoal(goal, model):
             services.editThing("GoalEditViewController",
@@ -134,6 +136,10 @@ extension DirectorRequest {
                                  model: model,
                                  presenterFn: GoalEditPresenter.init,
                                  done: { _ in })
+
+        case let .switchToGoals(tag):
+            services.animateToTab(tabIndex: Director.Tab.goals.rawValue,
+                                  invocationData: tag as AnyObject)
 
         case let .createIcon(model):
             services.createThing("IconEditViewController",
