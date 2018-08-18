@@ -28,13 +28,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         // 1-time pie view configuration
         pieChartView.referenceAngle = CGFloat(270)
         pieChartView.delegate = self
-
-        pieChartView.layer.borderWidth  = 1
-        pieChartView.layer.borderColor  = UIColor.lightGray.cgColor
         pieChartView.backgroundColor    = UIColor.init(white: 0.0, alpha: 0.0)
-
-        tagCloudView.layer.borderWidth  = 1
-        tagCloudView.layer.borderColor  = UIColor.lightGray.cgColor
     }
 
     var safeAreaSize: CGSize?
@@ -46,7 +40,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
             safeAreaSize = view.safeAreaLayoutGuide.layoutFrame.size
 
             // Initial layout pass
-            alertsTableHeightConstraint.constant = 80 // from subvc
+            alertsTableHeightConstraint.constant = 0 // from subvc
             positionChartOnlyView()
         }
     }
@@ -61,7 +55,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         tagCloudView.timerStop()
     }
 
-    func positionChartOnlyView() {
+    func layoutChartOnlyView() {
         guard let safeAreaSize = safeAreaSize else { return }
 
         tagCloudViewHeightConstraint.constant = 0
@@ -75,30 +69,27 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         return tagCloudViewHeightConstraint.constant > 0
     }
 
-    func positionChartAndTagsView() {
+    func layoutChartAndTagsView() {
         guard let safeAreaSize = safeAreaSize else { return }
 
-        var spaceAboveAlerts = safeAreaSize.height - alertsTableHeightConstraint.constant
-        if alertsTableHeightConstraint.constant > 0 {
-            spaceAboveAlerts -= 4 // margin
-        }
+        let spaceAboveAlerts = safeAreaSize.height - alertsTableHeightConstraint.constant
 
-        let maxTagCloudSide = spaceAboveAlerts - pieChartView.frame.height
-        let tagCloudSide = min(maxTagCloudSide, safeAreaSize.width)
-           /// Need to chuck a decent margin on either side for tag overflow - about what we
-           /// have in this 80pt alerts demo, reduce sAS.width.
+        let tagCloudVMargin = CGFloat(10) // deal with tag labels overflowing the frame
+        let tagCloudHMargin = CGFloat(30) // same, but bigger because text...
 
-        /// Need extra margin of maybe 10pt vertically to deal with tag height overlap.
+        let maxTagCloudHeight = spaceAboveAlerts - pieChartView.frame.height - 2 * tagCloudVMargin
+        let maxTagCloudWidth = safeAreaSize.width - (2 * tagCloudHMargin)
+        let tagCloudSide = min(maxTagCloudHeight, maxTagCloudWidth)
+
         pieChartViewTopConstraint.constant =
-            (spaceAboveAlerts - tagCloudSide - pieChartView.frame.height) / 2
+            (spaceAboveAlerts - tagCloudSide - 2 * tagCloudVMargin - pieChartView.frame.height) / 2
         tagCloudViewHeightConstraint.constant = tagCloudSide
         tagCloudViewTopConstraint.constant =
-            pieChartViewTopConstraint.constant + pieChartView.frame.height
+            pieChartViewTopConstraint.constant + pieChartView.frame.height + tagCloudVMargin
     }
 
     private static let kIncompleteSliceId = 0
     private static let kCompleteSliceId = 1
-    private static let kSliceCount = 2
 
     private func recalculateSlices(current: Int, total: Int) {
         let stepsToDo: Double
@@ -151,10 +142,10 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         UIView.animate(withDuration: 0.2, animations: {
             if !selected {
                 self.tagCloudView.clearCloudTags()
-                self.positionChartOnlyView()
+                self.layoutChartOnlyView()
             } else {
                 if !self.isTagCloudVisible {
-                    self.positionChartAndTagsView()
+                    self.layoutChartAndTagsView()
                 }
             }
             self.view.layoutIfNeeded()
