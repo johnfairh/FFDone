@@ -69,7 +69,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
         tagCloudViewHeightConstraint.constant = 0
         pieChartViewTopConstraint.constant =
-            (safeAreaSize.height -
+            (safeAreaSize.height - 40 -
              alertsTableHeightConstraint.constant -
              pieChartView.frame.height) / 2
     }
