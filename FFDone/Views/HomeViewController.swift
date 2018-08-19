@@ -168,7 +168,6 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
                 if !self.isTagCloudVisible {
                     self.layoutChartAndTagsView()
                 }
-                slice.view
             }
             self.view.layoutIfNeeded()
         }, completion: { _ in
