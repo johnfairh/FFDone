@@ -7,18 +7,17 @@
 
 import TMLPresentation
 
-///
-final class TagList: ModelFieldWatcherDelegate {
+/// Central place to cache the names of all the tags in use.
+/// This is used for auto-completion when the user is entering a tag name.
+final class TagList {
     var tags: [String]
     private var runner: ModelFieldWatcher
 
     init(model: Model) {
         tags = []
-        runner = model.createFieldWatcher(fetchRequest: Goal.tagListFieldFetchRequest)
-        runner.delegate = self
-    }
-
-    func updateQueryResults(results: ModelFieldResults) {
-        tags = results.compactMap { $0.values.first as? String }
+        runner = model.createFieldWatcher(fetchRequest: Goal.allTagsFieldFetchRequest)
+        runner.callback = { [unowned self] results in
+            self.tags = Goal.decodeTagsResults(results: results)
+        }
     }
 }

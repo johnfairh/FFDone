@@ -22,13 +22,14 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
     @IBOutlet weak var alertsTableView: UIView!
 
     public override func viewDidLoad() {
-        presenter.refreshSteps = { [unowned self] current, total in
-            self.recalculateSlices(current: current, total: total)
+        presenter.refresh = { [unowned self] data in
+            self.refreshData(data)
         }
+
         // 1-time pie view configuration
         pieChartView.referenceAngle = CGFloat(270)
         pieChartView.delegate = self
-        pieChartView.backgroundColor    = UIColor.init(white: 0.0, alpha: 0.0)
+        pieChartView.backgroundColor  = UIColor.init(white: 0.0, alpha: 0.0)
     }
 
     var safeAreaSize: CGSize?
@@ -88,22 +89,30 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
             pieChartViewTopConstraint.constant + pieChartView.frame.height + tagCloudVMargin
     }
 
-    private static let kIncompleteSliceId = 0
-    private static let kCompleteSliceId = 1
+    var homeData: HomeData?
+    var selectedSide: HomeSideType?
 
-    private func recalculateSlices(current: Int, total: Int) {
-        let stepsToDo: Double
-        let stepsDone: Double
+    private func refreshData(_ homeData: HomeData) {
+        self.homeData = homeData
 
-        if total == 0 {
+        recalculateSlices(toDo: homeData.dataForSide(.incomplete).steps,
+                          done: homeData.dataForSide(.complete).steps)
+        updateTagCloud()
+    }
+
+    private func recalculateSlices(toDo: Int, done: Int) {
+        let stepsToDo: Int
+        let stepsDone: Int
+
+        if toDo + done == 0 {
             stepsToDo = 0
             stepsDone = 1
         } else {
-            stepsDone = Double(current)
-            stepsToDo = Double(total - current)
+            stepsToDo = toDo
+            stepsDone = done
         }
 
-        let donePercent = Int((stepsDone * 100) / (stepsDone + stepsToDo))
+        let donePercent = (stepsDone * 100) / (stepsDone + stepsToDo)
         progressLabel.text = "\(donePercent)%"
 
         // Try to suppress weirdness during pie population... not 100% successful :/
@@ -114,11 +123,17 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
         // Add slices
         pieChartView.models =
-            [PieSliceModel(value: stepsDone, color: .green), // kIncompleteSliceId
-             PieSliceModel(value: stepsToDo, color: .red)]   // kCompleteSliceId
+            [PieSliceModel(value: Double(stepsDone), color: .green), // TagType.incomplete.rawValue
+             PieSliceModel(value: Double(stepsToDo), color: .red)]   // TagType.complete.rawValue
 
         // Configure how far out the slice pops when clicked
-        pieChartView.slices.forEach { $0.view.selectedOffset = CGFloat(2.0) }
+        pieChartView.slices.forEach { $0.view.selectedOffset = CGFloat(5.0) }
+
+        // Are we supposed to have selected a slice?
+        if let side = selectedSide {
+            ignoreNextOnSelected = true
+            pieChartView.slices[side.rawValue].view.selected = true
+        }
     }
 
     // If a slice is selected and the user clicks the other slice, we have
@@ -133,31 +148,45 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
             return
         }
 
+        guard let sliceSide = HomeSideType(rawValue: slice.data.id) else {
+            Log.fatal("Bad ID on slice: \(slice)")
+        }
+
         if selected && isTagCloudVisible {
             ignoreNextOnSelected = true
             Dispatch.toForeground {
-                self.pieChartView.slices[1 - slice.data.id].view.selected = false
+                self.pieChartView.slices[sliceSide.other.rawValue].view.selected = false
             }
         }
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             if !selected {
+                self.selectedSide = nil
                 self.tagCloudView.clearCloudTags()
                 self.layoutChartOnlyView()
             } else {
+                self.selectedSide = sliceSide
                 if !self.isTagCloudVisible {
                     self.layoutChartAndTagsView()
                 }
+                slice.view
             }
             self.view.layoutIfNeeded()
         }, completion: { _ in
             if selected {
-                self.updateTagCloud(complete: slice.data.id == HomeViewController.kCompleteSliceId)
+                self.updateTagCloud()
             }
         })
     }
 
-    func updateTagCloud(complete: Bool) {
-        let tags = [ "levelling", "crafting", "gathering", "arr", "zone", "heavensward", "legacy", "(untagged)"]
+    func updateTagCloud() {
+        guard let side = selectedSide else {
+            return
+        }
+        guard let data = homeData else {
+            Log.fatal("No home data set")
+        }
+
+        let tags = data.dataForSide(side).tags
 
         let buttons = tags.map { tag -> UIButton in
             let button = UIButton(type: .system).configureForTagCloud(tag: tag)
@@ -181,7 +210,7 @@ extension UIButton {
         Log.assert(buttonType == .system)
         setTitle(tag, for: .normal)
         setTitleColor(.darkText, for: .normal)
-        titleLabel?.font = .systemFont(ofSize: 24, weight: .light)
+        titleLabel?.font = .preferredFont(forTextStyle: .title2)
         backgroundColor = UIColor(named: "TagBackgroundColour")
         sizeToFit()
         frame.size.width += 8

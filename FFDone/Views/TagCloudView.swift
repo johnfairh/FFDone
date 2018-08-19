@@ -78,7 +78,7 @@ open class TagCloudView: UIView, UIGestureRecognizerDelegate {
             let point = TagPoint(x: x, y: y, z: z)
             coordinate.append(point)
 
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: 0.25) {
                 self.moveTagView(view, to: point)
             }
         }

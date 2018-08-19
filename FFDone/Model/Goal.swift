@@ -341,10 +341,31 @@ extension Goal {
                                     sortedBy: [sectionsOrder, completionOrder, userSortOrder],
                                     sectionNameKeyPath: #keyPath(sectionOrder)).asModelResultsSet
     }
+}
 
-    /// For the list of tags
-    static var tagListFieldFetchRequest: ModelFieldFetchRequest {
-        return createFieldFetchRequest(fields: [#keyPath(tag)], unique: true)
+// MARK: - Tag Queries
+extension Goal {
+
+    private static func createTagsFieldFetchRequest(predicate: NSPredicate? = nil) -> ModelFieldFetchRequest {
+        return createFieldFetchRequest(predicate: predicate, fields: [#keyPath(tag)], unique: true)
+    }
+
+    static var allTagsFieldFetchRequest: ModelFieldFetchRequest {
+        return createTagsFieldFetchRequest()
+    }
+
+    static var completeTagsFieldFetchRequest: ModelFieldFetchRequest {
+        let predicate = NSPredicate(format: "\(#keyPath(sectionOrder)) == \(Section.complete.rawValue)")
+        return createTagsFieldFetchRequest(predicate: predicate)
+    }
+
+    static var incompleteTagsFieldFetchRequest: ModelFieldFetchRequest {
+        let predicate = NSPredicate(format: "\(#keyPath(sectionOrder)) != \(Section.complete.rawValue)")
+        return createTagsFieldFetchRequest(predicate: predicate)
+    }
+
+    static func decodeTagsResults(results: ModelFieldResults) -> [String] {
+        return results.compactMap { $0.values.first as? String }
     }
 }
 
