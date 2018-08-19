@@ -75,7 +75,7 @@ class GoalViewPresenter: Presenter, GoalViewPresenterInterface, GoalNotesTablePr
 
     /// Let the user add a new note
     func addNote() {
-        director.request(.createNote(goal, model))
+        director.request(.createNoteAndThen(goal, model, { [unowned self] _ in self.model.save() }))
     }
 
     /// Callback a note has been deleted from the table.

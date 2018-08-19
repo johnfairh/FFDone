@@ -30,6 +30,7 @@ enum DirectorRequest {
     case pickIcon(Model, (Icon) -> Void)
 
     case createNote(Goal, Model)
+    case createNoteAndThen(Goal, Model, (Note) -> Void)
     case editNote(Note, Model)
 }
 
@@ -112,12 +113,7 @@ extension DirectorRequest {
     func handle(services: TabbedDirectorServices<DirectorInterface>) {
         switch self {
         case let .editGoal(goal, model):
-            services.editThing("GoalEditViewController",
-                               model: model,
-                               object: goal,
-                               presenterFn: GoalEditPresenter.init,
-                               done: { _ in  })
-
+            DirectorRequest.editGoalAndThen(goal, model, { _ in }).handle(services: services)
         case let .editGoalAndThen(goal, model, continuation):
             services.editThing("GoalEditViewController",
                                model: model,
@@ -169,10 +165,13 @@ extension DirectorRequest {
                                done: { _ in })
 
         case let .createNote(goal, model):
+            DirectorRequest.createNoteAndThen(goal, model, { _ in }).handle(services: services)
+        case let .createNoteAndThen(goal, model, continuation):
             services.createThing("NoteEditViewController",
                                  model: model,
                                  presenterFn: NoteEditPresenter.init,
-                                 done: { note in note.goal = goal })
+                                 done: { note in note.goal = goal; continuation(note) })
+
         }
     }
 }
