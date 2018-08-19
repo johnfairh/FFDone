@@ -44,6 +44,12 @@ protocol HomePresenterInterface {
 
     /// Drill down into a tag
     func displayTag(_ tag: String)
+
+    /// New goal
+    func createGoal()
+
+    /// New alarm
+    func createAlarm()
 }
 
 class HomePresenter: Presenter, HomePresenterInterface {
@@ -80,7 +86,7 @@ class HomePresenter: Presenter, HomePresenterInterface {
         }
     }
 
-    // MARK: - Steps
+    // MARK: - Steps + Tags
 
     // Stash the step sums
     private var currentSteps = 0
@@ -108,6 +114,8 @@ class HomePresenter: Presenter, HomePresenterInterface {
         }
     }
 
+    // Database updates come in batches, do a bit of merging to be kind to the UI
+
     private var refreshDeglitching = false
 
     private func doRefresh() {
@@ -130,5 +138,12 @@ class HomePresenter: Presenter, HomePresenterInterface {
     // user clicks tag
     func displayTag(_ tag: String) {
         director.request(.switchToGoals(tag))
+    }
+
+    func createGoal() {
+        director.request(.createGoal(model))
+    }
+
+    func createAlarm() {
     }
 }

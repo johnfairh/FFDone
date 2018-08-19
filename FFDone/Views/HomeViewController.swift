@@ -56,6 +56,14 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         tagCloudView.timerStop()
     }
 
+    @IBAction func didTapNewGoal(_ sender: UIButton) {
+        presenter.createGoal()
+    }
+
+    @IBAction func didTapNewAlarm(_ sender: UIButton) {
+        presenter.createAlarm()
+    }
+    
     func layoutChartOnlyView() {
         guard let safeAreaSize = safeAreaSize else { return }
 

@@ -745,17 +745,35 @@
                                     <constraint firstAttribute="height" constant="100" id="3sj-wu-0MD"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zcw-mq-m9n">
+                                <rect key="frame" x="43" y="207" width="64" height="30"/>
+                                <state key="normal" title="New goal"/>
+                                <connections>
+                                    <action selector="didTapNewGoal:" destination="3i4-tO-qwZ" eventType="touchUpInside" id="jLq-CB-EEf"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADN-TL-gBM">
+                                <rect key="frame" x="263.5" y="207" width="73" height="30"/>
+                                <state key="normal" title="New alarm"/>
+                                <connections>
+                                    <action selector="didTapNewAlarm:" destination="3i4-tO-qwZ" eventType="touchUpInside" id="z6f-aj-Ejw"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="f9X-5D-kxz" firstAttribute="centerX" secondItem="bUW-Jg-NDR" secondAttribute="centerX" id="1Fd-iZ-FTX"/>
+                            <constraint firstItem="Zcw-mq-m9n" firstAttribute="bottom" secondItem="ADN-TL-gBM" secondAttribute="bottom" id="4YG-NF-Gxm"/>
                             <constraint firstItem="0yd-DE-IVh" firstAttribute="width" secondItem="cGg-Bu-3Uw" secondAttribute="width" multiplier="0.6" id="Cw9-5d-i6s"/>
                             <constraint firstItem="N8V-Wy-Buw" firstAttribute="centerX" secondItem="bUW-Jg-NDR" secondAttribute="centerX" id="EF6-VN-fiu"/>
                             <constraint firstItem="f9X-5D-kxz" firstAttribute="top" secondItem="cGg-Bu-3Uw" secondAttribute="top" constant="240" id="FTI-7M-yqw"/>
                             <constraint firstItem="3qT-ec-3aR" firstAttribute="leading" secondItem="cGg-Bu-3Uw" secondAttribute="leading" id="GTv-W3-rgk"/>
                             <constraint firstItem="cGg-Bu-3Uw" firstAttribute="trailing" secondItem="3qT-ec-3aR" secondAttribute="trailing" id="M8N-Ng-NLf"/>
                             <constraint firstItem="0yd-DE-IVh" firstAttribute="centerX" secondItem="bUW-Jg-NDR" secondAttribute="centerX" id="fBH-iy-kKT"/>
+                            <constraint firstItem="ADN-TL-gBM" firstAttribute="centerX" secondItem="0yd-DE-IVh" secondAttribute="trailing" id="fMG-B2-MTH"/>
+                            <constraint firstItem="Zcw-mq-m9n" firstAttribute="bottom" secondItem="0yd-DE-IVh" secondAttribute="bottom" constant="-8" id="jD5-Rj-Xai"/>
                             <constraint firstAttribute="bottomMargin" secondItem="3qT-ec-3aR" secondAttribute="bottom" id="kxY-bv-AFq"/>
+                            <constraint firstItem="0yd-DE-IVh" firstAttribute="leading" secondItem="Zcw-mq-m9n" secondAttribute="centerX" id="ofU-zq-sXA"/>
                             <constraint firstItem="N8V-Wy-Buw" firstAttribute="centerY" secondItem="0yd-DE-IVh" secondAttribute="centerY" id="tLz-B3-QBF"/>
                             <constraint firstItem="0yd-DE-IVh" firstAttribute="top" secondItem="cGg-Bu-3Uw" secondAttribute="top" id="xZF-hn-cwB"/>
                         </constraints>
