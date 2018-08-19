@@ -297,9 +297,14 @@ extension Goal {
         return NSPredicate(format: "\(#keyPath(name)) CONTAINS[cd] \"\(str)\"")
     }
 
+    /// Magic string we use to represent the set of goals without a tag
+    static let untaggedPlaceholder = "(untagged)"
+
     /// Predicate to match tag - supports exact with '=' prefix
     static func getTagMatchPredicate(tag str: String) -> NSPredicate {
-        if str.first == "=" {
+        if str == "=" || str == "=\(untaggedPlaceholder)" {
+            return NSPredicate(format: "\(#keyPath(tag)) == nil")
+        } else if str.first == "=" {
             return NSPredicate(format: "\(#keyPath(tag)) LIKE[cd] \"\(str.dropFirst())\"")
         } else {
             return NSPredicate(format: "\(#keyPath(tag)) CONTAINS[cd] \"\(str)\"")
@@ -365,7 +370,7 @@ extension Goal {
     }
 
     static func decodeTagsResults(results: ModelFieldResults) -> [String] {
-        return results.compactMap { $0.values.first as? String }
+        return results.compactMap { ($0.values.first as? String) ?? untaggedPlaceholder }
     }
 }
 
