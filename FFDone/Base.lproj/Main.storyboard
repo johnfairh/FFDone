@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.9"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -735,7 +736,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8V-Wy-Buw">
                                 <rect key="frame" x="157.5" y="114.5" width="60.5" height="36"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" name="TextColour"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3qT-ec-3aR" userLabel="Alerts placeholder view">
@@ -760,7 +761,8 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" name="ContentBgColour"/>
+                        <color key="tintColor" name="TintColour"/>
                         <constraints>
                             <constraint firstItem="f9X-5D-kxz" firstAttribute="centerX" secondItem="bUW-Jg-NDR" secondAttribute="centerX" id="1Fd-iZ-FTX"/>
                             <constraint firstItem="Zcw-mq-m9n" firstAttribute="bottom" secondItem="ADN-TL-gBM" secondAttribute="bottom" id="4YG-NF-Gxm"/>
@@ -1103,6 +1105,15 @@
         <image name="TabGoalsIcon" width="30" height="30"/>
         <image name="TabHomeIcon" width="30" height="30"/>
         <image name="TabIconsIcon" width="30" height="30"/>
+        <namedColor name="ContentBgColour">
+            <color red="0.082352941176470587" green="0.082352941176470587" blue="0.082352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TextColour">
+            <color red="1" green="1" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TintColour">
+            <color red="1" green="0.75294117647058822" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="xWc-Nd-r2L"/>

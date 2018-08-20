@@ -29,7 +29,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         // 1-time pie view configuration
         pieChartView.referenceAngle = CGFloat(270)
         pieChartView.delegate = self
-        pieChartView.backgroundColor  = UIColor.init(white: 0.0, alpha: 0.0)
+        pieChartView.backgroundColor = UIColor.init(white: 0.0, alpha: 0.0)
     }
 
     var safeAreaSize: CGSize?

@@ -18,7 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         ImageTransformer.install()
-        
+
+        UITabBar.appearance().tintColor = UIColor(named: "TintColour")
+        UITabBar.appearance().barTintColor = .black
+
         app = App(window: window!)
 
         return true
