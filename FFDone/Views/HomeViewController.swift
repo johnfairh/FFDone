@@ -21,6 +21,9 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
     @IBOutlet weak var alertsTableHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var alertsTableView: UIView!
 
+    var pieRedColour: UIColor!
+    var pieGreenColour: UIColor!
+
     public override func viewDidLoad() {
         presenter.refresh = { [unowned self] data in
             self.refreshData(data)
@@ -30,6 +33,8 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         pieChartView.referenceAngle = CGFloat(270)
         pieChartView.delegate = self
         pieChartView.backgroundColor = UIColor.init(white: 0.0, alpha: 0.0)
+        pieRedColour = UIColor(named: "PieRedColour") ?? .red
+        pieGreenColour = UIColor(named: "PieGreenColour") ?? .green
     }
 
     var safeAreaSize: CGSize?
@@ -123,7 +128,6 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         let donePercent = (stepsDone * 100) / (stepsDone + stepsToDo)
         progressLabel.text = "\(donePercent)%"
 
-        // Try to suppress weirdness during pie population... not 100% successful :/
         pieChartView.clear()
         let oldAnimDuration = pieChartView.animDuration
         pieChartView.animDuration = 0
@@ -131,8 +135,8 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
         // Add slices
         pieChartView.models =
-            [PieSliceModel(value: Double(stepsDone), color: .green), // TagType.complete.rawValue
-             PieSliceModel(value: Double(stepsToDo), color: .red)]   // TagType.incomplete.rawValue
+            [PieSliceModel(value: Double(stepsDone), color: pieGreenColour), // TagType.complete.rawValue
+             PieSliceModel(value: Double(stepsToDo), color: pieRedColour)]   // TagType.incomplete.rawValue
 
         // Configure how far out the slice pops when clicked
         pieChartView.slices.forEach { $0.view.selectedOffset = CGFloat(5.0) }
