@@ -17,8 +17,8 @@ struct HomeSideData {
 }
 
 enum HomeSideType: Int {
-    case incomplete = 0
-    case complete = 1
+    case complete = 0
+    case incomplete = 1
 
     var other: HomeSideType {
         switch self {

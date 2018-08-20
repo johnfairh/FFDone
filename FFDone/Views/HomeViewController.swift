@@ -69,7 +69,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
         tagCloudViewHeightConstraint.constant = 0
         pieChartViewTopConstraint.constant =
-            (safeAreaSize.height - 40 -
+            (safeAreaSize.height - 40 -              // bit more space above
              alertsTableHeightConstraint.constant -
              pieChartView.frame.height) / 2
     }
@@ -131,8 +131,8 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
         // Add slices
         pieChartView.models =
-            [PieSliceModel(value: Double(stepsDone), color: .green), // TagType.incomplete.rawValue
-             PieSliceModel(value: Double(stepsToDo), color: .red)]   // TagType.complete.rawValue
+            [PieSliceModel(value: Double(stepsDone), color: .green), // TagType.complete.rawValue
+             PieSliceModel(value: Double(stepsToDo), color: .red)]   // TagType.incomplete.rawValue
 
         // Configure how far out the slice pops when clicked
         pieChartView.slices.forEach { $0.view.selectedOffset = CGFloat(5.0) }
