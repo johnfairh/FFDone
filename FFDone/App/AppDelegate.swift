@@ -19,8 +19,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         ImageTransformer.install()
 
-        UITabBar.appearance().tintColor = UIColor(named: "TintColour")
+        let tintColour = UIColor(named: "TintColour") ?? .blue
+        let lightTextColour = UIColor(named: "TextColour") ?? .lightText
+
+        UITabBar.appearance().tintColor = tintColour
         UITabBar.appearance().barTintColor = .black
+
+        UINavigationBar.appearance().tintColor = tintColour
+        UINavigationBar.appearance().barTintColor = .black
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: lightTextColour]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: lightTextColour]
+        UISearchBar.appearance().tintColor = tintColour
 
         app = App(window: window!)
 

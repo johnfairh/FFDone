@@ -192,3 +192,4 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
         invocationState.send(tag: data)
     }
 }
+
