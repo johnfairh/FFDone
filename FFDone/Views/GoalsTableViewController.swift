@@ -57,11 +57,8 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         }
 
         if presenter.isSearchable {
-            enableSearch(scopes: ["Both", "Name", "Tag"])
-            let searchBar = navigationItem.searchController!.searchBar
-            // SEARCH COLOR HACK
-            searchBar.setStyleColor(.white)
-            searchBar.tintColor = UIColor(named: "TintColour")
+            enableSearch(scopes: ["Both", "Name", "Tag"],
+                         textColor: UIColor(named: "TextColour"))
         }
 
         navigationItem.leftBarButtonItem = nil
@@ -162,17 +159,6 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         searchController.isActive = true
         searchController.searchBar.text = "=\(tag)"
         searchController.searchBar.selectedScopeButtonIndex = GoalsTableSearchType.tag.rawValue
-        // SEARCH COLOR HACK
-//        searchController.searchBar.setStyleColor(.white)
-//        searchController.searchBar.tintColor = UIColor(named: "TintColour")
-        updateSearchResults(for: searchController)
-    }
-}
-
-public extension UISearchBar {
-    public func setStyleColor(_ color: UIColor) {
-        tintColor = color
-        guard let tf = (value(forKey: "searchField") as? UITextField) else { return }
-        tf.textColor = color
+        updateSearchResults()
     }
 }

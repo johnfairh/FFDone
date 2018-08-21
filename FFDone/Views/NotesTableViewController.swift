@@ -34,7 +34,7 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
         }
         if presenter.shouldEnableExtraControls {
             navigationItem.leftBarButtonItem = nil
-            enableSearch(scopes: [])
+            enableSearch(scopes: [], textColor: UIColor(named: "TextColour"))
         }
         datePicker = DatePickerDialog(textColor: .darkText,
                                       buttonColor: UIButton(type: .system).currentTitleColor,
