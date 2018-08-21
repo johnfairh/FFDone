@@ -50,7 +50,8 @@ class Director {
         case home = 0
         case goals = 1
         case notes = 2
-        case icons = 3
+        case alarms = 3
+        case icons = 4
     }
 
     weak var services: TabbedDirectorServices<DirectorInterface>!
@@ -81,6 +82,12 @@ class Director {
                 queryResults: Note.allSortedResultsSet(model: model),
                 presenterFn: NotesTablePresenter.init) {
                     [unowned self] note in self.request(.editNote(note!, model))
+        }
+
+        initTab(.alarms,
+                queryResults: Alarm.sectionatedResultsSet(model: model),
+                presenterFn: AlarmsTablePresenter.init) {
+                    [unowned self] alarm in Log.log("Edit alarm: \(alarm!) (\(self))")
         }
 
         initTab(.icons,

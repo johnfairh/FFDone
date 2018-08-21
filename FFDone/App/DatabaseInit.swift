@@ -145,6 +145,33 @@ enum DatabaseObjects {
         }
     }
 
+    /// Create the debug alarms from the yaml file
+    private static func createDebugAlarms(model: Model) {
+        let defs = readYaml(file: "DebugAlarms")
+
+        for (index, def) in defs.enumerated() {
+            let name = def.str("name")
+
+            let iconName = def.str("iconName")
+            guard let icon = Icon.find(from: model, named: iconName) else {
+                Log.log("Debug load failed, can't find icon for alert \(name)")
+                return
+            }
+
+            let alarm = Alarm.create(from: model)
+            alarm.name = name
+            alarm.icon = icon
+            alarm.cdType = Int16(def.int("kind"))
+            alarm.cdWeekDay = Int16(def.int("day"))
+            alarm.sortOrder = Int64(index)
+            if def.bool("active") {
+                alarm.activate()
+            } else {
+                alarm.deactivate()
+            }
+        }
+    }
+
     /// Create the icon source templates from the yaml file
     private static func createIconSources() {
         let defs = readYaml(file: "DefaultIconSources")
@@ -166,6 +193,7 @@ enum DatabaseObjects {
             createDebugGoals(model: model)
             model.saveAndWait()
             createDebugNotes(model: model)
+            createDebugAlarms(model: model)
         }
     }
 

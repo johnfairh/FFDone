@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.2.4" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V3">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.12.1" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V3">
+    <entity name="Alarm" representedClassName=".Alarm" syncable="YES" codeGenerationType="class">
+        <attribute name="cdNextActiveDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="cdType" attributeType="Integer 16" minValueString="0" maxValueString="2" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="cdWeekDay" attributeType="Integer 16" minValueString="0" maxValueString="6" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="sectionOrder" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="icon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Icon" inverseName="usingAlarms" inverseEntity="Icon" syncable="YES"/>
+        <fetchIndex name="BySectionOrder">
+            <fetchIndexElement property="cdNextActiveDate" type="Binary" order="descending"/>
+            <fetchIndexElement property="sortOrder" type="Binary" order="descending"/>
+        </fetchIndex>
+    </entity>
     <entity name="Goal" representedClassName=".Goal" syncable="YES" codeGenerationType="class">
         <attribute name="cdCompletionDate" attributeType="Date" defaultDateTimeInterval="-31618800" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cdCreationDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
@@ -23,6 +36,7 @@
         <attribute name="isDefault" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="sortOrder" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="usingAlarms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Alarm" inverseName="icon" inverseEntity="Alarm" syncable="YES"/>
         <relationship name="usingGoals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Goal" inverseName="icon" inverseEntity="Goal" syncable="YES"/>
     </entity>
     <entity name="Note" representedClassName=".Note" syncable="YES" codeGenerationType="class">
@@ -37,7 +51,8 @@
     </entity>
     <elements>
         <element name="Goal" positionX="-63" positionY="-18" width="128" height="210"/>
-        <element name="Icon" positionX="-54" positionY="36" width="128" height="135"/>
+        <element name="Icon" positionX="-54" positionY="36" width="128" height="150"/>
         <element name="Note" positionX="-54" positionY="63" width="128" height="105"/>
+        <element name="Alarm" positionX="-54" positionY="72" width="128" height="150"/>
     </elements>
 </model>
