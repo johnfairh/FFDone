@@ -162,7 +162,8 @@ enum DatabaseObjects {
             alarm.name = name
             alarm.icon = icon
             alarm.cdType = Int16(def.int("kind"))
-            alarm.cdWeekDay = Int16(def.int("day"))
+            let day = def.int("day")
+            alarm.cdWeekDay = Int16((day == 0) ? 1 : day)
             alarm.sortOrder = Int64(index)
             if def.bool("active") {
                 alarm.activate()

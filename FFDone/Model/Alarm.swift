@@ -22,7 +22,7 @@ extension Alarm: ModelObject {
         let alarm = Alarm.create(from: model)
         alarm.sortOrder = Alarm.getNextSortOrderValue(primarySortOrder, from: model)
         alarm.name = ""
-        alarm.kind = .weekly(0)
+        alarm.kind = .weekly(1)
         alarm.icon = Icon.getGoalDefault(model: model) // XXX
         alarm.deactivate()
         
@@ -44,10 +44,10 @@ extension Alarm {
             switch newValue {
             case .oneShot:
                 cdType = 0
-                cdWeekDay = 0
+                cdWeekDay = 1
             case .daily:
                 cdType = 1
-                cdWeekDay = 0
+                cdWeekDay = 1
             case .weekly(let day):
                 cdType = 2;
                 cdWeekDay = Int16(day)
@@ -101,6 +101,42 @@ extension Alarm {
         // calculate nextActiveDate
         nextActiveDate = Date().addingTimeInterval(20)
         sectionOrder = Section.inactive.rawValue
+    }
+}
+
+// MARK: - Caption
+
+extension Alarm {
+
+    var dueDateString: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE MMM dd"
+        return dateFormatter.string(from: nextActiveDate)
+    }
+
+    func getWeekdayName(day: Int) -> String {
+        return Calendar.current.weekdaySymbols[day - 1 ]
+    }
+
+    var caption: String {
+        if isActive {
+            switch kind {
+            case .oneShot:
+                return ""
+            case .daily:
+                return "Repeats daily"
+            case .weekly(let day):
+                return "Repeats every \(getWeekdayName(day: day))"
+            }
+        } else {
+            var cap = dueDateString + ", then "
+            switch kind {
+            case .daily: cap += "daily"
+            case .weekly(_): cap += "weekly"
+            case .oneShot: Log.fatal("Inactive oneshot?")
+            }
+            return cap
+        }
     }
 }
 

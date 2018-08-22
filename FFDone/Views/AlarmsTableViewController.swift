@@ -11,7 +11,7 @@ class AlarmCell: UITableViewCell, TableCell {
 
     func configure(_ alarm: Alarm) {
         textLabel?.text       = alarm.name
-        detailTextLabel?.text = "..."
+        detailTextLabel?.text = alarm.caption
         imageView?.image      = alarm.mainTableImage
     }
 }
