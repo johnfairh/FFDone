@@ -9,6 +9,11 @@ import TMLPresentation
 
 /// Interface from the Alarms Table VC to presenter -- requirements unique to alarms table.
 protocol AlarmsTablePresenterInterface: TablePresenterInterface {
+
+    func canMoveAlarm(_ alarm: Alarm) -> Bool
+    func canMoveAlarmTo(_ alarm: Alarm, toSection: Alarm.Section, toRowInSection: Int) -> Bool
+    func moveAlarm(_ alarm: Alarm, fromRowInSection: Int, toSection: Alarm.Section, toRowInSection: Int, tableView: UITableView)
+
     func canDeleteAlarm(_ alarm: Alarm) -> Bool
     func deleteAlarm(_ alarm: Alarm)
 
@@ -28,6 +33,25 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
         self.selectedCallback = dismiss
         super.init(director: director, model: model, object: object, mode: mode)
     }
+
+    // MARK: - Move
+
+    // Allow reorder of active alarms - inactive sorted by due date
+
+    func canMoveAlarm(_ alarm: Alarm) -> Bool {
+        return alarm.isActive
+    }
+
+    func canMoveAlarmTo(_ alarm: Alarm, toSection: Alarm.Section, toRowInSection: Int) -> Bool {
+        return toSection == .active
+    }
+
+    func moveAlarm(_ alarm: Alarm, fromRowInSection: Int, toSection: Alarm.Section, toRowInSection: Int, tableView: UITableView) {
+        moveAndRenumber(fromRow: fromRowInSection, toRow: toRowInSection, sortOrder: Alarm.primarySortOrder)
+        model.saveAndWait()
+    }
+
+    // MARK: - Delete
 
     func canDeleteAlarm(_ alarm: Alarm) -> Bool {
         return isEditable

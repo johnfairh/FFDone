@@ -56,6 +56,25 @@ TableModelDelegate {
         presenter.deleteAlarm(modelObject)
     }
 
+    // MARK: - Move
+
+    func canMoveObject(_ modelObject: Alarm) -> Bool {
+        return presenter.canMoveAlarm(modelObject)
+    }
+
+    func canMoveObjectTo(_ alarm: Alarm, toSection: Alarm.Section, toRowInSection: Int) -> Bool {
+        return presenter.canMoveAlarmTo(alarm, toSection: toSection, toRowInSection: toRowInSection)
+    }
+
+    func moveObject(_ alarm: Alarm,
+                    fromRowInSection: Int,
+                    toSection: Alarm.Section, toRowInSection: Int) {
+        presenter.moveAlarm(alarm,
+                            fromRowInSection: fromRowInSection,
+                            toSection: toSection, toRowInSection: toRowInSection,
+                            tableView: tableView)
+    }
+
     // MARK: - Row actions
 
     func selectObject(_ modelObject: ModelObject) {

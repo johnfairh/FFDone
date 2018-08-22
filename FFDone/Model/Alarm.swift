@@ -121,7 +121,7 @@ extension Alarm {
         let sectionsOrder = NSSortDescriptor(key: #keyPath(cdNextActiveDate), ascending: true)
 
         // User sort order, affects active alarms that share the same timestamp
-        let userSortOrder = NSSortDescriptor(key: #keyPath(sortOrder), ascending: true)
+        let userSortOrder = NSSortDescriptor(key: #keyPath(sortOrder), ascending: false)
 
         return createFetchedResults(model: model,
                                     predicate: nil,
