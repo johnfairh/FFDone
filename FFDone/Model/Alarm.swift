@@ -103,6 +103,9 @@ extension Alarm {
     }
 
     var computedNextActiveDate: Date {
+        if App.debugMode {
+            return Date().addingTimeInterval(10)
+        }
         // Let's take 6AM GMT for the start of the day.
         var components = DateComponents(hour: 6, minute: 0)
 
@@ -128,6 +131,10 @@ extension Alarm {
 // MARK: - Caption
 
 extension Alarm {
+
+    var text: String {
+        return name ?? "(no title)"
+    }
 
     var dueDateString: String {
         let dateFormatter = DateFormatter()

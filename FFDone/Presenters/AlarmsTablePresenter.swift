@@ -58,7 +58,11 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
     }
 
     func deleteAlarm(_ alarm: Alarm) {
-        // XXX deschedule
+        if !alarm.isActive {
+            if let uid = alarm.notificationUid {
+                director.request(.cancelAlarm(uid))
+            }
+        }
         alarm.delete(from: model)
         model.save()
     }
@@ -68,7 +72,7 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
     }
 
     func createNewObject() {
-//        director.request(.createGoal(model))
+//        director.request(.createAlarm(model))
     }
 
     // MARK: - Swipe
@@ -81,10 +85,16 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
         return TableSwipeAction(text: "Done", colorName: "StepSwipeColour", action: {
             if case .oneShot = alarm.kind {
                 alarm.delete(from: self.model)
+                self.model.save()
             } else {
                 alarm.deactivate()
+                self.director.request(.scheduleAlarm(alarm, { uid in
+                    if let uid = uid {
+                        alarm.notificationUid = uid
+                    }
+                    self.model.save()
+                }))
             }
-            self.model.save()
         })
     }
 }

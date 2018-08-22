@@ -30,12 +30,12 @@ final class App {
         }
 
         modelProvider = ModelProvider(userDbName: "DataModel")
-        director = Director()
+        alarmScheduler = AlarmScheduler()
+        director = Director(alarmScheduler: alarmScheduler)
         directorServices = TabbedDirectorServices(director: director,
                                                   window: window,
                                                   tabBarVcName: "TabBarViewController")
         director.services = directorServices
-        alarmScheduler = AlarmScheduler()
 
         Log.enableDebugLogs = App.debugMode
 
@@ -62,7 +62,6 @@ final class App {
     func initComplete(model: Model) {
         Log.log("App.init complete!")
         Prefs.runBefore = true
-        alarmScheduler.modelIsReady(model: model)
         director.modelIsReady(model: model)
     }
 

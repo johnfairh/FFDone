@@ -33,6 +33,9 @@ enum DirectorRequest {
     case createNote(Goal, Model)
     case createNoteAndThen(Goal, Model, (Note) -> Void)
     case editNote(Note, Model)
+
+    case scheduleAlarm(Alarm, (String?) -> Void)
+    case cancelAlarm(String)
 }
 
 protocol DirectorInterface {
@@ -55,16 +58,19 @@ class Director {
         case icons = 4
     }
 
+    private let alarmScheduler: AlarmScheduler
     weak var services: TabbedDirectorServices<DirectorInterface>!
     private var rootModel: Model!
     private var tagList: TagList?
 
-    init() {
+    init(alarmScheduler: AlarmScheduler) {
+        self.alarmScheduler = alarmScheduler
     }
 
     func modelIsReady(model: Model) {
         rootModel = model
         tagList = TagList(model: model)
+        alarmScheduler.modelIsReady(model: model)
 
         Log.log("Director.modelIsReady")
 
@@ -118,10 +124,10 @@ class Director {
 // MARK: - DirectorRequest processing
 
 extension DirectorRequest {
-    func handle(services: TabbedDirectorServices<DirectorInterface>) {
+    func handle(services: TabbedDirectorServices<DirectorInterface>, alarmScheduler: AlarmScheduler) {
         switch self {
         case let .editGoal(goal, model):
-            DirectorRequest.editGoalAndThen(goal, model, { _ in }).handle(services: services)
+            DirectorRequest.editGoalAndThen(goal, model, { _ in }).handle(services: services, alarmScheduler: alarmScheduler)
         case let .editGoalAndThen(goal, model, continuation):
             services.editThing("GoalEditViewController",
                                model: model,
@@ -173,13 +179,17 @@ extension DirectorRequest {
                                done: { _ in })
 
         case let .createNote(goal, model):
-            DirectorRequest.createNoteAndThen(goal, model, { _ in }).handle(services: services)
+            DirectorRequest.createNoteAndThen(goal, model, { _ in }).handle(services: services, alarmScheduler: alarmScheduler)
         case let .createNoteAndThen(goal, model, continuation):
             services.createThing("NoteEditViewController",
                                  model: model,
                                  presenterFn: NoteEditPresenter.init,
                                  done: { note in note.goal = goal; continuation(note) })
 
+        case let .scheduleAlarm(alarm, callback):
+            alarmScheduler.scheduleAlarm(text: alarm.text, for: alarm.nextActiveDate, callback: callback)
+        case let .cancelAlarm(uid):
+            alarmScheduler.cancelAlarm(uid: uid)
         }
     }
 }
@@ -190,7 +200,7 @@ extension Director: DirectorInterface {
         // We add a fibre break here to avoid very odd behaviours, eg.
         // multi-second delays on selecting a table row.
         Dispatch.toForeground {
-            request.handle(services: self.services)
+            request.handle(services: self.services, alarmScheduler: self.alarmScheduler)
         }
     }
 

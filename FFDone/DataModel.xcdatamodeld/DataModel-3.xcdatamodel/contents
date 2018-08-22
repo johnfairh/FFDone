@@ -5,6 +5,7 @@
         <attribute name="cdType" attributeType="Integer 16" minValueString="0" maxValueString="2" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cdWeekDay" attributeType="Integer 16" minValueString="1" maxValueString="7" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="notificationUid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sectionOrder" transient="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="icon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Icon" inverseName="usingAlarms" inverseEntity="Icon" syncable="YES"/>
@@ -53,6 +54,6 @@
         <element name="Goal" positionX="-63" positionY="-18" width="128" height="210"/>
         <element name="Icon" positionX="-54" positionY="36" width="128" height="150"/>
         <element name="Note" positionX="-54" positionY="63" width="128" height="105"/>
-        <element name="Alarm" positionX="-54" positionY="72" width="128" height="150"/>
+        <element name="Alarm" positionX="-54" positionY="72" width="128" height="165"/>
     </elements>
 </model>
