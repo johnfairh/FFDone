@@ -8,6 +8,7 @@
 import TMLPresentation
 
 // The Director is the top-level Presenter for the application.
+// Although it does know a few things about view controllers
 //
 // It is roughly associated with the tab bar view and is responsible for
 // configuring each tab with its own presenter.

@@ -18,9 +18,10 @@ final class App {
     static let debugMode = false
     #endif
 
-    private var modelProvider: ModelProvider
-    private var director: Director
-    private var directorServices: TabbedDirectorServices<DirectorInterface>
+    private let modelProvider: ModelProvider
+    private let director: Director
+    private let directorServices: TabbedDirectorServices<DirectorInterface>
+    private let alarmScheduler: AlarmScheduler
 
     init(window: UIWindow) {
         if App.debugMode {
@@ -34,6 +35,7 @@ final class App {
                                                   window: window,
                                                   tabBarVcName: "TabBarViewController")
         director.services = directorServices
+        alarmScheduler = AlarmScheduler()
 
         Log.enableDebugLogs = App.debugMode
 
@@ -60,7 +62,12 @@ final class App {
     func initComplete(model: Model) {
         Log.log("App.init complete!")
         Prefs.runBefore = true
+        alarmScheduler.modelIsReady(model: model)
         director.modelIsReady(model: model)
+    }
+
+    func willEnterForeground() {
+        alarmScheduler.willEnterForeground()
     }
     
     // MARK: Shared instance

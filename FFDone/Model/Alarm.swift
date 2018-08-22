@@ -17,14 +17,14 @@ extension Alarm: ModelObject {
     /// Magic value to mark active alarms, far past
     static private let activeNextActiveDate = Date(timeIntervalSinceReferenceDate: 0)
 
-    /// Create a fresh `Alarm` - ends up inactive but unscheduled.
+    /// Create a fresh `Alarm` - ends up active
     static func createWithDefaults(model: Model) -> Alarm {
         let alarm = Alarm.create(from: model)
         alarm.sortOrder = Alarm.getNextSortOrderValue(primarySortOrder, from: model)
         alarm.name = ""
         alarm.kind = .weekly(1)
         alarm.icon = Icon.getGoalDefault(model: model) // XXX
-        alarm.deactivate()
+        alarm.activate() // surely??
         
         return alarm
     }
