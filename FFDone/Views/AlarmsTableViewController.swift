@@ -10,9 +10,9 @@ import TMLPresentation
 class AlarmCell: UITableViewCell, TableCell {
 
     func configure(_ alarm: Alarm) {
-        textLabel?.text       = alarm.name
+        textLabel?.text = alarm.name
         detailTextLabel?.text = alarm.caption
-        imageView?.image      = alarm.mainTableImage
+        imageView?.image = alarm.mainTableImage
     }
 }
 

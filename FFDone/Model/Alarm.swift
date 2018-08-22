@@ -98,9 +98,30 @@ extension Alarm {
     }
 
     func deactivate() {
-        // calculate nextActiveDate
-        nextActiveDate = Date().addingTimeInterval(20)
+        nextActiveDate = computedNextActiveDate
         sectionOrder = Section.inactive.rawValue
+    }
+
+    var computedNextActiveDate: Date {
+        // Let's take 6AM GMT for the start of the day.
+        var components = DateComponents(hour: 6, minute: 0)
+
+        switch kind {
+        case .daily:
+            break
+        case .weekly(let day):
+            components.weekday = day
+        case .oneShot:
+            Log.fatal("Oneshot never next active")
+        }
+
+        guard let nextDate = Calendar.current.nextDate(after: Date(),
+                                                       matching: components,
+                                                       matchingPolicy: .nextTime) else {
+            Log.fatal("Can't find the next date? \(components)")
+        }
+
+        return nextDate
     }
 }
 
