@@ -94,18 +94,37 @@ extension Alarm {
 
     func activate() {
         nextActiveDate = Alarm.activeNextActiveDate
-        sectionOrder = Section.active.rawValue
+        refreshSectionOrder()
     }
 
     func deactivate() {
         nextActiveDate = computedNextActiveDate
-        sectionOrder = Section.inactive.rawValue
+        refreshSectionOrder()
+    }
+
+    func debugDeactivate() {
+        if App.debugMode {
+            nextActiveDate = Date().addingTimeInterval(10)
+            refreshSectionOrder()
+        } else {
+            deactivate()
+        }
+    }
+
+    public override func awakeFromFetch() {
+        super.awakeFromFetch()
+        refreshSectionOrder()
+    }
+
+    private func refreshSectionOrder() {
+        if nextActiveDate == Alarm.activeNextActiveDate {
+            sectionOrder = Section.active.rawValue
+        } else {
+            sectionOrder = Section.inactive.rawValue
+        }
     }
 
     var computedNextActiveDate: Date {
-        if App.debugMode {
-            return Date().addingTimeInterval(10)
-        }
         // Let's take 6AM GMT for the start of the day.
         var components = DateComponents(hour: 6, minute: 0)
 
@@ -128,7 +147,7 @@ extension Alarm {
     }
 }
 
-// MARK: - Caption
+// MARK: - Captions
 
 extension Alarm {
 
@@ -166,6 +185,19 @@ extension Alarm {
             return cap
         }
     }
+
+    var notificationText: String {
+        let frequency: String
+        switch kind {
+        case .daily:
+            frequency = "daily"
+        case .weekly(_):
+            frequency = "weekly"
+        case .oneShot:
+            Log.fatal("Can't notify oneShot alarms")
+        }
+        return text + " - " + frequency
+    }
 }
 
 // MARK: - Image
@@ -191,5 +223,13 @@ extension Alarm {
                                     predicate: nil,
                                     sortedBy: [sectionsOrder, userSortOrder],
                                     sectionNameKeyPath: #keyPath(sectionOrder)).asModelResultsSet
+    }
+
+    /// Get the alarms that are due
+    static func findDueAlarms(model: Model) -> [Alarm] {
+        let nextActive = #keyPath(cdNextActiveDate)
+        let predicate = NSPredicate(format: "\(nextActive) > %@ AND \(nextActive) <= %@",
+                                    argumentArray: [Alarm.activeNextActiveDate, Date()])
+        return findAll(model: model, predicate: predicate)
     }
 }

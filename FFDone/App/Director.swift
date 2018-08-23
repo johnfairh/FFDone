@@ -187,7 +187,7 @@ extension DirectorRequest {
                                  done: { note in note.goal = goal; continuation(note) })
 
         case let .scheduleAlarm(alarm, callback):
-            alarmScheduler.scheduleAlarm(text: alarm.text, for: alarm.nextActiveDate, callback: callback)
+            alarmScheduler.scheduleAlarm(text: alarm.notificationText, for: alarm.nextActiveDate, callback: callback)
         case let .cancelAlarm(uid):
             alarmScheduler.cancelAlarm(uid: uid)
         }

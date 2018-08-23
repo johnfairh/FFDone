@@ -47,7 +47,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
 
     /// Called from App when we are ready to go.
     func modelIsReady(model: Model) {
-        self.model = model
+        self.model = model.createChildModel(background: true)
         scan()
     }
 
@@ -97,19 +97,21 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        scan()
+        scan() // this runs async, not finished by time next line runs
         completionHandler(.alert)
     }
 
     // MARK: - Alert database inteface
 
     private func scan() {
-        Dispatch.toForeground {
-            self.activateAlerts()
+        // Switch onto our private model's queue
+        model?.perform { model in
+            let alarms = Alarm.findDueAlarms(model: model)
+            alarms.forEach { alarm in
+                Log.log("Activating alarm \(alarm.text)")
+                alarm.activate()
+            }
+            model.save()
         }
-    }
-
-    private func activateAlerts() {
-
     }
 }
