@@ -232,4 +232,11 @@ extension Alarm {
                                     argumentArray: [Alarm.activeNextActiveDate, Date()])
         return findAll(model: model, predicate: predicate)
     }
+
+    /// Query How many alarms are active
+    static func getActiveAlarmCount(model: Model) -> Int {
+        let nextActive = #keyPath(cdNextActiveDate)
+        let predicate = NSPredicate(format: "\(nextActive) == %@", argumentArray: [Alarm.activeNextActiveDate])
+        return count(model: model, predicate: predicate)
+    }
 }

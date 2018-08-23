@@ -36,6 +36,7 @@ enum DirectorRequest {
 
     case scheduleAlarm(Alarm, (String?) -> Void)
     case cancelAlarm(String)
+    case setActiveAlarmCount(Int)
 }
 
 protocol DirectorInterface {
@@ -190,6 +191,8 @@ extension DirectorRequest {
             alarmScheduler.scheduleAlarm(text: alarm.notificationText, for: alarm.nextActiveDate, callback: callback)
         case let .cancelAlarm(uid):
             alarmScheduler.cancelAlarm(uid: uid)
+        case let .setActiveAlarmCount(count):
+            services.setTabBadge(tab: Director.Tab.alarms.rawValue, badge: (count == 0) ? nil : String(count))
         }
     }
 }

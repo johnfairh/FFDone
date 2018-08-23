@@ -29,9 +29,25 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
 
     private let selectedCallback: PresenterDone<Alarm>
 
+    private var listener: NotificationListener?
+
     required init(director: DirectorInterface, model: Model, object: ModelResultsSet?, mode: PresenterMode, dismiss: @escaping PresenterDone<Alarm>) {
         self.selectedCallback = dismiss
         super.init(director: director, model: model, object: object, mode: mode)
+        listener = model.createListener(name: .NSManagedObjectContextDidSave) {
+            [weak self] _ in self?.refreshAlarmCount()
+        }
+        refreshAlarmCount()
+    }
+
+    deinit {
+        listener?.stopListening()
+        listener = nil
+    }
+
+    func refreshAlarmCount() {
+        let count = Alarm.getActiveAlarmCount(model: model)
+        director.request(.setActiveAlarmCount(count))
     }
 
     // MARK: - Move
