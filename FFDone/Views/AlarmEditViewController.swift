@@ -89,10 +89,10 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
     // MARK: Table stuff
 
     func refreshRowHeights() {
-        Dispatch.toForeground {
+//        Dispatch.toForeground {
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
-        }
+//        }
     }
 
     /// Hide the disclosure triangle if can't edit those rows
@@ -142,16 +142,5 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
                 }
             }
         }
-    }
-}
-
-extension UIViewController {
-    func presentActionSheetChoice<T>(choices: [String], results: [T], done: @escaping (T?) -> Void) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        for (index, choice) in choices.enumerated() {
-            alert.addAction(UIAlertAction(title: choice, style: .default) {_ in done(results[index]) })
-        }
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) {_ in done(nil) })
-        present(alert, animated: true)
     }
 }
