@@ -153,6 +153,7 @@
 		02990A70212DB74B00BF1CEC /* AlarmScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmScheduler.swift; sourceTree = "<group>"; };
 		02990A7221303A7F00BF1CEC /* AlarmEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditPresenter.swift; sourceTree = "<group>"; };
 		02990A7421303BEA00BF1CEC /* AlarmEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditViewController.swift; sourceTree = "<group>"; };
+		02990A762130575F00BF1CEC /* DataModel-4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-4.xcdatamodel"; sourceTree = "<group>"; };
 		02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DBSphereTagCloud_Framework.framework; path = Carthage/Build/iOS/DBSphereTagCloud_Framework.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -890,11 +891,12 @@
 		021309E7210A13F700410451 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				02990A762130575F00BF1CEC /* DataModel-4.xcdatamodel */,
 				02867EB1211D7CDE004D3122 /* DataModel-3.xcdatamodel */,
 				02867EAC211C531C004D3122 /* DataModel-2.xcdatamodel */,
 				021309E8210A13F700410451 /* DataModel.xcdatamodel */,
 			);
-			currentVersion = 02867EB1211D7CDE004D3122 /* DataModel-3.xcdatamodel */;
+			currentVersion = 02990A762130575F00BF1CEC /* DataModel-4.xcdatamodel */;
 			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
