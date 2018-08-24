@@ -34,6 +34,8 @@ enum DirectorRequest {
     case createNoteAndThen(Goal, Model, (Note) -> Void)
     case editNote(Note, Model)
 
+    case createAlarm(Model)
+    case editAlarm(Alarm, Model)
     case scheduleAlarm(Alarm, (String?) -> Void)
     case cancelAlarm(String)
     case setActiveAlarmCount(Int)
@@ -95,7 +97,7 @@ class Director {
         initTab(.alarms,
                 queryResults: Alarm.sectionatedResultsSet(model: model),
                 presenterFn: AlarmsTablePresenter.init) {
-                    [unowned self] alarm in Log.log("Edit alarm: \(alarm!) (\(self))")
+                    [unowned self] alarm in self.request(.editAlarm(alarm!, model))
         }
 
         initTab(.icons,
@@ -186,6 +188,18 @@ extension DirectorRequest {
                                  model: model,
                                  presenterFn: NoteEditPresenter.init,
                                  done: { note in note.goal = goal; continuation(note) })
+
+        case let .createAlarm(model):
+            services.createThing("AlarmEditViewController",
+                                 model: model,
+                                 presenterFn: AlarmEditPresenter.init,
+                                 done: { _ in })
+        case let .editAlarm(alarm, model):
+            services.editThing("AlarmEditViewController",
+                               model: model,
+                               object: alarm,
+                               presenterFn: AlarmEditPresenter.init,
+                               done: { _ in } )
 
         case let .scheduleAlarm(alarm, callback):
             alarmScheduler.scheduleAlarm(text: alarm.notificationText, for: alarm.nextActiveDate, callback: callback)

@@ -88,7 +88,7 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
     }
 
     func createNewObject() {
-//        director.request(.createAlarm(model))
+        director.request(.createAlarm(model))
     }
 
     // MARK: - Swipe

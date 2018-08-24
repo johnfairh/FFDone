@@ -22,7 +22,7 @@ extension Alarm: ModelObject {
         let alarm = Alarm.create(from: model)
         alarm.sortOrder = Alarm.getNextSortOrderValue(primarySortOrder, from: model)
         alarm.name = ""
-        alarm.kind = .weekly(1)
+        alarm.kind = .weekly(3)
         alarm.icon = Icon.getGoalDefault(model: model) // XXX
         alarm.activate() // surely??
         
@@ -37,6 +37,21 @@ extension Alarm {
         case oneShot
         case daily
         case weekly(Int)
+
+        var repeatText: String {
+            switch self {
+            case .oneShot: return "Never"
+            case .daily: return "Daily"
+            case .weekly(_): return "Weekly"
+            }
+        }
+
+        var repeatDay: Int? {
+            if case let .weekly(day) = self {
+                return day
+            }
+            return nil
+        }
     }
 
     var kind: Kind {
@@ -205,6 +220,10 @@ extension Alarm {
 extension Alarm {
     var mainTableImage: UIImage {
         return icon!.getStandardImage()
+    }
+
+    var nativeImage: UIImage {
+        return icon!.nativeImage
     }
 }
 

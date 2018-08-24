@@ -145,5 +145,6 @@ class HomePresenter: Presenter, HomePresenterInterface {
     }
 
     func createAlarm() {
+        director.request(.createAlarm(model))
     }
 }

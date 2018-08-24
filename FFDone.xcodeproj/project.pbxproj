@@ -58,6 +58,8 @@
 		02990A6C212C76F100BF1CEC /* AlarmsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A6B212C76F100BF1CEC /* AlarmsTableViewController.swift */; };
 		02990A6F212C7F2B00BF1CEC /* DebugAlarms.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02990A6D212C7C8B00BF1CEC /* DebugAlarms.yaml */; };
 		02990A71212DB74B00BF1CEC /* AlarmScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A70212DB74B00BF1CEC /* AlarmScheduler.swift */; };
+		02990A7321303A8000BF1CEC /* AlarmEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A7221303A7F00BF1CEC /* AlarmEditPresenter.swift */; };
+		02990A7521303BEA00BF1CEC /* AlarmEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A7421303BEA00BF1CEC /* AlarmEditViewController.swift */; };
 		02C61D9F2125EAD500073B7D /* DBSphereTagCloud_Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */; };
 /* End PBXBuildFile section */
 
@@ -149,6 +151,8 @@
 		02990A6B212C76F100BF1CEC /* AlarmsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmsTableViewController.swift; sourceTree = "<group>"; };
 		02990A6D212C7C8B00BF1CEC /* DebugAlarms.yaml */ = {isa = PBXFileReference; lastKnownFileType = text; name = DebugAlarms.yaml; path = ../../../FFDoneResources/Resources/DebugAlarms.yaml; sourceTree = "<group>"; };
 		02990A70212DB74B00BF1CEC /* AlarmScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmScheduler.swift; sourceTree = "<group>"; };
+		02990A7221303A7F00BF1CEC /* AlarmEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditPresenter.swift; sourceTree = "<group>"; };
+		02990A7421303BEA00BF1CEC /* AlarmEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditViewController.swift; sourceTree = "<group>"; };
 		02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DBSphereTagCloud_Framework.framework; path = Carthage/Build/iOS/DBSphereTagCloud_Framework.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -220,6 +224,7 @@
 				020825EB2122CC53007578C7 /* GoalNotesTablePresenter.swift */,
 				02867EBE21209D18004D3122 /* GoalViewPresenter.swift */,
 				02130A0E210F777400410451 /* GoalEditPresenter.swift */,
+				02990A7221303A7F00BF1CEC /* AlarmEditPresenter.swift */,
 				02867EAF211C99A9004D3122 /* NoteEditPresenter.swift */,
 				02867EB6211F37E0004D3122 /* IconEditPresenter.swift */,
 				020825F12122E310007578C7 /* HomePresenter.swift */,
@@ -237,6 +242,7 @@
 				020825E92122C7AA007578C7 /* GoalNotesTableViewController.swift */,
 				02867EC021209EAF004D3122 /* GoalViewController.swift */,
 				02130A0C210F773A00410451 /* GoalEditViewController.swift */,
+				02990A7421303BEA00BF1CEC /* AlarmEditViewController.swift */,
 				02867EAD211C996F004D3122 /* NoteEditViewController.swift */,
 				02867EB4211F37B7004D3122 /* IconEditViewController.swift */,
 				020825EF2122E2D8007578C7 /* HomeViewController.swift */,
@@ -501,6 +507,7 @@
 				02867EAE211C996F004D3122 /* NoteEditViewController.swift in Sources */,
 				021309EB210A162500410451 /* Goal.swift in Sources */,
 				02867EB0211C99A9004D3122 /* NoteEditPresenter.swift in Sources */,
+				02990A7521303BEA00BF1CEC /* AlarmEditViewController.swift in Sources */,
 				021309F0210A1D2E00410451 /* Director.swift in Sources */,
 				02867EBF21209D18004D3122 /* GoalViewPresenter.swift in Sources */,
 				020825F621246F24007578C7 /* TagList.swift in Sources */,
@@ -510,6 +517,7 @@
 				020825F02122E2D8007578C7 /* HomeViewController.swift in Sources */,
 				021309EE210A176200410451 /* App.swift in Sources */,
 				02867EBB211F6323004D3122 /* IconSource.swift in Sources */,
+				02990A7321303A8000BF1CEC /* AlarmEditPresenter.swift in Sources */,
 				02130A0B210E113600410451 /* IconsTableViewController.swift in Sources */,
 				020825EC2122CC53007578C7 /* GoalNotesTablePresenter.swift in Sources */,
 				02990A68212C682300BF1CEC /* Alarm.swift in Sources */,
