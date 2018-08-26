@@ -110,7 +110,7 @@ enum DatabaseObjects {
                 let icon = Icon.find(from: model, named: iconName) {
                 goal.icon = icon
             } else {
-                goal.icon = Icon.findFirst(from: model, fetchReqName: "DefaultIcons")
+                goal.icon = Icon.getGoalDefault(model: model)
             }
 
             let yamlSortOrder = def.int("sortOrder")
