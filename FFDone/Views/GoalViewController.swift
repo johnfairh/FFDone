@@ -112,7 +112,7 @@ UITextFieldDelegate {
     private func updateTableHeight() {
         let desiredTableHeight = notesTableVC.desiredHeight
         notesTableHeightConstraint.constant = min(desiredTableHeight, maxTableViewHeight)
-        updateViewConstraints()
+        view.layoutIfNeeded()
     }
 
     func refreshNotesTableHeight() {
