@@ -140,14 +140,15 @@ extension Alarm {
     }
 
     var computedNextActiveDate: Date {
-        // Let's take 6AM GMT for the start of the day.
-        var components = DateComponents(hour: 6, minute: 0)
-
+        let components: DateComponents
         switch kind {
         case .daily:
+            // Daily reset is 3PM GMT
+            components = DateComponents(hour: 15, minute: 0)
             break
         case .weekly(let day):
-            components.weekday = day
+            // Weekly reset is 8AM GMT, assume that will do
+            components = DateComponents(hour: 8, minute: 0, weekday: day)
         case .oneShot:
             Log.fatal("Oneshot never next active")
         }
