@@ -18,9 +18,6 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
     @IBOutlet weak var tagCloudViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tagCloudView: TagCloudView!
 
-    @IBOutlet weak var alertsTableHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var alertsTableView: UIView!
-
     var pieRedColour: UIColor!
     var pieGreenColour: UIColor!
 
@@ -46,7 +43,6 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
             safeAreaSize = view.safeAreaLayoutGuide.layoutFrame.size
 
             // Initial layout pass
-            alertsTableHeightConstraint.constant = 0 // from subvc
             layoutChartOnlyView()
         }
     }
@@ -75,7 +71,6 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         tagCloudViewHeightConstraint.constant = 0
         pieChartViewTopConstraint.constant =
             (safeAreaSize.height - 40 -              // bit more space above
-             alertsTableHeightConstraint.constant -
              pieChartView.frame.height) / 2
     }
 
@@ -86,7 +81,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
     func layoutChartAndTagsView() {
         guard let safeAreaSize = safeAreaSize else { return }
 
-        let spaceAboveAlerts = safeAreaSize.height - alertsTableHeightConstraint.constant
+        let spaceAboveAlerts = safeAreaSize.height
 
         let tagCloudVMargin = CGFloat(10) // deal with tag labels overflowing the frame
         let tagCloudHMargin = CGFloat(30) // same, but bigger because text...

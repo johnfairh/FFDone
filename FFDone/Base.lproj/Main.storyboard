@@ -954,13 +954,6 @@
                                 <color key="textColor" name="TextColour"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3qT-ec-3aR" userLabel="Alerts placeholder view">
-                                <rect key="frame" x="0.0" y="518" width="375" height="100"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="3sj-wu-0MD"/>
-                                </constraints>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zcw-mq-m9n">
                                 <rect key="frame" x="43" y="207" width="64" height="30"/>
                                 <state key="normal" title="New goal"/>
@@ -984,12 +977,9 @@
                             <constraint firstItem="0yd-DE-IVh" firstAttribute="width" secondItem="cGg-Bu-3Uw" secondAttribute="width" multiplier="0.6" id="Cw9-5d-i6s"/>
                             <constraint firstItem="N8V-Wy-Buw" firstAttribute="centerX" secondItem="bUW-Jg-NDR" secondAttribute="centerX" id="EF6-VN-fiu"/>
                             <constraint firstItem="f9X-5D-kxz" firstAttribute="top" secondItem="cGg-Bu-3Uw" secondAttribute="top" constant="240" id="FTI-7M-yqw"/>
-                            <constraint firstItem="3qT-ec-3aR" firstAttribute="leading" secondItem="cGg-Bu-3Uw" secondAttribute="leading" id="GTv-W3-rgk"/>
-                            <constraint firstItem="cGg-Bu-3Uw" firstAttribute="trailing" secondItem="3qT-ec-3aR" secondAttribute="trailing" id="M8N-Ng-NLf"/>
                             <constraint firstItem="0yd-DE-IVh" firstAttribute="centerX" secondItem="bUW-Jg-NDR" secondAttribute="centerX" id="fBH-iy-kKT"/>
                             <constraint firstItem="ADN-TL-gBM" firstAttribute="centerX" secondItem="0yd-DE-IVh" secondAttribute="trailing" id="fMG-B2-MTH"/>
                             <constraint firstItem="Zcw-mq-m9n" firstAttribute="bottom" secondItem="0yd-DE-IVh" secondAttribute="bottom" constant="-8" id="jD5-Rj-Xai"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="3qT-ec-3aR" secondAttribute="bottom" id="kxY-bv-AFq"/>
                             <constraint firstItem="0yd-DE-IVh" firstAttribute="leading" secondItem="Zcw-mq-m9n" secondAttribute="centerX" id="ofU-zq-sXA"/>
                             <constraint firstItem="N8V-Wy-Buw" firstAttribute="centerY" secondItem="0yd-DE-IVh" secondAttribute="centerY" id="tLz-B3-QBF"/>
                             <constraint firstItem="0yd-DE-IVh" firstAttribute="top" secondItem="cGg-Bu-3Uw" secondAttribute="top" id="xZF-hn-cwB"/>
@@ -999,8 +989,6 @@
                     <tabBarItem key="tabBarItem" title="Home" image="TabHomeIcon" id="sy9-1Q-KgC"/>
                     <navigationItem key="navigationItem" id="SQE-IJ-8Gc"/>
                     <connections>
-                        <outlet property="alertsTableHeightConstraint" destination="3sj-wu-0MD" id="NQg-mh-yj8"/>
-                        <outlet property="alertsTableView" destination="3qT-ec-3aR" id="wAo-H3-xTr"/>
                         <outlet property="pieChartView" destination="0yd-DE-IVh" id="aqh-0J-cON"/>
                         <outlet property="pieChartViewTopConstraint" destination="xZF-hn-cwB" id="H7g-5J-1gP"/>
                         <outlet property="progressLabel" destination="N8V-Wy-Buw" id="9hl-0z-DIz"/>
