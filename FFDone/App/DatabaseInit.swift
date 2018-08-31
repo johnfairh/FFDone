@@ -86,6 +86,28 @@ enum DatabaseObjects {
         }
     }
 
+    private static func createMissingIcons(model: Model) {
+        let defs = readYaml(file: "DefaultIcons")
+
+        defs.forEach { def in
+            let name = def.str("desc")
+            guard Icon.find(from: model, named: name) == nil else {
+                Log.log("Skipping \(name) - already exists")
+                return
+            }
+
+            let assetName = "DefGoal_\(def.str("name"))"
+            guard let image = UIImage(named: assetName) else {
+                Log.log("Can't find default image \(assetName)")
+                return
+            }
+
+            let icon = Icon.createWithDefaults(model: model)
+            icon.nativeImage = image
+            icon.name = name
+        }
+    }
+
     /// Create the debug goals from the yaml file
     private static func createDebugGoals(model: Model) {
         let defs = readYaml(file: "DebugGoals")
@@ -201,5 +223,8 @@ enum DatabaseObjects {
     /// Entrypoint -- create objects etc. on every run
     static func createEachTime(model: Model, debugMode: Bool) {
         createIconSources()
+        #if false
+        createMissingIcons(model: model)
+        #endif
     }
 }
