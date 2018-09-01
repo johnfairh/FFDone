@@ -58,7 +58,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
 
     /// Called when an Alarm is deactivated and we know when to reactivate it.
     /// Callback is made with the string uuid of the alarm or `nil` if it didn't work.
-    func scheduleAlarm(text: String, for date: Date, callback: @escaping (String?) -> Void) {
+    func scheduleAlarm(text: String, image: UIImage, for date: Date, callback: @escaping (String?) -> Void) {
         center.getNotificationSettings { settings in
             guard settings.authorizationStatus == .authorized else {
                 Log.log("AlarmScheduler: Not authorized to schedule, bailing")
@@ -72,6 +72,19 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
             content.title = "Not done yet"
             content.body = text
 
+            // Try to add the alert's image to the notification
+            let imageFileUrl = FileManager.default.temporaryFileURL(extension: "png")
+            if let pngImageData = image.pngData() {
+                do {
+                    try pngImageData.write(to: imageFileUrl)
+
+                    let attachment = try UNNotificationAttachment(identifier: "???", url: imageFileUrl)
+                    content.attachments = [attachment]
+                } catch {
+                    Log.log("Failed to create notification PNG, pressing on - \(error)")
+                }
+            }
+
             let interval = date.timeIntervalSinceNow
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
 
@@ -80,6 +93,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
 
             self.center.add(request) { error in
                 Dispatch.toForeground {
+                    try? FileManager.default.removeItem(at: imageFileUrl)
                     if let error = error {
                         Log.log("AlarmScheduler: add request failed: \(error)")
                         callback(nil)

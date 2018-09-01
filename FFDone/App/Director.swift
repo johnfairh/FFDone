@@ -202,7 +202,7 @@ extension DirectorRequest {
                                done: { _ in } )
 
         case let .scheduleAlarm(alarm, callback):
-            alarmScheduler.scheduleAlarm(text: alarm.notificationText, for: alarm.nextActiveDate, callback: callback)
+            alarmScheduler.scheduleAlarm(text: alarm.notificationText, image: alarm.nativeImage, for: alarm.nextActiveDate, callback: callback)
         case let .cancelAlarm(uid):
             alarmScheduler.cancelAlarm(uid: uid)
         case let .setActiveAlarmCount(count):
