@@ -88,14 +88,17 @@ UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
         if let text = textField.text,
             let stepsValue = Int(text) {
             presenter.setCurrentSteps(steps: stepsValue)
         } else {
             textField.text = savedTextField
         }
-        textField.resignFirstResponder()
-        return true
     }
 
     // MARK: - Notes table
