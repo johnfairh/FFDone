@@ -34,7 +34,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
 
         center.delegate = self
 
-        center.requestAuthorization(options: [.alert]) { granted, error in
+        center.requestAuthorization(options: [.alert, .badge]) { granted, error in
             if !granted {
                 Log.log("Notification authorization denied")
                 if let error = error {
@@ -71,6 +71,12 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
             let content = UNMutableNotificationContent()
             content.title = "Not done yet"
             content.body = text
+            // Calculating the badge at this point is tricky - we have to examine the entire
+            // pending list and insert this new guy (which will require the tail of said list
+            // to also be updated).  So instead we set a silly value and wait for the DB update
+            // that will follow this schedule() that will update the `activeAlarmCount` variable
+            // to keep the app and tab badges in sync.
+            content.badge = 99
 
             // Try to add the alert's image to the notification
             let imageFileUrl = FileManager.default.temporaryFileURL(extension: "png")
@@ -126,6 +132,84 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                 alarm.activate()
             }
             model.save()
+        }
+    }
+
+    // MARK: - Badge maintenance
+
+    // This is very complicated because the notification object needs to know the absolute
+    // value of the app badge that it should display -- there is no "just increment the
+    // number that is already there" which would 100% meet our needs.
+    //
+    // So whenever the active alarm count changes, we have to scan through the queue of
+    // notification requests and update them all.
+    //
+    // This might be racy -- it's not clear whether calls to `getPendingNotificationRequests`
+    // are serialized.  Probably would be better to bounce back onto the private queue.
+    var activeAlarmCount: Int {
+        get {
+            return UIApplication.shared.applicationIconBadgeNumber
+        }
+        set {
+            guard newValue != activeAlarmCount else {
+                return
+            }
+            UIApplication.shared.applicationIconBadgeNumber = newValue
+
+            center.getPendingNotificationRequests { [activeAlarmCount] requests in
+                guard requests.count > 0 else {
+                    return
+                }
+
+                Log.log("Scanning notifications")
+
+                // Get notifications into the order they will fire
+                let sortedRequests = requests.sorted { left, right in
+                    guard let leftTrigger = left.trigger,
+                        let leftIntervalTrigger = leftTrigger as? UNTimeIntervalNotificationTrigger,
+                        let leftTriggerDate = leftIntervalTrigger.nextTriggerDate(),
+                        let rightTrigger = right.trigger,
+                        let rightIntervalTrigger = rightTrigger as? UNTimeIntervalNotificationTrigger,
+                        let rightTriggerDate = rightIntervalTrigger.nextTriggerDate() else {
+                            Log.fatal("Weird notification in the queue: \(left), \(right)")
+                    }
+                    return leftTriggerDate < rightTriggerDate
+                }
+
+                // Get the list of badges in the same order
+                let badgeNumbers = (activeAlarmCount+1)...(activeAlarmCount + sortedRequests.count)
+
+                // Look for things that need changing
+                zip(sortedRequests, badgeNumbers).forEach { request, newBadge in
+                    guard let currentBadgeValue = request.content.badge,
+                        let currentBadge = currentBadgeValue as? Int else {
+                            Log.log("Weird notification in the queue: \(request), pressing on...")
+                            return
+                    }
+
+                    guard currentBadge != newBadge else {
+                        Log.log("Request already has the right badge")
+                        return
+                    }
+
+                    // Replace the notification
+                    let newContent = UNMutableNotificationContent()
+                    newContent.title = request.content.title
+                    newContent.body = request.content.body
+                    newContent.badge = newBadge as NSNumber
+                    newContent.attachments = request.content.attachments
+
+                    Log.log("Adding replacement notification, \(currentBadge) -> \(newBadge)")
+
+                    let newRequest = UNNotificationRequest(identifier: request.identifier, content: newContent, trigger: request.trigger)
+                    self.center.add(newRequest) { error in
+                        Log.log("Replacement notification added")
+                        if let error = error {
+                            Log.log("Error trying to replace notification: \(error), pressing on...")
+                        }
+                    }
+                }
+            }
         }
     }
 }
