@@ -8,9 +8,13 @@
 import TMLPresentation
 
 class IconCell: UITableViewCell, TableCell {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        imageView?.enableRoundCorners()
+    }
+
     func configure(_ modelObject: Icon) {
         textLabel?.text  = modelObject.name
-//        imageView?.image = modelObject.getStandardImage()
         imageView?.image = modelObject.nativeImage.imageWithSize(CGSize(width: 38, height: 38))
     }
 }

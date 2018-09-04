@@ -24,6 +24,8 @@ class GoalCell: UITableViewCell, TableCell {
 
         let tagGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTagTextLabel(_:)))
         customTagTextLabel.addGestureRecognizer(tagGestureRecognizer)
+
+        customImageView.enableRoundCorners()
     }
 
     @IBAction func didTapTagTextLabel(_ sender: UIGestureRecognizer) {
