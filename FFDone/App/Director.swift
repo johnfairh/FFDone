@@ -59,6 +59,7 @@ class Director {
         case notes = 2
         case alarms = 3
         case icons = 4
+        case debug = 5
     }
 
     private let alarmScheduler: AlarmScheduler
@@ -104,6 +105,9 @@ class Director {
                 presenterFn: IconsTablePresenter.init) {
                     [unowned self] icon in self.request(.editIcon(icon!, model))
         }
+
+        initTab(.debug,
+                presenterFn: DebugPresenter.init)
 
         // Turn on the actual UI replacing the loading screen
         services.presentUI()

@@ -31,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: lightTextColour]
         UISearchBar.appearance().tintColor = tintColour
 
+        // Temp hacky way of affecting the tabbarcontroller's morecontroller tableview
+        window?.tintColor = tintColour
+
         app = App(window: window!)
 
         return true

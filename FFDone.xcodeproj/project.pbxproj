@@ -28,6 +28,8 @@
 		02130A0B210E113600410451 /* IconsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A0A210E113600410451 /* IconsTableViewController.swift */; };
 		02130A0D210F773A00410451 /* GoalEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A0C210F773A00410451 /* GoalEditViewController.swift */; };
 		02130A0F210F777400410451 /* GoalEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A0E210F777400410451 /* GoalEditPresenter.swift */; };
+		0252C9752144289B00DC6D64 /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252C9742144289B00DC6D64 /* DebugViewController.swift */; };
+		0252C977214428CD00DC6D64 /* DebugPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252C976214428CD00DC6D64 /* DebugPresenter.swift */; };
 		0253339F2112FE3D00AF8E7B /* TMLPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */; };
 		025333A02112FE3D00AF8E7B /* TMLPresentation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		027F63752105FF93001C9738 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027F63742105FF93001C9738 /* AppDelegate.swift */; };
@@ -116,6 +118,8 @@
 		02130A0A210E113600410451 /* IconsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsTableViewController.swift; sourceTree = "<group>"; };
 		02130A0C210F773A00410451 /* GoalEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditViewController.swift; sourceTree = "<group>"; };
 		02130A0E210F777400410451 /* GoalEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditPresenter.swift; sourceTree = "<group>"; };
+		0252C9742144289B00DC6D64 /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
+		0252C976214428CD00DC6D64 /* DebugPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPresenter.swift; sourceTree = "<group>"; };
 		0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TMLPresentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		027F63712105FF93001C9738 /* FFDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027F63742105FF93001C9738 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -229,6 +233,7 @@
 				02867EAF211C99A9004D3122 /* NoteEditPresenter.swift */,
 				02867EB6211F37E0004D3122 /* IconEditPresenter.swift */,
 				020825F12122E310007578C7 /* HomePresenter.swift */,
+				0252C976214428CD00DC6D64 /* DebugPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -248,6 +253,7 @@
 				02867EB4211F37B7004D3122 /* IconEditViewController.swift */,
 				020825EF2122E2D8007578C7 /* HomeViewController.swift */,
 				02990A6521270F4C00BF1CEC /* TagCloudView.swift */,
+				0252C9742144289B00DC6D64 /* DebugViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -505,6 +511,7 @@
 				02990A6C212C76F100BF1CEC /* AlarmsTableViewController.swift in Sources */,
 				02130A01210B6B7C00410451 /* DatabaseInit.swift in Sources */,
 				02130A0F210F777400410451 /* GoalEditPresenter.swift in Sources */,
+				0252C977214428CD00DC6D64 /* DebugPresenter.swift in Sources */,
 				02867EAE211C996F004D3122 /* NoteEditViewController.swift in Sources */,
 				021309EB210A162500410451 /* Goal.swift in Sources */,
 				02867EB0211C99A9004D3122 /* NoteEditPresenter.swift in Sources */,
@@ -519,6 +526,7 @@
 				021309EE210A176200410451 /* App.swift in Sources */,
 				02867EBB211F6323004D3122 /* IconSource.swift in Sources */,
 				02990A7321303A8000BF1CEC /* AlarmEditPresenter.swift in Sources */,
+				0252C9752144289B00DC6D64 /* DebugViewController.swift in Sources */,
 				02130A0B210E113600410451 /* IconsTableViewController.swift in Sources */,
 				020825EC2122CC53007578C7 /* GoalNotesTablePresenter.swift in Sources */,
 				02990A68212C682300BF1CEC /* Alarm.swift in Sources */,
