@@ -139,11 +139,17 @@ extension Alarm {
         }
     }
 
+    private static let utcCalendar: Calendar  = {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        return calendar
+    }()
+
     var computedNextActiveDate: Date {
         let components: DateComponents
         switch kind {
         case .daily:
-            // Daily reset is 3PM GMT
+            // Daily reset is 3PM GMT (midnight JST but I would get confused about which day it was)
             components = DateComponents(hour: 15, minute: 0)
             break
         case .weekly(let day):
@@ -153,9 +159,9 @@ extension Alarm {
             Log.fatal("Oneshot never next active")
         }
 
-        guard let nextDate = Calendar.current.nextDate(after: Date(),
-                                                       matching: components,
-                                                       matchingPolicy: .nextTime) else {
+        guard let nextDate = Alarm.utcCalendar.nextDate(after: Date(),
+                                                        matching: components,
+                                                        matchingPolicy: .nextTime) else {
             Log.fatal("Can't find the next date? \(components)")
         }
 

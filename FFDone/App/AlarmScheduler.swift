@@ -116,7 +116,9 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
         center.removePendingNotificationRequests(withIdentifiers: [uid])
     }
 
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         scan() // this runs async, not finished by time next line runs
         completionHandler(.alert)
     }
@@ -201,7 +203,20 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
 
                     Log.log("Adding replacement notification, \(currentBadge) -> \(newBadge)")
 
-                    let newRequest = UNNotificationRequest(identifier: request.identifier, content: newContent, trigger: request.trigger)
+                    // Fish out the date this is supposed to go off (again) -- if we use the
+                    // existing trigger then it uses the original interval rather than the
+                    // calculated trigger time.
+                    guard let oldTrigger = request.trigger,
+                        let oldIntervalTrigger = oldTrigger as? UNTimeIntervalNotificationTrigger,
+                        let triggerDate = oldIntervalTrigger.nextTriggerDate() else {
+                            Log.fatal("Trigger has mysteriously mutated - \(request)")
+                    }
+
+                    let interval = triggerDate.timeIntervalSinceNow
+                    let newTrigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+                    Log.log("Adding replacement notification, target time = \(triggerDate)")
+
+                    let newRequest = UNNotificationRequest(identifier: request.identifier, content: newContent, trigger: newTrigger)
                     self.center.add(newRequest) { error in
                         Log.log("Replacement notification added")
                         if let error = error {
