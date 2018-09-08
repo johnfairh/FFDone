@@ -55,7 +55,6 @@ protocol HomePresenterInterface {
 class HomePresenter: Presenter, HomePresenterInterface {
     typealias ViewInterfaceType = HomePresenterInterface
 
-    private let query: ModelResultsSet
     private let model: Model
     private let director: DirectorInterface
 
@@ -63,9 +62,11 @@ class HomePresenter: Presenter, HomePresenterInterface {
     private let completeTagsFieldWatcher: ModelFieldWatcher
     private let incompleteTagsFieldWatcher: ModelFieldWatcher
 
+    convenience init(director: DirectorInterface, model: Model) {
+        self.init(director: director, model: model, object: nil, mode: .single(.view), dismiss: { _ in })
+    }
+
     required init(director: DirectorInterface, model: Model, object: ModelResultsSet?, mode: PresenterMode, dismiss: @escaping PresenterDone<Goal>) {
-        Log.assert(mode.isMultiType(.manage) && object != nil)
-        self.query = object!
         self.model = model
         self.director = director
 

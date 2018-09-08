@@ -79,7 +79,6 @@ class Director {
 
         // set tabs
         initTab(.home,
-                queryResults: Goal.allSortedResultsSet(model: model), // TODO: wot?
                 presenterFn: HomePresenter.init)
 
         initTab(.goals,
@@ -121,6 +120,14 @@ class Director {
                              queryResults: queryResults,
                              presenterFn: presenterFn,
                              picked: picked)
+    }
+
+    private func initTab<PresenterType>(_ tab: Tab,
+                                        presenterFn: NulPresenterFn<DirectorInterface, PresenterType>)
+        where PresenterType: Presenter {
+            services.initTab(tabIndex: tab.rawValue,
+                             rootModel: rootModel!,
+                             presenterFn: presenterFn)
     }
 }
 
