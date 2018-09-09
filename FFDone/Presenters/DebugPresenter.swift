@@ -9,7 +9,7 @@ import TMLPresentation
 import UserNotifications
 
 struct DebugData {
-    let text: String
+    var text: String
 }
 
 /// Presenter inputs, commands, outputs
@@ -30,7 +30,7 @@ protocol DebugPresenterInterface {
     func doCommand(cmd: String)
 }
 
-class DebugPresenter: Presenter, DebugPresenterInterface {
+class DebugPresenter: Presenter, DebugPresenterInterface, LogBuffer {
     typealias ViewInterfaceType = DebugPresenterInterface
 
     private let model: Model
@@ -42,6 +42,9 @@ class DebugPresenter: Presenter, DebugPresenterInterface {
         }
     }
 
+    private var showingLog: Bool
+    private var log: DebugData
+
     convenience init(director: DirectorInterface, model: Model) {
         self.init(director: director, model: model, object: nil, mode: .single(.view), dismiss: { _ in })
     }
@@ -49,7 +52,10 @@ class DebugPresenter: Presenter, DebugPresenterInterface {
     required init(director: DirectorInterface, model: Model, object: ModelResultsSet?, mode: PresenterMode, dismiss: @escaping PresenterDone<Goal>) {
         self.model = model
         self.director = director
-        self.data = DebugData(text: "Boo")
+        self.log = DebugData(text: "")
+        self.data = self.log
+        self.showingLog = true
+        Log.logBuffer = self
     }
 
     var refresh: (DebugData) -> Void = { _ in } {
@@ -64,18 +70,32 @@ class DebugPresenter: Presenter, DebugPresenterInterface {
         }
     }
 
+    /// Record a log line in our buffer, trim if too big, push to UI if selected.
+    func log(line: String) {
+        if log.text.lengthOfBytes(using: .utf8) > 1024 {
+            log = DebugData(text: "")
+        }
+        log.text += "\(Date()) \(line)\n"
+        if showingLog {
+            data = log
+        }
+    }
+
     /// Clear data
     func clear() {
-        self.data = DebugData(text: "")
+        log = DebugData(text: "")
+        data = log
     }
 
     /// Show the log data
     func showLog() {
-
+        showingLog = true
+        data = log
     }
 
     /// Show notifications status
     func showNotifications() {
+        showingLog = false
         UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
             guard requests.count > 0 else {
                 self.data = DebugData(text: "No pending notifications")
