@@ -77,6 +77,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
             // that will follow this schedule() that will update the `activeAlarmCount` variable
             // to keep the app and tab badges in sync.
             content.badge = 99
+            content.categoryIdentifier = "ALERT"
 
             // Try to add the alert's image to the notification
             // (hmm we don't delete this file but rely on the system to do it - deleting
@@ -202,6 +203,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                     newContent.body = request.content.body
                     newContent.badge = newBadge as NSNumber
                     newContent.attachments = request.content.attachments
+                    newContent.categoryIdentifier = request.content.categoryIdentifier
 
                     Log.log("Adding replacement notification, \(currentBadge) -> \(newBadge)")
 
