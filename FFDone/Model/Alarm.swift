@@ -251,11 +251,11 @@ extension Alarm {
                                     sectionNameKeyPath: #keyPath(sectionOrder)).asModelResultsSet
     }
 
-    /// Get the alarms that are due
+    /// Get the alarms that are due (ish)
     static func findDueAlarms(model: Model) -> [Alarm] {
         let nextActive = #keyPath(cdNextActiveDate)
         let predicate = NSPredicate(format: "\(nextActive) > %@ AND \(nextActive) <= %@",
-                                    argumentArray: [Alarm.activeNextActiveDate, Date()])
+                                    argumentArray: [Alarm.activeNextActiveDate, Date().addingTimeInterval(5)])
         return findAll(model: model, predicate: predicate)
     }
 

@@ -32,7 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UISearchBar.appearance().tintColor = tintColour
 
         // Temp hacky way of affecting the tabbarcontroller's morecontroller tableview
-        window?.tintColor = tintColour
+        // bad hack - affects way too many places that aren't ready for darkmode yet :(
+        // window?.tintColor = tintColour
 
         app = App(window: window!)
 

@@ -79,6 +79,8 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
             content.badge = 99
 
             // Try to add the alert's image to the notification
+            // (hmm we don't delete this file but rely on the system to do it - deleting
+            //  it causes intermittent errors about it not existing later on...)
             let imageFileUrl = FileManager.default.temporaryFileURL(extension: "png")
             if let pngImageData = image.pngData() {
                 do {
@@ -91,15 +93,14 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                 }
             }
 
-            let interval = date.timeIntervalSinceNow
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+            let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+            let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
 
             let uid = UUID().uuidString
             let request = UNNotificationRequest(identifier: uid, content: content, trigger: trigger)
 
             self.center.add(request) { error in
                 Dispatch.toForeground {
-                    try? FileManager.default.removeItem(at: imageFileUrl)
                     if let error = error {
                         Log.log("AlarmScheduler: add request failed: \(error)")
                         callback(nil)
@@ -168,13 +169,14 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                 // Get notifications into the order they will fire
                 let sortedRequests = requests.sorted { left, right in
                     guard let leftTrigger = left.trigger,
-                        let leftIntervalTrigger = leftTrigger as? UNTimeIntervalNotificationTrigger,
-                        let leftTriggerDate = leftIntervalTrigger.nextTriggerDate(),
+                        let leftCalendarTrigger = leftTrigger as? UNCalendarNotificationTrigger,
+                        let leftTriggerDate = leftCalendarTrigger.nextTriggerDate(),
                         let rightTrigger = right.trigger,
-                        let rightIntervalTrigger = rightTrigger as? UNTimeIntervalNotificationTrigger,
-                        let rightTriggerDate = rightIntervalTrigger.nextTriggerDate() else {
+                        let rightCalendarTrigger = rightTrigger as? UNCalendarNotificationTrigger,
+                        let rightTriggerDate = rightCalendarTrigger.nextTriggerDate() else {
                             Log.fatal("Weird notification in the queue: \(left), \(right)")
                     }
+
                     return leftTriggerDate < rightTriggerDate
                 }
 
@@ -203,20 +205,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
 
                     Log.log("Adding replacement notification, \(currentBadge) -> \(newBadge)")
 
-                    // Fish out the date this is supposed to go off (again) -- if we use the
-                    // existing trigger then it uses the original interval rather than the
-                    // calculated trigger time.
-                    guard let oldTrigger = request.trigger,
-                        let oldIntervalTrigger = oldTrigger as? UNTimeIntervalNotificationTrigger,
-                        let triggerDate = oldIntervalTrigger.nextTriggerDate() else {
-                            Log.fatal("Trigger has mysteriously mutated - \(request)")
-                    }
-
-                    let interval = triggerDate.timeIntervalSinceNow
-                    let newTrigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
-                    Log.log("Adding replacement notification, target time = \(triggerDate)")
-
-                    let newRequest = UNNotificationRequest(identifier: request.identifier, content: newContent, trigger: newTrigger)
+                    let newRequest = UNNotificationRequest(identifier: request.identifier, content: newContent, trigger: request.trigger)
                     self.center.add(newRequest) { error in
                         Log.log("Replacement notification added")
                         if let error = error {

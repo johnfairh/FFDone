@@ -94,8 +94,8 @@ class DebugPresenter: Presenter, DebugPresenterInterface {
                 }
                 let due: String
                 if let trigger = request.trigger,
-                    let intervalTrigger = trigger as? UNTimeIntervalNotificationTrigger,
-                    let date = intervalTrigger.nextTriggerDate() {
+                    let calendarTrigger = trigger as? UNCalendarNotificationTrigger,
+                    let date = calendarTrigger.nextTriggerDate() {
                     due = String(describing: date)
                 } else {
                     due = "(can't decode)"
