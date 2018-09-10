@@ -68,6 +68,7 @@
 		02D6130B214589EE00BD9BA6 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D6130A214589EE00BD9BA6 /* NotificationViewController.swift */; };
 		02D6130E214589EE00BD9BA6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02D6130C214589EE00BD9BA6 /* MainInterface.storyboard */; };
 		02D61312214589EE00BD9BA6 /* FFDoneNF.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02D61304214589EE00BD9BA6 /* FFDoneNF.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		02D613182146BD9400BD9BA6 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D613172146BD9400BD9BA6 /* Strings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -188,6 +189,7 @@
 		02D6130A214589EE00BD9BA6 /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		02D6130D214589EE00BD9BA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		02D6130F214589EE00BD9BA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02D613172146BD9400BD9BA6 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +255,7 @@
 				02867EBA211F6323004D3122 /* IconSource.swift */,
 				020825F521246F24007578C7 /* TagList.swift */,
 				02990A70212DB74B00BF1CEC /* AlarmScheduler.swift */,
+				02D613172146BD9400BD9BA6 /* Strings.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -614,6 +617,7 @@
 				020825EC2122CC53007578C7 /* GoalNotesTablePresenter.swift in Sources */,
 				02990A68212C682300BF1CEC /* Alarm.swift in Sources */,
 				02990A6A212C737200BF1CEC /* AlarmsTablePresenter.swift in Sources */,
+				02D613182146BD9400BD9BA6 /* Strings.swift in Sources */,
 				02867EB5211F37B7004D3122 /* IconEditViewController.swift in Sources */,
 				02867EA9211AD48C004D3122 /* NotesTableViewController.swift in Sources */,
 				020825EA2122C7AA007578C7 /* GoalNotesTableViewController.swift in Sources */,

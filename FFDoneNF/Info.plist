@@ -25,7 +25,7 @@
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>UNNotificationExtensionCategory</key>
-			<string>ALERT</string>
+			<string>ALARM</string>
 			<key>UNNotificationExtensionInitialContentSizeRatio</key>
 			<real>0.2</real>
 			<key>UNNotificationExtensionDefaultContentHidden</key>
