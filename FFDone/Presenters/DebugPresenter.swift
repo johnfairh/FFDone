@@ -121,7 +121,9 @@ class DebugPresenter: Presenter, DebugPresenterInterface, LogBuffer {
                     due = "(can't decode)"
                 }
 
-                str += "NF name:'\(name)' badge:\(badge) due:\(due)\n\n"
+                let cat = request.content.categoryIdentifier
+
+                str += "NF name:'\(name)' badge:\(badge) due:\(due) cat:\(cat)\n\n"
             }
             self.data = DebugData(text: str)
         }
