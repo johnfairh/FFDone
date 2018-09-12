@@ -47,7 +47,6 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
         super.viewDidLoad()
 
         // XXX start temp coloring
-        view.tintColor = .tint
         view.backgroundColor = .black
         tableView.separatorColor = .tableSeparator
         // XXX end temp coloring

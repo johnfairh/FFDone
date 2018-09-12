@@ -9,7 +9,23 @@ import TMLPresentation
 
 class AlarmCell: UITableViewCell, TableCell {
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        // XXX start temp coloring -- can move to UIAppearance, hoorah!
+        selectedBackgroundView = UIView()
+        selectedBackgroundView?.backgroundColor = .tableSeparator
+        // XXX start temp coloring
+    }
+
     func configure(_ alarm: Alarm) {
+
+        // XXX start temp coloring
+        textLabel?.textColor = .text
+        detailTextLabel?.textColor = .text
+        backgroundColor = nil // can't figure out how to set transparent in storyboard
+        // XXX end temp coloring
+
         textLabel?.text = alarm.name
         detailTextLabel?.text = alarm.caption
         imageView?.image = alarm.mainTableImage
@@ -21,11 +37,21 @@ TableModelDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // XXX start temp coloring
+        view.backgroundColor = .black
+        tableView.separatorColor = .tableSeparator
+        // XXX end temp coloring
+
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
         }
 
         navigationItem.leftBarButtonItem = nil
+    }
+
+    func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
+        header.textLabel?.textColor = .text
     }
 
     private var tableModel: TableModel<AlarmCell, AlarmsTableViewController>!
