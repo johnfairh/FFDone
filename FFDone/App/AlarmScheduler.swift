@@ -203,7 +203,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                     newContent.body = request.content.body
                     newContent.badge = newBadge as NSNumber
                     newContent.attachments = request.content.attachments
-                    newContent.categoryIdentifier = request.content.categoryIdentifier
+                    newContent.categoryIdentifier = Strings.Notification.CATEGORY
 
                     Log.log("Adding replacement notification, \(currentBadge) -> \(newBadge)")
 
