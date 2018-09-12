@@ -17,6 +17,7 @@ enum Strings {
         static let text = "TextColour"
         static let tint = "TintColour"
         static let contentBg = "ContentBgColour"
+        static let tableSeparator = "TableSeparatorColour"
     }
 }
 
@@ -24,4 +25,5 @@ extension UIColor {
     static let text = UIColor(named: Strings.Color.text)!
     static let tint = UIColor(named: Strings.Color.tint)!
     static let contentBg = UIColor(named: Strings.Color.contentBg)
+    static let tableSeparator = UIColor(named: Strings.Color.tableSeparator)
 }

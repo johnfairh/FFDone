@@ -15,7 +15,23 @@ class NoteCell: UITableViewCell, TableCell {
     @IBOutlet weak var goalNameButton: UIButton!
     @IBOutlet weak var noteLabel: UILabel!
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        // XXX start temp coloring -- can move to UIAppearance, hoorah!
+        selectedBackgroundView = UIView()
+        selectedBackgroundView?.backgroundColor = .tableSeparator
+        // XXX start temp coloring
+    }
+
     func configure(_ note: Note) {
+
+        // XXX start temp coloring
+        goalNameButton.setTitleColor(.text, for: .normal)
+        noteLabel.textColor = .text
+        backgroundColor = nil // can't figure out how to set transparent in storyboard
+        // XXX end temp coloring
+
         goalImageView.image = note.goal?.nativeImage
         goalNameButton.setTitle(note.goal?.name ?? "??", for: .normal)
         noteLabel.text = note.text
@@ -29,6 +45,13 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // XXX start temp coloring
+        view.tintColor = .tint
+        view.backgroundColor = .black
+        tableView.separatorColor = .tableSeparator
+        // XXX end temp coloring
+
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
         }
@@ -40,6 +63,11 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
                                       buttonColor: UIButton(type: .system).currentTitleColor,
                                       font: .systemFont(ofSize: 15.0),
                                       showCancelButton: false)
+    }
+
+    func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
+        header.textLabel?.textColor = .text
+        header.tintColor = .contentBg // bizarrely this sets the background color
     }
 
     private var tableModel: TableModel<NoteCell, NotesTableViewController>!
