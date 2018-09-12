@@ -640,7 +640,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="849-cs-cOh">
                                                     <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Current steps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5j-Ug-fRU">
+                                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Current steps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5j-Ug-fRU">
                                                             <rect key="frame" x="0.0" y="11.5" width="209" height="20.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
@@ -682,7 +682,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="VZX-0I-1oL">
                                                     <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Total steps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k5U-1h-v3L">
+                                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Total steps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k5U-1h-v3L">
                                                             <rect key="frame" x="0.0" y="11.5" width="209" height="20.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <nil key="textColor"/>
@@ -853,6 +853,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="currentStepsLabel" destination="z5j-Ug-fRU" id="K4k-Lh-QXN"/>
                         <outlet property="currentStepsStepper" destination="15y-wd-7jq" id="Ukd-wi-HZK"/>
                         <outlet property="currentStepsTextField" destination="GsH-2Y-pbS" id="ZaP-3V-oCS"/>
                         <outlet property="doneButton" destination="JIx-2q-xv7" id="8CX-Fo-y5J"/>
@@ -860,6 +861,7 @@
                         <outlet property="iconImage" destination="E2B-GI-3fb" id="NWb-o8-qYS"/>
                         <outlet property="nameTextField" destination="sz7-qO-LWv" id="yIF-Lc-oyF"/>
                         <outlet property="tagTextField" destination="qAW-57-sXs" id="3PE-DR-JF6"/>
+                        <outlet property="totalStepsLabel" destination="k5U-1h-v3L" id="oaX-rJ-eGG"/>
                         <outlet property="totalStepsStepper" destination="Omv-Qz-511" id="Rgw-xj-QTP"/>
                         <outlet property="totalStepsTextField" destination="1M5-sr-cNe" id="aK1-Ck-ZD9"/>
                     </connections>
@@ -1217,15 +1219,15 @@
             <objects>
                 <tableViewController storyboardIdentifier="GoalEditNotesViewController" title="GoalEditNotesViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="z6z-81-z51" customClass="GoalNotesTableViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="gSF-Th-Gg1">
-                        <rect key="frame" x="0.0" y="0.0" width="351" height="128"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GoalNoteCell" rowHeight="69" id="BDP-nA-1Zg" customClass="GoalNoteCell" customModule="FFDone" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="351" height="69"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="69"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BDP-nA-1Zg" id="BYr-nh-zw2">
-                                    <rect key="frame" x="0.0" y="0.0" width="351" height="68.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="68.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukb-fP-qSr">
@@ -1435,6 +1437,6 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CKj-jx-yca"/>
+        <segue reference="xWc-Nd-r2L"/>
     </inferredMetricsTieBreakers>
 </document>

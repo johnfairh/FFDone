@@ -36,9 +36,11 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
     @IBOutlet weak var favToggle: UISwitch!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     @IBOutlet weak var tagTextField: UITextField!
-
-    private weak var notesTableVC: GoalNotesTableViewController!
+    @IBOutlet weak var currentStepsLabel: UILabel!
+    @IBOutlet weak var totalStepsLabel: UILabel!
     
+    private weak var notesTableVC: GoalNotesTableViewController!
+
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,6 +48,9 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
         currentStepsTextField.delegate = self
         totalStepsTextField.delegate = self
         tagTextField.delegate = self
+
+        currentStepsLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapCurrentSteps)))
+        totalStepsLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapTotalSteps)))
 
         presenter.refresh = { [unowned self] goal, isSaveOK in
             self.nameTextField.text = goal.name
@@ -85,6 +90,16 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
 
     @IBAction func addNoteButtonTapped(_ sender: UIButton) {
         presenter.addNote()
+    }
+
+    @objc
+    func didTapCurrentSteps() {
+        currentStepsTextField.becomeFirstResponder()
+    }
+
+    @objc
+    func didTapTotalSteps() {
+        totalStepsTextField.becomeFirstResponder()
     }
 
     // MARK: Text stuff
