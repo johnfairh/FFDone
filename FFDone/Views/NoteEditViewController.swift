@@ -18,6 +18,15 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface> {
     // MARK: - Functional stuff
 
     override public func viewDidLoad() {
+
+        // XXX start temp coloring
+        textView.textColor = .text
+        goalNameButton.setTitleColor(.text, for: .normal)
+        dateLabel.textColor = .text
+        view.backgroundColor = .black
+        view.tintColor = .tint
+        // XXX end temp coloring
+
         textView.text = presenter.text
         dateLabel.text = presenter.date
         if let goal = presenter.goal {
