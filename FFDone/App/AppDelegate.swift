@@ -19,17 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         ImageTransformer.install()
 
-        let tintColour = UIColor(named: "TintColour") ?? .blue
-        let lightTextColour = UIColor(named: "TextColour") ?? .lightText
-
-        UITabBar.appearance().tintColor = tintColour
+        UITabBar.appearance().tintColor = .tint
         UITabBar.appearance().barTintColor = .black
 
-        UINavigationBar.appearance().tintColor = tintColour
+        UINavigationBar.appearance().tintColor = .tint
         UINavigationBar.appearance().barTintColor = .black
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: lightTextColour]
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: lightTextColour]
-        UISearchBar.appearance().tintColor = tintColour
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.text]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.text]
+        UISearchBar.appearance().tintColor = .tint
 
         // Temp hacky way of affecting the tabbarcontroller's morecontroller tableview
         // bad hack - affects way too many places that aren't ready for darkmode yet :(
