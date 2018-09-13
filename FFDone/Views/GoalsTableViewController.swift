@@ -17,7 +17,7 @@ class GoalCell: UITableViewCell, TableCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        customTagTextLabel?.backgroundColor = UIColor(named: "TagBackgroundColour")
+        customTagTextLabel?.backgroundColor = .tagBubble
         customTagTextLabel?.layer.cornerRadius = 6
         customTagTextLabel?.layer.masksToBounds = true
         customTagTextLabel?.isUserInteractionEnabled = true
@@ -60,7 +60,7 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
 
         if presenter.isSearchable {
             enableSearch(scopes: ["Both", "Name", "Tag"],
-                         textColor: UIColor(named: "TextColour"))
+                         textColor: .text)
         }
 
         navigationItem.leftBarButtonItem = nil

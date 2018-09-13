@@ -217,7 +217,7 @@ extension UIButton {
         setTitle(tag, for: .normal)
         setTitleColor(.darkText, for: .normal)
         titleLabel?.font = .preferredFont(forTextStyle: .title2)
-        backgroundColor = UIColor(named: "TagBackgroundColour")
+        backgroundColor = .tagBubble
         sizeToFit()
         frame.size.width += 8
         layer.cornerRadius = 6

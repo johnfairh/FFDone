@@ -20,7 +20,7 @@ class NoteCell: UITableViewCell, TableCell {
 
         // XXX start temp coloring -- can move to UIAppearance, hoorah!
         selectedBackgroundView = UIView()
-        selectedBackgroundView?.backgroundColor = .tableSeparator
+        selectedBackgroundView?.backgroundColor = .tableHighlight
         // XXX start temp coloring
     }
 
@@ -47,7 +47,7 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
         super.viewDidLoad()
 
         // XXX start temp coloring
-        view.backgroundColor = .black
+        view.backgroundColor = .background
         tableView.separatorColor = .tableSeparator
         // XXX end temp coloring
 
@@ -56,17 +56,19 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
         }
         if presenter.shouldEnableExtraControls {
             navigationItem.leftBarButtonItem = nil
-            enableSearch(scopes: [], textColor: UIColor(named: "TextColour"))
+            enableSearch(scopes: [], textColor: .text)
         }
         datePicker = DatePickerDialog(textColor: .darkText,
-                                      buttonColor: UIButton(type: .system).currentTitleColor,
+                                      buttonColor: .tint,
                                       font: .systemFont(ofSize: 15.0),
                                       showCancelButton: false)
     }
 
     func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
+        // XXX start temp coloring
         header.textLabel?.textColor = .text
-        header.tintColor = .contentBg // bizarrely this sets the background color
+        header.tintColor = .tableHeader // bizarrely this sets the background color
+        // XXX end temp coloring
     }
 
     private var tableModel: TableModel<NoteCell, NotesTableViewController>!

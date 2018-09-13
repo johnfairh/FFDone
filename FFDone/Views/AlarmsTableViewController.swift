@@ -14,7 +14,7 @@ class AlarmCell: UITableViewCell, TableCell {
 
         // XXX start temp coloring -- can move to UIAppearance, hoorah!
         selectedBackgroundView = UIView()
-        selectedBackgroundView?.backgroundColor = .tableSeparator
+        selectedBackgroundView?.backgroundColor = .tableHighlight
         // XXX start temp coloring
     }
 
@@ -39,7 +39,7 @@ TableModelDelegate {
         super.viewDidLoad()
 
         // XXX start temp coloring
-        view.backgroundColor = .black
+        view.backgroundColor = .background
         tableView.separatorColor = .tableSeparator
         // XXX end temp coloring
 
@@ -51,7 +51,9 @@ TableModelDelegate {
     }
 
     func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
+        // XXX start temp coloring
         header.textLabel?.textColor = .text
+        // XXX end temp coloring
     }
 
     private var tableModel: TableModel<AlarmCell, AlarmsTableViewController>!

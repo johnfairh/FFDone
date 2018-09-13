@@ -20,13 +20,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ImageTransformer.install()
 
         UITabBar.appearance().tintColor = .tint
-        UITabBar.appearance().barTintColor = .black
+        UITabBar.appearance().barTintColor = .background
 
         UINavigationBar.appearance().tintColor = .tint
-        UINavigationBar.appearance().barTintColor = .black
+        UINavigationBar.appearance().barTintColor = .background
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.text]
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.text]
         UISearchBar.appearance().tintColor = .tint
+
+        UITextField.appearance().keyboardAppearance = .dark
+        // This crashes at runtime -- we have just the one & set in the storyboard instead...
+        // UITextView.appearance().keyboardAppearance = .dark
 
         // Temp hacky way of affecting the tabbarcontroller's morecontroller tableview
         // bad hack - affects way too many places that aren't ready for darkmode yet :(

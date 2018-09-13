@@ -14,16 +14,21 @@ enum Strings {
     }
 
     enum Color {
-        static let text = "TextColour"
-        static let tint = "TintColour"
-        static let contentBg = "ContentBgColour"
-        static let tableSeparator = "TableSeparatorColour"
+        static let text = "TextColour" // off-white
+        static let tint = "TintColour" // FF gold
+        static let background = "BackgroundColour" // Black
+        static let tableHeader = "TableHeaderColour" // V dark grey
+        static let tableSeparator = "TableSeparatorColour" // Lighter grey
+        static let tagBubble = "TagBackgroundColour" // V light blue
     }
 }
 
 extension UIColor {
     static let text = UIColor(named: Strings.Color.text)!
     static let tint = UIColor(named: Strings.Color.tint)!
-    static let contentBg = UIColor(named: Strings.Color.contentBg)
+    static let tableHeader = UIColor(named: Strings.Color.tableHeader)
     static let tableSeparator = UIColor(named: Strings.Color.tableSeparator)
+    static let tableHighlight = tableSeparator
+    static let background = UIColor(named: Strings.Color.background)!
+    static let tagBubble = UIColor(named: Strings.Color.tagBubble)!
 }

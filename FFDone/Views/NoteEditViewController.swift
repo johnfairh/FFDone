@@ -23,7 +23,7 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface> {
         textView.textColor = .text
         goalNameButton.setTitleColor(.text, for: .normal)
         dateLabel.textColor = .text
-        view.backgroundColor = .black
+        view.backgroundColor = .background
         view.tintColor = .tint
         // XXX end temp coloring
 
