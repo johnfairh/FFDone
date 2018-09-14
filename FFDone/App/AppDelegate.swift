@@ -32,10 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // This crashes at runtime -- we have just the one & set in the storyboard instead...
         // UITextView.appearance().keyboardAppearance = .dark
 
-        // Temp hacky way of affecting the tabbarcontroller's morecontroller tableview
-        // bad hack - affects way too many places that aren't ready for darkmode yet :(
-        // window?.tintColor = tintColour
-
         app = App(window: window!)
 
         return true

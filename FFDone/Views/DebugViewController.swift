@@ -15,6 +15,14 @@ class DebugViewController: PresentableVC<DebugPresenterInterface>, UITextFieldDe
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+
+        // XXX begin temp color stuff
+        view.backgroundColor = .background
+        view.tintColor = .tint
+        commandTextField.textColor = .text
+        textTextView.textColor = .text
+        // XXX end temp color stuff
+
         commandTextField.delegate = self
         textTextView.isEditable = false
 
