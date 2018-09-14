@@ -15,15 +15,6 @@ class NoteCell: UITableViewCell, TableCell {
     @IBOutlet weak var goalNameButton: UIButton!
     @IBOutlet weak var noteLabel: UILabel!
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        // XXX start temp coloring -- can move to UIAppearance, hoorah!
-        selectedBackgroundView = UIView()
-        selectedBackgroundView?.backgroundColor = .tableHighlight
-        // XXX start temp coloring
-    }
-
     func configure(_ note: Note) {
 
         // XXX start temp coloring
@@ -49,6 +40,9 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
         // XXX start temp coloring
         view.backgroundColor = .background
         tableView.separatorColor = .tableSeparator
+        let selectedView = UIView()
+        selectedView.backgroundColor = .tableHighlight
+        UITableViewCell.appearance(whenContainedInInstancesOf: [NotesTableViewController.self]).selectedBackgroundView = selectedView
         // XXX end temp coloring
 
         presenter.reload = { [weak self] queryResults in

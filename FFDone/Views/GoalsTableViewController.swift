@@ -22,6 +22,12 @@ class GoalCell: UITableViewCell, TableCell {
         customTagTextLabel?.layer.masksToBounds = true
         customTagTextLabel?.isUserInteractionEnabled = true
 
+        // XXX start temp coloring
+        customTextLabel?.textColor = .text
+        customDetailTextLabel?.textColor = .text
+        backgroundColor = nil // can't figure out how to set transparent in storyboard
+        // XXX end temp coloring
+
         let tagGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTagTextLabel(_:)))
         customTagTextLabel.addGestureRecognizer(tagGestureRecognizer)
 
@@ -54,6 +60,14 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // XXX start temp coloring
+        view.backgroundColor = .background
+        let selectedView = UIView()
+        selectedView.backgroundColor = .tableHighlight
+        UITableViewCell.appearance(whenContainedInInstancesOf: [GoalsTableViewController.self]).selectedBackgroundView = selectedView
+        // XXX end temp coloring
+
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
         }
@@ -72,6 +86,12 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         presenter.registerInvocation() { [weak self] tag in
             self?.doSearchForTag(tag: tag)
         }
+    }
+
+    func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
+        // XXX start temp coloring
+        header.textLabel?.textColor = .text
+        // XXX end temp coloring
     }
     
     private var tableModel: TableModel<GoalCell, GoalsTableViewController>!
