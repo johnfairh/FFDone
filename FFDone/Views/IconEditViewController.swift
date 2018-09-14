@@ -28,6 +28,18 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
     static let errorIconImage = UIImage(named: "ErrorIcon")
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // XXX start temp color stuff
+        view.backgroundColor = .background
+        view.tintColor = .tint
+        firstSourceLabel.textColor = .text
+        secondSourceLabel.textColor = .text
+        nameTextField.backgroundColor = .background
+        UITextField.appearance(whenContainedInInstancesOf: [IconEditViewController.self]).backgroundColor = .background
+        UITextField.appearance(whenContainedInInstancesOf: [IconEditViewController.self]).textColor = .text
+        // XXX end temp color stuff
+
         nameTextField.delegate = self
         iconImageView.enableRoundCorners()
 

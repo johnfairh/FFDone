@@ -11,6 +11,9 @@ class IconCell: UITableViewCell, TableCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         imageView?.enableRoundCorners()
+        // XXX start temp color stuff
+        textLabel?.textColor = .text
+        // XXX end temp color stuff
     }
 
     func configure(_ modelObject: Icon) {
@@ -24,6 +27,16 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
 {
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // XXX start temp color stuff
+        view.backgroundColor = .background
+        tableView.separatorColor = .tableSeparator
+        UITableViewCell.appearance(whenContainedInInstancesOf: [IconsTableViewController.self]).backgroundColor = .background
+        let selectedView = UIView()
+        selectedView.backgroundColor = .tableHighlight
+        UITableViewCell.appearance(whenContainedInInstancesOf: [IconsTableViewController.self]).selectedBackgroundView = selectedView
+        // XXX end temp color stuff
+
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
         }
