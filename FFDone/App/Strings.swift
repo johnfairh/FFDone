@@ -10,7 +10,7 @@ import UIKit
 enum Strings {
     enum Notification {
         /// Also referenced in the Info.plist of the notification content extension
-        static let CATEGORY = "ALARM"
+        static let Category = "ALARM"
     }
 
     enum Color {

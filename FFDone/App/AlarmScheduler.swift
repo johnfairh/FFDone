@@ -43,6 +43,12 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
             }
             self.authorized = granted
         }
+
+        let category = UNNotificationCategory(identifier: Strings.Notification.Category,
+                                              actions: [],
+                                              intentIdentifiers: [],
+                                              hiddenPreviewsBodyPlaceholder: "%u alarms")
+        center.setNotificationCategories([category])
     }
 
     /// Called from App when we are ready to go.
@@ -77,7 +83,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
             // that will follow this schedule() that will update the `activeAlarmCount` variable
             // to keep the app and tab badges in sync.
             content.badge = 99
-            content.categoryIdentifier = Strings.Notification.CATEGORY
+            content.categoryIdentifier = Strings.Notification.Category
 
             // Try to add the alert's image to the notification
             // (hmm we don't delete this file but rely on the system to do it - deleting
@@ -203,7 +209,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                     newContent.body = request.content.body
                     newContent.badge = newBadge as NSNumber
                     newContent.attachments = request.content.attachments
-                    newContent.categoryIdentifier = Strings.Notification.CATEGORY
+                    newContent.categoryIdentifier = Strings.Notification.Category
 
                     Log.log("Adding replacement notification, \(currentBadge) -> \(newBadge)")
 
