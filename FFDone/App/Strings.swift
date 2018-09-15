@@ -20,5 +20,7 @@ enum Strings {
         static let tableHeader = "TableHeaderColour" // V dark grey
         static let tableSeparator = "TableSeparatorColour" // Lighter grey
         static let tagBubble = "TagBackgroundColour" // V light blue
+        static let pieIncompleteColor = "PieRedColour"
+        static let pieCompleteColor = "PieGreenColour"
     }
 }

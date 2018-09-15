@@ -15,6 +15,8 @@ extension UIColor {
     static let tableHighlight = tableSeparator
     static let background = UIColor(named: Strings.Color.background)!
     static let tagBubble = UIColor(named: Strings.Color.tagBubble)!
+    static let pieComplete = UIColor(named: Strings.Color.pieCompleteColor)!
+    static let pieIncomplete = UIColor(named: Strings.Color.pieIncompleteColor)!
 }
 
 // Dark color scheme stuff.

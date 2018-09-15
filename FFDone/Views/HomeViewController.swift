@@ -18,9 +18,6 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
     @IBOutlet weak var tagCloudViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tagCloudView: TagCloudView!
 
-    var pieRedColour: UIColor!
-    var pieGreenColour: UIColor!
-
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,9 +28,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         // 1-time pie view configuration
         pieChartView.referenceAngle = CGFloat(270)
         pieChartView.delegate = self
-        pieChartView.backgroundColor = UIColor.init(white: 0.0, alpha: 0.0)
-        pieRedColour = UIColor(named: "PieRedColour") ?? .red
-        pieGreenColour = UIColor(named: "PieGreenColour") ?? .green
+        pieChartView.backgroundColor = .background
     }
 
     var safeAreaSize: CGSize?
@@ -132,8 +127,8 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
         // Add slices
         pieChartView.models =
-            [PieSliceModel(value: Double(stepsDone), color: pieGreenColour), // TagType.complete.rawValue
-             PieSliceModel(value: Double(stepsToDo), color: pieRedColour)]   // TagType.incomplete.rawValue
+            [PieSliceModel(value: Double(stepsDone), color: .pieComplete),  // TagType.complete.rawValue
+             PieSliceModel(value: Double(stepsToDo), color: .pieIncomplete)]// TagType.incomplete.rawValue
 
         // Configure how far out the slice pops when clicked
         pieChartView.slices.forEach { $0.view.selectedOffset = CGFloat(5.0) }
