@@ -93,3 +93,32 @@ extension UITableViewHeaderFooterView {
         tintColor = .tableHeader // this sets the background color
     }
 }
+
+enum ColorScheme {
+    static func globalInit() {
+        // tabbar
+        UITabBar.appearance().tintColor = .tint
+        UITabBar.appearance().barTintColor = .background
+
+        // navbar
+        UINavigationBar.appearance().tintColor = .tint
+        UINavigationBar.appearance().barTintColor = .background
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.text]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.text]
+        UISearchBar.appearance().tintColor = .tint
+
+        // text controls
+        UITextField.appearance().keyboardAppearance = .dark // textview equiv crashes :/
+        UITextField.appearance().textColor = .text
+        UITextView.appearance().textColor = .text
+
+        // tables
+        let selectedView = UIView()
+        selectedView.backgroundColor = .tableHighlight
+        UITableViewCell.appearance().selectedBackgroundView = selectedView
+        UITableView.appearance().separatorColor = .tableSeparator
+
+        // badges
+        UIImage.badgeColor = .text
+    }
+}
