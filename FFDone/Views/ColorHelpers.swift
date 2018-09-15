@@ -47,3 +47,11 @@ extension UIViewController {
         view.backgroundColor = .background
     }
 }
+
+extension UITableViewController {
+    /// Set up for a grouped dialog-style table
+    func setFormTableColors() {
+        setBasicColors()
+        UITableViewCell.appearance(whenContainedInInstancesOf: [type(of: self)]).backgroundColor = .tableHeader
+    }
+}

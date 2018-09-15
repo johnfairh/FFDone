@@ -13,6 +13,7 @@ class IconCell: UITableViewCell, TableCell {
         imageView?.enableRoundCorners()
         // XXX start temp color stuff
         textLabel?.textColor = .text
+        backgroundColor = nil
         // XXX end temp color stuff
     }
 
@@ -28,10 +29,6 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
     override func viewDidLoad() {
         super.viewDidLoad()
         setBasicColors()
-
-        // XXX start temp color stuff
-        UITableViewCell.appearance(whenContainedInInstancesOf: [IconsTableViewController.self]).backgroundColor = .background
-        // XXX end temp color stuff
 
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)

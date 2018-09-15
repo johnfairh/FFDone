@@ -43,11 +43,7 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setBasicColors()
-
-        // XXX begin temp color
-        UITableViewCell.appearance(whenContainedInInstancesOf: [AlarmEditViewController.self]).backgroundColor = .tableHeader
-        // XXX end temp color
+        setFormTableColors()
 
         nameTextField.delegate = self
 

@@ -43,11 +43,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setBasicColors()
-
-        // XXX begin temp color
-        UITableViewCell.appearance(whenContainedInInstancesOf: [GoalEditViewController.self]).backgroundColor = .tableHeader
-        // XXX end temp color
+        setFormTableColors()
 
         nameTextField.delegate = self
         currentStepsTextField.delegate = self
