@@ -63,9 +63,6 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
 
         // XXX start temp coloring
         view.backgroundColor = .background
-        let selectedView = UIView()
-        selectedView.backgroundColor = .tableHighlight
-        UITableViewCell.appearance(whenContainedInInstancesOf: [GoalsTableViewController.self]).selectedBackgroundView = selectedView
         // XXX end temp coloring
 
         presenter.reload = { [weak self] queryResults in

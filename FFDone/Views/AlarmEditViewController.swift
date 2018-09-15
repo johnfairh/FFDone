@@ -22,30 +22,6 @@ private extension IndexPath {
     }
 }
 
-// Text fields don't work so well with a dark background: the placeholder text and the clear image
-// do not show up.  There are no proper APIs for accessing these so we resort to a couple of
-// really nasty hacks from SO.
-//
-// The clear image in particular is a nightmare because it comes and goes depending on what the
-// wider state of the textfield is - so we catch it at runtime and tweak it.
-class DarkModeTextField: UITextField {
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setValue(UIColor.lightGray, forKeyPath: "_placeholderLabel.textColor")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        for view in subviews {
-            if let button = view as? UIButton {
-                button.setImage(button.image(for: .normal)?.withRenderingMode(.alwaysTemplate), for: .normal)
-                button.tintColor = .white
-            }
-        }
-    }
-}
-
 /// VC for alarm create/edit
 class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterface>, UITextFieldDelegate {
 
@@ -71,12 +47,7 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
         // XXX begin temp color
         view.backgroundColor = .background
         view.tintColor = .tint
-        UITextField.appearance(whenContainedInInstancesOf: [AlarmEditViewController.self]).textColor = .text
         UITableViewCell.appearance(whenContainedInInstancesOf: [AlarmEditViewController.self]).backgroundColor = .tableHeader
-        let selectedView = UIView()
-        selectedView.backgroundColor = .tableHighlight
-        UITableViewCell.appearance(whenContainedInInstancesOf: [AlarmEditViewController.self]).selectedBackgroundView = selectedView
-        tableView.separatorColor = .tableSeparator
         // XXX end temp color
 
         nameTextField.delegate = self

@@ -29,6 +29,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UISearchBar.appearance().tintColor = .tint
 
         UITextField.appearance().keyboardAppearance = .dark
+        UITextField.appearance().textColor = .text
+
+        UITextView.appearance().textColor = .text
+
+        let selectedView = UIView()
+        selectedView.backgroundColor = .tableHighlight
+        UITableViewCell.appearance().selectedBackgroundView = selectedView
+
+        UITableView.appearance().separatorColor = .tableSeparator
+
         // This crashes at runtime -- we have just the one & set in the storyboard instead...
         // UITextView.appearance().keyboardAppearance = .dark
 

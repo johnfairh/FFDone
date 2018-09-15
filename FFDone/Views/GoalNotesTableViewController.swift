@@ -34,10 +34,6 @@ class GoalNotesTableViewController: PresentableTableVC<GoalNotesTablePresenter>,
 
         // XXX start temp coloring
         view.backgroundColor = .background
-        tableView.separatorColor = .tableSeparator
-        let selectedView = UIView()
-        selectedView.backgroundColor = .tableHighlight
-        UITableViewCell.appearance(whenContainedInInstancesOf: [GoalNotesTableViewController.self]).selectedBackgroundView = selectedView
         // XXX end temp coloring
 
         presenter.reload = { [weak self] queryResults in

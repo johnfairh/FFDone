@@ -19,8 +19,6 @@ class DebugViewController: PresentableVC<DebugPresenterInterface>, UITextFieldDe
         // XXX begin temp color stuff
         view.backgroundColor = .background
         view.tintColor = .tint
-        commandTextField.textColor = .text
-        textTextView.textColor = .text
         // XXX end temp color stuff
 
         commandTextField.delegate = self

@@ -22,13 +22,3 @@ enum Strings {
         static let tagBubble = "TagBackgroundColour" // V light blue
     }
 }
-
-extension UIColor {
-    static let text = UIColor(named: Strings.Color.text)!
-    static let tint = UIColor(named: Strings.Color.tint)!
-    static let tableHeader = UIColor(named: Strings.Color.tableHeader)
-    static let tableSeparator = UIColor(named: Strings.Color.tableSeparator)
-    static let tableHighlight = tableSeparator
-    static let background = UIColor(named: Strings.Color.background)!
-    static let tagBubble = UIColor(named: Strings.Color.tagBubble)!
-}

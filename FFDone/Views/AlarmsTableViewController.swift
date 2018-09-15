@@ -31,9 +31,6 @@ TableModelDelegate {
 
         // XXX start temp coloring
         view.backgroundColor = .background
-        let selectedView = UIView()
-        selectedView.backgroundColor = .tableHighlight
-        UITableViewCell.appearance(whenContainedInInstancesOf: [AlarmsTableViewController.self]).selectedBackgroundView = selectedView
         // XXX end temp coloring
 
         presenter.reload = { [weak self] queryResults in

@@ -47,12 +47,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
         // XXX begin temp color
         view.backgroundColor = .background
         view.tintColor = .tint
-        UITextField.appearance(whenContainedInInstancesOf: [GoalEditViewController.self]).textColor = .text
         UITableViewCell.appearance(whenContainedInInstancesOf: [GoalEditViewController.self]).backgroundColor = .tableHeader
-        let selectedView = UIView()
-        selectedView.backgroundColor = .tableHighlight
-        UITableViewCell.appearance(whenContainedInInstancesOf: [GoalEditViewController.self]).selectedBackgroundView = selectedView
-        tableView.separatorColor = .tableSeparator
         // XXX end temp color
 
         nameTextField.delegate = self

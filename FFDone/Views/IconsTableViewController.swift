@@ -30,11 +30,7 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
 
         // XXX start temp color stuff
         view.backgroundColor = .background
-        tableView.separatorColor = .tableSeparator
         UITableViewCell.appearance(whenContainedInInstancesOf: [IconsTableViewController.self]).backgroundColor = .background
-        let selectedView = UIView()
-        selectedView.backgroundColor = .tableHighlight
-        UITableViewCell.appearance(whenContainedInInstancesOf: [IconsTableViewController.self]).selectedBackgroundView = selectedView
         // XXX end temp color stuff
 
         presenter.reload = { [weak self] queryResults in

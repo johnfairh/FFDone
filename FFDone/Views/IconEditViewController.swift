@@ -37,7 +37,6 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
         secondSourceLabel.textColor = .text
         nameTextField.backgroundColor = .background
         UITextField.appearance(whenContainedInInstancesOf: [IconEditViewController.self]).backgroundColor = .background
-        UITextField.appearance(whenContainedInInstancesOf: [IconEditViewController.self]).textColor = .text
         // XXX end temp color stuff
 
         nameTextField.delegate = self

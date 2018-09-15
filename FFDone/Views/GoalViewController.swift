@@ -32,7 +32,6 @@ UITextFieldDelegate {
         view.tintColor = .tint
         titleLabel.textColor = .text
         progressLabel.textColor = .text
-        multistepTextField.textColor = .text
         // XXX end temp coloring
 
         imageView.enableRoundCorners()

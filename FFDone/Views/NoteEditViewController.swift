@@ -20,7 +20,6 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface> {
     override public func viewDidLoad() {
 
         // XXX start temp coloring
-        textView.textColor = .text
         goalNameButton.setTitleColor(.text, for: .normal)
         dateLabel.textColor = .text
         view.backgroundColor = .background
