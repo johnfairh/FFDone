@@ -17,10 +17,13 @@ class GoalCell: UITableViewCell, TableCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        customTagTextLabel?.backgroundColor = UIColor(named: "TagBackgroundColour")
+        customTagTextLabel?.backgroundColor = .tagBubble
         customTagTextLabel?.layer.cornerRadius = 6
         customTagTextLabel?.layer.masksToBounds = true
         customTagTextLabel?.isUserInteractionEnabled = true
+
+        customTextLabel?.setColors()
+        customDetailTextLabel?.setColors()
 
         let tagGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTagTextLabel(_:)))
         customTagTextLabel.addGestureRecognizer(tagGestureRecognizer)
@@ -54,13 +57,15 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setFlatTableColors()
+
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
         }
 
         if presenter.isSearchable {
             enableSearch(scopes: ["Both", "Name", "Tag"],
-                         textColor: UIColor(named: "TextColour"))
+                         textColor: .text)
         }
 
         navigationItem.leftBarButtonItem = nil
@@ -72,6 +77,10 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         presenter.registerInvocation() { [weak self] tag in
             self?.doSearchForTag(tag: tag)
         }
+    }
+
+    func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
+        header.setFlatTableColors()
     }
     
     private var tableModel: TableModel<GoalCell, GoalsTableViewController>!

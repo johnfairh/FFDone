@@ -28,6 +28,14 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
     static let errorIconImage = UIImage(named: "ErrorIcon")
 
     override func viewDidLoad() {
+        super.viewDidLoad()
+
+        setBasicColors()
+        firstSourceLabel.setColors()
+        secondSourceLabel.setColors()
+        // we use odd style of text fields here..
+        UITextField.appearance(whenContainedInInstancesOf: [IconEditViewController.self]).backgroundColor = .background
+
         nameTextField.delegate = self
         iconImageView.enableRoundCorners()
 

@@ -43,6 +43,7 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        setFormTableColors()
 
         nameTextField.delegate = self
 
@@ -89,10 +90,8 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
     // MARK: Table stuff
 
     func refreshRowHeights() {
-//        Dispatch.toForeground {
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
-//        }
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
 
     /// Hide the disclosure triangle if can't edit those rows
@@ -127,8 +126,8 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
             let kinds: [Alarm.Kind] = [.oneShot, .weekly(3), .daily]
             let choices = kinds.map { $0.repeatText }
             presentActionSheetChoice(choices: choices, results: kinds) { kind in
+                tableView.deselectRow(at: indexPath, animated: true)
                 if let kind = kind {
-                    tableView.deselectRow(at: indexPath, animated: true)
                     self.presenter.setKind(kind: kind)
                 }
             }
@@ -136,8 +135,8 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
             let choices = Calendar.current.weekdaySymbols
             let results = Array(1...7)
             presentActionSheetChoice(choices: choices, results: results) { dayNumber in
+                tableView.deselectRow(at: indexPath, animated: true)
                 if let dayNumber = dayNumber {
-                    tableView.deselectRow(at: indexPath, animated: true)
                     self.presenter.setKind(kind: .weekly(dayNumber))
                 }
             }

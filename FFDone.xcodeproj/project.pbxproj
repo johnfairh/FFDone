@@ -32,6 +32,7 @@
 		0252C977214428CD00DC6D64 /* DebugPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252C976214428CD00DC6D64 /* DebugPresenter.swift */; };
 		0253339F2112FE3D00AF8E7B /* TMLPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */; };
 		025333A02112FE3D00AF8E7B /* TMLPresentation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0270F7BE214D5563004BC1EF /* ColorHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0270F7BD214D5563004BC1EF /* ColorHelpers.swift */; };
 		027F63752105FF93001C9738 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027F63742105FF93001C9738 /* AppDelegate.swift */; };
 		027F637A2105FF94001C9738 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027F63782105FF94001C9738 /* Main.storyboard */; };
 		027F637C2105FF95001C9738 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027F637B2105FF95001C9738 /* Assets.xcassets */; };
@@ -145,6 +146,7 @@
 		0252C9742144289B00DC6D64 /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		0252C976214428CD00DC6D64 /* DebugPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPresenter.swift; sourceTree = "<group>"; };
 		0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TMLPresentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0270F7BD214D5563004BC1EF /* ColorHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHelpers.swift; sourceTree = "<group>"; };
 		027F63712105FF93001C9738 /* FFDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FFDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027F63742105FF93001C9738 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		027F63792105FF94001C9738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				020825EF2122E2D8007578C7 /* HomeViewController.swift */,
 				02990A6521270F4C00BF1CEC /* TagCloudView.swift */,
 				0252C9742144289B00DC6D64 /* DebugViewController.swift */,
+				0270F7BD214D5563004BC1EF /* ColorHelpers.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 				02867EA9211AD48C004D3122 /* NotesTableViewController.swift in Sources */,
 				020825EA2122C7AA007578C7 /* GoalNotesTableViewController.swift in Sources */,
 				02867EA32119ED7D004D3122 /* Note.swift in Sources */,
+				0270F7BE214D5563004BC1EF /* ColorHelpers.swift in Sources */,
 				027F63752105FF93001C9738 /* AppDelegate.swift in Sources */,
 				02130A05210CD65F00410451 /* Icon.swift in Sources */,
 				02990A6621270F4C00BF1CEC /* TagCloudView.swift in Sources */,
@@ -970,6 +974,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D243YH28Y6;
 				INFOPLIST_FILE = FFDoneNF/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -989,6 +994,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D243YH28Y6;
 				INFOPLIST_FILE = FFDoneNF/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

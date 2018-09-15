@@ -18,20 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         ImageTransformer.install()
-
-        UITabBar.appearance().tintColor = .tint
-        UITabBar.appearance().barTintColor = .black
-
-        UINavigationBar.appearance().tintColor = .tint
-        UINavigationBar.appearance().barTintColor = .black
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.text]
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.text]
-        UISearchBar.appearance().tintColor = .tint
-
-        // Temp hacky way of affecting the tabbarcontroller's morecontroller tableview
-        // bad hack - affects way too many places that aren't ready for darkmode yet :(
-        // window?.tintColor = tintColour
-
+        ColorScheme.globalInit()
         app = App(window: window!)
 
         return true

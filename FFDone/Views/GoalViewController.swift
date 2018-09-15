@@ -26,6 +26,11 @@ UITextFieldDelegate {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+
+        setBasicColors()
+        titleLabel.setColors()
+        progressLabel.setColors()
+
         imageView.enableRoundCorners()
         multistepTextField.delegate = self
         notesTableVC.tableView.isScrollEnabled = true // enabled=f by default

@@ -15,6 +15,12 @@ class NoteCell: UITableViewCell, TableCell {
     @IBOutlet weak var goalNameButton: UIButton!
     @IBOutlet weak var noteLabel: UILabel!
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        noteLabel.setColors()
+        goalNameButton.setColors()
+    }
+
     func configure(_ note: Note) {
         goalImageView.image = note.goal?.nativeImage
         goalNameButton.setTitle(note.goal?.name ?? "??", for: .normal)
@@ -29,17 +35,23 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setFlatTableColors()
+
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
         }
         if presenter.shouldEnableExtraControls {
             navigationItem.leftBarButtonItem = nil
-            enableSearch(scopes: [], textColor: UIColor(named: "TextColour"))
+            enableSearch(scopes: [], textColor: .text)
         }
         datePicker = DatePickerDialog(textColor: .darkText,
-                                      buttonColor: UIButton(type: .system).currentTitleColor,
+                                      buttonColor: .tint,
                                       font: .systemFont(ofSize: 15.0),
                                       showCancelButton: false)
+    }
+
+    func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
+        header.setColors()
     }
 
     private var tableModel: TableModel<NoteCell, NotesTableViewController>!
