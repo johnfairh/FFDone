@@ -22,9 +22,9 @@ class GoalCell: UITableViewCell, TableCell {
         customTagTextLabel?.layer.masksToBounds = true
         customTagTextLabel?.isUserInteractionEnabled = true
 
+        customTextLabel?.setColors()
+        customDetailTextLabel?.setColors()
         // XXX start temp coloring
-        customTextLabel?.textColor = .text
-        customDetailTextLabel?.textColor = .text
         backgroundColor = nil // can't figure out how to set transparent in storyboard
         // XXX end temp coloring
 

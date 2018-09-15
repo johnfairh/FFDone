@@ -11,8 +11,8 @@ class IconCell: UITableViewCell, TableCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         imageView?.enableRoundCorners()
+        textLabel?.setColors()
         // XXX start temp color stuff
-        textLabel?.textColor = .text
         backgroundColor = nil
         // XXX end temp color stuff
     }

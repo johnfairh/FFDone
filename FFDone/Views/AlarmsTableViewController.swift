@@ -9,14 +9,16 @@ import TMLPresentation
 
 class AlarmCell: UITableViewCell, TableCell {
 
-    func configure(_ alarm: Alarm) {
-
+    override public func awakeFromNib() {
+        super.awakeFromNib()
+        textLabel?.setColors()
+        detailTextLabel?.setColors()
         // XXX start temp coloring
-        textLabel?.textColor = .text
-        detailTextLabel?.textColor = .text
         backgroundColor = nil // can't figure out how to set transparent in storyboard
         // XXX end temp coloring
+    }
 
+    func configure(_ alarm: Alarm) {
         textLabel?.text = alarm.name
         detailTextLabel?.text = alarm.caption
         imageView?.image = alarm.mainTableImage

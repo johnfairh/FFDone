@@ -41,6 +41,21 @@ class DarkModeTextField: UITextField {
     }
 }
 
+/// Setting this globally is a disaster because of all the random labels that are parts of
+/// other system views.
+extension UILabel {
+    func setColors() {
+        textColor = .text
+    }
+}
+
+/// We have a couple of buttons that aren't tinted
+extension UIButton {
+    func setColors() {
+        setTitleColor(.text, for: .normal)
+    }
+}
+
 extension UIViewController {
     func setBasicColors() {
         view.tintColor = .tint

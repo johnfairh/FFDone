@@ -15,14 +15,17 @@ class NoteCell: UITableViewCell, TableCell {
     @IBOutlet weak var goalNameButton: UIButton!
     @IBOutlet weak var noteLabel: UILabel!
 
-    func configure(_ note: Note) {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        noteLabel.setColors()
+        goalNameButton.setColors()
 
         // XXX start temp coloring
-        goalNameButton.setTitleColor(.text, for: .normal)
-        noteLabel.textColor = .text
         backgroundColor = nil // can't figure out how to set transparent in storyboard
         // XXX end temp coloring
+    }
 
+    func configure(_ note: Note) {
         goalImageView.image = note.goal?.nativeImage
         goalNameButton.setTitle(note.goal?.name ?? "??", for: .normal)
         noteLabel.text = note.text
@@ -53,7 +56,7 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
 
     func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
         // XXX start temp coloring
-        header.textLabel?.textColor = .text
+        header.textLabel?.setColors()
         header.tintColor = .tableHeader // bizarrely this sets the background color
         // XXX end temp coloring
     }

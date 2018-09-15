@@ -26,12 +26,10 @@ UITextFieldDelegate {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setBasicColors()
 
-        // XXX start temp coloring
-        titleLabel.textColor = .text
-        progressLabel.textColor = .text
-        // XXX end temp coloring
+        setBasicColors()
+        titleLabel.setColors()
+        progressLabel.setColors()
 
         imageView.enableRoundCorners()
         multistepTextField.delegate = self

@@ -29,11 +29,12 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         setBasicColors()
+        firstSourceLabel.setColors()
+        secondSourceLabel.setColors()
 
         // XXX start temp color stuff
-        firstSourceLabel.textColor = .text
-        secondSourceLabel.textColor = .text
         nameTextField.backgroundColor = .background
         UITextField.appearance(whenContainedInInstancesOf: [IconEditViewController.self]).backgroundColor = .background
         // XXX end temp color stuff
