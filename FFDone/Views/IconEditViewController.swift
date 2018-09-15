@@ -33,11 +33,8 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
         setBasicColors()
         firstSourceLabel.setColors()
         secondSourceLabel.setColors()
-
-        // XXX start temp color stuff
-        nameTextField.backgroundColor = .background
+        // we use odd style of text fields here..
         UITextField.appearance(whenContainedInInstancesOf: [IconEditViewController.self]).backgroundColor = .background
-        // XXX end temp color stuff
 
         nameTextField.delegate = self
         iconImageView.enableRoundCorners()

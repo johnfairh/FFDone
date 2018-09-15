@@ -17,6 +17,13 @@ extension UIColor {
     static let tagBubble = UIColor(named: Strings.Color.tagBubble)!
 }
 
+// Dark color scheme stuff.
+//
+// This was very fiddly to get through.  Couldn't figure out what mix of run-time / storyboard to do,
+// and for run-time how much to push into custom classes and how much extensions.
+//
+// If doing this again from scratch I would use a lot more in the storyboard and custom controls.
+
 // Text fields don't work so well with a dark background: the placeholder text and the clear image
 // do not show up.  There are no proper APIs for accessing these so we resort to a couple of
 // really nasty hacks from SO.
