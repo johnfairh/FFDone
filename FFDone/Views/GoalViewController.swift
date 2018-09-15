@@ -26,10 +26,9 @@ UITextFieldDelegate {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        setBasicColors()
 
         // XXX start temp coloring
-        view.backgroundColor = .background
-        view.tintColor = .tint
         titleLabel.textColor = .text
         progressLabel.textColor = .text
         // XXX end temp coloring

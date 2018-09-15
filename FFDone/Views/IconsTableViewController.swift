@@ -27,9 +27,9 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
 {
     override func viewDidLoad() {
         super.viewDidLoad()
+        setBasicColors()
 
         // XXX start temp color stuff
-        view.backgroundColor = .background
         UITableViewCell.appearance(whenContainedInInstancesOf: [IconsTableViewController.self]).backgroundColor = .background
         // XXX end temp color stuff
 

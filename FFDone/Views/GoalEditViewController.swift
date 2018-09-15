@@ -43,10 +43,9 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        setBasicColors()
 
         // XXX begin temp color
-        view.backgroundColor = .background
-        view.tintColor = .tint
         UITableViewCell.appearance(whenContainedInInstancesOf: [GoalEditViewController.self]).backgroundColor = .tableHeader
         // XXX end temp color
 

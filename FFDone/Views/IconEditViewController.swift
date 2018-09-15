@@ -29,10 +29,9 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setBasicColors()
 
         // XXX start temp color stuff
-        view.backgroundColor = .background
-        view.tintColor = .tint
         firstSourceLabel.textColor = .text
         secondSourceLabel.textColor = .text
         nameTextField.backgroundColor = .background

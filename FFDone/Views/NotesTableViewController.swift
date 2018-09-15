@@ -36,10 +36,7 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // XXX start temp coloring
-        view.backgroundColor = .background
-        // XXX end temp coloring
+        setBasicColors()
 
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)

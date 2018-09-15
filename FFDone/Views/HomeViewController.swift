@@ -22,6 +22,8 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
     var pieGreenColour: UIColor!
 
     public override func viewDidLoad() {
+        super.viewDidLoad()
+        
         presenter.refresh = { [unowned self] data in
             self.refreshData(data)
         }

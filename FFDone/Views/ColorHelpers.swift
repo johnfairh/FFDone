@@ -40,3 +40,10 @@ class DarkModeTextField: UITextField {
         }
     }
 }
+
+extension UIViewController {
+    func setBasicColors() {
+        view.tintColor = .tint
+        view.backgroundColor = .background
+    }
+}
