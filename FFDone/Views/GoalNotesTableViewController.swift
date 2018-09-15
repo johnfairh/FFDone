@@ -16,9 +16,6 @@ class GoalNoteCell: UITableViewCell, TableCell {
     func configure(_ note: Note) {
         noteLabel.text = note.text
         noteLabel.setColors()
-        // XXX start temp coloring
-        backgroundColor = nil
-        // XXX end temp coloring
     }
 }
 
@@ -31,7 +28,7 @@ class GoalNotesTableViewController: PresentableTableVC<GoalNotesTablePresenter>,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setBasicColors()
+        setFlatTableColors()
 
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
@@ -39,10 +36,7 @@ class GoalNotesTableViewController: PresentableTableVC<GoalNotesTablePresenter>,
     }
 
     func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
-        // XXX start temp coloring
-        header.textLabel?.setColors()
-        header.tintColor = .tableHeader // bizarrely this sets the background color
-        // XXX end temp coloring
+        header.setColors()
     }
 
     private var tableModel: TableModel<GoalNoteCell, GoalNotesTableViewController>!

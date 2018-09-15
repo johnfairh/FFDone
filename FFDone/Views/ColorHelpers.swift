@@ -69,4 +69,20 @@ extension UITableViewController {
         setBasicColors()
         UITableViewCell.appearance(whenContainedInInstancesOf: [type(of: self)]).backgroundColor = .tableHeader
     }
+
+    func setFlatTableColors() {
+        setBasicColors()
+        UITableViewCell.appearance(whenContainedInInstancesOf: [type(of: self)]).backgroundColor = .background//il
+    }
+}
+
+extension UITableViewHeaderFooterView {
+    func setFlatTableColors() {
+        textLabel?.setColors()
+    }
+
+    func setColors() {
+        setFlatTableColors()
+        tintColor = .tableHeader // this sets the background color
+    }
 }

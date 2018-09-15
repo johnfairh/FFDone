@@ -19,10 +19,6 @@ class NoteCell: UITableViewCell, TableCell {
         super.awakeFromNib()
         noteLabel.setColors()
         goalNameButton.setColors()
-
-        // XXX start temp coloring
-        backgroundColor = nil // can't figure out how to set transparent in storyboard
-        // XXX end temp coloring
     }
 
     func configure(_ note: Note) {
@@ -39,7 +35,7 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setBasicColors()
+        setFlatTableColors()
 
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
@@ -55,10 +51,7 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
     }
 
     func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
-        // XXX start temp coloring
-        header.textLabel?.setColors()
-        header.tintColor = .tableHeader // bizarrely this sets the background color
-        // XXX end temp coloring
+        header.setColors()
     }
 
     private var tableModel: TableModel<NoteCell, NotesTableViewController>!

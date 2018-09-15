@@ -12,9 +12,6 @@ class IconCell: UITableViewCell, TableCell {
         super.awakeFromNib()
         imageView?.enableRoundCorners()
         textLabel?.setColors()
-        // XXX start temp color stuff
-        backgroundColor = nil
-        // XXX end temp color stuff
     }
 
     func configure(_ modelObject: Icon) {
@@ -28,7 +25,7 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
 {
     override func viewDidLoad() {
         super.viewDidLoad()
-        setBasicColors()
+        setFlatTableColors()
 
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)

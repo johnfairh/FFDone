@@ -13,9 +13,6 @@ class AlarmCell: UITableViewCell, TableCell {
         super.awakeFromNib()
         textLabel?.setColors()
         detailTextLabel?.setColors()
-        // XXX start temp coloring
-        backgroundColor = nil // can't figure out how to set transparent in storyboard
-        // XXX end temp coloring
     }
 
     func configure(_ alarm: Alarm) {
@@ -30,7 +27,7 @@ TableModelDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setBasicColors()
+        setFlatTableColors()
 
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
@@ -40,9 +37,7 @@ TableModelDelegate {
     }
 
     func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
-        // XXX start temp coloring
-        header.textLabel?.textColor = .text
-        // XXX end temp coloring
+        header.setFlatTableColors()
     }
 
     private var tableModel: TableModel<AlarmCell, AlarmsTableViewController>!
