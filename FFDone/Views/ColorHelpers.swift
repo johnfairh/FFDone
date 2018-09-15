@@ -13,6 +13,7 @@ extension UIColor {
     static let tableHeader = UIColor(named: Strings.Color.tableHeader)
     static let tableSeparator = UIColor(named: Strings.Color.tableSeparator)
     static let tableHighlight = tableSeparator
+    static let tableLeadingSwipe = UIColor(named: Strings.Color.tableLeadingSwipe)
     static let background = UIColor(named: Strings.Color.background)!
     static let tagBubble = UIColor(named: Strings.Color.tagBubble)!
     static let pieComplete = UIColor(named: Strings.Color.pieCompleteColor)!

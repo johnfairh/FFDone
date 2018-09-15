@@ -98,7 +98,7 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
             return nil
         }
 
-        return TableSwipeAction(text: "Done", colorName: "StepSwipeColour", action: {
+        return TableSwipeAction(text: "Done", color: .tableLeadingSwipe, action: {
             if case .oneShot = alarm.kind {
                 alarm.delete(from: self.model)
                 self.model.save()

@@ -131,7 +131,7 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
 
         let title = (goal.stepsToGo == 1) ? "Complete" : "Progress"
 
-        return TableSwipeAction(text: title, colorName: "StepSwipeColour", action: {
+        return TableSwipeAction(text: title, color: .tableLeadingSwipe, action: {
             goal.currentSteps = goal.currentSteps + 1
             self.model.save()
         })

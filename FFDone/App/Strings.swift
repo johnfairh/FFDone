@@ -22,5 +22,6 @@ enum Strings {
         static let tagBubble = "TagBackgroundColour" // V light blue
         static let pieIncompleteColor = "PieRedColour"
         static let pieCompleteColor = "PieGreenColour"
+        static let tableLeadingSwipe = "StepSwipeColour"
     }
 }
