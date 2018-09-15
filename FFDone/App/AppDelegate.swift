@@ -39,6 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         UITableView.appearance().separatorColor = .tableSeparator
 
+        UIImage.badgeColor = .text
+
         // This crashes at runtime -- we have just the one & set in the storyboard instead...
         // UITextView.appearance().keyboardAppearance = .dark
 
