@@ -85,10 +85,10 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
             content.badge = 99
             content.categoryIdentifier = Strings.Notification.Category
 
-            // Try to add the alert's image to the notification
-            // (hmm we don't delete this file but rely on the system to do it - deleting
-            //  it causes intermittent errors about it not existing later on...)
+            // Try to add the alert's image to the notification.  The UN system moves
+            // the file over into the notifications area, so don't delete it.
             let imageFileUrl = FileManager.default.temporaryFileURL(extension: "png")
+            Log.log("Orig: \(imageFileUrl.path)")
             if let pngImageData = image.pngData() {
                 do {
                     try pngImageData.write(to: imageFileUrl)
@@ -162,6 +162,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
         }
         set {
             guard newValue != activeAlarmCount else {
+                Log.log("SetActiveAlarmCount \(newValue): skipping, same")
                 return
             }
             UIApplication.shared.applicationIconBadgeNumber = newValue
@@ -209,6 +210,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                     newContent.body = request.content.body
                     newContent.badge = newBadge as NSNumber
                     newContent.attachments = request.content.attachments
+                    Log.log("New: \(request.content.attachments[0].url.path)")
                     newContent.categoryIdentifier = Strings.Notification.Category
 
                     Log.log("Adding replacement notification, \(currentBadge) -> \(newBadge)")
