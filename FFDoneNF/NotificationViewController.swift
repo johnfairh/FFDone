@@ -27,13 +27,13 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         detailLabel.text = content.body
         if let attachment = content.attachments.first {
             if attachment.url.startAccessingSecurityScopedResource() {
-                defer { attachment.url.stopAccessingSecurityScopedResource() }
                 if let loadedImage = UIImage(contentsOfFile: attachment.url.path) {
                     self.image.image = loadedImage
-                    detailLabel.text = "set image OK, \(loadedImage.size)"
+                    self.image.sizeToFit()
                 } else {
                     detailLabel.text = "e: no img load"
                 }
+                attachment.url.stopAccessingSecurityScopedResource()
             } else {
                 detailLabel.text = "e: no security"
             }
