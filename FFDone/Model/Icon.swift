@@ -58,11 +58,49 @@ extension Icon : ModelObject {
 
     /// Default goal icon
     static func getGoalDefault(model: Model) -> Icon {
-        let predicate = NSPredicate(format: "isDefault == 1")
-        guard let defaultIcon = findFirst(model: model, predicate: predicate) else {
-            Log.fatal("No default icon")
+        return getSpecific(model: model, named: Prefs.defaultGoalIcon)
+    }
+
+    var isGoalDefault: Bool {
+        get {
+            return name == Prefs.defaultGoalIcon
         }
-        return defaultIcon
+        set {
+            if newValue {
+                Prefs.defaultGoalIcon = name!
+            } else if isGoalDefault {
+                Prefs.defaultGoalIcon = ""
+            }
+        }
+    }
+
+    static func getAlarmDefault(model: Model) -> Icon {
+        return getSpecific(model: model, named: Prefs.defaultAlarmIcon)
+    }
+
+    var isAlarmDefault: Bool {
+        get {
+            return name == Prefs.defaultAlarmIcon
+        }
+        set {
+            if newValue {
+                Prefs.defaultAlarmIcon = name!
+            } else if isAlarmDefault {
+                Prefs.defaultAlarmIcon = ""
+            }
+        }
+    }
+
+    private static func getSpecific(model: Model, named: String) -> Icon {
+        if let defaultIcon = find(from: model, named: named) {
+            return defaultIcon
+        }
+        // if not found then just return something...
+        let fallback = NSPredicate(format: "\(#keyPath(isBuiltin)) == TRUE")
+        if let defaultIcon = findFirst(model: model, predicate: fallback) {
+            return defaultIcon
+        }
+        Log.fatal("Can't find default icon")
     }
 
     /// For the search view -- search icon name.

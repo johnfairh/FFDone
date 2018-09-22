@@ -22,6 +22,11 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
     @IBOutlet weak var secondSourceTextField: UITextField!
     @IBOutlet weak var secondSourceButton: UIButton!
 
+    @IBOutlet weak var defaultGoalLabel: UILabel!
+    @IBOutlet weak var defaultGoalSwitch: UISwitch!
+    @IBOutlet weak var defaultAlarmLabel: UILabel!
+    @IBOutlet weak var defaultAlarmSwitch: UISwitch!
+
     var iconSources: [IconSource]?
 
     static let unknownIconImage = UIImage(named: "UnknownIcon")
@@ -33,6 +38,8 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
         setBasicColors()
         firstSourceLabel.setColors()
         secondSourceLabel.setColors()
+        defaultGoalLabel.setColors()
+        defaultAlarmLabel.setColors()
         // we use odd style of text fields here..
         UITextField.appearance(whenContainedInInstancesOf: [IconEditViewController.self]).backgroundColor = .background
 
@@ -49,7 +56,7 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
         iconSources = IconSourceBuilder.createSources(uiList: [firstSourceUI, secondSourceUI],
                                                       delegate: self)
 
-        presenter.refresh = { [unowned self] icon, canSave in
+        presenter.refresh = { [unowned self] icon, goalDefault, alarmDefault, canSave in
             self.nameTextField.text = icon.name ?? ""
             if icon.hasImage {
                 self.iconImageView.image = icon.nativeImage
@@ -59,6 +66,8 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
             if let doneBarButton = self.navigationItem.rightBarButtonItem {
                 doneBarButton.isEnabled = canSave
             }
+            self.defaultGoalSwitch.setOn(goalDefault, animated: false)
+            self.defaultAlarmSwitch.setOn(alarmDefault, animated: false)
         }
         firstSourceTextField.becomeFirstResponder()
     }
@@ -95,6 +104,16 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+
+    // MARK: - Defaults switches
+    
+    @IBAction func defaultGoalDidChange(_ sender: UISwitch) {
+        presenter.setGoalDefault(value: sender.isOn)
+    }
+
+    @IBAction func defaultAlarmDidChange(_ sender: UISwitch) {
+        presenter.setAlarmDefault(value: sender.isOn)
     }
 
     // MARK: - Bar buttons

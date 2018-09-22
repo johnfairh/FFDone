@@ -86,4 +86,22 @@ extension Prefs {
             return Prefs.bool("RunBefore")
         }
     }
+
+    static var defaultGoalIcon: String {
+        set {
+            Prefs.set("DefGoalIcon", to: newValue)
+        }
+        get {
+            return Prefs.string("DefGoalIcon")
+        }
+    }
+
+    static var defaultAlarmIcon: String {
+        set {
+            Prefs.set("DefAlarmIcon", to: newValue)
+        }
+        get {
+            return Prefs.string("DefAlarmIcon")
+        }
+    }
 }

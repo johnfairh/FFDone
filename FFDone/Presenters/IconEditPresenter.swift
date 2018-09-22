@@ -11,12 +11,14 @@ import TMLPresentation
 protocol IconEditPresenterInterface {
 
     /// Callback to refresh the view
-    var refresh: (Icon, Bool) -> () { get set }
+    var refresh: (Icon, Bool, Bool, Bool) -> () { get set }
 
     /// Change properties
     func setName(name: String)
     func setImage(image: UIImage)
     func clearImage()
+    func setGoalDefault(value: Bool)
+    func setAlarmDefault(value: Bool)
 
     /// Discard changes
     func cancel()
@@ -32,7 +34,10 @@ class IconEditPresenter: Presenter, IconEditPresenterInterface {
     private let model: Model
     private let director: DirectorInterface
     private let dismissFn: PresenterDone<Icon>
+
     private let icon: Icon
+    private var isGoalDefault: Bool
+    private var isAlarmDefault: Bool
 
     required init(director: DirectorInterface,
                   model: Model,
@@ -49,16 +54,18 @@ class IconEditPresenter: Presenter, IconEditPresenterInterface {
         self.model     = model
         self.director  = director
         self.dismissFn = dismiss
+        isGoalDefault = icon.isGoalDefault
+        isAlarmDefault = icon.isAlarmDefault
     }
 
-    var refresh: (Icon, Bool) -> Void = { _, _ in } {
+    var refresh: (Icon, Bool, Bool, Bool) -> Void = { _, _, _, _ in } {
         didSet {
             doRefresh()
         }
     }
 
     private func doRefresh() {
-        refresh(icon, isSaveAllowed)
+        refresh(icon, isGoalDefault, isAlarmDefault, isSaveAllowed)
     }
 
     private var isSaveAllowed: Bool {
@@ -80,6 +87,18 @@ class IconEditPresenter: Presenter, IconEditPresenterInterface {
         doRefresh()
     }
 
+    // we cheat a bit on this default
+
+    func setGoalDefault(value: Bool) {
+        isGoalDefault = value
+        doRefresh()
+    }
+
+    func setAlarmDefault(value: Bool) {
+        isAlarmDefault = value
+        doRefresh()
+    }
+
     /// Discard changes
     func cancel() {
         dismissFn(nil)
@@ -88,7 +107,10 @@ class IconEditPresenter: Presenter, IconEditPresenterInterface {
     /// Save changes
     func save() {
         Log.assert(isSaveAllowed)
+        // These defaults aren't saved in core data so mess around a bit to sync them...
         model.save {
+            self.icon.isGoalDefault = self.isGoalDefault
+            self.icon.isAlarmDefault = self.isAlarmDefault
             self.dismissFn(self.icon)
         }
     }

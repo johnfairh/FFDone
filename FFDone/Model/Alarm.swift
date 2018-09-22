@@ -23,7 +23,7 @@ extension Alarm: ModelObject {
         alarm.sortOrder = Alarm.getNextSortOrderValue(primarySortOrder, from: model)
         alarm.name = ""
         alarm.kind = .weekly(3)
-        alarm.icon = Icon.getGoalDefault(model: model) // XXX
+        alarm.icon = Icon.getAlarmDefault(model: model)
         alarm.activate() // surely??
         
         return alarm
