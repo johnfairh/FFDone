@@ -23,7 +23,7 @@ final class App {
     private let directorServices: TabbedDirectorServices<DirectorInterface>
     private let alarmScheduler: AlarmScheduler
 
-    init(window: UIWindow) {
+    init(window: UIWindow, tabIndex: Int?) {
         if App.debugMode {
             Log.log("App launching **** IN DEBUG MODE **** RESETTING DATABASE ***")
             Prefs.runBefore = false
@@ -34,7 +34,8 @@ final class App {
         director = Director(alarmScheduler: alarmScheduler)
         directorServices = TabbedDirectorServices(director: director,
                                                   window: window,
-                                                  tabBarVcName: "TabBarViewController")
+                                                  tabBarVcName: "TabBarViewController",
+                                                  tabIndex: tabIndex)
         director.services = directorServices
 
         Log.enableDebugLogs = App.debugMode
@@ -67,6 +68,10 @@ final class App {
 
     func willEnterForeground() {
         alarmScheduler.willEnterForeground()
+    }
+
+    var currentTabIndex: Int {
+        return directorServices.currentTabIndex
     }
     
     // MARK: Shared instance

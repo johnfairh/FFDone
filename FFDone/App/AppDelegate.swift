@@ -12,6 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var app: App!
+    var restoreTabIndex: Int?
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -19,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         ImageTransformer.install()
         ColorScheme.globalInit()
-        app = App(window: window!)
+        app = App(window: window!, tabIndex: restoreTabIndex)
 
         return true
     }
@@ -47,6 +48,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    static let archiveVersion = 1
 
+    enum ArchiveKeys: String {
+        case FF_ArchiveVersion
+        case FF_TabIndex
+    }
+
+    func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
+        coder.encode(AppDelegate.archiveVersion, forKey: ArchiveKeys.FF_ArchiveVersion.rawValue)
+        if let app = app {
+            coder.encode(app.currentTabIndex, forKey: ArchiveKeys.FF_TabIndex.rawValue)
+        }
+        return true
+    }
+
+    func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+        let version = coder.decodeInt32(forKey: ArchiveKeys.FF_ArchiveVersion.rawValue)
+        if version == AppDelegate.archiveVersion {
+            restoreTabIndex = Int(coder.decodeInt32(forKey: ArchiveKeys.FF_TabIndex.rawValue))
+        }
+        return false
+    }
 }
 
