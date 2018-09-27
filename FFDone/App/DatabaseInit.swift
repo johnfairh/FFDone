@@ -80,7 +80,6 @@ enum DatabaseObjects {
 
             icon.nativeImage = image
             icon.isBuiltin = true
-            icon.isDefault = (index == 0)
             icon.name = def.str("desc")
             icon.sortOrder = Int64(index)
         }

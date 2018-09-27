@@ -18,7 +18,6 @@ extension Icon : ModelObject {
     static func createWithDefaults(model: Model) -> Icon {
         let icon = Icon.create(from: model)
         icon.name = ""
-        icon.isDefault = false
         icon.isBuiltin = false
         icon.sortOrder = getNextSortOrderValue(primarySortOrder, from: model)
         return icon

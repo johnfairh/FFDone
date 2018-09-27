@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.12.1" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V4">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="17G2307" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V4">
     <entity name="Alarm" representedClassName=".Alarm" syncable="YES" codeGenerationType="class">
         <attribute name="cdNextActiveDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cdType" attributeType="Integer 16" minValueString="0" maxValueString="2" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -34,7 +34,6 @@
     <entity name="Icon" representedClassName=".Icon" syncable="YES" codeGenerationType="class">
         <attribute name="imageData" attributeType="Transformable" valueTransformerName="ImageTransformer" syncable="YES"/>
         <attribute name="isBuiltin" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isDefault" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="sortOrder" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="usingAlarms" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Alarm" inverseName="icon" inverseEntity="Alarm" syncable="YES"/>
@@ -53,7 +52,7 @@
     <elements>
         <element name="Alarm" positionX="-54" positionY="72" width="128" height="165"/>
         <element name="Goal" positionX="-63" positionY="-18" width="128" height="210"/>
-        <element name="Icon" positionX="-54" positionY="36" width="128" height="150"/>
+        <element name="Icon" positionX="-54" positionY="36" width="128" height="135"/>
         <element name="Note" positionX="-54" positionY="63" width="128" height="105"/>
     </elements>
 </model>
