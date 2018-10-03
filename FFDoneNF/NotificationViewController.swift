@@ -27,13 +27,21 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
         detailLabel.text = content.body
         if let attachment = content.attachments.first {
             if attachment.url.startAccessingSecurityScopedResource() {
-                if let loadedImage = UIImage(contentsOfFile: attachment.url.path) {
-                    image.image = loadedImage
-                    image.sizeToFit()
-                } else {
-                    detailLabel.text = "e: no img load"
+                defer { attachment.url.stopAccessingSecurityScopedResource() }
+
+                do {
+                    /* So: the UIImage constructor that takes a URL is a trap, it does
+                     * lazy loading of the image data which escapes this security
+                     * access block and does nothing.
+                     */
+                    let imageData = try Data(contentsOf: attachment.url)
+                    if let loadedImage = UIImage(data: imageData) {
+                        image.image = loadedImage
+                        image.sizeToFit()
+                    }
+                } catch {
+                    detailLabel.text = "e: no img load \(error)"
                 }
-                attachment.url.stopAccessingSecurityScopedResource()
             } else {
                 detailLabel.text = "e: no security"
             }

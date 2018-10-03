@@ -93,7 +93,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                 do {
                     try pngImageData.write(to: imageFileUrl)
 
-                    let attachment = try UNNotificationAttachment(identifier: "???", url: imageFileUrl)
+                    let attachment = try UNNotificationAttachment(identifier: "", url: imageFileUrl)
                     content.attachments = [attachment]
                 } catch {
                     Log.log("Failed to create notification PNG, pressing on - \(error)")
