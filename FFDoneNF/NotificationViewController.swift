@@ -40,7 +40,8 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
                         image.sizeToFit()
                     }
                 } catch {
-                    detailLabel.text = "e: no img load \(error)"
+                    // For the life of me can't debug these issues....
+                    // detailLabel.text = "e: no img load"
                 }
             } else {
                 detailLabel.text = "e: no security"

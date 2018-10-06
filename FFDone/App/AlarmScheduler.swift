@@ -79,10 +79,10 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
             content.body = text
             // Calculating the badge at this point is tricky - we have to examine the entire
             // pending list and insert this new guy (which will require the tail of said list
-            // to also be updated).  So instead we set a silly value and wait for the DB update
-            // that will follow this schedule() that will update the `activeAlarmCount` variable
-            // to keep the app and tab badges in sync.
-            content.badge = 99
+            // to also be updated).  So instead we set an arbitrary value and wait for the DB
+            // update that will follow this schedule() that will update the `activeAlarmCount`
+            // variable to keep the app and tab badges in sync.
+            content.badge = 1
             content.categoryIdentifier = Strings.Notification.Category
 
             // Try to add the alert's image to the notification.  The UN system moves
@@ -93,7 +93,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                 do {
                     try pngImageData.write(to: imageFileUrl)
 
-                    let attachment = try UNNotificationAttachment(identifier: "", url: imageFileUrl)
+                    let attachment = try UNNotificationAttachment(identifier: UUID().uuidString, url: imageFileUrl)
                     content.attachments = [attachment]
                 } catch {
                     Log.log("Failed to create notification PNG, pressing on - \(error)")
@@ -107,6 +107,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
             let request = UNNotificationRequest(identifier: uid, content: content, trigger: trigger)
 
             self.center.add(request) { error in
+                Log.log("Notification added OK")
                 Dispatch.toForeground {
                     if let error = error {
                         Log.log("AlarmScheduler: add request failed: \(error)")
@@ -209,8 +210,19 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                     newContent.title = request.content.title
                     newContent.body = request.content.body
                     newContent.badge = newBadge as NSNumber
-                    newContent.attachments = request.content.attachments
-                    Log.log("New: \(request.content.attachments[0].url.path)")
+                    if let oldAttachment = request.content.attachments.first {
+                        let oldUrl = oldAttachment.url
+                        let tmpUrl = FileManager.default.temporaryFileURL(extension: "png")
+                        Log.log("Previous url: \(oldUrl.path)")
+                        Log.log("New tmp url: \(tmpUrl.path)")
+                        do {
+                            try FileManager.default.copyItem(at: oldUrl, to: tmpUrl)
+                            let newAttachment = try UNNotificationAttachment(identifier: UUID().uuidString, url: tmpUrl)
+                            newContent.attachments = [newAttachment]
+                        } catch {
+                            Log.log("Copying up attachment failed: \(error)")
+                        }
+                    }
                     newContent.categoryIdentifier = Strings.Notification.Category
 
                     Log.log("Adding replacement notification, \(currentBadge) -> \(newBadge)")
