@@ -215,12 +215,17 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                         let tmpUrl = FileManager.default.temporaryFileURL(extension: "png")
                         Log.log("Previous url: \(oldUrl.path)")
                         Log.log("New tmp url: \(tmpUrl.path)")
-                        do {
-                            try FileManager.default.copyItem(at: oldUrl, to: tmpUrl)
-                            let newAttachment = try UNNotificationAttachment(identifier: UUID().uuidString, url: tmpUrl)
-                            newContent.attachments = [newAttachment]
-                        } catch {
-                            Log.log("Copying up attachment failed: \(error)")
+                        if oldUrl.startAccessingSecurityScopedResource() {
+                            defer { oldUrl.stopAccessingSecurityScopedResource() }
+                            do {
+                                try FileManager.default.copyItem(at: oldUrl, to: tmpUrl)
+                                let newAttachment = try UNNotificationAttachment(identifier: UUID().uuidString, url: tmpUrl)
+                                newContent.attachments = [newAttachment]
+                            } catch {
+                                Log.log("Copying up attachment failed: \(error)")
+                            }
+                        } else {
+                            Log.log("Can't get security access to copy up attachment")
                         }
                     }
                     newContent.categoryIdentifier = Strings.Notification.Category
