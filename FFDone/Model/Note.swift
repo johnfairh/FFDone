@@ -108,6 +108,15 @@ extension Note {
 
     /// Carefully sorted to drive the table
     private static func sectionatedResultsSet(model: Model, predicate: NSPredicate?, latestFirst: Bool) -> ModelResultsSet {
+        // Filter out alarm notes..
+        let goalsOnlyPredicate = NSPredicate(format: "\(#keyPath(goal)) != NIL")
+        let goalsPredicate: NSPredicate
+        if let predicate = predicate {
+            goalsPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate, goalsOnlyPredicate])
+        } else {
+            goalsPredicate = goalsOnlyPredicate
+        }
+
         // Day, most recent first
         let dayOrder = NSSortDescriptor(key: #keyPath(dayStamp), ascending: !latestFirst)
 
@@ -115,7 +124,7 @@ extension Note {
         let timeOrder = NSSortDescriptor(key: #keyPath(cdCreationDate), ascending: !latestFirst)
 
         return createFetchedResults(model: model,
-                                    predicate: predicate,
+                                    predicate: goalsPredicate,
                                     sortedBy: [dayOrder, timeOrder],
                                     sectionNameKeyPath: #keyPath(dayStamp)).asModelResultsSet
     }
