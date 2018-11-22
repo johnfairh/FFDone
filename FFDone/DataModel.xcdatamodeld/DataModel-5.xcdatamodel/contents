@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14315.18" systemVersion="17G2307" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V5">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18B75" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V5">
     <entity name="Alarm" representedClassName=".Alarm" syncable="YES" codeGenerationType="class">
         <attribute name="cdNextActiveDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cdType" attributeType="Integer 16" minValueString="0" maxValueString="2" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -8,6 +8,8 @@
         <attribute name="notificationUid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sectionOrder" transient="YES" attributeType="String" syncable="YES"/>
         <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="activeNote" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Note" inverseName="activeAlarm" inverseEntity="Note" syncable="YES"/>
+        <relationship name="defaultNote" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Note" inverseName="defaultAlarm" inverseEntity="Note" syncable="YES"/>
         <relationship name="icon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Icon" inverseName="usingAlarms" inverseEntity="Icon" syncable="YES"/>
         <fetchIndex name="BySectionOrder">
             <fetchIndexElement property="cdNextActiveDate" type="Binary" order="descending"/>
@@ -43,6 +45,8 @@
         <attribute name="cdCreationDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="dayStamp" attributeType="String" minValueString="8" maxValueString="8" syncable="YES"/>
         <attribute name="text" attributeType="String" syncable="YES"/>
+        <relationship name="activeAlarm" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Alarm" inverseName="activeNote" inverseEntity="Alarm" syncable="YES"/>
+        <relationship name="defaultAlarm" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Alarm" inverseName="defaultNote" inverseEntity="Alarm" syncable="YES"/>
         <relationship name="goal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Goal" inverseName="notes" inverseEntity="Goal" syncable="YES"/>
         <fetchIndex name="ByDayStamp">
             <fetchIndexElement property="dayStamp" type="Binary" order="descending"/>
@@ -50,9 +54,9 @@
         </fetchIndex>
     </entity>
     <elements>
-        <element name="Alarm" positionX="-54" positionY="72" width="128" height="165"/>
+        <element name="Alarm" positionX="-54" positionY="72" width="128" height="195"/>
         <element name="Goal" positionX="-63" positionY="-18" width="128" height="210"/>
         <element name="Icon" positionX="-54" positionY="36" width="128" height="135"/>
-        <element name="Note" positionX="-54" positionY="63" width="128" height="105"/>
+        <element name="Note" positionX="-54" positionY="63" width="128" height="135"/>
     </elements>
 </model>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -318,6 +318,55 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="TableHeaderColour"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="NXN-TW-CHW">
+                                        <rect key="frame" x="0.0" y="211" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NXN-TW-CHW" id="jv0-8u-e1u">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" text="Default notes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="84j-Jl-eGt">
+                                                    <rect key="frame" x="16" y="11.5" width="317" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" name="TextColour"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="84j-Jl-eGt" firstAttribute="leading" secondItem="jv0-8u-e1u" secondAttribute="leadingMargin" id="3nL-fR-wcv"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="84j-Jl-eGt" secondAttribute="trailing" id="Abl-Fl-vlA"/>
+                                                <constraint firstItem="84j-Jl-eGt" firstAttribute="centerY" secondItem="jv0-8u-e1u" secondAttribute="centerY" id="C8D-2A-STn"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="TableHeaderColour"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Notes" id="eNS-E0-XNm">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="VXd-JA-ruK">
+                                        <rect key="frame" x="0.0" y="311" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VXd-JA-ruK" id="8zf-VP-LfN">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some lovely notes and this just keeps going forever or until I get bored of making up stuff to type." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zFC-vY-lSb">
+                                                    <rect key="frame" x="16" y="11" width="343" height="22"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" name="TextColour"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="zFC-vY-lSb" firstAttribute="leading" secondItem="8zf-VP-LfN" secondAttribute="leadingMargin" id="6E5-Oq-1WG"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="zFC-vY-lSb" secondAttribute="trailing" id="6HN-pZ-7sf"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="zFC-vY-lSb" secondAttribute="bottom" id="Zoj-1i-Pwi"/>
+                                                <constraint firstItem="zFC-vY-lSb" firstAttribute="top" secondItem="8zf-VP-LfN" secondAttribute="topMargin" id="zrc-E9-Ozk"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="TableHeaderColour"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -339,6 +388,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activeNotesLabel" destination="zFC-vY-lSb" id="xNC-WG-tMf"/>
                         <outlet property="doneButton" destination="t6x-c0-dFj" id="qDd-gp-69h"/>
                         <outlet property="iconImageView" destination="deC-Cn-Y5v" id="lDw-cv-WHc"/>
                         <outlet property="nameTextField" destination="veN-Dm-0xH" id="4Ur-Hi-BGz"/>
@@ -1210,6 +1260,7 @@
                     <tabBarItem key="tabBarItem" systemItem="history" id="xoj-aj-02U"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="b2g-pq-SXu">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1470,8 +1521,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ActionCalendarIcon" width="25" height="25"/>
-        <image name="ActionReverseIcon" width="25" height="25"/>
+        <image name="ActionCalendarIcon" width="37.5" height="37.5"/>
+        <image name="ActionReverseIcon" width="37.5" height="37.5"/>
         <image name="TabAlarmsIcon" width="30" height="30"/>
         <image name="TabDebugIcon" width="30" height="30"/>
         <image name="TabGoalsIcon" width="30" height="30"/>

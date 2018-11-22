@@ -191,6 +191,22 @@ enum DatabaseObjects {
             } else {
                 alarm.deactivate()
             }
+
+            let defNote = def.str("defaultNote")
+            if !defNote.isEmpty {
+                let note = Note.create(from: model)
+                note.text = defNote
+                note.creationDate = Date()
+                alarm.defaultNote = note
+            }
+
+            let activeNote = def.str("activeNote")
+            if !activeNote.isEmpty {
+                let note = Note.create(from: model)
+                note.text = activeNote
+                note.creationDate = Date()
+                alarm.activeNote = note
+            }
         }
     }
 

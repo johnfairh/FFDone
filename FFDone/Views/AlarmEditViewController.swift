@@ -20,6 +20,14 @@ private extension IndexPath {
     var isRepeatDayRow: Bool {
         return section == 0 && row == 3
     }
+
+    var isDefaultNotesRow: Bool {
+        return section == 0 && row == 4
+    }
+
+    var isNotesRow: Bool {
+        return section == 1 && row == 0
+    }
 }
 
 /// VC for alarm create/edit
@@ -32,7 +40,8 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var repeatsLabel: UILabel!
     @IBOutlet weak var repeatDayLabel: UILabel!
-
+    @IBOutlet weak var activeNotesLabel: UILabel!
+    
     // overly complicated table state
     private var weekdayNumber: Int?
     private var canEditRepeat: Bool = false
@@ -57,6 +66,7 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
             if let day = self.weekdayNumber {
                 self.repeatDayLabel.text = self.dayName(weekday: day)
             }
+            self.activeNotesLabel.text = alarm.activeNote?.text ?? ""
             self.refreshRowHeights()
         }
     }
@@ -115,7 +125,9 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
 
     /// Allow rows that do stuff to highlight
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.isIconRow || (canEditRepeat && (indexPath.isRepeatRow || indexPath.isRepeatDayRow))
+        return indexPath.isIconRow ||
+            (canEditRepeat && (indexPath.isRepeatRow || indexPath.isRepeatDayRow)) ||
+            indexPath.isDefaultNotesRow || indexPath.isNotesRow
     }
 
     /// Trigger the icon picker
@@ -140,6 +152,12 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
                     self.presenter.setKind(kind: .weekly(dayNumber))
                 }
             }
+        } else if indexPath.isDefaultNotesRow {
+            Log.log("DEFAULT NOTES ROW")
+            //presenter.editDefaultNotes()
+        } else if indexPath.isNotesRow {
+            Log.log("NOTES ROW")
+            //presenter.editNotes()
         }
     }
 }
