@@ -63,6 +63,8 @@
 		02990A71212DB74B00BF1CEC /* AlarmScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A70212DB74B00BF1CEC /* AlarmScheduler.swift */; };
 		02990A7321303A8000BF1CEC /* AlarmEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A7221303A7F00BF1CEC /* AlarmEditPresenter.swift */; };
 		02990A7521303BEA00BF1CEC /* AlarmEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A7421303BEA00BF1CEC /* AlarmEditViewController.swift */; };
+		02C5870221A712BD00DF6C36 /* MappingModel45.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 02C5870121A712BD00DF6C36 /* MappingModel45.xcmappingmodel */; };
+		02C5870421A714A000DF6C36 /* DatabaseMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C5870321A714A000DF6C36 /* DatabaseMigration.swift */; };
 		02C61D9F2125EAD500073B7D /* DBSphereTagCloud_Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */; };
 		02D61306214589EE00BD9BA6 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D61305214589EE00BD9BA6 /* UserNotifications.framework */; };
 		02D61308214589EE00BD9BA6 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D61307214589EE00BD9BA6 /* UserNotificationsUI.framework */; };
@@ -184,6 +186,8 @@
 		02990A7221303A7F00BF1CEC /* AlarmEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditPresenter.swift; sourceTree = "<group>"; };
 		02990A7421303BEA00BF1CEC /* AlarmEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditViewController.swift; sourceTree = "<group>"; };
 		02990A762130575F00BF1CEC /* DataModel-4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-4.xcdatamodel"; sourceTree = "<group>"; };
+		02C5870121A712BD00DF6C36 /* MappingModel45.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MappingModel45.xcmappingmodel; sourceTree = "<group>"; };
+		02C5870321A714A000DF6C36 /* DatabaseMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseMigration.swift; sourceTree = "<group>"; };
 		02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DBSphereTagCloud_Framework.framework; path = Carthage/Build/iOS/DBSphereTagCloud_Framework.framework; sourceTree = "<group>"; };
 		02D61304214589EE00BD9BA6 /* FFDoneNF.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FFDoneNF.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		02D61305214589EE00BD9BA6 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -254,6 +258,7 @@
 				027F63742105FF93001C9738 /* AppDelegate.swift */,
 				021309ED210A176200410451 /* App.swift */,
 				02130A00210B6B7C00410451 /* DatabaseInit.swift */,
+				02C5870321A714A000DF6C36 /* DatabaseMigration.swift */,
 				021309EF210A1D2E00410451 /* Director.swift */,
 				02867EBA211F6323004D3122 /* IconSource.swift */,
 				020825F521246F24007578C7 /* TagList.swift */,
@@ -363,6 +368,7 @@
 				021309F2210A2EE500410451 /* Views */,
 				027F63782105FF94001C9738 /* Main.storyboard */,
 				027F637D2105FF95001C9738 /* LaunchScreen.storyboard */,
+				02C5870121A712BD00DF6C36 /* MappingModel45.xcmappingmodel */,
 				021309E7210A13F700410451 /* DataModel.xcdatamodeld */,
 				021309F9210B5DF300410451 /* Resources */,
 				027F63802105FF95001C9738 /* Info.plist */,
@@ -630,11 +636,13 @@
 				027F63752105FF93001C9738 /* AppDelegate.swift in Sources */,
 				02130A05210CD65F00410451 /* Icon.swift in Sources */,
 				02990A6621270F4C00BF1CEC /* TagCloudView.swift in Sources */,
+				02C5870221A712BD00DF6C36 /* MappingModel45.xcmappingmodel in Sources */,
 				02990A71212DB74B00BF1CEC /* AlarmScheduler.swift in Sources */,
 				021309F6210A300B00410451 /* GoalsTableViewController.swift in Sources */,
 				02867EB7211F37E0004D3122 /* IconEditPresenter.swift in Sources */,
 				020825F22122E310007578C7 /* HomePresenter.swift in Sources */,
 				02130A0D210F773A00410451 /* GoalEditViewController.swift in Sources */,
+				02C5870421A714A000DF6C36 /* DatabaseMigration.swift in Sources */,
 				02867EA7211AD3EF004D3122 /* NotesTablePresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
