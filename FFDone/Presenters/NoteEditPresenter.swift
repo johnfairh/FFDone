@@ -16,11 +16,14 @@ protocol NoteEditPresenterInterface {
     /// Date of the note
     var date: String { get }
 
-    /// Goal associated with the note, if any
-    var goal: Goal? { get }
+    /// Name of note's owner, if any
+    var ownerName: String? { get }
 
-    /// Go display the goal
-    func showGoal()
+    /// Icon of note's owner, if any
+    var ownerIcon: Icon? { get }
+
+    /// Go display the owner
+    func showOwner()
 
     /// Discard changes
     func cancel()
@@ -63,14 +66,36 @@ class NoteEditPresenter: Presenter, NoteEditPresenterInterface {
         return Note.dayStampToUserString(dayStamp: note.dayStamp!)
     }
 
-    var goal: Goal? {
-        return note.goal
+    // MARK: - Owner stuff
+
+    /// Name of note's owner
+    private var owner: (String?, Icon?) {
+        if let goal = note.goal {
+            return (goal.name, goal.icon)
+        } else if let alarm = note.activeAlarm {
+            return (alarm.name, alarm.icon)
+        } else if let alarm = note.defaultAlarm {
+            return (alarm.name, alarm.icon)
+        }
+        return (nil, nil)
     }
 
-    func showGoal() {
+
+    /// Name of note's owner
+    var ownerName: String? {
+        return owner.0
+    }
+
+    /// Icon of note's owner, if any
+    var ownerIcon: Icon? {
+        return owner.1
+    }
+
+    func showOwner() {
         if let goal = note.goal {
             director.request(.viewGoal(goal, model))
         }
+        // choosing to do nothing for alarms, can only make loops....
     }
     
     func cancel() {

@@ -26,12 +26,11 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface> {
 
         textView.text = presenter.text
         dateLabel.text = presenter.date
-        if let goal = presenter.goal {
-            goalImageView.image = goal.nativeImage
-            goalNameButton.setTitle(goal.name, for: .normal)
+        goalNameButton.setTitle(presenter.ownerName, for: .normal)
+        if let icon = presenter.ownerIcon {
+            goalImageView.image = icon.nativeImage
         } else {
             goalImageView.isHidden = true
-            goalNameButton.isHidden = true
             navigationItem.title = "New Note"
         }
         if textView.text.isEmpty {
@@ -48,7 +47,7 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface> {
     }
 
     @IBAction func goalButtonDidTap(_ sender: Any) {
-        presenter.showGoal()
+        presenter.showOwner()
     }
     
     // MARK: - Keyboard dance :-(
