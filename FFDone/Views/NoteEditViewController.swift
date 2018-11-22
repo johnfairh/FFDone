@@ -11,8 +11,8 @@ import TMLPresentation
 class NoteEditViewController: PresentableVC<NoteEditPresenterInterface> {
     
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var goalImageView: UIImageView!
-    @IBOutlet weak var goalNameButton: UIButton!
+    @IBOutlet weak var ownerImageView: UIImageView!
+    @IBOutlet weak var ownerNameButton: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
     
     // MARK: - Functional stuff
@@ -22,15 +22,15 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface> {
         
         setBasicColors()
         dateLabel.setColors()
-        goalNameButton.setColors()
+        ownerNameButton.setColors()
 
         textView.text = presenter.text
         dateLabel.text = presenter.date
-        goalNameButton.setTitle(presenter.ownerName, for: .normal)
+        ownerNameButton.setTitle(presenter.ownerName, for: .normal)
         if let icon = presenter.ownerIcon {
-            goalImageView.image = icon.nativeImage
+            ownerImageView.image = icon.nativeImage
         } else {
-            goalImageView.isHidden = true
+            ownerImageView.isHidden = true
             navigationItem.title = "New Note"
         }
         if textView.text.isEmpty {

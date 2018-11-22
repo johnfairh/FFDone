@@ -1208,8 +1208,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="dateLabel" destination="yso-VE-8iY" id="9R8-Ni-N60"/>
-                        <outlet property="goalImageView" destination="uSU-uf-zVJ" id="Wri-nf-5zf"/>
-                        <outlet property="goalNameButton" destination="GgJ-VC-nP8" id="8OZ-5K-F6p"/>
+                        <outlet property="ownerImageView" destination="uSU-uf-zVJ" id="Wri-nf-5zf"/>
+                        <outlet property="ownerNameButton" destination="GgJ-VC-nP8" id="8OZ-5K-F6p"/>
                         <outlet property="textView" destination="7MS-62-Ctc" id="Oc1-bl-1ie"/>
                     </connections>
                 </viewController>
