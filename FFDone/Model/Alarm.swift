@@ -24,7 +24,9 @@ extension Alarm: ModelObject {
         alarm.name = ""
         alarm.kind = .weekly(3)
         alarm.icon = Icon.getAlarmDefault(model: model)
-        alarm.activate() // surely??
+        alarm.activeNote = Note.createWithDefaults(model: model)
+        alarm.defaultNote = Note.createWithDefaults(model: model)
+        alarm.activate()
         
         return alarm
     }
@@ -109,6 +111,7 @@ extension Alarm {
 
     func activate() {
         nextActiveDate = Alarm.activeNextActiveDate
+        notes = defaultNotes
         refreshSectionOrder()
     }
 
@@ -231,6 +234,34 @@ extension Alarm {
 
     var nativeImage: UIImage {
         return icon!.nativeImage
+    }
+}
+
+// MARK: - Notes
+
+extension Alarm {
+    var notes: String {
+        get {
+            return activeNote?.text ?? ""
+        }
+        set {
+            guard let note = activeNote else {
+                Log.fatal("No activeNote object for alarm \(self)")
+            }
+            note.text = newValue
+        }
+    }
+
+    var defaultNotes: String {
+        get {
+            return defaultNote?.text ?? ""
+        }
+        set {
+            guard let note = defaultNote else {
+                Log.fatal("No defaultNote object for alarm \(self)")
+            }
+            note.text = newValue
+        }
     }
 }
 

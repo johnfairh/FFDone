@@ -19,6 +19,12 @@ protocol AlarmEditPresenterInterface {
     /// Let the user choose the icon
     func pickIcon()
 
+    /// Let the user edit the active notes
+    func editActiveNotes()
+
+    /// Let the user edit the default notes
+    func editDefaultNotes()
+
     /// Dismiss the view without committing and changes
     func cancel()
 
@@ -86,6 +92,22 @@ class AlarmEditPresenter: Presenter, AlarmEditPresenterInterface {
             self.alarm.icon = newIcon
             self.doRefresh()
         }))
+    }
+
+    /// Let the user edit the active notes
+    func editActiveNotes() {
+        guard let note = alarm.activeNote else {
+            Log.fatal("Missing active note for alarm \(alarm)")
+        }
+        director.request(.editNoteAndThen(note, model, { _ in self.doRefresh() }))
+    }
+
+    /// Let the user edit the default notes
+    func editDefaultNotes() {
+        guard let note = alarm.defaultNote else {
+            Log.fatal("Missing default note for alarm \(alarm)")
+        }
+        director.request(.editNote(note, model))
     }
 
     func cancel() {

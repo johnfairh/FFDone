@@ -41,7 +41,7 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
     @IBOutlet weak var repeatsLabel: UILabel!
     @IBOutlet weak var repeatDayLabel: UILabel!
     @IBOutlet weak var activeNotesLabel: UILabel!
-    
+
     // overly complicated table state
     private var weekdayNumber: Int?
     private var canEditRepeat: Bool = false
@@ -66,7 +66,7 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
             if let day = self.weekdayNumber {
                 self.repeatDayLabel.text = self.dayName(weekday: day)
             }
-            self.activeNotesLabel.text = alarm.activeNote?.text ?? ""
+            self.activeNotesLabel.text = alarm.notes
             self.refreshRowHeights()
         }
     }
@@ -153,11 +153,9 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
                 }
             }
         } else if indexPath.isDefaultNotesRow {
-            Log.log("DEFAULT NOTES ROW")
-            //presenter.editDefaultNotes()
+            presenter.editDefaultNotes()
         } else if indexPath.isNotesRow {
-            Log.log("NOTES ROW")
-            //presenter.editNotes()
+            presenter.editActiveNotes()
         }
     }
 }

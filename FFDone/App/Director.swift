@@ -33,6 +33,7 @@ enum DirectorRequest {
     case createNote(Goal, Model)
     case createNoteAndThen(Goal, Model, (Note) -> Void)
     case editNote(Note, Model)
+    case editNoteAndThen(Note, Model, (Note) -> Void)
 
     case createAlarm(Model)
     case editAlarm(Alarm, Model)
@@ -186,11 +187,13 @@ extension DirectorRequest {
                                done: continuation)
 
         case let .editNote(note, model):
+            DirectorRequest.editNoteAndThen(note, model, { _ in }).handle(services: services, alarmScheduler: alarmScheduler)
+        case let .editNoteAndThen(note, model, continuation):
             services.editThing("NoteEditViewController",
                                model: model,
                                object: note,
                                presenterFn: NoteEditPresenter.init,
-                               done: { _ in })
+                               done: { editNote in continuation(editNote) })
 
         case let .createNote(goal, model):
             DirectorRequest.createNoteAndThen(goal, model, { _ in }).handle(services: services, alarmScheduler: alarmScheduler)

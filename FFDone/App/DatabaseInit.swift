@@ -186,26 +186,22 @@ enum DatabaseObjects {
             let day = def.int("day")
             alarm.cdWeekDay = Int16((day == 0) ? 1 : day)
             alarm.sortOrder = Int64(index)
+            do {
+                let note = Note.createWithDefaults(model: model)
+                note.text = def.str("defaultNote")
+                alarm.defaultNote = note
+            }
+
+            do {
+                let note = Note.createWithDefaults(model: model)
+                note.text = def.str("activeNote")
+                alarm.activeNote = note
+            }
+
             if def.bool("active") {
                 alarm.activate()
             } else {
                 alarm.deactivate()
-            }
-
-            let defNote = def.str("defaultNote")
-            if !defNote.isEmpty {
-                let note = Note.create(from: model)
-                note.text = defNote
-                note.creationDate = Date()
-                alarm.defaultNote = note
-            }
-
-            let activeNote = def.str("activeNote")
-            if !activeNote.isEmpty {
-                let note = Note.create(from: model)
-                note.text = activeNote
-                note.creationDate = Date()
-                alarm.activeNote = note
             }
         }
     }
