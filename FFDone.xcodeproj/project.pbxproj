@@ -186,6 +186,7 @@
 		02990A7221303A7F00BF1CEC /* AlarmEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditPresenter.swift; sourceTree = "<group>"; };
 		02990A7421303BEA00BF1CEC /* AlarmEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditViewController.swift; sourceTree = "<group>"; };
 		02990A762130575F00BF1CEC /* DataModel-4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-4.xcdatamodel"; sourceTree = "<group>"; };
+		02BEE27221A721CB009B8844 /* DataModel-6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-6.xcdatamodel"; sourceTree = "<group>"; };
 		02C5870121A712BD00DF6C36 /* MappingModel45.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MappingModel45.xcmappingmodel; sourceTree = "<group>"; };
 		02C5870321A714A000DF6C36 /* DatabaseMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseMigration.swift; sourceTree = "<group>"; };
 		02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DBSphereTagCloud_Framework.framework; path = Carthage/Build/iOS/DBSphereTagCloud_Framework.framework; sourceTree = "<group>"; };
@@ -1071,13 +1072,14 @@
 		021309E7210A13F700410451 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				02BEE27221A721CB009B8844 /* DataModel-6.xcdatamodel */,
 				02D992E3215CCC3900693F63 /* DataModel-5.xcdatamodel */,
 				02990A762130575F00BF1CEC /* DataModel-4.xcdatamodel */,
 				02867EB1211D7CDE004D3122 /* DataModel-3.xcdatamodel */,
 				02867EAC211C531C004D3122 /* DataModel-2.xcdatamodel */,
 				021309E8210A13F700410451 /* DataModel.xcdatamodel */,
 			);
-			currentVersion = 02D992E3215CCC3900693F63 /* DataModel-5.xcdatamodel */;
+			currentVersion = 02BEE27221A721CB009B8844 /* DataModel-6.xcdatamodel */;
 			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
