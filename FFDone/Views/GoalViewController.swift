@@ -80,6 +80,10 @@ UITextFieldDelegate {
     @IBAction func didTapAddNoteButton(_ sender: UIButton) {
         presenter.addNote()
     }
+    
+    @IBAction func didTapDupButton(_ sender: UIBarButtonItem) {
+        presenter.dup()
+    }
 
     // MARK: - Textfield
 

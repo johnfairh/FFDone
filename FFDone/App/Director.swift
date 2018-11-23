@@ -22,6 +22,7 @@ enum DirectorRequest {
     case createGoal(Model)
     case editGoal(Goal, Model)
     case editGoalAndThen(Goal, Model, (Goal) -> Void)
+    case dupGoal(Goal, Model)
     case viewGoal(Goal, Model)
 
     case switchToGoals(String)
@@ -149,6 +150,13 @@ extension DirectorRequest {
                                object: goal,
                                presenterFn: GoalEditPresenter.init,
                                done: { editGoal in continuation(editGoal) })
+
+        case let .dupGoal(goal, model):
+            services.createThing("GoalEditViewController",
+                                 model: model,
+                                 from: goal,
+                                 presenterFn: GoalEditPresenter.init,
+                                 done: { _ in })
 
         case let .viewGoal(goal, model):
             services.viewThing("GoalViewController",

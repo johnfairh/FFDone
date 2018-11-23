@@ -71,14 +71,18 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface, GoalNotesTablePr
                   object: Goal?,
                   mode: PresenterMode,
                   dismiss: @escaping PresenterDone<Goal>) {
-        if let object = object {
-            Log.assert(mode.isSingleType(.edit))
-            goal = object
+        switch mode.singleType! {
+        case .edit:
+            goal = object!
             canEditCurrentSteps = true
-        } else {
-            Log.assert(mode.isSingleType(.create))
+        case .create:
             goal = Goal.createWithDefaults(model: model)
             canEditCurrentSteps = false
+        case .dup:
+            goal = object!.dup(model: model)
+            canEditCurrentSteps = false
+        default:
+            Log.fatal("Bad mode: \(mode)")
         }
 
         self.model     = model

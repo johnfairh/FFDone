@@ -19,6 +19,9 @@ protocol GoalViewPresenterInterface {
     /// Let the user add a new note
     func addNote()
 
+    /// Duplicate the goal
+    func dup()
+
     /// Edit the goal
     func edit()
 
@@ -82,6 +85,11 @@ class GoalViewPresenter: Presenter, GoalViewPresenterInterface, GoalNotesTablePr
     func didDeleteNote() {
         model.save()
         doRefresh()
+    }
+
+    /// Duplicate the goal.
+    func dup() {
+        director.request(.dupGoal(goal, model))
     }
 
     /// Edit this goal.

@@ -28,6 +28,17 @@ extension Goal: ModelObject {
         goal.icon = Icon.getGoalDefault(model: model)
         return goal
     }
+
+    /// Create an independent goal that mimicks this one
+    func dup(model: Model) -> Goal {
+        let goal = Goal.createWithDefaults(model: model)
+        goal.name = name
+        goal.icon = icon
+        goal.isFav = isFav
+        goal.totalSteps = totalSteps
+        goal.tag = tag
+        return goal
+    }
 }
 
 // MARK: - Timestamp wrapper utilities, allow `Date` in code and convert to TIs
