@@ -40,10 +40,10 @@ extension Goal: ModelObject {
 
         if let myNotes = notes as? Set<Note> {
             let newNotes = myNotes.sorted(by: { $0.cdCreationDate < $1.cdCreationDate }).map { $0.dup(model: model) }
-            var now = Date().timeIntervalSinceReferenceDate
+            var now = Date()
             newNotes.forEach {
-                $0.cdCreationDate = now
-                now += 1 // this is to ensure the same ordering
+                $0.creationDate = now
+                now.addTimeInterval(1) // keep the same order
                 $0.goal = goal
             }
         }
