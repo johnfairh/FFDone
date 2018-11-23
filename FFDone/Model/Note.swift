@@ -18,6 +18,13 @@ extension Note: ModelObject {
         return note
     }
 
+    /// Create a new Note based on this one
+    func dup(model: Model) -> Note {
+        let note = Note.createWithDefaults(model: model)
+        note.text = text
+        return note
+    }
+
     // MARK: - Daystamp conversion
 
     // For core data section-sorting we have to maintain a separate day timestamp field,
