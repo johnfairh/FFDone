@@ -38,14 +38,22 @@ extension Goal: ModelObject {
         goal.totalSteps = totalSteps
         goal.tag = tag
 
+        // NSFetchedResultsController throws very odd errors if it is run on
+        // a nested model with unsaved records.  This workaround creates a further
+        // child model, creates the notes in there, then saves the child model which
+        // merges back into the current model -- while leaving the goal itself unsaved,
+        // which is vital for save/cancel to work properly.
         if let myNotes = notes as? Set<Note> {
-            let newNotes = myNotes.sorted(by: { $0.cdCreationDate < $1.cdCreationDate }).map { $0.dup(model: model) }
+            let subModel = model.createChildModel()
+            let subModelGoal = goal.convert(subModel)
+            let newNotes = myNotes.sorted(by: { $0.cdCreationDate < $1.cdCreationDate }).map { $0.dup(model: subModel) }
             var now = Date()
             newNotes.forEach {
                 $0.creationDate = now
                 now.addTimeInterval(1) // keep the same order
-                $0.goal = goal
+                $0.goal = subModelGoal
             }
+            subModel.save()
         }
 
         return goal
