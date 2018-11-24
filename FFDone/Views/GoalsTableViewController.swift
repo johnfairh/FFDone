@@ -67,7 +67,7 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
             enableSearch(scopes: ["Both", "Name", "Tag"],
                          textColor: .text)
         }
-
+        enablePullToCreate()
         navigationItem.leftBarButtonItem = nil
 
         if GoalsTableViewController.shared == nil {

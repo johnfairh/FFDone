@@ -171,9 +171,7 @@
                             <outlet property="delegate" destination="fXi-wo-yMs" id="5MV-Iv-pG1"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Alarms" largeTitleDisplayMode="always" id="1oO-t6-jwQ">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="jmp-rQ-LEa"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Alarms" largeTitleDisplayMode="always" id="1oO-t6-jwQ"/>
                     <connections>
                         <segue destination="I9K-HS-ZgR" kind="show" identifier="DummySegue6" id="yM4-78-6Ff"/>
                     </connections>
@@ -478,9 +476,7 @@
                             <outlet property="delegate" destination="r1t-ux-Hy5" id="RYl-93-zci"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Goals" largeTitleDisplayMode="always" id="Q64-zT-Kh2">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Nec-9p-p1j"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Goals" largeTitleDisplayMode="always" id="Q64-zT-Kh2"/>
                     <connections>
                         <segue destination="ITq-eA-vcY" kind="show" identifier="DummySegue" id="IXd-L2-TO3"/>
                         <segue destination="jhi-Pr-pg1" kind="show" identifier="DummySegue4" id="ghS-ei-tSe"/>
@@ -968,9 +964,7 @@
                             <outlet property="delegate" destination="l2p-Uk-BCD" id="Mct-jL-Oux"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Icons" id="pF0-kB-Go5">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="FpB-Cx-uv5"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Icons" id="pF0-kB-Go5"/>
                     <connections>
                         <segue destination="K9q-p6-ZFG" kind="show" identifier="DummySegue3" id="UQu-Q1-rPc"/>
                     </connections>
@@ -1296,7 +1290,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukb-fP-qSr">
-                                            <rect key="frame" x="16" y="0.0" width="343" height="66.5"/>
+                                            <rect key="frame" x="16" y="0.0" width="319" height="66.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>

@@ -32,6 +32,7 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
         }
         if presenter.shouldEnableExtraControls {
             navigationItem.leftBarButtonItem = nil
+            enablePullToCreate()
         }
         enableSearch(scopes: [])
     }

@@ -33,6 +33,7 @@ TableModelDelegate {
             self?.reloadTable(queryResults: queryResults)
         }
 
+        enablePullToCreate()
         navigationItem.leftBarButtonItem = nil
     }
 
