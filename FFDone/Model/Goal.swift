@@ -166,9 +166,12 @@ extension Goal {
 // MARK: - View text helpers
 
 extension Goal {
-
     var stepsStatusText: String {
         return "\(currentSteps) out of \(totalSteps)"
+    }
+
+    var stepsStatusShortText: String {
+        return "(\(currentSteps)/\(totalSteps))"
     }
 
     private func getFormattedDate(date: Date) -> String {
@@ -306,6 +309,15 @@ extension Goal {
             Log.fatal("Shouldn't be reachable")
         }
         Log.assert(section == newSection, message: "Messed up a goal section transition")
+    }
+}
+
+// MARK: - Notes
+
+extension Goal {
+    func add(note: Note) {
+        note.goalStatus = stepsStatusShortText
+        note.goal = self
     }
 }
 

@@ -44,6 +44,7 @@
     <entity name="Note" representedClassName=".Note" syncable="YES" codeGenerationType="class">
         <attribute name="cdCreationDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="dayStamp" attributeType="String" minValueString="8" maxValueString="8" syncable="YES"/>
+        <attribute name="goalStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="text" attributeType="String" syncable="YES"/>
         <relationship name="activeAlarm" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Alarm" inverseName="activeNote" inverseEntity="Alarm" syncable="YES"/>
         <relationship name="defaultAlarm" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Alarm" inverseName="defaultNote" inverseEntity="Alarm" syncable="YES"/>
@@ -57,6 +58,6 @@
         <element name="Alarm" positionX="-54" positionY="72" width="128" height="195"/>
         <element name="Goal" positionX="-63" positionY="-18" width="128" height="210"/>
         <element name="Icon" positionX="-54" positionY="36" width="128" height="135"/>
-        <element name="Note" positionX="-54" positionY="63" width="128" height="135"/>
+        <element name="Note" positionX="-54" positionY="63" width="128" height="150"/>
     </elements>
 </model>

@@ -25,6 +25,24 @@ extension Note: ModelObject {
         return note
     }
 
+    // MARK: - Text helpers
+
+    /// Title string for notes associated with goals, includes goal status.
+    var extendedGoalTitle: String {
+        guard let goal = goal else {
+            return ""
+        }
+        return (goal.name ?? "") + " " + (goalStatus ?? "")
+    }
+
+    /// Note text with goal status prefix, must not be editable.
+    var textWithGoalStatus: String {
+        guard let goalStatus = goalStatus else {
+            return text ?? ""
+        }
+        return "\(goalStatus) \(text ?? "")"
+    }
+
     // MARK: - Daystamp conversion
 
     // For core data section-sorting we have to maintain a separate day timestamp field,

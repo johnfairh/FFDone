@@ -10,17 +10,15 @@ import TMLPresentation
 /// This is a VC for the notes table that embeds inside the
 /// goal-view and goal-edit main VCs.
 class GoalNoteCell: UITableViewCell, TableCell {
-
     @IBOutlet weak var noteLabel: UILabel!
 
     func configure(_ note: Note) {
-        noteLabel.text = note.text
+        noteLabel.text = note.textWithGoalStatus
         noteLabel.setColors()
     }
 }
 
 class GoalNotesTableViewController: PresentableTableVC<GoalNotesTablePresenter>, TableModelDelegate {
-
     /// How big the table would like to be -- could be bigger than the screen.
     var desiredHeight: CGFloat {
         return tableView.contentSize.height

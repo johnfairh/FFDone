@@ -209,7 +209,7 @@ extension DirectorRequest {
             services.createThing("NoteEditViewController",
                                  model: model,
                                  presenterFn: NoteEditPresenter.init,
-                                 done: { note in note.goal = goal; continuation(note) })
+                                 done: { note in goal.add(note: note); continuation(note) })
 
         case let .createAlarm(model):
             services.createThing("AlarmEditViewController",

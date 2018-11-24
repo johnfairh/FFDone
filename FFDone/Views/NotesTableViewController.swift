@@ -24,7 +24,7 @@ class NoteCell: UITableViewCell, TableCell {
     func configure(_ note: Note) {
         goalImageView.image = note.goal?.nativeImage
         goalNameButton.setTitle(note.goal?.name ?? "??", for: .normal)
-        noteLabel.text = note.text
+        noteLabel.text = note.textWithGoalStatus
     }
 }
 

@@ -71,7 +71,7 @@ class NoteEditPresenter: Presenter, NoteEditPresenterInterface {
     /// Name of note's owner
     private var owner: (String?, Icon?) {
         if let goal = note.goal {
-            return (goal.name, goal.icon)
+            return (note.extendedGoalTitle, goal.icon)
         } else if let alarm = note.activeAlarm {
             return (alarm.name, alarm.icon)
         } else if let alarm = note.defaultAlarm {
