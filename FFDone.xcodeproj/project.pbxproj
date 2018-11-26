@@ -198,6 +198,7 @@
 		02D6130F214589EE00BD9BA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		02D613172146BD9400BD9BA6 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		02D992E3215CCC3900693F63 /* DataModel-5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-5.xcdatamodel"; sourceTree = "<group>"; };
+		02DA5F2E21AC537B00C88120 /* DataModel-7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-7.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1072,6 +1073,7 @@
 		021309E7210A13F700410451 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				02DA5F2E21AC537B00C88120 /* DataModel-7.xcdatamodel */,
 				02BEE27221A721CB009B8844 /* DataModel-6.xcdatamodel */,
 				02D992E3215CCC3900693F63 /* DataModel-5.xcdatamodel */,
 				02990A762130575F00BF1CEC /* DataModel-4.xcdatamodel */,
@@ -1079,7 +1081,7 @@
 				02867EAC211C531C004D3122 /* DataModel-2.xcdatamodel */,
 				021309E8210A13F700410451 /* DataModel.xcdatamodel */,
 			);
-			currentVersion = 02BEE27221A721CB009B8844 /* DataModel-6.xcdatamodel */;
+			currentVersion = 02DA5F2E21AC537B00C88120 /* DataModel-7.xcdatamodel */;
 			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
