@@ -224,7 +224,6 @@ extension Goal {
 // MARK: - View icon helpers
 
 extension Goal {
-
     private var imageAnnotationText: String? {
         guard hasSteps && !isComplete else {
             return nil
@@ -320,7 +319,6 @@ extension Goal {
         note.goal = self
     }
 }
-
 
 // MARK: - Queries
 
