@@ -65,8 +65,17 @@ class AlarmViewPresenter: Presenter, AlarmViewPresenterInterface {
 
     /// Mark the alarm as complete
     func complete() {
-        alarm.deactivate()
-        doRefresh()
+        if case .oneShot = alarm.kind {
+            dismissFn(alarm)
+            alarm.delete(from: model)
+            model.save()
+        } else {
+            alarm.debugDeactivate()
+            self.director.request(.scheduleAlarmAndThen(alarm, {
+                self.model.save()
+                self.doRefresh()
+            }))
+        }
     }
 
     /// Edit the notes

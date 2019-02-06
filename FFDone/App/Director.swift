@@ -40,7 +40,7 @@ enum DirectorRequest {
     case editAlarm(Alarm, Model)
     case editAlarmAndThen(Alarm, Model, (Alarm) -> Void)
     case viewAlarm(Alarm, Model)
-    case scheduleAlarm(Alarm, (String?) -> Void)
+    case scheduleAlarmAndThen(Alarm, () -> Void)
     case cancelAlarm(String)
     case setActiveAlarmCount(Int)
 }
@@ -233,8 +233,16 @@ extension DirectorRequest {
                                object: alarm,
                                presenterFn: AlarmViewPresenter.init)
 
-        case let .scheduleAlarm(alarm, callback):
-            alarmScheduler.scheduleAlarm(text: alarm.notificationText, image: alarm.nativeImage, for: alarm.nextActiveDate, callback: callback)
+        case let .scheduleAlarmAndThen(alarm, callback):
+            alarmScheduler.scheduleAlarm(text: alarm.notificationText,
+                                         image: alarm.nativeImage,
+                                         for: alarm.nextActiveDate) { uid in
+                                            if let uid = uid {
+                                                alarm.notificationUid = uid
+                                            }
+                                            callback()
+                                         }
+
         case let .cancelAlarm(uid):
             alarmScheduler.cancelAlarm(uid: uid)
         case let .setActiveAlarmCount(count):

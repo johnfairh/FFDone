@@ -104,12 +104,7 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
                 self.model.save()
             } else {
                 alarm.debugDeactivate()
-                self.director.request(.scheduleAlarm(alarm, { uid in
-                    if let uid = uid {
-                        alarm.notificationUid = uid
-                    }
-                    self.model.save()
-                }))
+                self.director.request(.scheduleAlarmAndThen(alarm, { self.model.save() }))
             }
         })
     }
