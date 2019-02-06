@@ -174,6 +174,7 @@
                     <navigationItem key="navigationItem" title="Alarms" largeTitleDisplayMode="always" id="1oO-t6-jwQ"/>
                     <connections>
                         <segue destination="I9K-HS-ZgR" kind="show" identifier="DummySegue6" id="yM4-78-6Ff"/>
+                        <segue destination="EUr-gp-56p" kind="show" identifier="DummySegue42" id="Wdr-IT-JSl"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3yS-ze-xm0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -397,6 +398,98 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0HR-sT-chM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1200.8" y="-1045.7271364317842"/>
+        </scene>
+        <!--AlarmViewController-->
+        <scene sceneID="9gY-eI-c6Y">
+            <objects>
+                <viewController storyboardIdentifier="AlarmViewController" title="AlarmViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="EUr-gp-56p" customClass="AlarmViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TRG-xP-iEg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="nBN-n0-ITE">
+                                <rect key="frame" x="12" y="76" width="351" height="64"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Bb-RE-oYy">
+                                        <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="64" id="Zoh-rv-ooJ"/>
+                                            <constraint firstAttribute="height" constant="64" id="wr2-XI-ZYm"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kEt-qW-gSD">
+                                        <rect key="frame" x="85" y="21.5" width="266" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarm repeating text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yQv-3F-XkJ">
+                                <rect key="frame" x="12" y="152" width="351" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T3N-8M-J3d">
+                                <rect key="frame" x="163" y="184.5" width="51" height="31"/>
+                                <connections>
+                                    <action selector="doneSwitchTapped:" destination="EUr-gp-56p" eventType="valueChanged" id="Lvj-bT-R44"/>
+                                </connections>
+                            </switch>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zi9-zU-qc2">
+                                <rect key="frame" x="12" y="227.5" width="363" height="30"/>
+                                <state key="normal" title="Edit notes"/>
+                                <connections>
+                                    <action selector="editNotesButtonTapped:" destination="EUr-gp-56p" eventType="touchUpInside" id="Va8-uR-tcb"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="N5t-nD-MLr">
+                                <rect key="frame" x="8" y="248" width="355" height="370"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="nBN-n0-ITE" firstAttribute="leading" secondItem="QuU-S3-kWb" secondAttribute="leading" constant="12" id="1lm-ht-MWJ"/>
+                            <constraint firstItem="zi9-zU-qc2" firstAttribute="top" secondItem="T3N-8M-J3d" secondAttribute="bottom" constant="12" id="7WC-ZH-xmJ"/>
+                            <constraint firstItem="zi9-zU-qc2" firstAttribute="leading" secondItem="QuU-S3-kWb" secondAttribute="leading" constant="12" id="8bH-KR-i7N"/>
+                            <constraint firstItem="QuU-S3-kWb" firstAttribute="trailing" secondItem="zi9-zU-qc2" secondAttribute="trailing" id="9tg-lv-L77"/>
+                            <constraint firstItem="QuU-S3-kWb" firstAttribute="bottom" secondItem="N5t-nD-MLr" secondAttribute="bottom" id="FPR-Ol-SMZ"/>
+                            <constraint firstItem="nBN-n0-ITE" firstAttribute="top" secondItem="QuU-S3-kWb" secondAttribute="top" constant="12" id="Fy0-3t-nWg"/>
+                            <constraint firstItem="QuU-S3-kWb" firstAttribute="trailing" secondItem="N5t-nD-MLr" secondAttribute="trailing" constant="12" id="H0b-Ub-PSI"/>
+                            <constraint firstItem="N5t-nD-MLr" firstAttribute="leading" secondItem="QuU-S3-kWb" secondAttribute="leading" constant="8" id="P2w-EJ-fCp"/>
+                            <constraint firstItem="T3N-8M-J3d" firstAttribute="centerX" secondItem="TRG-xP-iEg" secondAttribute="centerX" id="VoD-58-1kU"/>
+                            <constraint firstItem="N5t-nD-MLr" firstAttribute="top" secondItem="zi9-zU-qc2" secondAttribute="baseline" id="Xrq-CU-Ndz"/>
+                            <constraint firstItem="QuU-S3-kWb" firstAttribute="trailing" secondItem="yQv-3F-XkJ" secondAttribute="trailing" constant="12" id="cnB-7A-enc"/>
+                            <constraint firstItem="T3N-8M-J3d" firstAttribute="top" secondItem="yQv-3F-XkJ" secondAttribute="bottom" constant="12" id="dsr-Ub-rOY"/>
+                            <constraint firstItem="yQv-3F-XkJ" firstAttribute="top" secondItem="nBN-n0-ITE" secondAttribute="bottom" constant="12" id="srA-GJ-NKA"/>
+                            <constraint firstItem="yQv-3F-XkJ" firstAttribute="leading" secondItem="QuU-S3-kWb" secondAttribute="leading" constant="12" id="vSG-ea-pAp"/>
+                            <constraint firstItem="QuU-S3-kWb" firstAttribute="trailing" secondItem="yQv-3F-XkJ" secondAttribute="trailing" constant="12" id="yhe-nG-ZGY"/>
+                            <constraint firstItem="QuU-S3-kWb" firstAttribute="trailing" secondItem="nBN-n0-ITE" secondAttribute="trailing" constant="12" id="zir-Jw-co1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="QuU-S3-kWb"/>
+                    </view>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="GhY-RQ-FfX">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="ZiJ-Rh-VXy">
+                            <connections>
+                                <action selector="editAlarmTapped:" destination="EUr-gp-56p" id="Z6o-7q-IFe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="alarmImage" destination="7Bb-RE-oYy" id="DyS-3P-4iE"/>
+                        <outlet property="doneSwitch" destination="T3N-8M-J3d" id="2hx-e5-XxZ"/>
+                        <outlet property="notesTextView" destination="N5t-nD-MLr" id="8gA-wL-wgl"/>
+                        <outlet property="subtitleLabel" destination="yQv-3F-XkJ" id="vu6-zq-opq"/>
+                        <outlet property="titleLabel" destination="kEt-qW-gSD" id="meS-Wh-o5U"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="crv-p7-4Lb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1948" y="-1049.3253373313344"/>
         </scene>
         <!--Goals Table-->
         <scene sceneID="h26-6V-Ng6">

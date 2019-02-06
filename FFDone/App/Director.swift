@@ -38,6 +38,8 @@ enum DirectorRequest {
 
     case createAlarm(Model)
     case editAlarm(Alarm, Model)
+    case editAlarmAndThen(Alarm, Model, (Alarm) -> Void)
+    case viewAlarm(Alarm, Model)
     case scheduleAlarm(Alarm, (String?) -> Void)
     case cancelAlarm(String)
     case setActiveAlarmCount(Int)
@@ -99,7 +101,7 @@ class Director {
         initTab(.alarms,
                 queryResults: Alarm.sectionatedResultsSet(model: model),
                 presenterFn: AlarmsTablePresenter.init) {
-                    [unowned self] alarm in self.request(.editAlarm(alarm!, model))
+                    [unowned self] alarm in self.request(.viewAlarm(alarm!, model))
         }
 
         initTab(.icons,
@@ -201,7 +203,7 @@ extension DirectorRequest {
                                model: model,
                                object: note,
                                presenterFn: NoteEditPresenter.init,
-                               done: { editNote in continuation(editNote) })
+                               done: continuation)
 
         case let .createNote(goal, model):
             DirectorRequest.createNoteAndThen(goal, model, { _ in }).handle(services: services, alarmScheduler: alarmScheduler)
@@ -217,11 +219,19 @@ extension DirectorRequest {
                                  presenterFn: AlarmEditPresenter.init,
                                  done: { _ in })
         case let .editAlarm(alarm, model):
+            DirectorRequest.editAlarmAndThen(alarm, model, { _ in }).handle(services: services, alarmScheduler: alarmScheduler)
+        case let .editAlarmAndThen(alarm, model, continuation):
             services.editThing("AlarmEditViewController",
                                model: model,
                                object: alarm,
                                presenterFn: AlarmEditPresenter.init,
-                               done: { _ in } )
+                               done: continuation)
+
+        case let .viewAlarm(alarm, model):
+            services.viewThing("AlarmViewController",
+                               model: model,
+                               object: alarm,
+                               presenterFn: AlarmViewPresenter.init)
 
         case let .scheduleAlarm(alarm, callback):
             alarmScheduler.scheduleAlarm(text: alarm.notificationText, image: alarm.nativeImage, for: alarm.nextActiveDate, callback: callback)
