@@ -1,4 +1,4 @@
-github "johnfairh/TMLPersistentContainer" ~> 3.0
+github "johnfairh/TMLPersistentContainer" ~> 4.0
 github "jpsim/Yams"
 github "squimer/DatePickerDialog-iOS-Swift"
 github "i-schuetz/PieCharts"
