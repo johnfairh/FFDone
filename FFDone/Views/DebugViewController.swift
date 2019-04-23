@@ -43,4 +43,8 @@ class DebugViewController: PresentableVC<DebugPresenterInterface>, UITextFieldDe
     @IBAction func notificationsButtonTapped(_ sender: UIButton) {
         presenter.showNotifications()
     }
+
+    @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
+        presenter.close()
+    }
 }

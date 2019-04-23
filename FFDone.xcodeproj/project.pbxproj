@@ -74,6 +74,7 @@
 		02D6130E214589EE00BD9BA6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02D6130C214589EE00BD9BA6 /* MainInterface.storyboard */; };
 		02D61312214589EE00BD9BA6 /* FFDoneNF.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02D61304214589EE00BD9BA6 /* FFDoneNF.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		02D613182146BD9400BD9BA6 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D613172146BD9400BD9BA6 /* Strings.swift */; };
+		02F85F18226F589800E34E2C /* LogCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F17226F589800E34E2C /* LogCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -203,6 +204,7 @@
 		02D613172146BD9400BD9BA6 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		02D992E3215CCC3900693F63 /* DataModel-5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-5.xcdatamodel"; sourceTree = "<group>"; };
 		02DA5F2E21AC537B00C88120 /* DataModel-7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-7.xcdatamodel"; sourceTree = "<group>"; };
+		02F85F17226F589800E34E2C /* LogCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,6 +271,7 @@
 				02867EBA211F6323004D3122 /* IconSource.swift */,
 				020825F521246F24007578C7 /* TagList.swift */,
 				02990A70212DB74B00BF1CEC /* AlarmScheduler.swift */,
+				02F85F17226F589800E34E2C /* LogCache.swift */,
 				02D613172146BD9400BD9BA6 /* Strings.swift */,
 			);
 			path = App;
@@ -658,6 +661,7 @@
 				02130A0D210F773A00410451 /* GoalEditViewController.swift in Sources */,
 				02C5870421A714A000DF6C36 /* DatabaseMigration.swift in Sources */,
 				02867EA7211AD3EF004D3122 /* NotesTablePresenter.swift in Sources */,
+				02F85F18226F589800E34E2C /* LogCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

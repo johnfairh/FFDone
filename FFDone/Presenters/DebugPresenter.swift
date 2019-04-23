@@ -28,13 +28,17 @@ protocol DebugPresenterInterface {
 
     /// Issue a custom command
     func doCommand(cmd: String)
+
+    /// Dismiss the debug presenter
+    func close()
 }
 
-class DebugPresenter: Presenter, DebugPresenterInterface, LogBuffer {
+class DebugPresenter: Presenter, DebugPresenterInterface {
     typealias ViewInterfaceType = DebugPresenterInterface
 
     private let model: Model
     private let director: DirectorInterface
+    private let dismiss: PresenterDone<Goal>
 
     private var data: DebugData {
         didSet {
@@ -43,19 +47,27 @@ class DebugPresenter: Presenter, DebugPresenterInterface, LogBuffer {
     }
 
     private var showingLog: Bool
-    private var log: DebugData
 
-    convenience init(director: DirectorInterface, model: Model) {
-        self.init(director: director, model: model, object: nil, mode: .single(.view), dismiss: { _ in })
+    public typealias NulAckPresenterFn<AppDirectorType, PresenterType> =
+        (AppDirectorType, Model, @escaping () -> Void) -> PresenterType
+
+    convenience init(director: DirectorInterface, model: Model, dismiss: @escaping () -> Void) {
+        self.init(director: director, model: model,
+                  object: nil, mode: .single(.create),
+                  dismiss: { _ in dismiss() })
     }
 
     required init(director: DirectorInterface, model: Model, object: ModelResultsSet?, mode: PresenterMode, dismiss: @escaping PresenterDone<Goal>) {
         self.model = model
         self.director = director
-        self.log = DebugData(text: "")
-        self.data = self.log
+        self.dismiss = dismiss
+        self.data = DebugData(text: "")
         self.showingLog = true
-        Log.logBuffer = self
+        director.debugLogCache.notify = { logText in
+            if self.showingLog {
+                self.data.text = logText
+            }
+        }
     }
 
     var refresh: (DebugData) -> Void = { _ in } {
@@ -70,27 +82,20 @@ class DebugPresenter: Presenter, DebugPresenterInterface, LogBuffer {
         }
     }
 
-    /// Record a log line in our buffer, trim if too big, push to UI if selected.
-    func log(line: String) {
-        if log.text.lengthOfBytes(using: .utf8) > 1024 {
-            log = DebugData(text: "")
-        }
-        log.text += "\(Date()) \(line)\n"
-        if showingLog {
-            data = log
-        }
+    func close() {
+        director.debugLogCache.notify = nil
+        dismiss(nil)
     }
 
     /// Clear data
     func clear() {
-        log = DebugData(text: "")
-        data = log
+        director.debugLogCache.log = ""
     }
 
     /// Show the log data
     func showLog() {
         showingLog = true
-        data = log
+        data.text = director.debugLogCache.log
     }
 
     /// Show notifications status

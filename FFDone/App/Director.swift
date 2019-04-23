@@ -43,6 +43,8 @@ enum DirectorRequest {
     case scheduleAlarmAndThen(Alarm, () -> Void)
     case cancelAlarm(String)
     case setActiveAlarmCount(Int)
+
+    case showDebugConsole
 }
 
 protocol DirectorInterface {
@@ -51,28 +53,31 @@ protocol DirectorInterface {
     
     /// What tags are defined?
     var tags: [String] { get }
+
+    /// Query the debug log
+    var debugLogCache: LogCache { get }
 }
 
 // MARK: - Concrete director class
 
 class Director {
-
     enum Tab: Int {
         case home = 0
         case goals = 1
         case notes = 2
         case alarms = 3
         case icons = 4
-//        case debug = 5
     }
 
-    private let alarmScheduler: AlarmScheduler
+    fileprivate let alarmScheduler: AlarmScheduler
     weak var services: TabbedDirectorServices<DirectorInterface>!
-    private var rootModel: Model!
+    fileprivate var rootModel: Model!
     private var tagList: TagList?
+    private var logCache: LogCache
 
     init(alarmScheduler: AlarmScheduler) {
         self.alarmScheduler = alarmScheduler
+        self.logCache = LogCache()
     }
 
     func modelIsReady(model: Model) {
@@ -109,9 +114,6 @@ class Director {
                 presenterFn: IconsTablePresenter.init) {
                     [unowned self] icon in self.request(.editIcon(icon!, model))
         }
-//
-//        initTab(.debug,
-//                presenterFn: DebugPresenter.init)
 
         // Turn on the actual UI replacing the loading screen
         services.presentUI()
@@ -142,10 +144,13 @@ class Director {
 // MARK: - DirectorRequest processing
 
 extension DirectorRequest {
-    func handle(services: TabbedDirectorServices<DirectorInterface>, alarmScheduler: AlarmScheduler) {
+    func handle(director: Director) {
+        let services = director.services!
+        let alarmScheduler = director.alarmScheduler
+
         switch self {
         case let .editGoal(goal, model):
-            DirectorRequest.editGoalAndThen(goal, model, { _ in }).handle(services: services, alarmScheduler: alarmScheduler)
+            DirectorRequest.editGoalAndThen(goal, model, { _ in }).handle(director: director)
         case let .editGoalAndThen(goal, model, continuation):
             services.editThing("GoalEditViewController",
                                model: model,
@@ -197,7 +202,7 @@ extension DirectorRequest {
                                done: continuation)
 
         case let .editNote(note, model):
-            DirectorRequest.editNoteAndThen(note, model, { _ in }).handle(services: services, alarmScheduler: alarmScheduler)
+            DirectorRequest.editNoteAndThen(note, model, { _ in }).handle(director: director)
         case let .editNoteAndThen(note, model, continuation):
             services.editThing("NoteEditViewController",
                                model: model,
@@ -206,7 +211,7 @@ extension DirectorRequest {
                                done: continuation)
 
         case let .createNote(goal, model):
-            DirectorRequest.createNoteAndThen(goal, model, { _ in }).handle(services: services, alarmScheduler: alarmScheduler)
+            DirectorRequest.createNoteAndThen(goal, model, { _ in }).handle(director: director)
         case let .createNoteAndThen(goal, model, continuation):
             services.createThing("NoteEditViewController",
                                  model: model,
@@ -219,7 +224,7 @@ extension DirectorRequest {
                                  presenterFn: AlarmEditPresenter.init,
                                  done: { _ in })
         case let .editAlarm(alarm, model):
-            DirectorRequest.editAlarmAndThen(alarm, model, { _ in }).handle(services: services, alarmScheduler: alarmScheduler)
+            DirectorRequest.editAlarmAndThen(alarm, model, { _ in }).handle(director: director)
         case let .editAlarmAndThen(alarm, model, continuation):
             services.editThing("AlarmEditViewController",
                                model: model,
@@ -248,6 +253,12 @@ extension DirectorRequest {
         case let .setActiveAlarmCount(count):
             services.setTabBadge(tab: Director.Tab.alarms.rawValue, badge: (count == 0) ? nil : String(count))
             alarmScheduler.activeAlarmCount = count
+
+        case .showDebugConsole:
+            services.showModally("DebugViewController",
+                                 model: director.rootModel,
+                                 presenterFn: DebugPresenter.init,
+                                 done: {})
         }
     }
 }
@@ -258,12 +269,17 @@ extension Director: DirectorInterface {
         // We add a fibre break here to avoid very odd behaviours, eg.
         // multi-second delays on selecting a table row.
         Dispatch.toForeground {
-            request.handle(services: self.services, alarmScheduler: self.alarmScheduler)
+            request.handle(director: self)
         }
     }
 
     /// Call from presenter to query list of user-defined goal tags
     var tags: [String] {
         return tagList?.tags ?? []
+    }
+
+    /// Debug log
+    var debugLogCache: LogCache {
+        return logCache
     }
 }

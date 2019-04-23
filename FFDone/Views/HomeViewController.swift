@@ -62,6 +62,10 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         presenter.createAlarm()
     }
     
+    @IBAction func didTapDebug(_ sender: UIButton) {
+        presenter.showDebugConsole()
+    }
+
     func layoutChartOnlyView() {
         guard let safeAreaSize = safeAreaSize else { return }
 
