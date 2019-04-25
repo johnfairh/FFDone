@@ -24,38 +24,59 @@ struct IconSourceError: Error, ExpressibleByStringLiteral { // -> TMLError along
     init(_ text: String)             { self.init(stringLiteral: text) }
 }
 
+/// Type returned by an `IconSource` lookup request.
 typealias IconSourceResult = Result<UIImage, IconSourceError>
 
+/// Callback type for clients that want images.
 typealias IconSourceClient = (IconSourceResult) -> Void
 
+/// Model a service that asynchronously provides images in response to string keys.
 protocol IconSource {
+    /// Human-readable name for the service.
     var name: String { get }
+
+    /// Kick off an async request to fetch an image.
     func findIcon(name: String, client: @escaping IconSourceClient)
+
+    /// Cancel any pending request.
     func cancel()
 }
 
 /// Namespace
 enum IconSourceBuilder {
-    /// Sources
+    /// All sources
+    static private var allSources: [String : IconSource] = [:]
+
+    /// Active sources
     static private(set) var sources: [IconSource] = []
 
-    static func addSource(name: String) {
-        switch name.lowercased() {
-        case "garland": sources.append(GarlandDbIconSource())
-//        case "xivapi": sources.append(XivApiIconSource())
-        default: Log.log("Unknown icon source \(name) - ignoring")
-        }
+    /// Register a named icon source, called by sources at start-of-day
+    static func install(source: IconSource, name: String) {
+        allSources[name.lowercased()] = source
     }
 
+    /// Activate a particular icon source, called at DB config time.
+    static func activateSource(name: String) {
+        guard let source = allSources[name.lowercased()] else {
+            let sourceNames = allSources.keys.joined(separator: ", ")
+            Log.log("Unknown icon source \(name), ignoring.  Have sources: \(sourceNames)")
+            return
+        }
+        sources.append(source)
+    }
+
+    /// Cancel any background activity
     static func cancelAll() {
         sources.forEach { $0.cancel() }
     }
 }
 
+/// Helper class for sources that access icons via http.
 class BaseNetworkIconSource {
+    /// HTTP wrapper
     var fetcher: URLFetcher?
 
-    /// Fulfills `IconSource.cancel()`
+    /// Typically witnesses `IconSource.cancel()`
     func cancel() {
         fetcher?.cancel()
         fetcher = nil
@@ -79,7 +100,6 @@ class BaseNetworkIconSource {
     }
 }
 
-
 fileprivate final class GarlandDbIconSource: BaseNetworkIconSource, IconSource {
     var name: String {
         return "Garland Tools"
@@ -89,6 +109,10 @@ fileprivate final class GarlandDbIconSource: BaseNetworkIconSource, IconSource {
         fetchIcon(at: "https://www.garlandtools.org/files/icons/item/\(name).png", client: client)
     }
 }
+
+private let install: Void = {
+    IconSourceBuilder.install(source: GarlandDbIconSource(), name: "Garland")
+}()
 
 /// REST search model - a REST search interface that we can bash through.
 /// Details of the API not at all abstracted!

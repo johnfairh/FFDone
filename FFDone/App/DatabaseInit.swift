@@ -211,7 +211,7 @@ enum DatabaseObjects {
         let defs = readYaml(file: "DefaultIconSources")
 
         defs.forEach {
-            IconSourceBuilder.addSource(name: $0.str("name"))
+            IconSourceBuilder.activateSource(name: $0.str("name"))
         }
     }
 
