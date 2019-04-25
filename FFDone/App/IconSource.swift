@@ -18,14 +18,8 @@
 
 import TMLPresentation
 
-struct IconSourceError: Error, ExpressibleByStringLiteral { // -> TMLError along with URLFetcher
-    let text: String
-    init(stringLiteral text: String) { self.text = text }
-    init(_ text: String)             { self.init(stringLiteral: text) }
-}
-
 /// Type returned by an `IconSource` lookup request.
-typealias IconSourceResult = Result<UIImage, IconSourceError>
+typealias IconSourceResult = TMLResult<UIImage>
 
 /// Callback type for clients that want images.
 typealias IconSourceClient = (IconSourceResult) -> Void
@@ -42,7 +36,7 @@ protocol IconSource {
     func cancel()
 }
 
-/// Namespace
+/// Namespace to handle the double-sided pub-sub.
 enum IconSourceBuilder {
     /// All sources
     static private var allSources: [String : IconSource] = [:]
@@ -50,13 +44,20 @@ enum IconSourceBuilder {
     /// Active sources
     static private(set) var sources: [IconSource] = []
 
-    /// Register a named icon source, called by sources at start-of-day
+    /// Dumb Swift mechanism to trigger one-time registration
+    static private let sourceOnce: Void = {
+        XivIconSources.install()
+    }()
+
+    /// Register a named icon source, called by sources at start-of-day [in theory]
     static func install(source: IconSource, name: String) {
         allSources[name.lowercased()] = source
     }
 
-    /// Activate a particular icon source, called at DB config time.
+    /// Activate a particular icon source, called at config-file read-time.
     static func activateSource(name: String) {
+        let _ = sourceOnce // one-time registration
+
         guard let source = allSources[name.lowercased()] else {
             let sourceNames = allSources.keys.joined(separator: ", ")
             Log.log("Unknown icon source \(name), ignoring.  Have sources: \(sourceNames)")
@@ -84,18 +85,14 @@ class BaseNetworkIconSource {
 
     /// Helper - get + return an icon at an URL
     func fetchIcon(at urlString: String, client: @escaping IconSourceClient) {
-        fetcher = URLFetcher(url: urlString) { data, error in
-            if let data = data {
+        fetcher = URLFetcher(url: urlString) { result in
+            client(result.flatMap { data in
                 if let image = UIImage(data: data, scale: 1.0) {
-                    client(.success(image))
+                    return .success(image)
                 } else {
-                    client(.failure("Bad image data."))
+                    return .failure("Bad image data.")
                 }
-            } else if let error = error {
-                client(.failure(IconSourceError(error)))
-            } else {
-                Log.fatal("Error missing?")
-            }
+            })
         }
     }
 }
@@ -110,9 +107,11 @@ fileprivate final class GarlandDbIconSource: BaseNetworkIconSource, IconSource {
     }
 }
 
-private let install: Void = {
-    IconSourceBuilder.install(source: GarlandDbIconSource(), name: "Garland")
-}()
+enum XivIconSources {
+    static func install() {
+        IconSourceBuilder.install(source: GarlandDbIconSource(), name: "Garland")
+    }
+}
 
 /// REST search model - a REST search interface that we can bash through.
 /// Details of the API not at all abstracted!
