@@ -18,155 +18,60 @@
 
 import TMLPresentation
 
-/// Properties of an icon source
-struct IconSourceTemplate: CustomStringConvertible {
-    let name: String
-    let isSimple: Bool
-    let urlBase: String
-    let urlExtension: String
-    let isUserName: Bool
+struct IconSourceError: Error, ExpressibleByStringLiteral { // -> TMLError along with URLFetcher
+    let text: String
+    init(stringLiteral text: String) { self.text = text }
+    init(_ text: String)             { self.init(stringLiteral: text) }
+}
 
-    var description: String {
-        return "Template=[\(name) \(isSimple) \(urlBase) \(urlExtension) \(isUserName)"
-    }
+typealias IconSourceResult = Result<UIImage, IconSourceError>
+
+typealias IconSourceClient = (IconSourceResult) -> Void
+
+protocol IconSource {
+    var name: String { get }
+    func findIcon(name: String, client: @escaping IconSourceClient)
+    func cancel()
 }
 
 /// Namespace
 enum IconSourceBuilder {
-    /// Stashed templates
-    static var templates: [IconSourceTemplate] = []
+    /// Sources
+    static private(set) var sources: [IconSource] = []
 
-    /// Add a template, called during app init
-    static func addTemplate(_ template: IconSourceTemplate) {
-        Log.debugLog(template.description)
-        templates.append(template)
-    }
-
-    /// Create and begin management of some UI components as icon sources
-    static func createSources(uiList: [IconSourceUI], delegate: IconSourceDelegate) -> [IconSource] {
-        var sources: [IconSource] = []
-
-        for (index, template) in templates.enumerated() {
-            let ui = uiList[index]
-            if template.isSimple {
-                sources.append(SimpleIconSource(ui: ui, template: template, delegate: delegate))
-            } else {
-                sources.append(RestSearchIconSource(ui: ui, template: template, delegate: delegate))
-            }
+    static func addSource(name: String) {
+        switch name.lowercased() {
+        case "garland": sources.append(GarlandDbIconSource())
+//        case "xivapi": sources.append(XivApiIconSource())
+        default: Log.log("Unknown icon source \(name) - ignoring")
         }
-        
-        return sources
+    }
+
+    static func cancelAll() {
+        sources.forEach { $0.cancel() }
     }
 }
 
-/// Callbacks from icon source to give feedback on the fetch
-protocol IconSourceDelegate: class {
-    func setIconImage(iconSource: IconSource, image: UIImage)
-    func setIconError(iconSource: IconSource, message: String)
-}
-
-/// UI elements to be customized for the icon source
-struct IconSourceUI {
-    weak var label: UILabel!
-    weak var textField: UITextField!
-    weak var button: UIButton!
-}
-
-/// Wrap up the UI for an icon source - text field, button, network stuff.
-///
-/// This is abstract, subclasses go to specific places.
-class IconSource: NSObject, UITextFieldDelegate {
-    private      let ui: IconSourceUI
-                 let template: IconSourceTemplate
-    private weak var delegate: IconSourceDelegate?
-
-    /// Current fetcher, subclasses should use to make cancel work.
+class BaseNetworkIconSource {
     var fetcher: URLFetcher?
 
-    /// API: create at view load, waits for button/textfield enter
-    fileprivate init(ui: IconSourceUI,
-                     template: IconSourceTemplate,
-                     delegate: IconSourceDelegate) {
-        self.ui = ui
-        self.template = template
-        self.delegate = delegate
-        super.init()
-        ui.label.text = template.name
-        ui.button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        ui.textField.delegate = self
-        update()
-    }
-
-    /// Subclass helper - feedback to delegate
-    func delegateImage(_ image: UIImage) {
-        delegate?.setIconImage(iconSource: self, image: image)
-    }
-
-    /// Subclass helper - feedback to delegate
-    func delegateError(_ message: String) {
-        delegate?.setIconError(iconSource: self, message: message)
-    }
-
-    /// API - current text identifying the item
-    var text: String {
-        return ui.textField.text ?? ""
-    }
-
-    /// API - is the identifying text suitable for a icon object name?
-    var textIsSuitableIconName: Bool {
-        return template.isUserName
-    }
-
-    /// Refresh control enable state
-    private func update() {
-        ui.button.isEnabled = !text.isEmpty
-    }
-
-    /// API - cancel any network activity
+    /// Fulfills `IconSource.cancel()`
     func cancel() {
         fetcher?.cancel()
         fetcher = nil
     }
 
-    /// Text field delegate: return key prompts fetch
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if !text.isEmpty {
-            Dispatch.toForeground {
-                self.buttonTapped(self.ui.button)
-            }
-        }
-        textField.resignFirstResponder()
-        return true
-    }
-
-    /// Text field delegate: refresh UI
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        update()
-        return true
-    }
-
-    /// Buttonpress - cancel any active fetch and start a new one
-    @objc func buttonTapped(_ sender: UIButton) {
-        cancel()
-        getIcon()
-    }
-
-    /// Extension point, subclasses override
-    func getIcon() {
-        Log.fatal("Supposed to override this")
-    }
-
-    /// Subclass helper - get + return an icon at an URL
-    func fetchIcon(urlString: String) {
+    /// Helper - get + return an icon at an URL
+    func fetchIcon(at urlString: String, client: @escaping IconSourceClient) {
         fetcher = URLFetcher(url: urlString) { data, error in
             if let data = data {
                 if let image = UIImage(data: data, scale: 1.0) {
-                    self.delegateImage(image)
+                    client(.success(image))
                 } else {
-                    self.delegateError("Bad image data.")
+                    client(.failure("Bad image data."))
                 }
             } else if let error = error {
-                self.delegateError(error)
+                client(.failure(IconSourceError(error)))
             } else {
                 Log.fatal("Error missing?")
             }
@@ -174,62 +79,57 @@ class IconSource: NSObject, UITextFieldDelegate {
     }
 }
 
-/// Helpers for clients dealing with arrays of sources
-extension Array where Element == IconSource {
-    func cancel() {
-        forEach { $0.cancel() }
-    }
-}
 
-/// Simple model - user has to locate the item ID through the web so we can just
-/// plug it directly into the URL.
-///
-private class SimpleIconSource: IconSource {
-    override func getIcon() {
-        fetchIcon(urlString: "\(template.urlBase)\(text)\(template.urlExtension)")
+fileprivate final class GarlandDbIconSource: BaseNetworkIconSource, IconSource {
+    var name: String {
+        return "Garland Tools"
+    }
+
+    func findIcon(name: String, client: @escaping (IconSourceResult) -> Void) {
+        fetchIcon(at: "https://www.garlandtools.org/files/icons/item/\(name).png", client: client)
     }
 }
 
 /// REST search model - a REST search interface that we can bash through.
 /// Details of the API not at all abstracted!
 ///
-private class RestSearchIconSource: IconSource {
-    override func getIcon() {
-        guard let encoded = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-            self.delegateError("Can't encode the text")
-            return
-        }
-        fetcher = URLFetcher(url: "\(template.urlBase)\(encoded)") { data, error in
-            guard self.fetcher != nil else {
-                // user cancelled
-                return
-            }
-
-            if let data = data {
-                self.handleJSON(data: data)
-            } else if let error = error {
-                self.delegateError(error)
-            } else {
-                Log.fatal("Error missing?")
-            }
-        }
-    }
-
-    func handleJSON(data: Data) {
-        do {
-            let object = try JSONSerialization.jsonObject(with: data)
-            guard let topDict = object as? NSDictionary,
-                let itemsDict = topDict["items"] as? NSDictionary,
-                let resultsList = itemsDict["results"] as? NSArray,
-                resultsList.count > 0,
-                let firstResultDict = resultsList[0] as? NSDictionary,
-                let iconUrl = firstResultDict["icon"] as? String else {
-                    delegateError("Unexpected JSON format.")
-                    return
-            }
-            fetchIcon(urlString: iconUrl)
-        } catch {
-            delegateError("Can't decode JSON: \(error)")
-        }
-    }
-}
+//private class RestSearchIconSource: IconSource {
+//    override func getIcon() {
+//        guard let encoded = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+//            self.delegateError("Can't encode the text")
+//            return
+//        }
+//        fetcher = URLFetcher(url: "\(template.urlBase)\(encoded)") { data, error in
+//            guard self.fetcher != nil else {
+//                // user cancelled
+//                return
+//            }
+//
+//            if let data = data {
+//                self.handleJSON(data: data)
+//            } else if let error = error {
+//                self.delegateError(error)
+//            } else {
+//                Log.fatal("Error missing?")
+//            }
+//        }
+//    }
+//
+//    func handleJSON(data: Data) {
+//        do {
+//            let object = try JSONSerialization.jsonObject(with: data)
+//            guard let topDict = object as? NSDictionary,
+//                let itemsDict = topDict["items"] as? NSDictionary,
+//                let resultsList = itemsDict["results"] as? NSArray,
+//                resultsList.count > 0,
+//                let firstResultDict = resultsList[0] as? NSDictionary,
+//                let iconUrl = firstResultDict["icon"] as? String else {
+//                    delegateError("Unexpected JSON format.")
+//                    return
+//            }
+//            fetchIcon(urlString: iconUrl)
+//        } catch {
+//            delegateError("Can't decode JSON: \(error)")
+//        }
+//    }
+//}

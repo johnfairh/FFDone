@@ -210,13 +210,8 @@ enum DatabaseObjects {
     private static func createIconSources() {
         let defs = readYaml(file: "DefaultIconSources")
 
-        defs.forEach { def in
-            let template = IconSourceTemplate(name: def.str("name"),
-                                              isSimple: def.bool("simple"),
-                                              urlBase: def.str("urlBase"),
-                                              urlExtension: def.str("urlExtension"),
-                                              isUserName: def.bool("userName"))
-            IconSourceBuilder.addTemplate(template)
+        defs.forEach {
+            IconSourceBuilder.addSource(name: $0.str("name"))
         }
     }
 

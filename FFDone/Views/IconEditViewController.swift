@@ -9,8 +9,7 @@ import TMLPresentation
 
 /// VC for icon edit
 class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
-                              UITextFieldDelegate,
-                              IconSourceDelegate {
+                              UITextFieldDelegate {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var iconImageView: UIImageView!
 
@@ -27,7 +26,7 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
     @IBOutlet weak var defaultAlarmLabel: UILabel!
     @IBOutlet weak var defaultAlarmSwitch: UISwitch!
 
-    var iconSources: [IconSource]?
+    var iconSourceControllers: [IconSourceViewController] = []
 
     static let unknownIconImage = UIImage(named: "UnknownIcon")
     static let errorIconImage = UIImage(named: "ErrorIcon")
@@ -46,15 +45,27 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
         nameTextField.delegate = self
         iconImageView.enableRoundCorners()
 
-        let firstSourceUI = IconSourceUI(label: firstSourceLabel,
-                                         textField: firstSourceTextField,
-                                         button: firstSourceButton)
-        let secondSourceUI = IconSourceUI(label: secondSourceLabel,
-                                          textField: secondSourceTextField,
-                                          button: secondSourceButton)
+        iconSourceControllers.append(IconSourceViewController(label: firstSourceLabel,
+                                                              textField: firstSourceTextField,
+                                                              button: firstSourceButton))
+        iconSourceControllers.append(IconSourceViewController(label: secondSourceLabel,
+                                                              textField: secondSourceTextField,
+                                                              button: secondSourceButton))
 
-        iconSources = IconSourceBuilder.createSources(uiList: [firstSourceUI, secondSourceUI],
-                                                      delegate: self)
+        zip(iconSourceControllers, IconSourceBuilder.sources).forEach {[unowned self] ui, source in
+            ui.label.text = source.name
+            ui.textEntryCallback = { text in
+                source.cancel()
+                source.findIcon(name: text) { result in
+                    switch result {
+                    case .success(let image):
+                        self.setIconImage(image: image, name: ui.text)
+                    case .failure(let error):
+                        self.setIconError(message: error.text)
+                    }
+                }
+            }
+        }
 
         presenter.refresh = { [unowned self] icon, goalDefault, alarmDefault, canSave in
             self.nameTextField.text = icon.name ?? ""
@@ -72,20 +83,16 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
         firstSourceTextField.becomeFirstResponder()
     }
 
-    // MARK: - IconSourceDelegate interface
+    // MARK: - IconSource completion
 
-    func setIconImage(iconSource: IconSource, image: UIImage) {
+    func setIconImage(image: UIImage, name: String) {
         presenter.setImage(image: image)
         if newIconName.isEmpty {
-            if iconSource.textIsSuitableIconName {
-                presenter.setName(name: iconSource.text)
-            } else {
-                nameTextField.becomeFirstResponder()
-            }
+            presenter.setName(name: name)
         }
     }
 
-    func setIconError(iconSource: IconSource, message: String) {
+    func setIconError(message: String) {
         iconImageView.image = IconEditViewController.errorIconImage
         presenter.clearImage()
         Log.log(message)
@@ -119,11 +126,62 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
     // MARK: - Bar buttons
 
     @IBAction func didTapCancelButton(_ sender: UIBarButtonItem) {
-        iconSources?.cancel()
+        IconSourceBuilder.cancelAll()
         presenter.cancel()
     }
 
     @IBAction func didTapDoneButton(_ sender: UIBarButtonItem) {
+        IconSourceBuilder.cancelAll()
         presenter.save()
+    }
+}
+
+/// Handle one set of icon-fetching UI
+class IconSourceViewController: NSObject, UITextFieldDelegate {
+    weak var label: UILabel!
+    weak var textField: UITextField!
+    weak var button: UIButton!
+    var textEntryCallback: (String) -> Void = { _ in }
+
+    init(label: UILabel, textField: UITextField, button: UIButton) {
+        self.label = label
+        self.textField = textField
+        self.button = button
+        super.init()
+
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        textField.delegate = self
+        update()
+    }
+
+    var text: String {
+        return textField.text ?? ""
+    }
+
+    /// Refresh control enable state
+    private func update() {
+        button.isEnabled = !text.isEmpty
+    }
+
+    /// Text field delegate: return key prompts fetch
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if !text.isEmpty {
+            Dispatch.toForeground {
+                self.buttonTapped(self.button)
+            }
+        }
+        textField.resignFirstResponder()
+        return true
+    }
+
+    /// Text field delegate: refresh UI
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        update()
+        return true
+    }
+
+    /// Buttonpress - cancel any active fetch and start a new one
+    @objc func buttonTapped(_ sender: UIButton) {
+        textEntryCallback(text)
     }
 }
