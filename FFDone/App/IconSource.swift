@@ -5,16 +5,14 @@
 //  Distributed under the MIT license, see LICENSE.
 //
 
-/// This file wraps up the way of getting an art asset 'icon' from
-/// a third party web service.
+/// This is a registry and coordinator for icon sources: typically a
+/// third-party web service that returns a graphic given a string identifier.
 ///
-/// It includes management of the view part, the network requests,
-/// and any processing off the back of the requests needed to get
-/// to a UIImage.
+/// All known sources are initialized once - this is basically free, nothing
+/// happens.
 ///
-/// Details of the services are mostly abstracted into the resource
-/// files; `IconEditViewController` is the main client and has a simple
-/// hard-coded UI layout supporting just two sources.
+/// The icon sources config file says which sources should be activated and
+/// presented to the UI to actually use.
 
 import TMLPresentation
 
@@ -26,8 +24,11 @@ typealias IconSourceClient = (IconSourceResult) -> Void
 
 /// Model a service that asynchronously provides images in response to string keys.
 protocol IconSource {
-    /// Human-readable name for the service.
+    /// Human-readable name for the service, used as a label.
     var name: String { get }
+
+    /// Human-readable name for the service's parameter, used as textfield background.
+    var inputDescription: String { get }
 
     /// Kick off an async request to fetch an image.
     func findIcon(name: String, client: @escaping IconSourceClient)

@@ -54,6 +54,7 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
 
         zip(iconSourceControllers, IconSourceBuilder.sources).forEach {[unowned self] ui, source in
             ui.label.text = source.name
+            ui.textField.placeholder = source.inputDescription
             ui.textEntryCallback = { text in
                 source.cancel()
                 source.findIcon(name: text) { result in
