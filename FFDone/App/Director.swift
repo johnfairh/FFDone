@@ -45,6 +45,7 @@ enum DirectorRequest {
     case setActiveAlarmCount(Int)
 
     case showDebugConsole
+    case showSettings
 }
 
 protocol DirectorInterface {
@@ -255,9 +256,13 @@ extension DirectorRequest {
             alarmScheduler.activeAlarmCount = count
 
         case .showDebugConsole:
-            services.showModally("DebugViewController",
+            services.showNormally("DebugViewController",
+                                  model: director.rootModel,
+                                  presenterFn: DebugPresenter.init)
+        case .showSettings:
+            services.showModally("SettingsViewController",
                                  model: director.rootModel,
-                                 presenterFn: DebugPresenter.init,
+                                 presenterFn: SettingsPresenter.init,
                                  done: {})
         }
     }

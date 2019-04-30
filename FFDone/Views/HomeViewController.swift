@@ -63,7 +63,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
     }
     
     @IBAction func didTapDebug(_ sender: UIButton) {
-        presenter.showDebugConsole()
+        presenter.showSettings()
     }
 
     func layoutChartOnlyView() {

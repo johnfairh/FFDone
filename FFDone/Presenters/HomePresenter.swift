@@ -51,8 +51,8 @@ protocol HomePresenterInterface {
     /// New alarm
     func createAlarm()
 
-    /// Show the debug console
-    func showDebugConsole()
+    /// Show the settings window
+    func showSettings()
 }
 
 class HomePresenter: Presenter, HomePresenterInterface {
@@ -152,7 +152,7 @@ class HomePresenter: Presenter, HomePresenterInterface {
         director.request(.createAlarm(model))
     }
 
-    func showDebugConsole() {
-        director.request(.showDebugConsole)
+    func showSettings() {
+        director.request(.showSettings)
     }
 }

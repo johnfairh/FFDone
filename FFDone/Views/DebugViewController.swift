@@ -25,6 +25,11 @@ class DebugViewController: PresentableVC<DebugPresenterInterface>, UITextFieldDe
         }
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        presenter.close()
+        super.viewWillDisappear(animated)
+    }
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         presenter.doCommand(cmd: textField.text!)
         textField.resignFirstResponder()
@@ -42,9 +47,5 @@ class DebugViewController: PresentableVC<DebugPresenterInterface>, UITextFieldDe
 
     @IBAction func notificationsButtonTapped(_ sender: UIButton) {
         presenter.showNotifications()
-    }
-
-    @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
-        presenter.close()
     }
 }
