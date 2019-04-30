@@ -215,9 +215,17 @@ enum DatabaseObjects {
         }
     }
 
+    /// Create the global epoch we rely on having
+    static func createGlobalEpoch(model: Model) {
+        let epoch = Epoch.createWithDefaults(model: model)
+        epoch.name = "Global" // don't think this appears in the UI
+        Log.assert(epoch.sortOrder == 1)
+    }
+
     /// Entrypoint -- create all the default objects, called only on first run
     static func createOneTime(model: Model, debugMode: Bool) {
         createIcons(model: model)
+        createGlobalEpoch(model: model)
         if debugMode {
             createDebugGoals(model: model)
             model.saveAndWait()

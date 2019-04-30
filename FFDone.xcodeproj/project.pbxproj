@@ -76,6 +76,7 @@
 		02D613182146BD9400BD9BA6 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D613172146BD9400BD9BA6 /* Strings.swift */; };
 		02F85F18226F589800E34E2C /* LogCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F17226F589800E34E2C /* LogCache.swift */; };
 		02F85F1C22720DB800E34E2C /* XivIconSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F1B22720DB800E34E2C /* XivIconSources.swift */; };
+		02F85F642278402E00E34E2C /* Epoch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F632278402E00E34E2C /* Epoch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,6 +208,7 @@
 		02DA5F2E21AC537B00C88120 /* DataModel-7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-7.xcdatamodel"; sourceTree = "<group>"; };
 		02F85F17226F589800E34E2C /* LogCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCache.swift; sourceTree = "<group>"; };
 		02F85F1B22720DB800E34E2C /* XivIconSources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XivIconSources.swift; sourceTree = "<group>"; };
+		02F85F632278402E00E34E2C /* Epoch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Epoch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +260,7 @@
 				02867EA22119ED7D004D3122 /* Note.swift */,
 				02990A67212C682300BF1CEC /* Alarm.swift */,
 				02130A04210CD65F00410451 /* Icon.swift */,
+				02F85F632278402E00E34E2C /* Epoch.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -628,6 +631,7 @@
 				02130A0F210F777400410451 /* GoalEditPresenter.swift in Sources */,
 				0252C977214428CD00DC6D64 /* DebugPresenter.swift in Sources */,
 				02867EAE211C996F004D3122 /* NoteEditViewController.swift in Sources */,
+				02F85F642278402E00E34E2C /* Epoch.swift in Sources */,
 				021309EB210A162500410451 /* Goal.swift in Sources */,
 				02867EB0211C99A9004D3122 /* NoteEditPresenter.swift in Sources */,
 				02990A7521303BEA00BF1CEC /* AlarmEditViewController.swift in Sources */,
