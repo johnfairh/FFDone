@@ -19,9 +19,9 @@
     <entity name="Epoch" representedClassName=".Epoch" syncable="YES" codeGenerationType="class">
         <attribute name="cdEndDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cdStartDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="name" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <fetchIndex name="BySortOrder">
+            <fetchIndexElement property="cdStartDate" type="Binary" order="ascending"/>
             <fetchIndexElement property="sortOrder" type="Binary" order="ascending"/>
         </fetchIndex>
     </entity>
@@ -65,9 +65,9 @@
     </entity>
     <elements>
         <element name="Alarm" positionX="-54" positionY="72" width="128" height="195"/>
+        <element name="Epoch" positionX="-54" positionY="108" width="128" height="90"/>
         <element name="Goal" positionX="-63" positionY="-18" width="128" height="210"/>
         <element name="Icon" positionX="-54" positionY="36" width="128" height="135"/>
         <element name="Note" positionX="-54" positionY="63" width="128" height="150"/>
-        <element name="Epoch" positionX="-54" positionY="108" width="128" height="105"/>
     </elements>
 </model>

@@ -218,7 +218,6 @@ enum DatabaseObjects {
     /// Create the global epoch we rely on having
     static func createGlobalEpoch(model: Model) {
         let epoch = Epoch.createWithDefaults(model: model)
-        epoch.name = "Global" // don't think this appears in the UI
         Log.assert(epoch.sortOrder == 1)
     }
 
