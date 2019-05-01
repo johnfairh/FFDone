@@ -32,9 +32,9 @@ class SettingsPresenter: Presenter, SettingsPresenterInterface {
     private let director: DirectorInterface
     private let dismiss: PresenterDone<Epoch>
 
-    // tmp model
-    private var epochsEnabled = false
-    private var epochDate = Date()
+    // model
+    private let epochResults: ModelResults
+    private var epochWatcher: ModelResultsWatcher<Epoch>?
 
     convenience init(director: DirectorInterface, model: Model, dismiss: @escaping () -> Void) {
         self.init(director: director, model: model,
@@ -46,28 +46,49 @@ class SettingsPresenter: Presenter, SettingsPresenterInterface {
         self.model = model
         self.director = director
         self.dismiss = dismiss
+
+        epochResults = Epoch.createAllResults(model: model)
+        epochResults.issueFetch()
     }
 
     var refresh: (Bool, Date) -> Void = { _, _ in } {
         didSet {
+            epochWatcher = ModelResultsWatcher(modelResults: epochResults) { [weak self] _ in
+                self?.doRefresh()
+            }
             doRefresh()
         }
     }
 
+    private var secondEpoch: Epoch? {
+        guard let epochs = epochResults.fetchedObjects as? [Epoch],
+            epochs.count > 1 else {
+                return nil
+        }
+        return epochs[1]
+    }
+
     func doRefresh() {
-        refresh(epochsEnabled, epochDate)
+        let epoch = secondEpoch
+        let epochDate = epoch?.startDate ?? Date()
+        refresh(epoch != nil, epochDate)
     }
 
     /// Enable/disable multiple epochs
     func enableEpochs(_ flag: Bool) {
-        epochsEnabled = flag
-        doRefresh()
+        if flag {
+            let epoch = Epoch.createWithDefaults(model: model)
+            Log.assert(epoch.sortOrder == 2)
+        } else {
+            secondEpoch!.delete(from: model)
+        }
+        model.save() // -> doRefresh via watcher
     }
 
     /// Set the epoch date
     func setEpochDate(_ date: Date) {
-        epochDate = date
-        doRefresh()
+        secondEpoch!.startDate = date
+        model.save() // -> doRefresh via watcher
     }
 
     /// Request debug window

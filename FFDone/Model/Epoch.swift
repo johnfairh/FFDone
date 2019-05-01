@@ -17,7 +17,7 @@ extension Epoch : ModelObject {
     /// Default properties
     static func createWithDefaults(model: Model) -> Epoch {
         let epoch = create(from: model)
-        epoch.startDate = .distantPast
+        epoch.startDate = Date()
         epoch.endDate = .distantFuture
         epoch.sortOrder = getNextSortOrderValue(primarySortOrder, from: model)
         return epoch

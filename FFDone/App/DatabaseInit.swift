@@ -218,6 +218,7 @@ enum DatabaseObjects {
     /// Create the global epoch we rely on having
     static func createGlobalEpoch(model: Model) {
         let epoch = Epoch.createWithDefaults(model: model)
+        epoch.startDate = .distantPast
         Log.assert(epoch.sortOrder == 1)
     }
 
