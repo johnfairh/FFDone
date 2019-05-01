@@ -206,6 +206,16 @@ enum DatabaseObjects {
         }
     }
 
+    /// Create debug epochs
+    static func createDebugEpochs(model: Model) {
+        let defs = readYaml(file: "DebugEpochs")
+
+        if let def = defs.first {
+            let epoch = Epoch.createWithDefaults(model: model)
+            epoch.startDate = def.date("startDate")
+        }
+    }
+
     /// Create the icon source templates from the yaml file
     private static func createIconSources() {
         let defs = readYaml(file: "DefaultIconSources")
@@ -231,6 +241,7 @@ enum DatabaseObjects {
             model.saveAndWait()
             createDebugNotes(model: model)
             createDebugAlarms(model: model)
+            createDebugEpochs(model: model)
         }
     }
 

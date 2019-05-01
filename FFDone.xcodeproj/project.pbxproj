@@ -79,6 +79,7 @@
 		02F85F642278402E00E34E2C /* Epoch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F632278402E00E34E2C /* Epoch.swift */; };
 		02F85F6622784D2700E34E2C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F6522784D2700E34E2C /* SettingsViewController.swift */; };
 		02F85F6822784D8F00E34E2C /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F6722784D8F00E34E2C /* SettingsPresenter.swift */; };
+		02F85F6A2279BF4C00E34E2C /* DebugEpochs.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02F85F692279BF4C00E34E2C /* DebugEpochs.yaml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -213,6 +214,7 @@
 		02F85F632278402E00E34E2C /* Epoch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Epoch.swift; sourceTree = "<group>"; };
 		02F85F6522784D2700E34E2C /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		02F85F6722784D8F00E34E2C /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
+		02F85F692279BF4C00E34E2C /* DebugEpochs.yaml */ = {isa = PBXFileReference; lastKnownFileType = text; name = DebugEpochs.yaml; path = ../../../FFDoneResources/Resources/DebugEpochs.yaml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,6 +342,7 @@
 				021309FA210B5E7200410451 /* DebugGoals.yaml */,
 				02867EA42119FC17004D3122 /* DebugNotes.yaml */,
 				02990A6D212C7C8B00BF1CEC /* DebugAlarms.yaml */,
+				02F85F692279BF4C00E34E2C /* DebugEpochs.yaml */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -565,6 +568,7 @@
 				02130A03210CD37600410451 /* DefaultIcons.yaml in Resources */,
 				02867EBD211F6398004D3122 /* DefaultIconSources.yaml in Resources */,
 				02867EA52119FC17004D3122 /* DebugNotes.yaml in Resources */,
+				02F85F6A2279BF4C00E34E2C /* DebugEpochs.yaml in Resources */,
 				027F637F2105FF95001C9738 /* LaunchScreen.storyboard in Resources */,
 				027F637C2105FF95001C9738 /* Assets.xcassets in Resources */,
 				027F637A2105FF94001C9738 /* Main.storyboard in Resources */,
