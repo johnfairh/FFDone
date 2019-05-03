@@ -74,8 +74,8 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
             GoalsTableViewController.shared = self
         }
 
-        presenter.registerInvocation() { [weak self] tag in
-            self?.doSearchForTag(tag: tag)
+        presenter.registerInvocation() { [weak self] query in
+            self?.doQueryForTag(query: query)
         }
     }
 
@@ -163,12 +163,16 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
 
     /// API up from `GoalTableCell` to implement the filter-by-tag usecase when a tag
     /// label gets clicked.
-    public func doSearchForTag(tag: String) {
+    func doSearchForTag(tag: String) {
+        doQueryForTag(query: "=\(tag)")
+    }
+
+    func doQueryForTag(query: String) {
         guard let searchController = navigationItem.searchController else {
             Log.fatal("Lost the searchcontroller")
         }
         searchController.isActive = true
-        searchController.searchBar.text = "=\(tag)"
+        searchController.searchBar.text = query
         searchController.searchBar.selectedScopeButtonIndex = GoalsTableSearchType.tag.rawValue
         updateSearchResults()
     }

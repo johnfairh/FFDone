@@ -32,6 +32,17 @@ enum GoalsTableSearchType: Int {
     case tag = 2
 }
 
+/// Packet passed from elsewhere to set the default search
+struct GoalsTableInvocationData {
+    let date: Date
+    let tag: String
+
+    init(from date: Date, tagged tag: String) {
+        self.date = date
+        self.tag = tag
+    }
+}
+
 // MARK: - Presenter
 
 class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTablePresenterInterface {
@@ -164,21 +175,25 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
 
     enum InvocationState {
         case idle
-        case waiting(String)
+        case waiting(GoalsTableInvocationData)
         case ready((String) -> Void)
 
-        mutating func send(tag: String) {
+        mutating func send(data: GoalsTableInvocationData) {
             switch self {
-            case .idle, .waiting(_): self = .waiting(tag)
-            case .ready(let uiFn): uiFn(tag)
+            case .idle, .waiting(_):
+                self = .waiting(data)
+            case .ready(let uiFn):
+                let dateQuery = Goal.queryStringForDate(data.date)
+                uiFn("\(dateQuery) =\(data.tag)")
             }
         }
 
         mutating func register(uiFunc: @escaping (String) -> Void) {
-            if case .waiting(let tag) = self {
-                uiFunc(tag)
-            }
+            let previous = self
             self = .ready(uiFunc)
+            if case .waiting(let data) = previous {
+                send(data: data)
+            }
         }
     }
 
@@ -188,8 +203,8 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
         invocationState.register(uiFunc: uifn)
     }
 
-    func invoke(with data: String) {
-        invocationState.send(tag: data)
+    func invoke(with data: GoalsTableInvocationData) {
+        invocationState.send(data: data)
     }
 }
 

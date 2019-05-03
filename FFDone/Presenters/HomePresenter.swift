@@ -141,7 +141,8 @@ class HomePresenter: Presenter, HomePresenterInterface {
 
     // user clicks tag
     func displayTag(_ tag: String) {
-        director.request(.switchToGoals(tag))
+        let data = GoalsTableInvocationData(from: .distantPast, tagged: tag)
+        director.request(.switchToGoals(data))
     }
 
     func createGoal() {

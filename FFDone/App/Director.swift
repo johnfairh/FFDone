@@ -25,7 +25,7 @@ enum DirectorRequest {
     case dupGoal(Goal, Model)
     case viewGoal(Goal, Model)
 
-    case switchToGoals(String)
+    case switchToGoals(GoalsTableInvocationData)
 
     case createIcon(Model)
     case editIcon(Icon, Model)
@@ -178,9 +178,9 @@ extension DirectorRequest {
                                  presenterFn: GoalEditPresenter.init,
                                  done: { _ in })
 
-        case let .switchToGoals(tag):
+        case let .switchToGoals(data):
             services.animateToTab(tabIndex: Director.Tab.goals.rawValue,
-                                  invocationData: tag as AnyObject)
+                                  invocationData: data as AnyObject)
 
         case let .createIcon(model):
             services.createThing("IconEditViewController",
