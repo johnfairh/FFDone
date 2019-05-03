@@ -90,7 +90,8 @@ class Director {
 
         // set tabs
         initTab(.home,
-                presenterFn: HomePresenter.init)
+                queryResults: Epoch.createAllResultsSet(model: model),
+                presenterFn: HomePagerPresenter.init)
 
         initTab(.goals,
                 queryResults: Goal.allSortedResultsSet(model: model),

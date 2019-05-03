@@ -12,6 +12,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Home-->
+        <scene sceneID="aH7-gj-PYa">
+            <objects>
+                <pageViewController storyboardIdentifier="HomePagerViewController" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="jt9-rc-xhL" customClass="HomePagerViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" image="TabHomeIcon" id="hfY-fg-nzN"/>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jzj-Bp-O7t" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1140" y="1110"/>
+        </scene>
         <!--Loading Screen-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -46,7 +56,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="3i4-tO-qwZ" kind="relationship" relationship="viewControllers" id="elD-F9-E6Y"/>
+                        <segue destination="jt9-rc-xhL" kind="relationship" relationship="viewControllers" id="ySQ-dW-pDz"/>
                         <segue destination="8kL-Rh-YRf" kind="relationship" relationship="viewControllers" id="IQG-lb-fyn"/>
                         <segue destination="Qhz-hz-oV4" kind="relationship" relationship="viewControllers" id="X5m-HC-0Fg"/>
                         <segue destination="uKO-of-IH4" kind="relationship" relationship="viewControllers" id="Bjh-L2-AbT"/>
@@ -1399,7 +1409,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tyj-O4-pqz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1140" y="1110"/>
+            <point key="canvasLocation" x="-1122" y="1881"/>
         </scene>
         <!--NoteEditViewController-->
         <scene sceneID="scj-FJ-rx1">

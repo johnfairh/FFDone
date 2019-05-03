@@ -8,6 +8,13 @@
 import TMLPresentation
 import PieCharts
 
+class HomePagerViewController: PresentablePagerVC<HomePagerPresenter> {
+    public override func viewDidLoad() {
+        pageViewControllerName = "HomeViewController"
+        super.viewDidLoad()
+    }
+}
+
 /// VC for the home screen
 class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegate {
     @IBOutlet weak var pieChartViewTopConstraint: NSLayoutConstraint!

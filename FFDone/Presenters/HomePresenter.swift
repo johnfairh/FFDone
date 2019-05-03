@@ -7,6 +7,28 @@
 
 import TMLPresentation
 
+// MARK: Pager -- the parent class that manages the pages
+
+protocol HomePagerPresenterInterface : PagerPresenterInterface {
+}
+
+final class HomePagerPresenter: PagerPresenter<DirectorInterface, Epoch, HomePresenter>,
+                                Presenter,
+                                HomePagerPresenterInterface {
+    typealias PagePresenter = HomePresenter
+    typealias ViewInterfaceType = HomePagerPresenter//Interface
+
+    init(director: DirectorInterface,
+         model: Model,
+         object: ModelResultsSet?,
+         mode: PresenterMode,
+         dismiss: @escaping PresenterDone<Epoch>) {
+        super.init(director: director, model: model, object: object, mode: mode, pagePresenterFn: HomePresenter.init)
+    }
+}
+
+// MARK: - Home Page -- pie + cloud
+
 // This is a somewhat different screen that takes data inputs from
 // various queries and combines that into a bespoke type `HomeData`
 // that is passed to the UI.
@@ -65,11 +87,11 @@ class HomePresenter: Presenter, HomePresenterInterface {
     private let completeTagsFieldWatcher: ModelFieldWatcher
     private let incompleteTagsFieldWatcher: ModelFieldWatcher
 
-    convenience init(director: DirectorInterface, model: Model) {
-        self.init(director: director, model: model, object: nil, mode: .single(.view), dismiss: { _ in })
-    }
+//    convenience init(director: DirectorInterface, model: Model) {
+//        self.init(director: director, model: model, object: nil, mode: .single(.view), dismiss: { _ in })
+//    }
 
-    required init(director: DirectorInterface, model: Model, object: ModelResultsSet?, mode: PresenterMode, dismiss: @escaping PresenterDone<Goal>) {
+    required init(director: DirectorInterface, model: Model, object: Epoch?, mode: PresenterMode, dismiss: @escaping PresenterDone<Epoch>) {
         self.model = model
         self.director = director
 
