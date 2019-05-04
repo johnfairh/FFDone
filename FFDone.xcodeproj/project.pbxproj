@@ -153,6 +153,7 @@
 		02130A0A210E113600410451 /* IconsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsTableViewController.swift; sourceTree = "<group>"; };
 		02130A0C210F773A00410451 /* GoalEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditViewController.swift; sourceTree = "<group>"; };
 		02130A0E210F777400410451 /* GoalEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditPresenter.swift; sourceTree = "<group>"; };
+		023966D8227DC039000F647E /* DataModel-8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-8.xcdatamodel"; sourceTree = "<group>"; };
 		0252C9742144289B00DC6D64 /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		0252C976214428CD00DC6D64 /* DebugPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPresenter.swift; sourceTree = "<group>"; };
 		0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TMLPresentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1109,6 +1110,7 @@
 		021309E7210A13F700410451 /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				023966D8227DC039000F647E /* DataModel-8.xcdatamodel */,
 				02DA5F2E21AC537B00C88120 /* DataModel-7.xcdatamodel */,
 				02BEE27221A721CB009B8844 /* DataModel-6.xcdatamodel */,
 				02D992E3215CCC3900693F63 /* DataModel-5.xcdatamodel */,
@@ -1117,7 +1119,7 @@
 				02867EAC211C531C004D3122 /* DataModel-2.xcdatamodel */,
 				021309E8210A13F700410451 /* DataModel.xcdatamodel */,
 			);
-			currentVersion = 02DA5F2E21AC537B00C88120 /* DataModel-7.xcdatamodel */;
+			currentVersion = 023966D8227DC039000F647E /* DataModel-8.xcdatamodel */;
 			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
