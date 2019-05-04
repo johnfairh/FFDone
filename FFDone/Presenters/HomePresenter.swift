@@ -7,9 +7,12 @@
 
 import TMLPresentation
 
+// Presenter stack for the home tab.
+
 // MARK: Pager -- the parent class that manages the pages
 
 protocol HomePagerPresenterInterface : PagerPresenterInterface {
+    // XXX drop this when we know there's nothing here.
 }
 
 final class HomePagerPresenter: PagerPresenter<DirectorInterface, Epoch, HomePresenter>,

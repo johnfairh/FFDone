@@ -8,6 +8,9 @@
 import TMLPresentation
 import PieCharts
 
+// Home Screen View Controller stack
+
+/// Pager - provide one home screen page (pie + cloud) per Epoch
 class HomePagerViewController: PresentablePagerVC<HomePagerPresenter> {
     public override func viewDidLoad() {
         pageViewControllerName = "HomeViewController"
@@ -15,7 +18,8 @@ class HomePagerViewController: PresentablePagerVC<HomePagerPresenter> {
     }
 }
 
-/// VC for the home screen
+/// Page - the home screen itself, can be multiple instances embedded in the
+/// `HomePagerViewController`.
 class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegate {
     @IBOutlet weak var pieChartViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var pieChartView: PieChart!
