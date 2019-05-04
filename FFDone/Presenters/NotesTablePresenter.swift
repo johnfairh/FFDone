@@ -104,8 +104,9 @@ class NotesTablePresenter: TablePresenter<DirectorInterface>, Presenter, NotesTa
                 lower = mid
             }
         }
-        Log.log("Finished: index \(upper) value \(sections[upper].name)")
+        let result = max(upper, 0)
+        Log.log("Finished: index \(result) value \(sections[result].name)")
 
-        return upper
+        return result
     }
 }
