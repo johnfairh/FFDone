@@ -123,5 +123,8 @@ enum ColorScheme {
 
         // badges
         UIImage.badgeColor = .text
+
+        // pagecontrol (dots)
+        UIPageControl.appearance().currentPageIndicatorTintColor = .tint
     }
 }
