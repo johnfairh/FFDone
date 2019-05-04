@@ -86,21 +86,24 @@ class HomePresenter: Presenter, HomePresenterInterface {
     private let model: Model
     private let director: DirectorInterface
 
+    private let epoch: Epoch
+
     private let stepsFieldWatcher: ModelFieldWatcher
     private let completeTagsFieldWatcher: ModelFieldWatcher
     private let incompleteTagsFieldWatcher: ModelFieldWatcher
 
-//    convenience init(director: DirectorInterface, model: Model) {
-//        self.init(director: director, model: model, object: nil, mode: .single(.view), dismiss: { _ in })
-//    }
-
     required init(director: DirectorInterface, model: Model, object: Epoch?, mode: PresenterMode, dismiss: @escaping PresenterDone<Epoch>) {
+        Log.assert(mode.isSingleType(.edit))
+        guard let object = object else {
+            Log.fatal("Missing epoch object to HomePresenter!")
+        }
         self.model = model
         self.director = director
+        self.epoch = object
 
-        self.stepsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.stepsSummaryFieldFetchRequest)
-        self.completeTagsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.completeTagsFieldFetchRequest)
-        self.incompleteTagsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.incompleteTagsFieldFetchRequest)
+        self.stepsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.stepsSummaryFieldFetchRequest(in: self.epoch))
+        self.completeTagsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.completeTagsFieldFetchRequest(in: self.epoch))
+        self.incompleteTagsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.incompleteTagsFieldFetchRequest(in: self.epoch))
 
         self.stepsFieldWatcher.callback = { [weak self] results in
             self?.updateStepsQueryResults(results: results)
@@ -166,7 +169,7 @@ class HomePresenter: Presenter, HomePresenterInterface {
 
     // user clicks tag
     func displayTag(_ tag: String) {
-        let data = GoalsTableInvocationData(from: .distantPast, tagged: tag)
+        let data = GoalsTableInvocationData(from: epoch.startDate, tagged: tag)
         director.request(.switchToGoals(data))
     }
 

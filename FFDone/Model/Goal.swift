@@ -398,6 +398,11 @@ extension Goal {
             return nil
         }
         query = parts[2...].joined(separator: " ")
+        return findDateFilterPredicate(date: date)
+    }
+
+    /// Date filtering helper
+    private static func findDateFilterPredicate(date: Date) -> NSPredicate {
         return NSPredicate(format: "\(#keyPath(cdCreationDate)) >= %@", date as NSDate)
     }
 
@@ -441,22 +446,31 @@ extension Goal {
 // MARK: - Tag Queries
 extension Goal {
 
-    private static func createTagsFieldFetchRequest(predicate: NSPredicate? = nil) -> ModelFieldFetchRequest {
-        return createFieldFetchRequest(predicate: predicate, fields: [#keyPath(tag)], unique: true)
+    private static func createTagsFieldFetchRequest(predicate: NSPredicate? = nil, in epoch: Epoch? = nil) -> ModelFieldFetchRequest {
+        var pred = predicate
+        if let predicate = predicate {
+            if let epoch = epoch {
+                let terms = [predicate, findDateFilterPredicate(date: epoch.startDate)]
+                pred = NSCompoundPredicate.init(andPredicateWithSubpredicates: terms)
+            }
+        }
+        return createFieldFetchRequest(predicate: pred, fields: [#keyPath(tag)], unique: true)
     }
 
     static var allTagsFieldFetchRequest: ModelFieldFetchRequest {
         return createTagsFieldFetchRequest()
     }
 
-    static var completeTagsFieldFetchRequest: ModelFieldFetchRequest {
-        let predicate = NSPredicate(format: "\(#keyPath(sectionOrder)) == \(Section.complete.rawValue)")
-        return createTagsFieldFetchRequest(predicate: predicate)
+    /// Tags associated with goals with complated steps - any progress is fine
+    static func completeTagsFieldFetchRequest(in epoch: Epoch) -> ModelFieldFetchRequest {
+        let predicate = NSPredicate(format: "\(#keyPath(cdCurrentSteps)) > 0")
+        return createTagsFieldFetchRequest(predicate: predicate, in: epoch)
     }
 
-    static var incompleteTagsFieldFetchRequest: ModelFieldFetchRequest {
+    /// Tags associated with goals that are incomplete
+    static func incompleteTagsFieldFetchRequest(in epoch: Epoch) -> ModelFieldFetchRequest {
         let predicate = NSPredicate(format: "\(#keyPath(sectionOrder)) != \(Section.complete.rawValue)")
-        return createTagsFieldFetchRequest(predicate: predicate)
+        return createTagsFieldFetchRequest(predicate: predicate, in: epoch)
     }
 
     static func decodeTagsResults(results: ModelFieldResults) -> [String] {
@@ -481,15 +495,16 @@ extension Goal {
         return sumDescription
     }
 
-    /// For the total number of completed and current steps
-    static var stepsSummaryFieldFetchRequest: ModelFieldFetchRequest {
+    /// Find the total number of steps, and how many of those have been done.
+    static func stepsSummaryFieldFetchRequest(in epoch: Epoch) -> ModelFieldFetchRequest {
         let totalSumDescr = getSumExpressionDescription(keyPath: #keyPath(cdTotalSteps),
                                                         sumFieldName: totalSumName)
 
         let currentSumDescr = getSumExpressionDescription(keyPath: #keyPath(cdCurrentSteps),
                                                           sumFieldName: currentSumName)
 
-        return createFieldFetchRequest(fields: [totalSumDescr, currentSumDescr])
+        return createFieldFetchRequest(predicate: findDateFilterPredicate(date: epoch.startDate),
+                                       fields: [totalSumDescr, currentSumDescr])
     }
 
     /// Decode the results when back from the DB
