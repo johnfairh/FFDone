@@ -11,13 +11,9 @@ import TMLPresentation
 
 // MARK: Pager -- the parent class that manages the pages
 
-protocol HomePagerPresenterInterface : PagerPresenterInterface {
-    // XXX drop this when we know there's nothing here.
-}
-
 final class HomePagerPresenter: PagerPresenter<DirectorInterface, Epoch, HomePresenter>,
                                 Presenter,
-                                HomePagerPresenterInterface {
+                                PagerPresenterInterface {
     typealias PagePresenter = HomePresenter
     typealias ViewInterfaceType = HomePagerPresenter//Interface
 
@@ -27,6 +23,15 @@ final class HomePagerPresenter: PagerPresenter<DirectorInterface, Epoch, HomePre
          mode: PresenterMode,
          dismiss: @escaping PresenterDone<Epoch>) {
         super.init(director: director, model: model, object: object, mode: mode, pagePresenterFn: HomePresenter.init)
+    }
+
+    public var pageIndex: Int {
+        get {
+            return director.homePageIndex
+        }
+        set {
+            director.homePageIndex = newValue
+        }
     }
 }
 
