@@ -12,7 +12,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var app: App!
-    var restoreTabIndex: Int?
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -20,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         ImageTransformer.install()
         ColorScheme.globalInit()
-        app = App(window: window!, tabIndex: restoreTabIndex)
+        app = App(window: window!, state: restoredState)
 
         return true
     }
@@ -48,27 +47,68 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-    static let archiveVersion = 1
+    static let latestArchiveVersion = 2
 
-    enum ArchiveKeys: String {
+    enum ArchiveKey: String {
         case FF_ArchiveVersion
         case FF_TabIndex
+        case FF_HomePageIndex
     }
 
+    struct ArchiveState {
+        var tabIndex: Int = 0
+        var homePageIndex: Int = 0
+    }
+
+    struct ArchiveRule<T> {
+        let key: ArchiveKey
+        let fromVersion: Int
+        let keypath: WritableKeyPath<ArchiveState, T>
+        init(_ key: ArchiveKey, _ fromVersion: Int, _ keypath: WritableKeyPath<ArchiveState, T>) {
+            self.key = key
+            self.fromVersion = fromVersion
+            self.keypath = keypath
+        }
+    }
+
+    static let archiveRules = [
+        ArchiveRule(.FF_TabIndex, 1, \.tabIndex),
+        ArchiveRule(.FF_HomePageIndex, 2, \.homePageIndex)
+    ]
+
     func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
-        coder.encode(AppDelegate.archiveVersion, forKey: ArchiveKeys.FF_ArchiveVersion.rawValue)
+        coder.encode(AppDelegate.latestArchiveVersion, key: .FF_ArchiveVersion)
         if let app = app {
-            coder.encode(app.currentTabIndex, forKey: ArchiveKeys.FF_TabIndex.rawValue)
+            let state = app.archiveState
+            AppDelegate.archiveRules.forEach { rule in
+                let value = state[keyPath: rule.keypath]
+                coder.encode(value, key: rule.key)
+            }
         }
         return true
     }
 
+    var restoredState = ArchiveState()
+
     func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
-        let version = coder.decodeInt32(forKey: ArchiveKeys.FF_ArchiveVersion.rawValue)
-        if version == AppDelegate.archiveVersion {
-            restoreTabIndex = Int(coder.decodeInt32(forKey: ArchiveKeys.FF_TabIndex.rawValue))
+        let version = coder.decode(key: .FF_ArchiveVersion)
+
+        AppDelegate.archiveRules.forEach { rule in
+            if version >= rule.fromVersion {
+                let value = coder.decode(key: rule.key)
+                restoredState[keyPath: rule.keypath] = value
+            }
         }
         return false
     }
 }
 
+extension NSCoder {
+    func encode(_ value: Int, key: AppDelegate.ArchiveKey) {
+        encode(value, forKey: key.rawValue)
+    }
+
+    func decode(key: AppDelegate.ArchiveKey) -> Int {
+        return Int(decodeInt32(forKey: key.rawValue))
+    }
+}

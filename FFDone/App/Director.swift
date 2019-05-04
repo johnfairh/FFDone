@@ -57,6 +57,9 @@ protocol DirectorInterface {
 
     /// Query the debug log
     var debugLogCache: LogCache { get }
+
+    /// Save/Restore the home page index [state save empire goes here]
+    var homePageIndex: Int { get set }
 }
 
 // MARK: - Concrete director class
@@ -75,10 +78,12 @@ class Director {
     fileprivate var rootModel: Model!
     private var tagList: TagList?
     private var logCache: LogCache
+    var homePageIndex: Int
 
-    init(alarmScheduler: AlarmScheduler) {
+    init(alarmScheduler: AlarmScheduler, homePageIndex: Int) {
         self.alarmScheduler = alarmScheduler
         self.logCache = LogCache()
+        self.homePageIndex = homePageIndex
     }
 
     func modelIsReady(model: Model) {

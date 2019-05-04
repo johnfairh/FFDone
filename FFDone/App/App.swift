@@ -23,7 +23,7 @@ final class App {
     private let directorServices: TabbedDirectorServices<DirectorInterface>
     private let alarmScheduler: AlarmScheduler
 
-    init(window: UIWindow, tabIndex: Int?) {
+    init(window: UIWindow, state: AppDelegate.ArchiveState) {
         if App.debugMode {
             Log.log("App launching **** IN DEBUG MODE **** RESETTING DATABASE ***")
             Prefs.runBefore = false
@@ -31,11 +31,11 @@ final class App {
 
         modelProvider = ModelProvider(userDbName: "DataModel")
         alarmScheduler = AlarmScheduler()
-        director = Director(alarmScheduler: alarmScheduler)
+        director = Director(alarmScheduler: alarmScheduler, homePageIndex: state.homePageIndex)
         directorServices = TabbedDirectorServices(director: director,
                                                   window: window,
                                                   tabBarVcName: "TabBarViewController",
-                                                  tabIndex: tabIndex)
+                                                  tabIndex: state.tabIndex)
         director.services = directorServices
 
         Log.enableDebugLogs = App.debugMode
@@ -70,6 +70,10 @@ final class App {
         alarmScheduler.willEnterForeground()
     }
 
+    var archiveState: AppDelegate.ArchiveState {
+        return AppDelegate.ArchiveState(tabIndex: directorServices.currentTabIndex,
+                                        homePageIndex: director.homePageIndex)
+    }
     var currentTabIndex: Int {
         return directorServices.currentTabIndex
     }
