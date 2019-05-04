@@ -28,7 +28,9 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
     @IBOutlet weak var tagCloudViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tagCloudViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tagCloudView: TagCloudView!
-
+    @IBOutlet weak var headingImageView: UIImageView!
+    
+    @IBOutlet weak var headingImageViewHeightConstraint: NSLayoutConstraint!
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -84,6 +86,8 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         pieChartViewTopConstraint.constant =
             (safeAreaSize.height - 40 -              // bit more space above
              pieChartView.frame.height) / 2
+
+        headingImageViewHeightConstraint.constant = 100.0
     }
 
     var isTagCloudVisible: Bool {
@@ -107,6 +111,8 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         tagCloudViewHeightConstraint.constant = tagCloudSide
         tagCloudViewTopConstraint.constant =
             pieChartViewTopConstraint.constant + pieChartView.frame.height + tagCloudVMargin
+
+        headingImageViewHeightConstraint.constant = 0
     }
 
     var homeData: HomeData?
@@ -114,6 +120,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
     private func refreshData(_ homeData: HomeData) {
         self.homeData = homeData
+        headingImageView.image = UIImage(named: "EpochHeading_\(presenter.headingImageId)")
 
         recalculateSlices(toDo: homeData.dataForSide(.incomplete).steps,
                           done: homeData.dataForSide(.complete).steps)

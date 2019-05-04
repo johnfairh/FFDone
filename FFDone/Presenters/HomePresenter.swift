@@ -67,6 +67,9 @@ protocol HomePresenterInterface {
     /// Get told about data model changes
     var refresh: (HomeData) -> Void { get set }
 
+    /// Get the heading image ID
+    var headingImageId: Int { get }
+
     /// Drill down into a tag
     func displayTag(_ tag: String)
 
@@ -116,6 +119,10 @@ class HomePresenter: Presenter, HomePresenterInterface {
         self.incompleteTagsFieldWatcher.callback = { [weak self] results in
             self?.updateTags(.incomplete, results: results)
         }
+    }
+
+    var headingImageId: Int {
+        return Int(epoch.sortOrder)
     }
 
     // MARK: - Steps + Tags
