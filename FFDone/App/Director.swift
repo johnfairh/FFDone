@@ -25,7 +25,7 @@ enum DirectorRequest {
     case dupGoal(Goal, Model)
     case viewGoal(Goal, Model)
 
-    case switchToGoals(String)
+    case switchToGoals(GoalsTableInvocationData)
 
     case createIcon(Model)
     case editIcon(Icon, Model)
@@ -45,6 +45,7 @@ enum DirectorRequest {
     case setActiveAlarmCount(Int)
 
     case showDebugConsole
+    case showSettings
 }
 
 protocol DirectorInterface {
@@ -89,7 +90,8 @@ class Director {
 
         // set tabs
         initTab(.home,
-                presenterFn: HomePresenter.init)
+                queryResults: Epoch.createAllResultsSet(model: model),
+                presenterFn: HomePagerPresenter.init)
 
         initTab(.goals,
                 queryResults: Goal.allSortedResultsSet(model: model),
@@ -177,9 +179,9 @@ extension DirectorRequest {
                                  presenterFn: GoalEditPresenter.init,
                                  done: { _ in })
 
-        case let .switchToGoals(tag):
+        case let .switchToGoals(data):
             services.animateToTab(tabIndex: Director.Tab.goals.rawValue,
-                                  invocationData: tag as AnyObject)
+                                  invocationData: data as AnyObject)
 
         case let .createIcon(model):
             services.createThing("IconEditViewController",
@@ -255,9 +257,13 @@ extension DirectorRequest {
             alarmScheduler.activeAlarmCount = count
 
         case .showDebugConsole:
-            services.showModally("DebugViewController",
+            services.showNormally("DebugViewController",
+                                  model: director.rootModel,
+                                  presenterFn: DebugPresenter.init)
+        case .showSettings:
+            services.showModally("SettingsViewController",
                                  model: director.rootModel,
-                                 presenterFn: DebugPresenter.init,
+                                 presenterFn: SettingsPresenter.init,
                                  done: {})
         }
     }

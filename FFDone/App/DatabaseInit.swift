@@ -206,6 +206,16 @@ enum DatabaseObjects {
         }
     }
 
+    /// Create debug epochs
+    static func createDebugEpochs(model: Model) {
+        let defs = readYaml(file: "DebugEpochs")
+
+        if let def = defs.first {
+            let epoch = Epoch.createWithDefaults(model: model)
+            epoch.startDate = def.date("startDate")
+        }
+    }
+
     /// Create the icon source templates from the yaml file
     private static func createIconSources() {
         let defs = readYaml(file: "DefaultIconSources")
@@ -215,14 +225,23 @@ enum DatabaseObjects {
         }
     }
 
+    /// Create the global epoch we rely on having
+    static func createGlobalEpoch(model: Model) {
+        let epoch = Epoch.createWithDefaults(model: model)
+        epoch.startDate = .distantPast
+        Log.assert(epoch.sortOrder == 1)
+    }
+
     /// Entrypoint -- create all the default objects, called only on first run
     static func createOneTime(model: Model, debugMode: Bool) {
         createIcons(model: model)
+        createGlobalEpoch(model: model)
         if debugMode {
             createDebugGoals(model: model)
             model.saveAndWait()
             createDebugNotes(model: model)
             createDebugAlarms(model: model)
+            createDebugEpochs(model: model)
         }
     }
 

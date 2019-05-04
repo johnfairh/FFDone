@@ -29,7 +29,7 @@ protocol DebugPresenterInterface {
     /// Issue a custom command
     func doCommand(cmd: String)
 
-    /// Dismiss the debug presenter
+    /// Going offscreen
     func close()
 }
 
@@ -47,9 +47,6 @@ class DebugPresenter: Presenter, DebugPresenterInterface {
     }
 
     private var showingLog: Bool
-
-    public typealias NulAckPresenterFn<AppDirectorType, PresenterType> =
-        (AppDirectorType, Model, @escaping () -> Void) -> PresenterType
 
     convenience init(director: DirectorInterface, model: Model, dismiss: @escaping () -> Void) {
         self.init(director: director, model: model,
@@ -84,7 +81,6 @@ class DebugPresenter: Presenter, DebugPresenterInterface {
 
     func close() {
         director.debugLogCache.notify = nil
-        dismiss(nil)
     }
 
     /// Clear data

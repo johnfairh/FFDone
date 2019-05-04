@@ -341,14 +341,69 @@ extension Goal {
     static let untaggedPlaceholder = "(untagged)"
 
     /// Predicate to match tag - supports exact with '=' prefix
-    static func getTagMatchPredicate(tag str: String) -> NSPredicate {
-        if str == "=" || str == "=\(untaggedPlaceholder)" {
-            return NSPredicate(format: "\(#keyPath(tag)) == nil")
-        } else if str.first == "=" {
-            return NSPredicate(format: "\(#keyPath(tag)) LIKE[cd] \"\(str.dropFirst())\"")
-        } else {
-            return NSPredicate(format: "\(#keyPath(tag)) CONTAINS[cd] \"\(str)\"")
+    static func getTagMatchPredicate(query: String) -> NSPredicate {
+        var query = query
+        let maybeSincePredicate = findSincePredicate(query: &query)
+        var predicate = findTagTextPredicate(query: query)
+        if let sincePredicate = maybeSincePredicate {
+            predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [sincePredicate, predicate])
         }
+        return predicate
+    }
+
+    static func findTagTextPredicate(query: String) -> NSPredicate {
+        if query == "=" || query == "=\(untaggedPlaceholder)" {
+            return NSPredicate(format: "\(#keyPath(tag)) == nil")
+        } else if query.first == "=" {
+            return NSPredicate(format: "\(#keyPath(tag)) LIKE[cd] \"\(query.dropFirst())\"")
+        } else {
+            return NSPredicate(format: "\(#keyPath(tag)) CONTAINS[cd] \"\(query)\"")
+        }
+    }
+
+    /// Support for @since operator
+    ///
+    /// Sorry about this, MVP to support epochs and home->goal queries via textual
+    /// searchbox.
+    ///
+    /// [@since dd/mm/yyyy ][=][text]
+
+    /// Logic -> Str to construct a text query
+    public static func queryStringForDate(_ date: Date) -> String {
+        return "\(sinceQuerySpec) \(sinceQueryDateFormatter.string(from: date))"
+    }
+
+    private static let sinceQueryDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        formatter.locale = Locale.current
+        return formatter
+    }()
+
+    private static let sinceQuerySpec = "@since "
+
+    /// Str -> Logic consume a query string and return the corresponding predicate.
+    private static func findSincePredicate(query: inout String) -> NSPredicate? {
+        guard query.starts(with: sinceQuerySpec) else {
+            return nil
+        }
+        let parts = query.split(separator: " ")
+        guard parts.count > 1 else {
+            Log.log("Found \(sinceQuerySpec) but no date following: \(query)")
+            return nil
+        }
+        let dateStr = String(parts[1])
+        guard let date = sinceQueryDateFormatter.date(from: dateStr) else {
+            Log.log("Can't make Date from '\(dateStr)': \(query)")
+            return nil
+        }
+        query = parts[2...].joined(separator: " ")
+        return findDateFilterPredicate(date: date)
+    }
+
+    /// Date filtering helper
+    private static func findDateFilterPredicate(date: Date) -> NSPredicate {
+        return NSPredicate(format: "\(#keyPath(cdCreationDate)) >= %@", date as NSDate)
     }
 
     /// Query - search by name
@@ -358,13 +413,13 @@ extension Goal {
 
     /// Query - search by tag
     static func searchByTagSortedResultsSet(model: Model, tag: String) -> ModelResultsSet {
-        return sectionatedResultsSet(model: model, predicate: getTagMatchPredicate(tag: tag))
+        return sectionatedResultsSet(model: model, predicate: getTagMatchPredicate(query: tag))
     }
 
     /// Query - search by either
     static func searchByAnythingSortedResultsSet(model: Model, text: String) -> ModelResultsSet {
         let namePredicate = getNameMatchPredicate(name: text)
-        let tagPredicate = getTagMatchPredicate(tag: text)
+        let tagPredicate = getTagMatchPredicate(query: text)
         let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [namePredicate, tagPredicate])
         return sectionatedResultsSet(model: model, predicate: orPredicate)
     }
@@ -391,22 +446,31 @@ extension Goal {
 // MARK: - Tag Queries
 extension Goal {
 
-    private static func createTagsFieldFetchRequest(predicate: NSPredicate? = nil) -> ModelFieldFetchRequest {
-        return createFieldFetchRequest(predicate: predicate, fields: [#keyPath(tag)], unique: true)
+    private static func createTagsFieldFetchRequest(predicate: NSPredicate? = nil, in epoch: Epoch? = nil) -> ModelFieldFetchRequest {
+        var pred = predicate
+        if let predicate = predicate {
+            if let epoch = epoch {
+                let terms = [predicate, findDateFilterPredicate(date: epoch.startDate)]
+                pred = NSCompoundPredicate.init(andPredicateWithSubpredicates: terms)
+            }
+        }
+        return createFieldFetchRequest(predicate: pred, fields: [#keyPath(tag)], unique: true)
     }
 
     static var allTagsFieldFetchRequest: ModelFieldFetchRequest {
         return createTagsFieldFetchRequest()
     }
 
-    static var completeTagsFieldFetchRequest: ModelFieldFetchRequest {
-        let predicate = NSPredicate(format: "\(#keyPath(sectionOrder)) == \(Section.complete.rawValue)")
-        return createTagsFieldFetchRequest(predicate: predicate)
+    /// Tags associated with goals with complated steps - any progress is fine
+    static func completeTagsFieldFetchRequest(in epoch: Epoch) -> ModelFieldFetchRequest {
+        let predicate = NSPredicate(format: "\(#keyPath(cdCurrentSteps)) > 0")
+        return createTagsFieldFetchRequest(predicate: predicate, in: epoch)
     }
 
-    static var incompleteTagsFieldFetchRequest: ModelFieldFetchRequest {
+    /// Tags associated with goals that are incomplete
+    static func incompleteTagsFieldFetchRequest(in epoch: Epoch) -> ModelFieldFetchRequest {
         let predicate = NSPredicate(format: "\(#keyPath(sectionOrder)) != \(Section.complete.rawValue)")
-        return createTagsFieldFetchRequest(predicate: predicate)
+        return createTagsFieldFetchRequest(predicate: predicate, in: epoch)
     }
 
     static func decodeTagsResults(results: ModelFieldResults) -> [String] {
@@ -431,15 +495,16 @@ extension Goal {
         return sumDescription
     }
 
-    /// For the total number of completed and current steps
-    static var stepsSummaryFieldFetchRequest: ModelFieldFetchRequest {
+    /// Find the total number of steps, and how many of those have been done.
+    static func stepsSummaryFieldFetchRequest(in epoch: Epoch) -> ModelFieldFetchRequest {
         let totalSumDescr = getSumExpressionDescription(keyPath: #keyPath(cdTotalSteps),
                                                         sumFieldName: totalSumName)
 
         let currentSumDescr = getSumExpressionDescription(keyPath: #keyPath(cdCurrentSteps),
                                                           sumFieldName: currentSumName)
 
-        return createFieldFetchRequest(fields: [totalSumDescr, currentSumDescr])
+        return createFieldFetchRequest(predicate: findDateFilterPredicate(date: epoch.startDate),
+                                       fields: [totalSumDescr, currentSumDescr])
     }
 
     /// Decode the results when back from the DB

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18B75" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V7">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V7">
     <entity name="Alarm" representedClassName=".Alarm" syncable="YES" codeGenerationType="class">
         <attribute name="cdNextActiveDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cdType" attributeType="Integer 16" minValueString="0" maxValueString="2" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -14,6 +14,15 @@
         <fetchIndex name="BySectionOrder">
             <fetchIndexElement property="cdNextActiveDate" type="Binary" order="descending"/>
             <fetchIndexElement property="sortOrder" type="Binary" order="descending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="Epoch" representedClassName=".Epoch" syncable="YES" codeGenerationType="class">
+        <attribute name="cdEndDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="cdStartDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <fetchIndex name="BySortOrder">
+            <fetchIndexElement property="cdStartDate" type="Binary" order="ascending"/>
+            <fetchIndexElement property="sortOrder" type="Binary" order="ascending"/>
         </fetchIndex>
     </entity>
     <entity name="Goal" representedClassName=".Goal" syncable="YES" codeGenerationType="class">
@@ -56,6 +65,7 @@
     </entity>
     <elements>
         <element name="Alarm" positionX="-54" positionY="72" width="128" height="195"/>
+        <element name="Epoch" positionX="-54" positionY="108" width="128" height="90"/>
         <element name="Goal" positionX="-63" positionY="-18" width="128" height="210"/>
         <element name="Icon" positionX="-54" positionY="36" width="128" height="135"/>
         <element name="Note" positionX="-54" positionY="63" width="128" height="150"/>

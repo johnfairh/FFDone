@@ -7,6 +7,31 @@
 
 import TMLPresentation
 
+// Presenter stack for the home tab.
+
+// MARK: Pager -- the parent class that manages the pages
+
+protocol HomePagerPresenterInterface : PagerPresenterInterface {
+    // XXX drop this when we know there's nothing here.
+}
+
+final class HomePagerPresenter: PagerPresenter<DirectorInterface, Epoch, HomePresenter>,
+                                Presenter,
+                                HomePagerPresenterInterface {
+    typealias PagePresenter = HomePresenter
+    typealias ViewInterfaceType = HomePagerPresenter//Interface
+
+    init(director: DirectorInterface,
+         model: Model,
+         object: ModelResultsSet?,
+         mode: PresenterMode,
+         dismiss: @escaping PresenterDone<Epoch>) {
+        super.init(director: director, model: model, object: object, mode: mode, pagePresenterFn: HomePresenter.init)
+    }
+}
+
+// MARK: - Home Page -- pie + cloud
+
 // This is a somewhat different screen that takes data inputs from
 // various queries and combines that into a bespoke type `HomeData`
 // that is passed to the UI.
@@ -42,6 +67,9 @@ protocol HomePresenterInterface {
     /// Get told about data model changes
     var refresh: (HomeData) -> Void { get set }
 
+    /// Get the heading image ID
+    var headingImageId: Int { get }
+
     /// Drill down into a tag
     func displayTag(_ tag: String)
 
@@ -51,8 +79,8 @@ protocol HomePresenterInterface {
     /// New alarm
     func createAlarm()
 
-    /// Show the debug console
-    func showDebugConsole()
+    /// Show the settings window
+    func showSettings()
 }
 
 class HomePresenter: Presenter, HomePresenterInterface {
@@ -61,21 +89,24 @@ class HomePresenter: Presenter, HomePresenterInterface {
     private let model: Model
     private let director: DirectorInterface
 
+    private let epoch: Epoch
+
     private let stepsFieldWatcher: ModelFieldWatcher
     private let completeTagsFieldWatcher: ModelFieldWatcher
     private let incompleteTagsFieldWatcher: ModelFieldWatcher
 
-    convenience init(director: DirectorInterface, model: Model) {
-        self.init(director: director, model: model, object: nil, mode: .single(.view), dismiss: { _ in })
-    }
-
-    required init(director: DirectorInterface, model: Model, object: ModelResultsSet?, mode: PresenterMode, dismiss: @escaping PresenterDone<Goal>) {
+    required init(director: DirectorInterface, model: Model, object: Epoch?, mode: PresenterMode, dismiss: @escaping PresenterDone<Epoch>) {
+        Log.assert(mode.isSingleType(.edit))
+        guard let object = object else {
+            Log.fatal("Missing epoch object to HomePresenter!")
+        }
         self.model = model
         self.director = director
+        self.epoch = object
 
-        self.stepsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.stepsSummaryFieldFetchRequest)
-        self.completeTagsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.completeTagsFieldFetchRequest)
-        self.incompleteTagsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.incompleteTagsFieldFetchRequest)
+        self.stepsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.stepsSummaryFieldFetchRequest(in: self.epoch))
+        self.completeTagsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.completeTagsFieldFetchRequest(in: self.epoch))
+        self.incompleteTagsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.incompleteTagsFieldFetchRequest(in: self.epoch))
 
         self.stepsFieldWatcher.callback = { [weak self] results in
             self?.updateStepsQueryResults(results: results)
@@ -88,6 +119,10 @@ class HomePresenter: Presenter, HomePresenterInterface {
         self.incompleteTagsFieldWatcher.callback = { [weak self] results in
             self?.updateTags(.incomplete, results: results)
         }
+    }
+
+    var headingImageId: Int {
+        return Int(epoch.sortOrder)
     }
 
     // MARK: - Steps + Tags
@@ -141,7 +176,8 @@ class HomePresenter: Presenter, HomePresenterInterface {
 
     // user clicks tag
     func displayTag(_ tag: String) {
-        director.request(.switchToGoals(tag))
+        let data = GoalsTableInvocationData(from: epoch.startDate, tagged: tag)
+        director.request(.switchToGoals(data))
     }
 
     func createGoal() {
@@ -152,7 +188,7 @@ class HomePresenter: Presenter, HomePresenterInterface {
         director.request(.createAlarm(model))
     }
 
-    func showDebugConsole() {
-        director.request(.showDebugConsole)
+    func showSettings() {
+        director.request(.showSettings)
     }
 }

@@ -8,7 +8,18 @@
 import TMLPresentation
 import PieCharts
 
-/// VC for the home screen
+// Home Screen View Controller stack
+
+/// Pager - provide one home screen page (pie + cloud) per Epoch
+class HomePagerViewController: PresentablePagerVC<HomePagerPresenter> {
+    public override func viewDidLoad() {
+        pageViewControllerName = "HomeViewController"
+        super.viewDidLoad()
+    }
+}
+
+/// Page - the home screen itself, can be multiple instances embedded in the
+/// `HomePagerViewController`.
 class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegate {
     @IBOutlet weak var pieChartViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var pieChartView: PieChart!
@@ -17,7 +28,9 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
     @IBOutlet weak var tagCloudViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tagCloudViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var tagCloudView: TagCloudView!
-
+    @IBOutlet weak var headingImageView: UIImageView!
+    
+    @IBOutlet weak var headingImageViewHeightConstraint: NSLayoutConstraint!
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,21 +71,32 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         presenter.createGoal()
     }
 
+    @IBAction func didTapHeadingImage(_ sender: UITapGestureRecognizer) {
+        guard sender.view != nil && sender.state == .ended else {
+            return
+        }
+        presenter.showSettings()
+    }
+    
     @IBAction func didTapNewAlarm(_ sender: UIButton) {
         presenter.createAlarm()
     }
     
-    @IBAction func didTapDebug(_ sender: UIButton) {
-        presenter.showDebugConsole()
-    }
-
     func layoutChartOnlyView() {
         guard let safeAreaSize = safeAreaSize else { return }
 
         tagCloudViewHeightConstraint.constant = 0
+
+        let headingImageHeight = CGFloat(100.0) // sure
+        headingImageViewHeightConstraint.constant = headingImageHeight
+
+        let topOfSpaceForPie = headingImageView.frame.origin.y + headingImageHeight
+        let extraBottomPad = CGFloat(40)
+        let allSpaceForPie = safeAreaSize.height - topOfSpaceForPie - extraBottomPad
+        let spaceSurroundingPie = allSpaceForPie - pieChartView.frame.height
+
         pieChartViewTopConstraint.constant =
-            (safeAreaSize.height - 40 -              // bit more space above
-             pieChartView.frame.height) / 2
+            topOfSpaceForPie + (spaceSurroundingPie / 2)
     }
 
     var isTagCloudVisible: Bool {
@@ -96,6 +120,8 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         tagCloudViewHeightConstraint.constant = tagCloudSide
         tagCloudViewTopConstraint.constant =
             pieChartViewTopConstraint.constant + pieChartView.frame.height + tagCloudVMargin
+
+        headingImageViewHeightConstraint.constant = 0
     }
 
     var homeData: HomeData?
@@ -103,6 +129,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
     private func refreshData(_ homeData: HomeData) {
         self.homeData = homeData
+        headingImageView.image = UIImage(named: "EpochHeading_\(presenter.headingImageId)")
 
         recalculateSlices(toDo: homeData.dataForSide(.incomplete).steps,
                           done: homeData.dataForSide(.complete).steps)
@@ -121,8 +148,12 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
             stepsDone = done
         }
 
-        let donePercent = (stepsDone * 100) / (stepsDone + stepsToDo)
-        progressLabel.text = "\(donePercent)%"
+        if stepsToDo > 0 {
+            let donePercent = (stepsDone * 100) / (stepsDone + stepsToDo)
+            progressLabel.text = "\(donePercent)%"
+        } else {
+            progressLabel.text = "DONE"
+        }
 
         pieChartView.clear()
         let oldAnimDuration = pieChartView.animDuration
