@@ -71,23 +71,32 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         presenter.createGoal()
     }
 
+    @IBAction func didTapHeadingImage(_ sender: UITapGestureRecognizer) {
+        guard sender.view != nil && sender.state == .ended else {
+            return
+        }
+        presenter.showSettings()
+    }
+    
     @IBAction func didTapNewAlarm(_ sender: UIButton) {
         presenter.createAlarm()
     }
     
-    @IBAction func didTapDebug(_ sender: UIButton) {
-        presenter.showSettings()
-    }
-
     func layoutChartOnlyView() {
         guard let safeAreaSize = safeAreaSize else { return }
 
         tagCloudViewHeightConstraint.constant = 0
-        pieChartViewTopConstraint.constant =
-            (safeAreaSize.height - 40 -              // bit more space above
-             pieChartView.frame.height) / 2
 
-        headingImageViewHeightConstraint.constant = 100.0
+        let headingImageHeight = CGFloat(100.0) // sure
+        headingImageViewHeightConstraint.constant = headingImageHeight
+
+        let topOfSpaceForPie = headingImageView.frame.origin.y + headingImageHeight
+        let extraBottomPad = CGFloat(40)
+        let allSpaceForPie = safeAreaSize.height - topOfSpaceForPie - extraBottomPad
+        let spaceSurroundingPie = allSpaceForPie - pieChartView.frame.height
+
+        pieChartViewTopConstraint.constant =
+            topOfSpaceForPie + (spaceSurroundingPie / 2)
     }
 
     var isTagCloudVisible: Bool {
@@ -139,8 +148,12 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
             stepsDone = done
         }
 
-        let donePercent = (stepsDone * 100) / (stepsDone + stepsToDo)
-        progressLabel.text = "\(donePercent)%"
+        if stepsToDo > 0 {
+            let donePercent = (stepsDone * 100) / (stepsDone + stepsToDo)
+            progressLabel.text = "\(donePercent)%"
+        } else {
+            progressLabel.text = "DONE"
+        }
 
         pieChartView.clear()
         let oldAnimDuration = pieChartView.animDuration
