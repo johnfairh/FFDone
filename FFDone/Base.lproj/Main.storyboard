@@ -1344,9 +1344,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0yd-DE-IVh" customClass="PieChart" customModule="PieCharts">
                                 <rect key="frame" x="75" y="20" width="225" height="225"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="0yd-DE-IVh" secondAttribute="height" multiplier="1:1" id="maY-d8-VT9"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="iyK-x5-p4Z" appends="YES" id="wi5-Xe-ugp"/>
+                                </connections>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="88%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N8V-Wy-Buw">
                                 <rect key="frame" x="157.5" y="114.5" width="60.5" height="36"/>
@@ -1418,6 +1422,11 @@
                         <action selector="didTapHeadingImage:" destination="3i4-tO-qwZ" id="5R7-jL-N4G"/>
                     </connections>
                 </tapGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="iyK-x5-p4Z">
+                    <connections>
+                        <action selector="didSwipeDownPie:" destination="3i4-tO-qwZ" id="ZOF-go-NTd"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1122" y="1881"/>
         </scene>

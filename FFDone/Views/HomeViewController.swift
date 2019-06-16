@@ -136,6 +136,12 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         updateTagCloud()
     }
 
+    @IBAction func didSwipeDownPie(_ sender: UISwipeGestureRecognizer) {
+        if let selectedSide = selectedSide {
+            pieChartView.slices[selectedSide.rawValue].view.selected = false
+        }
+    }
+
     private func recalculateSlices(toDo: Int, done: Int) {
         let stepsToDo: Int
         let stepsDone: Int
@@ -197,22 +203,31 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
                 self.pieChartView.slices[sliceSide.other.rawValue].view.selected = false
             }
         }
+        if selected {
+            animateOpen(side: sliceSide)
+        } else {
+            animateClosed()
+        }
+    }
+
+    func animateClosed() {
         UIView.animate(withDuration: 0.3, animations: {
-            if !selected {
-                self.selectedSide = nil
-                self.tagCloudView.clearCloudTags()
-                self.layoutChartOnlyView()
-            } else {
-                self.selectedSide = sliceSide
-                if !self.isTagCloudVisible {
-                    self.layoutChartAndTagsView()
-                }
+            self.selectedSide = nil
+            self.tagCloudView.clearCloudTags()
+            self.layoutChartOnlyView()
+            self.view.layoutIfNeeded()
+        })
+    }
+
+    func animateOpen(side: HomeSideType) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.selectedSide = side
+            if !self.isTagCloudVisible {
+                self.layoutChartAndTagsView()
             }
             self.view.layoutIfNeeded()
         }, completion: { _ in
-            if selected {
-                self.updateTagCloud()
-            }
+            self.updateTagCloud()
         })
     }
 
