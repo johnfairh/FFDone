@@ -74,6 +74,7 @@ class AlarmViewPresenter: Presenter, AlarmViewPresenterInterface {
             self.director.request(.scheduleAlarmAndThen(alarm, {
                 self.model.save()
                 self.doRefresh()
+                self.dismissFn(self.alarm)
             }))
         }
     }

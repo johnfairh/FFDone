@@ -37,13 +37,15 @@ extension Alarm: ModelObject {
 extension Alarm {
     enum Kind {
         case oneShot
-        case daily
+        case dailyReset
+        case dailyGc
         case weekly(Int)
 
         var repeatText: String {
             switch self {
             case .oneShot: return "Never"
-            case .daily: return "Daily"
+            case .dailyReset: return "Daily Reset"
+            case .dailyGc: return "Daily GC Reset"
             case .weekly(_): return "Weekly"
             }
         }
@@ -62,19 +64,23 @@ extension Alarm {
             case .oneShot:
                 cdType = 0
                 cdWeekDay = 1
-            case .daily:
+            case .dailyReset:
                 cdType = 1
                 cdWeekDay = 1
             case .weekly(let day):
                 cdType = 2;
                 cdWeekDay = Int16(day)
+            case .dailyGc:
+                cdType = 3;
+                cdWeekDay = 1;
             }
         }
         get {
             switch cdType {
             case 0: return .oneShot
-            case 1: return .daily
+            case 1: return .dailyReset
             case 2: return .weekly(Int(cdWeekDay))
+            case 3: return .dailyGc
             default:
                 // Let's not crash
                 return .oneShot
@@ -151,9 +157,13 @@ extension Alarm {
     var computedNextActiveDate: Date {
         let components: DateComponents
         switch kind {
-        case .daily:
+        case .dailyReset:
             // Daily reset is 3PM GMT (midnight JST but I would get confused about which day it was)
             components = DateComponents(hour: 15, minute: 0)
+            break
+        case .dailyGc:
+            // GC Daily reset is 2000 GMT for some reason
+            components = DateComponents(hour: 20, minute: 0)
             break
         case .weekly(let day):
             // Weekly reset is 8AM GMT, assume that will do
@@ -195,7 +205,7 @@ extension Alarm {
             switch kind {
             case .oneShot:
                 return ""
-            case .daily:
+            case .dailyReset, .dailyGc:
                 return "Repeats daily"
             case .weekly(let day):
                 return "Repeats every \(getWeekdayName(day: day))"
@@ -203,7 +213,7 @@ extension Alarm {
         } else {
             var cap = dueDateString + ", then "
             switch kind {
-            case .daily: cap += "daily"
+            case .dailyReset, .dailyGc: cap += "daily"
             case .weekly(_): cap += "weekly"
             case .oneShot: Log.fatal("Inactive oneshot?")
             }
@@ -214,7 +224,7 @@ extension Alarm {
     var notificationText: String {
         let frequency: String
         switch kind {
-        case .daily:
+        case .dailyReset, .dailyGc:
             frequency = "daily"
         case .weekly(_):
             frequency = "weekly"

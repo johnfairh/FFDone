@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V8">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F203" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="V8">
     <entity name="Alarm" representedClassName=".Alarm" syncable="YES" codeGenerationType="class">
         <attribute name="cdNextActiveDate" attributeType="Date" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="cdType" attributeType="Integer 16" minValueString="0" maxValueString="2" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="cdType" attributeType="Integer 16" minValueString="0" maxValueString="3" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cdWeekDay" attributeType="Integer 16" minValueString="1" maxValueString="7" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="notificationUid" optional="YES" attributeType="String" syncable="YES"/>

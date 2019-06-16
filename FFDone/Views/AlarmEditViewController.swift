@@ -135,7 +135,7 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
         if indexPath.isIconRow {
             presenter.pickIcon()
         } else if indexPath.isRepeatRow {
-            let kinds: [Alarm.Kind] = [.oneShot, .weekly(3), .daily]
+            let kinds: [Alarm.Kind] = [.oneShot, .weekly(3), .dailyReset, .dailyGc]
             let choices = kinds.map { $0.repeatText }
             presentActionSheetChoice(choices: choices, results: kinds) { kind in
                 tableView.deselectRow(at: indexPath, animated: true)
