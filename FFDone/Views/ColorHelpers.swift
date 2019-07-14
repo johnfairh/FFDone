@@ -36,7 +36,7 @@ extension UIColor {
 class DarkModeTextField: UITextField {
     override func awakeFromNib() {
         super.awakeFromNib()
-        setValue(UIColor.darkGray, forKeyPath: "_placeholderLabel.textColor")
+        //setValue(UIColor.darkGray, forKeyPath: "_placeholderLabel.textColor")
     }
 
     override func layoutSubviews() {
