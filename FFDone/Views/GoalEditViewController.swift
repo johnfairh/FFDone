@@ -53,7 +53,7 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
         currentStepsLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapCurrentSteps)))
         totalStepsLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapTotalSteps)))
 
-        presenter.refresh = { [unowned self] goal, isSaveOK in
+        presenter.refresh = { [unowned self] goal, isSaveOK, hasChanges in
             self.nameTextField.text = goal.name
             self.iconImage.image = goal.nativeImage
             self.currentStepsTextField.text = String(goal.currentSteps)
@@ -64,6 +64,10 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
             self.tagTextField.text = goal.tag
             self.doneButton.isEnabled = isSaveOK
             self.refreshRowHeights()
+
+            self.updateSwipeDismiss(changes: hasChanges,
+                                    discard: { self.presenter.cancel() },
+                                    save: { self.presenter.save() })
         }
     }
 

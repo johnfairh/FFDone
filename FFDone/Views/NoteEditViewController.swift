@@ -8,7 +8,7 @@
 import TMLPresentation
 
 /// VC for note edit
-class NoteEditViewController: PresentableVC<NoteEditPresenterInterface> {
+class NoteEditViewController: PresentableVC<NoteEditPresenterInterface>, UITextViewDelegate {
     
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var ownerImageView: UIImageView!
@@ -36,6 +36,7 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface> {
         if textView.text.isEmpty {
             textView.becomeFirstResponder()
         }
+        textView.delegate = self
     }
 
     @IBAction func cancelButtonDidTap(_ sender: UIBarButtonItem) {
@@ -43,11 +44,20 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface> {
     }
 
     @IBAction func doneButtonDidTap(_ sender: UIBarButtonItem) {
+        doSave()
+    }
+
+    private func doSave() {
         presenter.save(text: textView.text)
     }
 
     @IBAction func goalButtonDidTap(_ sender: Any) {
         presenter.showOwner()
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        guardSwipeDismiss(discard: { self.presenter.cancel() },
+                          save: { self.doSave() })
     }
     
     // MARK: - Keyboard dance :-(
