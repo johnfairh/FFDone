@@ -34,7 +34,7 @@ fileprivate final class XivApiIconSource: BaseNetworkIconSource, IconSource {
             return
         }
         let base = "https://xivapi.com/"
-        let searchUrl = "\(base)/search?indexes=Item&string=\(encoded)"
+        let searchUrl = "\(base)search?indexes=Item&string=\(encoded)"
 
         fetcher = URLFetcher(url: searchUrl) { result in
             switch (result.flatMap { data -> TMLResult<String> in
