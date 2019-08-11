@@ -50,7 +50,7 @@ class AlarmEditPresenter: Presenter, AlarmEditPresenterInterface {
     }
 
     func doRefresh() {
-        refresh(alarm, isSaveAllowed, alarm.isActive)
+        refresh(alarm, isSaveAllowed, !alarm.isInserted && alarm.hasChanges)
     }
 
     required init(director: DirectorInterface,
