@@ -68,18 +68,22 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
             }
         }
 
-        presenter.refresh = { [unowned self] icon, goalDefault, alarmDefault, canSave in
-            self.nameTextField.text = icon.name ?? ""
-            if icon.hasImage {
-                self.iconImageView.image = icon.nativeImage
+        presenter.refresh = { [unowned self] m in
+            self.nameTextField.text = m.icon.name ?? ""
+            if m.icon.hasImage {
+                self.iconImageView.image = m.icon.nativeImage
             } else if self.iconImageView.image != IconEditViewController.errorIconImage {
                 self.iconImageView.image = IconEditViewController.unknownIconImage
             }
             if let doneBarButton = self.navigationItem.rightBarButtonItem {
-                doneBarButton.isEnabled = canSave
+                doneBarButton.isEnabled = m.canSave
             }
-            self.defaultGoalSwitch.setOn(goalDefault, animated: false)
-            self.defaultAlarmSwitch.setOn(alarmDefault, animated: false)
+            self.defaultGoalSwitch.setOn(m.isGoalDefault, animated: false)
+            self.defaultAlarmSwitch.setOn(m.isAlarmDefault, animated: false)
+
+            self.updateSwipeDismiss(changes: m.hasChanges,
+                                    discard: { self.presenter.cancel() },
+                                    save: { self.presenter.save() })
         }
         firstSourceTextField.becomeFirstResponder()
     }

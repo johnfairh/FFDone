@@ -8,10 +8,18 @@
 import TMLPresentation
 
 /// Presenter inputs, commands, outputs
+
+struct IconEditViewModel {
+    let icon: Icon
+    let isGoalDefault: Bool
+    let isAlarmDefault: Bool
+    let canSave: Bool
+    let hasChanges: Bool
+}
 protocol IconEditPresenterInterface {
 
     /// Callback to refresh the view
-    var refresh: (Icon, Bool, Bool, Bool) -> () { get set }
+    var refresh: (IconEditViewModel) -> () { get set }
 
     /// Change properties
     func setName(name: String)
@@ -58,14 +66,18 @@ class IconEditPresenter: Presenter, IconEditPresenterInterface {
         isAlarmDefault = icon.isAlarmDefault
     }
 
-    var refresh: (Icon, Bool, Bool, Bool) -> Void = { _, _, _, _ in } {
+    var refresh: (IconEditViewModel) -> Void = { _ in } {
         didSet {
             doRefresh()
         }
     }
 
     private func doRefresh() {
-        refresh(icon, isGoalDefault, isAlarmDefault, isSaveAllowed)
+        refresh(IconEditViewModel(icon: icon,
+                                  isGoalDefault: isGoalDefault,
+                                  isAlarmDefault: isAlarmDefault,
+                                  canSave: isSaveAllowed,
+                                  hasChanges: !icon.isInserted && icon.hasChanges))
     }
 
     private var isSaveAllowed: Bool {
