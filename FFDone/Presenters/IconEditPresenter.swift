@@ -14,7 +14,6 @@ struct IconEditViewModel {
     let isGoalDefault: Bool
     let isAlarmDefault: Bool
     let canSave: Bool
-    let hasChanges: Bool
 }
 protocol IconEditPresenterInterface {
 
@@ -35,7 +34,7 @@ protocol IconEditPresenterInterface {
     func save()
 }
 
-class IconEditPresenter: Presenter, IconEditPresenterInterface {
+class IconEditPresenter: EditablePresenter, IconEditPresenterInterface {
 
     typealias ViewInterfaceType = IconEditPresenterInterface
 
@@ -76,12 +75,15 @@ class IconEditPresenter: Presenter, IconEditPresenterInterface {
         refresh(IconEditViewModel(icon: icon,
                                   isGoalDefault: isGoalDefault,
                                   isAlarmDefault: isAlarmDefault,
-                                  canSave: isSaveAllowed,
-                                  hasChanges: !icon.isInserted && icon.hasChanges))
+                                  canSave: canSave))
     }
 
-    private var isSaveAllowed: Bool {
-        return icon.hasName && icon.hasImage
+    var canSave: Bool {
+        icon.hasName && icon.hasImage
+    }
+
+    var hasChanges: Bool {
+        !icon.isInserted && icon.hasChanges
     }
 
     func setName(name: String) {
@@ -118,7 +120,7 @@ class IconEditPresenter: Presenter, IconEditPresenterInterface {
 
     /// Save changes
     func save() {
-        Log.assert(isSaveAllowed)
+        Log.assert(canSave)
         // These defaults aren't saved in core data so mess around a bit to sync them...
         model.save {
             self.icon.isGoalDefault = self.isGoalDefault

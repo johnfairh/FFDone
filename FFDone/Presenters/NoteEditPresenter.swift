@@ -11,7 +11,7 @@ import TMLPresentation
 protocol NoteEditPresenterInterface {
 
     /// Initial text to edit
-    var text: String { get }
+    var text: String { get set }
 
     /// Date of the note
     var date: String { get }
@@ -29,10 +29,10 @@ protocol NoteEditPresenterInterface {
     func cancel()
 
     /// Save the changes and close the session
-    func save(text: String)
+    func save()
 }
 
-class NoteEditPresenter: Presenter, NoteEditPresenterInterface {
+class NoteEditPresenter: EditablePresenter, NoteEditPresenterInterface {
 
     typealias ViewInterfaceType = NoteEditPresenterInterface
 
@@ -59,7 +59,20 @@ class NoteEditPresenter: Presenter, NoteEditPresenterInterface {
     }
 
     var text: String {
-        return note.text ?? ""
+        get {
+            note.text ?? ""
+        }
+        set {
+            note.text = newValue
+        }
+    }
+
+    var canSave: Bool {
+        true
+    }
+
+    var hasChanges: Bool {
+        !note.isInserted && note.hasChanges
     }
 
     var date: String {
@@ -102,8 +115,7 @@ class NoteEditPresenter: Presenter, NoteEditPresenterInterface {
         dismissFn(nil)
     }
 
-    func save(text: String) {
-        note.text = text
+    func save() {
         model.save {
             self.dismissFn(self.note)
         }

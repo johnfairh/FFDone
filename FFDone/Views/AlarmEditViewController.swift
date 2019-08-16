@@ -56,7 +56,7 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
 
         nameTextField.delegate = self
 
-        presenter.refresh = { [unowned self] alarm, isSaveOK, hasChanges in
+        presenter.refresh = { [unowned self] alarm, isSaveOK in
             self.doneButton.isEnabled = isSaveOK
             self.canEditRepeat = alarm.isActive
             self.nameTextField.text = alarm.name
@@ -68,10 +68,6 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
             }
             self.activeNotesLabel.text = alarm.notes
             self.refreshRowHeights()
-
-            self.updateSwipeDismiss(changes: hasChanges,
-                                    discard: { self.presenter.cancel() },
-                                    save: { self.presenter.save() })
         }
     }
 

@@ -10,8 +10,8 @@ import TMLPresentation
 /// Presenter inputs, commands, outputs
 protocol GoalEditPresenterInterface {
 
-    /// Callback to refresh the view - goal, can save, has changes
-    var refresh: (Goal, Bool, Bool) -> () { get set }
+    /// Callback to refresh the view - goal, can save
+    var refresh: (Goal, Bool) -> () { get set }
 
     /// Should view allow editting of 'current steps'?
     var canEditCurrentSteps: Bool { get }
@@ -44,7 +44,7 @@ protocol GoalEditPresenterInterface {
 
 // MARK: - Presenter
 
-class GoalEditPresenter: Presenter, GoalEditPresenterInterface, GoalNotesTablePresenterDelegate {
+class GoalEditPresenter: EditablePresenter, GoalEditPresenterInterface, GoalNotesTablePresenterDelegate {
 
     typealias ViewInterfaceType = GoalEditPresenterInterface
 
@@ -53,14 +53,14 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface, GoalNotesTablePr
     private let director: DirectorInterface
     private let dismissFn: PresenterDone<Goal>
 
-    var refresh: (Goal, Bool, Bool) -> () = { _, _, _ in } {
+    var refresh: (Goal, Bool) -> () = { _, _ in } {
         didSet {
             doRefresh()
         }
     }
 
     func doRefresh() {
-        refresh(goal, isSaveAllowed, hasChanges)
+        refresh(goal, canSave)
     }
 
     /// For 'create' don't allow the current steps to be editted
@@ -91,7 +91,7 @@ class GoalEditPresenter: Presenter, GoalEditPresenterInterface, GoalNotesTablePr
     }
 
     /// Validation
-    var isSaveAllowed: Bool {
+    var canSave: Bool {
         return goal.name != ""
     }
 

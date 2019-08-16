@@ -80,10 +80,6 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
             }
             self.defaultGoalSwitch.setOn(m.isGoalDefault, animated: false)
             self.defaultAlarmSwitch.setOn(m.isAlarmDefault, animated: false)
-
-            self.updateSwipeDismiss(changes: m.hasChanges,
-                                    discard: { self.presenter.cancel() },
-                                    save: { self.presenter.save() })
         }
         firstSourceTextField.becomeFirstResponder()
     }

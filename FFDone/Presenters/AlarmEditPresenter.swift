@@ -10,7 +10,7 @@ import TMLPresentation
 /// Presenter inputs, commands, outputs
 protocol AlarmEditPresenterInterface {
     /// Callback to refresh the view
-    var refresh: (Alarm, Bool, Bool) -> () { get set }
+    var refresh: (Alarm, Bool) -> () { get set }
 
     /// Properties - will likely cause `refresh` reentrantly
     func setName(name: String)
@@ -34,7 +34,7 @@ protocol AlarmEditPresenterInterface {
 
 // MARK: - Presenter
 
-class AlarmEditPresenter: Presenter, AlarmEditPresenterInterface {
+class AlarmEditPresenter: EditablePresenter, AlarmEditPresenterInterface {
 
     typealias ViewInterfaceType = AlarmEditPresenterInterface
 
@@ -43,14 +43,14 @@ class AlarmEditPresenter: Presenter, AlarmEditPresenterInterface {
     private let director: DirectorInterface
     private let dismissFn: PresenterDone<Alarm>
 
-    var refresh: (Alarm, Bool, Bool) -> () = { _, _, _ in } {
+    var refresh: (Alarm, Bool) -> () = { _, _ in } {
         didSet {
             doRefresh()
         }
     }
 
     func doRefresh() {
-        refresh(alarm, isSaveAllowed, !alarm.isInserted && alarm.hasChanges)
+        refresh(alarm, canSave)
     }
 
     required init(director: DirectorInterface,
@@ -72,8 +72,12 @@ class AlarmEditPresenter: Presenter, AlarmEditPresenterInterface {
     }
 
     /// Validation
-    var isSaveAllowed: Bool {
-        return alarm.text != ""
+    var canSave: Bool {
+        alarm.text != ""
+    }
+
+    var hasChanges: Bool {
+        !alarm.isInserted && alarm.hasChanges
     }
 
     func setName(name: String) {

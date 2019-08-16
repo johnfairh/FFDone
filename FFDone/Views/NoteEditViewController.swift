@@ -48,7 +48,7 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface>, UITextV
     }
 
     private func doSave() {
-        presenter.save(text: textView.text)
+        presenter.save()
     }
 
     @IBAction func goalButtonDidTap(_ sender: Any) {
@@ -56,8 +56,7 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface>, UITextV
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        guardSwipeDismiss(discard: { self.presenter.cancel() },
-                          save: { self.doSave() })
+        presenter.text = textView.text
     }
     
     // MARK: - Keyboard dance :-(
