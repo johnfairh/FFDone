@@ -53,13 +53,16 @@ class GoalEditPresenter: EditablePresenter, GoalEditPresenterInterface, GoalNote
     private let director: DirectorInterface
     private let dismissFn: PresenterDone<Goal>
 
+    public var hasChanges = false
+
     var refresh: (Goal, Bool) -> () = { _, _ in } {
         didSet {
-            doRefresh()
+            refresh(goal, canSave)
         }
     }
 
     func doRefresh() {
+        hasChanges = true
         refresh(goal, canSave)
     }
 
@@ -93,13 +96,6 @@ class GoalEditPresenter: EditablePresenter, GoalEditPresenterInterface, GoalNote
     /// Validation
     var canSave: Bool {
         return goal.name != ""
-    }
-
-    var hasChanges: Bool {
-        if !canEditCurrentSteps {
-            return false
-        }
-        return goal.hasChanges
     }
 
     func setGoalName(name: String) {
@@ -148,7 +144,7 @@ class GoalEditPresenter: EditablePresenter, GoalEditPresenterInterface, GoalNote
 
     /// Let the user add a new note
     func addNote() {
-        director.request(.createNote(goal, model))
+        director.request(.createNoteAndThen(goal, model, { _ in self.doRefresh() }))
     }
 
     /// Callback from nested presenter that a note has been deleted from the table.

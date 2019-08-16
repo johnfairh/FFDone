@@ -160,11 +160,6 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
     // this, but empirically it's what's needed, something to do with the section headers in
     // the embedded table means that it takes two rounds for everything to come out with the
     // right values.  And of course I have no idea what is up with the timed delay.  Argh.
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        refreshRowHeights()
-    }
-
     func refreshRowHeights() {
         Dispatch.toForegroundAfter(milliseconds: 100) {
             self.tableView.beginUpdates()
