@@ -43,13 +43,16 @@ class AlarmEditPresenter: EditablePresenter, AlarmEditPresenterInterface {
     private let director: DirectorInterface
     private let dismissFn: PresenterDone<Alarm>
 
+    public var hasChanges = false
+
     var refresh: (Alarm, Bool) -> () = { _, _ in } {
         didSet {
-            doRefresh()
+            refresh(alarm, canSave)
         }
     }
 
     func doRefresh() {
+        hasChanges = true
         refresh(alarm, canSave)
     }
 
@@ -74,10 +77,6 @@ class AlarmEditPresenter: EditablePresenter, AlarmEditPresenterInterface {
     /// Validation
     var canSave: Bool {
         alarm.text != ""
-    }
-
-    var hasChanges: Bool {
-        !alarm.isInserted && alarm.hasChanges
     }
 
     func setName(name: String) {

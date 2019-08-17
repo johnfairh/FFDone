@@ -83,11 +83,6 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
 
     // MARK: Text stuff
 
-    // Close the keyboard when appropriate, plus listen live for changes
-    // to the fields and update everything, sanitizing the step entries.
-    //
-    // Autocomplete the tag field against existing tags.
-
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -130,7 +125,7 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
             indexPath.isDefaultNotesRow || indexPath.isNotesRow
     }
 
-    /// Trigger the icon picker
+    /// Trigger a picker for things that need to be picked
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.isIconRow {
             presenter.pickIcon()
