@@ -41,6 +41,9 @@ class NoteEditPresenter: EditablePresenter, NoteEditPresenterInterface {
     private let director: DirectorInterface
     private let dismissFn: PresenterDone<Note>
 
+    public let canSave = true
+    public var hasChanges = false
+
     required init(director: DirectorInterface,
                   model: Model,
                   object: Note?,
@@ -64,15 +67,8 @@ class NoteEditPresenter: EditablePresenter, NoteEditPresenterInterface {
         }
         set {
             note.text = newValue
+            hasChanges = true
         }
-    }
-
-    var canSave: Bool {
-        true
-    }
-
-    var hasChanges: Bool {
-        !note.isInserted && note.hasChanges
     }
 
     var date: String {
