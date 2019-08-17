@@ -58,11 +58,6 @@ UITextFieldDelegate {
         }
     }
 
-    public override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        refreshNotesTableHeight()
-    }
-
     // MARK: - Control actions
     
     @IBAction func didChangeMultiStepper(_ sender: UIStepper) {

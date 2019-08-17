@@ -144,7 +144,7 @@ class GoalEditPresenter: EditablePresenter, GoalEditPresenterInterface, GoalNote
 
     /// Let the user add a new note
     func addNote() {
-        director.request(.createNoteAndThen(goal, model, { _ in self.doRefresh() }))
+        director.request(.createNoteAndThen(goal, model, { [unowned self] _ in self.doRefresh() }))
     }
 
     /// Callback from nested presenter that a note has been deleted from the table.
