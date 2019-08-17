@@ -46,6 +46,8 @@ class IconEditPresenter: EditablePresenter, IconEditPresenterInterface {
     private var isGoalDefault: Bool
     private var isAlarmDefault: Bool
 
+    public var hasChanges = false
+
     required init(director: DirectorInterface,
                   model: Model,
                   object: Icon?,
@@ -71,6 +73,11 @@ class IconEditPresenter: EditablePresenter, IconEditPresenterInterface {
         }
     }
 
+    private func modelUpdated() {
+        hasChanges = true
+        doRefresh()
+    }
+
     private func doRefresh() {
         refresh(IconEditViewModel(icon: icon,
                                   isGoalDefault: isGoalDefault,
@@ -82,35 +89,31 @@ class IconEditPresenter: EditablePresenter, IconEditPresenterInterface {
         icon.hasName && icon.hasImage
     }
 
-    var hasChanges: Bool {
-        !icon.isInserted && icon.hasChanges
-    }
-
     func setName(name: String) {
         icon.name = name
-        doRefresh()
+        modelUpdated()
     }
 
     func setImage(image: UIImage) {
         icon.nativeImage = image
-        doRefresh()
+        modelUpdated()
     }
 
     func clearImage() {
         icon.imageData = nil
-        doRefresh()
+        modelUpdated()
     }
 
     // we cheat a bit on this default
 
     func setGoalDefault(value: Bool) {
         isGoalDefault = value
-        doRefresh()
+        modelUpdated()
     }
 
     func setAlarmDefault(value: Bool) {
         isAlarmDefault = value
-        doRefresh()
+        modelUpdated()
     }
 
     /// Discard changes
