@@ -1019,6 +1019,7 @@
 		02D61313214589EE00BD9BA6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D243YH28Y6;
 				INFOPLIST_FILE = FFDoneNF/Info.plist;
@@ -1030,6 +1031,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = tml.FFDone.FFDoneNF;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1039,6 +1041,7 @@
 		02D61314214589EE00BD9BA6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D243YH28Y6;
 				INFOPLIST_FILE = FFDoneNF/Info.plist;
@@ -1050,6 +1053,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = tml.FFDone.FFDoneNF;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
