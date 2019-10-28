@@ -1,5 +1,5 @@
-github "apparition47/DBSphereTagCloudSwift" "c01ab91ecf4f510c5a53386bf1787c110acf32bf"
+github "apparition47/DBSphereTagCloudSwift" "b1d0fe19fac335264822080e2e79be4128e4b4b7"
 github "i-schuetz/PieCharts" "0.0.7"
-github "johnfairh/TMLPersistentContainer" "4.0.0"
+github "johnfairh/TMLPersistentContainer" "4.1.0"
 github "jpsim/Yams" "2.0.0"
-github "squimer/DatePickerDialog-iOS-Swift" "2.0"
+github "squimer/DatePickerDialog-iOS-Swift" "3.0"
