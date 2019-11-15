@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         ImageTransformer.install()
         ColorScheme.globalInit()
-        app = App(window: window!, state: restoredState)
+        app = App()
+        app.createScene(window: window!, state: restoredState)
 
         return true
     }

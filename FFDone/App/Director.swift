@@ -74,22 +74,25 @@ class Director {
     }
 
     fileprivate let alarmScheduler: AlarmScheduler
+    fileprivate let tagList: TagList
     weak var services: TabbedDirectorServices<DirectorInterface>!
     fileprivate var rootModel: Model!
-    private var tagList: TagList?
-    private var logCache: LogCache
+    private let logCache: LogCache
     var homePageIndex: Int
 
-    init(alarmScheduler: AlarmScheduler, homePageIndex: Int) {
+    init(alarmScheduler: AlarmScheduler, tagList: TagList, logCache: LogCache, homePageIndex: Int) {
         self.alarmScheduler = alarmScheduler
-        self.logCache = LogCache()
+        self.tagList = tagList
+        self.logCache = logCache
+
         self.homePageIndex = homePageIndex
+        App.shared.notifyWhenReady { model in
+            self.modelIsReady(model: model)
+        }
     }
 
     func modelIsReady(model: Model) {
         rootModel = model
-        tagList = TagList(model: model)
-        alarmScheduler.modelIsReady(model: model)
 
         Log.log("Director.modelIsReady")
 
@@ -286,7 +289,7 @@ extension Director: DirectorInterface {
 
     /// Call from presenter to query list of user-defined goal tags
     var tags: [String] {
-        return tagList?.tags ?? []
+        return tagList.tags
     }
 
     /// Debug log
