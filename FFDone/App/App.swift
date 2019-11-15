@@ -20,13 +20,11 @@ final class App {
 
     // App-wide shared stuff that we own
     private let modelProvider: ModelProvider
-    private var alarmScheduler: AlarmScheduler!
-    private var tagList: TagList!
-    private var logCache: LogCache
 
-    // UI-specific stuff destined for Scene
-    private var director: Director!
-    private var directorServices: TabbedDirectorServices<DirectorInterface>!
+    // App-wide shared stuff that we publish
+    private(set) var alarmScheduler: AlarmScheduler!
+    private(set) var tagList: TagList!
+    private(set) var logCache: LogCache
 
     /// Model-Ready synchronization
     typealias AppReadyCallback = (Model) -> Void
@@ -71,15 +69,6 @@ final class App {
         modelProvider.load(createFreshStore: App.debugMode, initModelLoaded)
     }
 
-    func createScene(window: UIWindow, state: AppDelegate.ArchiveState) {
-        director = Director(alarmScheduler: alarmScheduler, tagList: tagList, logCache: logCache, homePageIndex: state.homePageIndex)
-        directorServices = TabbedDirectorServices(director: director,
-                                                  window: window,
-                                                  tabBarVcName: "TabBarViewController",
-                                                  tabIndex: state.tabIndex)
-        director.services = directorServices
-    }
-
     func initModelLoaded() {
         Log.log("App.init store loaded")
         guard let model = modelProvider.model else {
@@ -106,13 +95,13 @@ final class App {
         alarmScheduler.willEnterForeground()
     }
 
-    var archiveState: AppDelegate.ArchiveState {
-        return AppDelegate.ArchiveState(tabIndex: directorServices.currentTabIndex,
-                                        homePageIndex: director.homePageIndex)
-    }
-    var currentTabIndex: Int {
-        return directorServices.currentTabIndex
-    }
+//    var archiveState: AppDelegate.ArchiveState {
+//        return AppDelegate.ArchiveState(tabIndex: directorServices.currentTabIndex,
+//                                        homePageIndex: director.homePageIndex)
+//    }
+//    var currentTabIndex: Int {
+//        return directorServices.currentTabIndex
+//    }
     
     // MARK: Shared instance
 
