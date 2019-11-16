@@ -15,16 +15,26 @@ struct AppScene {
     private let director: Director
     private let directorServices: TabbedDirectorServices<DirectorInterface>
 
-    init(window: UIWindow) {
+    struct State {
+        var tabIndex: Int = 0
+        var homePageIndex: Int = 0
+    }
+
+    var state: State {
+        State(tabIndex: directorServices.currentTabIndex,
+              homePageIndex: director.homePageIndex)
+    }
+
+    init(window: UIWindow, state: State) {
         self.window = window
         director = Director(alarmScheduler: App.shared.alarmScheduler,
                             tagList: App.shared.tagList,
                             logCache: App.shared.logCache,
-                            homePageIndex: 0 /*state.homePageIndex*/)
+                            homePageIndex: state.homePageIndex)
         directorServices = TabbedDirectorServices(director: director,
                                                   window: window,
                                                   tabBarVcName: "TabBarViewController",
-                                                  tabIndex: 0/*state.tabIndex*/)
+                                                  tabIndex: state.tabIndex)
         director.services = directorServices
     }
 }
