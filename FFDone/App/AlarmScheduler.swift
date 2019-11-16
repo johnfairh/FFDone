@@ -28,7 +28,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
     private var model: Model?
     private var authorized = false
 
-    override init() {
+    init(app: App) {
         center = UNUserNotificationCenter.current()
         super.init()
 
@@ -49,12 +49,12 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                                               intentIdentifiers: [],
                                               hiddenPreviewsBodyPlaceholder: "%u alarms")
         center.setNotificationCategories([category])
-    }
 
-    /// Called from App when we are ready to go.
-    func modelIsReady(model: Model) {
-        self.model = model.createChildModel(background: true)
-        scan()
+        /// Called from App when we are ready to go.
+        app.notifyWhenReady { model in
+            self.model = model.createChildModel(background: true)
+            self.scan()
+        }
     }
 
     /// Called from App when we are about to come into the foreground having been away for a while

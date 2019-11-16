@@ -18,26 +18,51 @@ final class App {
     static let debugMode = false
     #endif
 
+    // App-wide shared stuff that we own
     private let modelProvider: ModelProvider
-    private let director: Director
-    private let directorServices: TabbedDirectorServices<DirectorInterface>
-    private let alarmScheduler: AlarmScheduler
 
-    init(window: UIWindow, state: AppDelegate.ArchiveState) {
+    // App-wide shared stuff that we publish
+    private(set) var alarmScheduler: AlarmScheduler!
+    private(set) var tagList: TagList!
+    private(set) var logCache: LogCache
+
+    /// Model-Ready synchronization
+    typealias AppReadyCallback = (Model) -> Void
+
+    private var appReadyWaitList: [AppReadyCallback] = []
+
+    func notifyWhenReady(_ callback: @escaping AppReadyCallback) {
+        if appIsReady {
+            Dispatch.toForeground {
+                callback(self.modelProvider.model)
+            }
+        } else {
+            appReadyWaitList.append(callback)
+        }
+    }
+
+    // Perfect for a publisher!
+    private var appIsReady = false {
+        didSet {
+            guard appIsReady else { return }
+            while let next = appReadyWaitList.popLast() {
+                Dispatch.toForeground {
+                    next(self.modelProvider.model)
+                }
+            }
+        }
+    }
+
+    init() {
         if App.debugMode {
             Log.log("App launching **** IN DEBUG MODE **** RESETTING DATABASE ***")
             Prefs.runBefore = false
         }
 
         modelProvider = ModelProvider(userDbName: "DataModel")
-        alarmScheduler = AlarmScheduler()
-        director = Director(alarmScheduler: alarmScheduler, homePageIndex: state.homePageIndex)
-        directorServices = TabbedDirectorServices(director: director,
-                                                  window: window,
-                                                  tabBarVcName: "TabBarViewController",
-                                                  tabIndex: state.tabIndex)
-        director.services = directorServices
-
+        logCache = LogCache()
+        alarmScheduler = AlarmScheduler(app: self)
+        tagList = TagList(app: self)
         Log.enableDebugLogs = App.debugMode
 
         Log.log("App.init loading model and store")
@@ -63,21 +88,13 @@ final class App {
     func initComplete(model: Model) {
         Log.log("App.init complete!")
         Prefs.runBefore = true
-        director.modelIsReady(model: model)
+        appIsReady = true
     }
 
     func willEnterForeground() {
         alarmScheduler.willEnterForeground()
     }
 
-    var archiveState: AppDelegate.ArchiveState {
-        return AppDelegate.ArchiveState(tabIndex: directorServices.currentTabIndex,
-                                        homePageIndex: director.homePageIndex)
-    }
-    var currentTabIndex: Int {
-        return directorServices.currentTabIndex
-    }
-    
     // MARK: Shared instance
 
     static var shared: App {
