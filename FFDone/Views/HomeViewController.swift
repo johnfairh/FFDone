@@ -268,6 +268,7 @@ extension UIButton {
         sizeToFit()
         frame.size.width += 8
         layer.cornerRadius = 6
+        layer.cornerCurve = .continuous
         layer.masksToBounds = true
         return self
     }

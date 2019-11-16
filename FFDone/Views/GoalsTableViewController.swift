@@ -18,6 +18,7 @@ class GoalCell: UITableViewCell, TableCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         customTagTextLabel?.backgroundColor = .tagBubble
+        customTagTextLabel?.layer.cornerCurve = .continuous
         customTagTextLabel?.layer.cornerRadius = 6
         customTagTextLabel?.layer.masksToBounds = true
         customTagTextLabel?.isUserInteractionEnabled = true
