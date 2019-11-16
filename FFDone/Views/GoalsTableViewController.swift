@@ -33,7 +33,14 @@ class GoalCell: UITableViewCell, TableCell {
     }
 
     @IBAction func didTapTagTextLabel(_ sender: UIGestureRecognizer) {
-        GoalsTableViewController.shared?.doSearchForTag(tag: tagText)
+        var responder: UIResponder? = self
+        while responder != nil {
+            if let table = responder as? GoalsTableViewController {
+                table.doSearchForTag(tag: tagText)
+                return
+            }
+            responder = responder!.next
+        }
     }
 
     func configure(_ goal: Goal) {
@@ -53,9 +60,6 @@ class GoalCell: UITableViewCell, TableCell {
 class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
     TableModelDelegate {
 
-    /// Slight hack to locate this VC from a cell...
-    fileprivate static var shared: GoalsTableViewController?
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setFlatTableColors()
@@ -70,10 +74,6 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         }
         enablePullToCreate()
         navigationItem.leftBarButtonItem = nil
-
-        if GoalsTableViewController.shared == nil {
-            GoalsTableViewController.shared = self
-        }
 
         presenter.registerInvocation() { [weak self] query in
             self?.doQueryForTag(query: query)
