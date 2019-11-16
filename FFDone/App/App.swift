@@ -95,14 +95,6 @@ final class App {
         alarmScheduler.willEnterForeground()
     }
 
-//    var archiveState: AppDelegate.ArchiveState {
-//        return AppDelegate.ArchiveState(tabIndex: directorServices.currentTabIndex,
-//                                        homePageIndex: director.homePageIndex)
-//    }
-//    var currentTabIndex: Int {
-//        return directorServices.currentTabIndex
-//    }
-    
     // MARK: Shared instance
 
     static var shared: App {

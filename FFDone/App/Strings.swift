@@ -18,12 +18,6 @@ enum Strings {
         static let stateRestoration = "com.tml.ffdone.activity.StateRestoration"
     }
 
-    enum StateRestorationKey: String {
-        case version
-        case tabIndex
-        case homePageIndex
-    }
-
     enum Color {
         static let text = "TextColour" // off-white
         static let tint = "TintColour" // FF gold
