@@ -42,8 +42,8 @@ class NotesTablePresenter: TablePresenter<DirectorInterface>, Presenter, NotesTa
     // MARK: - Search
 
     func updateSearchResults(text: String) {
-        handleSearchUpdate(text: text, type: 0) { text, typeInt in
-            return Note.searchByTextSortedResultsSet(model: self.model, str: text)
+        handleSearchUpdate(text: text) {
+            Note.searchByTextSortedResultsSet(model: self.model, str: text)
         }
     }
 

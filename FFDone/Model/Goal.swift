@@ -326,7 +326,7 @@ extension Goal {
 
     /// For the main goals view -- all goals.
     static func allSortedResultsSet(model: Model) -> ModelResultsSet {
-        return sectionatedResultsSet(model: model, predicate: nil)
+        sectionatedResultsSet(model: model, predicate: nil)
     }
 
     // To do searching we need various different queries depending on the
@@ -334,7 +334,7 @@ extension Goal {
 
     /// Predicate to match goal name - contains
     static func getNameMatchPredicate(name str: String) -> NSPredicate {
-        return NSPredicate(format: "\(#keyPath(name)) CONTAINS[cd] \"\(str)\"")
+        NSPredicate(format: "\(#keyPath(name)) CONTAINS[cd] \"\(str)\"")
     }
 
     /// Magic string we use to represent the set of goals without a tag
@@ -342,16 +342,6 @@ extension Goal {
 
     /// Predicate to match tag - supports exact with '=' prefix
     static func getTagMatchPredicate(query: String) -> NSPredicate {
-        var query = query
-        let maybeSincePredicate = findSincePredicate(query: &query)
-        var predicate = findTagTextPredicate(query: query)
-        if let sincePredicate = maybeSincePredicate {
-            predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [sincePredicate, predicate])
-        }
-        return predicate
-    }
-
-    static func findTagTextPredicate(query: String) -> NSPredicate {
         if query == "=" || query == "=\(untaggedPlaceholder)" {
             return NSPredicate(format: "\(#keyPath(tag)) == nil")
         } else if query.first == "=" {
@@ -361,16 +351,8 @@ extension Goal {
         }
     }
 
-    /// Support for @since operator
-    ///
-    /// Sorry about this, MVP to support epochs and home->goal queries via textual
-    /// searchbox.
-    ///
-    /// [@since dd/mm/yyyy ][=][text]
-
-    /// Logic -> Str to construct a text query
-    public static func queryStringForDate(_ date: Date) -> String {
-        return "\(sinceQuerySpec) \(sinceQueryDateFormatter.string(from: date))"
+    public static func queryStringForExactTag(_ tag: String) -> String {
+        return "=\(tag)"
     }
 
     private static let sinceQueryDateFormatter: DateFormatter = {
@@ -380,48 +362,38 @@ extension Goal {
         return formatter
     }()
 
-    private static let sinceQuerySpec = "@since "
+    /// Date filtering helpers
 
-    /// Str -> Logic consume a query string and return the corresponding predicate.
-    private static func findSincePredicate(query: inout String) -> NSPredicate? {
-        guard query.starts(with: sinceQuerySpec) else {
-            return nil
-        }
-        let parts = query.split(separator: " ")
-        guard parts.count > 1 else {
-            Log.log("Found \(sinceQuerySpec) but no date following: \(query)")
-            return nil
-        }
-        let dateStr = String(parts[1])
-        guard let date = sinceQueryDateFormatter.date(from: dateStr) else {
-            Log.log("Can't make Date from '\(dateStr)': \(query)")
-            return nil
-        }
-        query = parts[2...].joined(separator: " ")
-        return findDateFilterPredicate(date: date)
+    private static func findDateFilterPredicate(date: Date) -> NSPredicate {
+        NSPredicate(format: "\(#keyPath(cdCreationDate)) >= %@", date as NSDate)
     }
 
-    /// Date filtering helper
-    private static func findDateFilterPredicate(date: Date) -> NSPredicate {
-        return NSPredicate(format: "\(#keyPath(cdCreationDate)) >= %@", date as NSDate)
+    private static func filter(predicate: NSPredicate, by date: Date?) -> NSPredicate {
+        guard let date = date else {
+            return predicate
+        }
+        let datePredicate = findDateFilterPredicate(date: date)
+        return NSCompoundPredicate(andPredicateWithSubpredicates: [datePredicate, predicate])
     }
 
     /// Query - search by name
-    static func searchByNameSortedResultsSet(model: Model, name: String) -> ModelResultsSet {
-        return sectionatedResultsSet(model: model, predicate: getNameMatchPredicate(name: name))
+    static func searchByNameSortedResultsSet(model: Model, date: Date?, name: String) -> ModelResultsSet {
+        sectionatedResultsSet(model: model,
+                              predicate: filter(predicate: getNameMatchPredicate(name: name), by: date))
     }
 
     /// Query - search by tag
-    static func searchByTagSortedResultsSet(model: Model, tag: String) -> ModelResultsSet {
-        return sectionatedResultsSet(model: model, predicate: getTagMatchPredicate(query: tag))
+    static func searchByTagSortedResultsSet(model: Model, date: Date?, tag: String) -> ModelResultsSet {
+        sectionatedResultsSet(model: model,
+                              predicate: filter(predicate: getTagMatchPredicate(query: tag), by: date))
     }
 
     /// Query - search by either
-    static func searchByAnythingSortedResultsSet(model: Model, text: String) -> ModelResultsSet {
+    static func searchByAnythingSortedResultsSet(model: Model, date: Date?, text: String) -> ModelResultsSet {
         let namePredicate = getNameMatchPredicate(name: text)
         let tagPredicate = getTagMatchPredicate(query: text)
         let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [namePredicate, tagPredicate])
-        return sectionatedResultsSet(model: model, predicate: orPredicate)
+        return sectionatedResultsSet(model: model, predicate: filter(predicate: orPredicate, by: date))
     }
 
     /// Carefully sorted order to drive main table
@@ -458,7 +430,7 @@ extension Goal {
     }
 
     static var allTagsFieldFetchRequest: ModelFieldFetchRequest {
-        return createTagsFieldFetchRequest()
+        createTagsFieldFetchRequest()
     }
 
     /// Tags associated with goals with complated steps - any progress is fine
@@ -474,7 +446,7 @@ extension Goal {
     }
 
     static func decodeTagsResults(results: ModelFieldResults) -> [String] {
-        return results.compactMap { ($0.values.first as? String) ?? untaggedPlaceholder }
+        results.compactMap { ($0.values.first as? String) ?? untaggedPlaceholder }
     }
 }
 

@@ -22,7 +22,9 @@ protocol GoalsTablePresenterInterface: TablePresenterInterface {
     func swipeActionForGoal(_ goal: Goal) -> TableSwipeAction?
 
     var tags: [String] { get }
-    func updateSearchResults(text: String, type: GoalsTableSearchType)
+    func updateSearchResults(date: Date?, text: String, type: GoalsTableSearchType)
+
+    var invokeSearch: (GoalsTableInvocationData) -> Void { get set }
 }
 
 /// What is being searched for
@@ -154,15 +156,15 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
         return director.tags
     }
 
-    func updateSearchResults(text: String, type: GoalsTableSearchType) {
-        handleSearchUpdate(text: text, type: type.rawValue) { text, typeInt in
-            switch GoalsTableSearchType(rawValue: typeInt)! {
+    func updateSearchResults(date: Date?, text: String, type: GoalsTableSearchType) {
+        handleSearchUpdate(text: text) {
+            switch type {
             case .both:
-                return Goal.searchByAnythingSortedResultsSet(model: self.model, text: text)
+                return Goal.searchByAnythingSortedResultsSet(model: self.model, date: date, text: text)
             case .name:
-                return Goal.searchByNameSortedResultsSet(model: self.model, name: text)
+                return Goal.searchByNameSortedResultsSet(model: self.model, date: date, name: text)
             case .tag:
-                return Goal.searchByTagSortedResultsSet(model: self.model, tag: text)
+                return Goal.searchByTagSortedResultsSet(model: self.model, date: date, tag: text)
             }
         }
     }
@@ -176,19 +178,18 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
     enum InvocationState {
         case idle
         case waiting(GoalsTableInvocationData)
-        case ready((String) -> Void)
+        case ready((GoalsTableInvocationData) -> Void)
 
         mutating func send(data: GoalsTableInvocationData) {
             switch self {
             case .idle, .waiting(_):
                 self = .waiting(data)
             case .ready(let uiFn):
-                let dateQuery = Goal.queryStringForDate(data.date)
-                uiFn("\(dateQuery) =\(data.tag)")
+                uiFn(data)
             }
         }
 
-        mutating func register(uiFunc: @escaping (String) -> Void) {
+        mutating func register(uiFunc: @escaping (GoalsTableInvocationData) -> Void) {
             let previous = self
             self = .ready(uiFunc)
             if case .waiting(let data) = previous {
@@ -199,8 +200,13 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
 
     var invocationState: InvocationState = .idle
 
-    func registerInvocation(uifn: @escaping (String) -> Void) {
-        invocationState.register(uiFunc: uifn)
+    var invokeSearch: (GoalsTableInvocationData) -> Void {
+        set {
+            invocationState.register(uiFunc: newValue)
+        }
+        get {
+            return { _ in }
+        }
     }
 
     func invoke(with data: GoalsTableInvocationData) {

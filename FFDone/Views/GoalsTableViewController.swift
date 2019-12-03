@@ -75,8 +75,8 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         enablePullToCreate()
         navigationItem.leftBarButtonItem = nil
 
-        presenter.registerInvocation() { [weak self] query in
-            self?.doQueryForTag(query: query)
+        presenter.invokeSearch = { [weak self] data in
+            self?.doInvocationSearch(data: data)
         }
     }
 
@@ -152,29 +152,37 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
             return true
         }
         Dispatch.toForeground {
-            self.updateSearchResults(for: self.navigationItem.searchController!)
+            self.refreshSearch()
         }
         return false
     }
 
     /// The actual search prompt
-    public override func updateTableForSearch(text: String, scopeIndex: Int) {
-        presenter.updateSearchResults(text: text, type: GoalsTableSearchType(rawValue: scopeIndex) ?? .both)
+    public override func updateTableForSearch(tokens: [UISearchToken], text: String, scopeIndex: Int) {
+        let date = tokens.first.flatMap { $0.representedDate }
+        presenter.updateSearchResults(date: date, text: text, type: GoalsTableSearchType(rawValue: scopeIndex) ?? .both)
     }
 
     /// API up from `GoalTableCell` to implement the filter-by-tag usecase when a tag
     /// label gets clicked.
     func doSearchForTag(tag: String) {
-        doQueryForTag(query: "=\(tag)")
+        invokeSearch(text: Goal.queryStringForExactTag(tag), scopeIndex: GoalsTableSearchType.tag.rawValue)
     }
 
-    func doQueryForTag(query: String) {
-        guard let searchController = navigationItem.searchController else {
-            Log.fatal("Lost the searchcontroller")
-        }
-        searchController.isActive = true
-        searchController.searchBar.text = query
-        searchController.searchBar.selectedScopeButtonIndex = GoalsTableSearchType.tag.rawValue
-        updateSearchResults()
+    func doInvocationSearch(data: GoalsTableInvocationData) {
+        let token = UISearchToken(date: data.date, epochName: "Epoch")
+        invokeSearch(tokens: [token], text: Goal.queryStringForExactTag(data.tag), scopeIndex: GoalsTableSearchType.tag.rawValue)
+    }
+}
+
+/// Helpers for our epoch search tokens.
+extension UISearchToken {
+    convenience init(date: Date, epochName: String) {
+        self.init(icon: UIImage(systemName: "calendar.circle"), text: epochName)
+        representedObject = date
+    }
+
+    var representedDate: Date {
+        representedObject as! Date
     }
 }

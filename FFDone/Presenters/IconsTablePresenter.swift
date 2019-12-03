@@ -56,8 +56,8 @@ class IconsTablePresenter: TablePresenter<DirectorInterface>, Presenter, IconsTa
     }
 
     func updateSearchResults(text: String) {
-        handleSearchUpdate(text: text, type: 0) { text, typeInt in
-            return Icon.searchByNameSortedResultsSet(model: self.model, str: text)
+        handleSearchUpdate(text: text) {
+            Icon.searchByNameSortedResultsSet(model: self.model, str: text)
         }
     }
 }

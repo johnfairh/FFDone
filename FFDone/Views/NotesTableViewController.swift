@@ -83,7 +83,7 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
 
     // MARK: - UI fanciness
 
-    public override func updateTableForSearch(text: String, scopeIndex: Int) {
+    public override func updateTableForSearch(tokens: [UISearchToken], text: String, scopeIndex: Int) {
         presenter.updateSearchResults(text: text)
     }
 

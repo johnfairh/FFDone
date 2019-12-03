@@ -34,7 +34,7 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
             navigationItem.leftBarButtonItem = nil
             enablePullToCreate()
         }
-        enableSearch(scopes: [])
+        enableSearch(scopes: [], textColor: .text)
     }
 
     private var tableModel: TableModel<IconCell, IconsTableViewController>!
@@ -66,7 +66,7 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
         presenter.selectIcon(modelObject as! Icon)
     }
 
-    public override func updateTableForSearch(text: String, scopeIndex: Int) {
+    public override func updateTableForSearch(tokens: [UISearchToken], text: String, scopeIndex: Int) {
         presenter.updateSearchResults(text: text)
     }
 }
