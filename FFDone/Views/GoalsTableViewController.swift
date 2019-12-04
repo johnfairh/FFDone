@@ -170,7 +170,7 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
     }
 
     func doInvocationSearch(data: GoalsTableInvocationData) {
-        let token = UISearchToken(date: data.date, epochName: "Epoch")
+        let token = UISearchToken(date: data.date, epochName: data.epochName)
         invokeSearch(tokens: [token], text: Goal.queryStringForExactTag(data.tag), scopeIndex: GoalsTableSearchType.tag.rawValue)
     }
 }

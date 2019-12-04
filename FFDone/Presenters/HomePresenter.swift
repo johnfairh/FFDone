@@ -181,7 +181,9 @@ class HomePresenter: Presenter, HomePresenterInterface {
 
     // user clicks tag
     func displayTag(_ tag: String) {
-        let data = GoalsTableInvocationData(from: epoch.startDate, tagged: tag)
+        let data = GoalsTableInvocationData(from: epoch.startDate,
+                                            tagged: tag,
+                                            epochName: epoch.name)
         director.request(.switchToGoals(data))
     }
 

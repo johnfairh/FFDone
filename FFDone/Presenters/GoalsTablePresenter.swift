@@ -38,10 +38,12 @@ enum GoalsTableSearchType: Int {
 struct GoalsTableInvocationData {
     let date: Date
     let tag: String
+    let epochName: String
 
-    init(from date: Date, tagged tag: String) {
+    init(from date: Date, tagged tag: String, epochName: String) {
         self.date = date
         self.tag = tag
+        self.epochName = epochName
     }
 }
 

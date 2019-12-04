@@ -48,3 +48,10 @@ extension Epoch {
     }
 }
 
+// MARK: - Name, kludge-o
+
+extension Epoch {
+    var name: String {
+        sortOrder == 1 ? "All" : "SHB"
+    }
+}
