@@ -28,8 +28,6 @@ UITextFieldDelegate {
         super.viewDidLoad()
 
         setBasicColors()
-        titleLabel.setColors()
-        progressLabel.setColors()
 
         imageView.enableRoundCorners()
         multistepTextField.delegate = self

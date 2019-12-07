@@ -33,8 +33,6 @@ class SettingsViewController: PresentableBasicTableVC<SettingsPresenterInterface
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setFormTableColors()
-        epochStartDatePicker.setValue(UIColor.text, forKey: "textColor")
 
         edittingDate = false
         dateFormatter.dateStyle = .medium

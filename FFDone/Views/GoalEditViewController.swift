@@ -43,7 +43,6 @@ class GoalEditViewController: PresentableBasicTableVC<GoalEditPresenterInterface
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setFormTableColors()
 
         nameTextField.delegate = self
         currentStepsTextField.delegate = self

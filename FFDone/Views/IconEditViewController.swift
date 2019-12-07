@@ -35,12 +35,6 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
         super.viewDidLoad()
 
         setBasicColors()
-        firstSourceLabel.setColors()
-        secondSourceLabel.setColors()
-        defaultGoalLabel.setColors()
-        defaultAlarmLabel.setColors()
-        // we use odd style of text fields here..
-        UITextField.appearance(whenContainedInInstancesOf: [IconEditViewController.self]).backgroundColor = .background
 
         nameTextField.delegate = self
         iconImageView.enableRoundCorners()

@@ -11,8 +11,6 @@ class AlarmCell: UITableViewCell, TableCell {
 
     override public func awakeFromNib() {
         super.awakeFromNib()
-        textLabel?.setColors()
-        detailTextLabel?.setColors()
     }
 
     func configure(_ alarm: Alarm) {
@@ -27,7 +25,6 @@ TableModelDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setFlatTableColors()
 
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
@@ -35,10 +32,6 @@ TableModelDelegate {
 
         enablePullToCreate()
         navigationItem.leftBarButtonItem = nil
-    }
-
-    func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
-        header.setFlatTableColors()
     }
 
     private var tableModel: TableModel<AlarmCell, AlarmsTableViewController>!

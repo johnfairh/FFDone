@@ -52,7 +52,6 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setFormTableColors()
 
         nameTextField.delegate = self
 

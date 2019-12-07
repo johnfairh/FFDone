@@ -17,8 +17,6 @@ class NoteCell: UITableViewCell, TableCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        noteLabel.setColors()
-        goalNameButton.setColors()
     }
 
     func configure(_ note: Note) {
@@ -35,23 +33,18 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setFlatTableColors()
 
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
         }
         if presenter.shouldEnableExtraControls {
             navigationItem.leftBarButtonItem = nil
-            enableSearch(scopes: [], textColor: .text)
+            enableSearch(scopes: [])
         }
         datePicker = DatePickerDialog(textColor: .darkText,
                                       buttonColor: .tint,
                                       font: .systemFont(ofSize: 15.0),
                                       showCancelButton: false)
-    }
-
-    func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
-        header.setColors()
     }
 
     private var tableModel: TableModel<NoteCell, NotesTableViewController>!

@@ -23,9 +23,6 @@ class GoalCell: UITableViewCell, TableCell {
         customTagTextLabel?.layer.masksToBounds = true
         customTagTextLabel?.isUserInteractionEnabled = true
 
-        customTextLabel?.setColors()
-        customDetailTextLabel?.setColors()
-
         let tagGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTagTextLabel(_:)))
         customTagTextLabel.addGestureRecognizer(tagGestureRecognizer)
 
@@ -62,15 +59,13 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setFlatTableColors()
 
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
         }
 
         if presenter.isSearchable {
-            enableSearch(scopes: ["Both", "Name", "Tag"],
-                         textColor: .text)
+            enableSearch(scopes: ["Both", "Name", "Tag"])
         }
         enablePullToCreate()
         navigationItem.leftBarButtonItem = nil
@@ -80,10 +75,6 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
         }
     }
 
-    func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
-        header.setFlatTableColors()
-    }
-    
     private var tableModel: TableModel<GoalCell, GoalsTableViewController>!
 
     private func reloadTable(queryResults: ModelResults) {

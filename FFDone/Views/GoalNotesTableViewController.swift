@@ -14,7 +14,6 @@ class GoalNoteCell: UITableViewCell, TableCell {
 
     func configure(_ note: Note) {
         noteLabel.text = note.textWithGoalStatus
-        noteLabel.setColors()
     }
 }
 
@@ -26,15 +25,10 @@ class GoalNotesTableViewController: PresentableTableVC<GoalNotesTablePresenter>,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setFlatTableColors()
 
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
         }
-    }
-
-    func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
-        header.setColors()
     }
 
     private var tableModel: TableModel<GoalNoteCell, GoalNotesTableViewController>!

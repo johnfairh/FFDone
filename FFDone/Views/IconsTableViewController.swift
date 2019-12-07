@@ -11,7 +11,6 @@ class IconCell: UITableViewCell, TableCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         imageView?.enableRoundCorners()
-        textLabel?.setColors()
     }
 
     func configure(_ modelObject: Icon) {
@@ -25,7 +24,6 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
 {
     override func viewDidLoad() {
         super.viewDidLoad()
-        setFlatTableColors()
 
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
@@ -34,7 +32,7 @@ class IconsTableViewController: PresentableTableVC<IconsTablePresenter>,
             navigationItem.leftBarButtonItem = nil
             enablePullToCreate()
         }
-        enableSearch(scopes: [], textColor: .text)
+        enableSearch(scopes: [])
     }
 
     private var tableModel: TableModel<IconCell, IconsTableViewController>!

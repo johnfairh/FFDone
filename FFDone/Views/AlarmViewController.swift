@@ -20,8 +20,6 @@ class AlarmViewController: PresentableVC<AlarmViewPresenterInterface> {
         super.viewDidLoad()
 
         setBasicColors()
-        titleLabel.setColors()
-        subtitleLabel.setColors()
 
         presenter.refresh = { [unowned self] alarm in
             self.alarmImage.image = alarm.mainTableImage

@@ -21,8 +21,6 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface>, UITextV
         super.viewDidLoad()
         
         setBasicColors()
-        dateLabel.setColors()
-        ownerNameButton.setColors()
 
         textView.text = presenter.text
         dateLabel.text = presenter.date
