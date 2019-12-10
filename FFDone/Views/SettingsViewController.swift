@@ -86,7 +86,7 @@ class SettingsViewController: PresentableBasicTableVC<SettingsPresenterInterface
         return indexPath.isDebugRow || indexPath.isEpochDateRow
     }
 
-    // Trigger the icon picker
+    // Take the row action
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.isDebugRow {
             presenter.showDebug()
@@ -94,9 +94,10 @@ class SettingsViewController: PresentableBasicTableVC<SettingsPresenterInterface
         else if indexPath.isEpochDateRow {
             // This delay is purely aesthetic, give the highlight enough time to
             // be seen before dismissing it.
+            self.edittingDate.toggle()
+            self.refreshRowHeights()
             Dispatch.toForegroundAfter(milliseconds: 100) {
-                self.edittingDate.toggle()
-                self.refreshRowHeights()
+                self.tableView.clearSelection()
             }
         }
     }
