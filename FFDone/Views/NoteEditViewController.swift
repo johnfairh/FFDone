@@ -19,8 +19,6 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface>, UITextV
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
-        setBasicColors()
 
         textView.text = presenter.text
         dateLabel.text = presenter.date

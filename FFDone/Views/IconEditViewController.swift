@@ -34,8 +34,6 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setBasicColors()
-
         nameTextField.delegate = self
         iconImageView.enableRoundCorners()
 

@@ -20,6 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
         guard let window = window else { return }
+        window.backgroundColor = .systemBackground
         var appSceneState = AppScene.State()
 
         if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity,

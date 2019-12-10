@@ -19,8 +19,6 @@ class AlarmViewController: PresentableVC<AlarmViewPresenterInterface> {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        setBasicColors()
-
         presenter.refresh = { [unowned self] alarm in
             self.alarmImage.image = alarm.mainTableImage
             self.titleLabel.text = alarm.name

@@ -19,14 +19,11 @@ enum Strings {
     }
 
     enum Color {
-        static let text = "TextColour" // off-white
         static let tint = "TintColour" // FF gold
-        static let background = "BackgroundColour" // Black
-        static let tableHeader = "TableHeaderColour" // V dark grey
-        static let tableSeparator = "TableSeparatorColour" // Lighter grey
+        static let veryLightText = "VeryLightTextColour"
         static let tagBubble = "TagBackgroundColour" // V light blue
-        static let pieIncompleteColor = "PieRedColour"
-        static let pieCompleteColor = "PieGreenColour"
+        static let pieIncomplete = "PieRedColour"
+        static let pieComplete = "PieGreenColour"
         static let tableLeadingSwipe = "StepSwipeColour"
     }
 }
