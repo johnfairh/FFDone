@@ -60,6 +60,10 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
         return Note.dayStampToUserString(dayStamp: name)
     }
 
+    func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
+        header.setColorScheme()
+    }
+
     // MARK: - Object actions
 
     func canDeleteObject(_ modelObject: Note) -> Bool {

@@ -40,6 +40,10 @@ class GoalNotesTableViewController: PresentableTableVC<GoalNotesTablePresenter>,
         tableModel.start()
     }
 
+    func willDisplaySectionHeader(_ header: UITableViewHeaderFooterView) {
+        header.setColorScheme()
+    }
+
     func getSectionTitle(name: String) -> String {
         return Note.dayStampToUserString(dayStamp: name)
     }

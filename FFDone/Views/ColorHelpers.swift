@@ -16,6 +16,19 @@ extension UIColor {
     static let veryLightText = UIColor(named: Strings.Color.veryLightText)!
 }
 
+// In dark mode the section header for flat tables is too light.
+extension UITableViewHeaderFooterView {
+    func setColorScheme() {
+        switch traitCollection.userInterfaceStyle {
+        case .dark:
+            // sets the background...
+            tintColor = .secondarySystemBackground
+        default:
+            break
+        }
+    }
+}
+
 enum ColorScheme {
     static func globalInit() {
         // stuff bizarrely unaffected by 'global' tint
