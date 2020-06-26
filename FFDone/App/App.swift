@@ -92,6 +92,7 @@ final class App {
     }
 
     func willEnterForeground() {
+        Log.log("App.willEnterForeground")
         alarmScheduler.willEnterForeground()
     }
 
