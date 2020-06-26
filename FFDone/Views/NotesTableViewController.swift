@@ -6,7 +6,6 @@
 //
 
 import TMLPresentation
-import DatePickerDialog
 
 class NoteCell: UITableViewCell, TableCell {
 
