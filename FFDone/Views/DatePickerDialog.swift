@@ -17,7 +17,6 @@ open class DatePickerDialog: UIView {
     private let kDefaultButtonHeight: CGFloat = 50
     private let kDefaultButtonSpacerHeight: CGFloat = 1
     private let kCornerRadius: CGFloat = 7
-    private let kDoneButtonTag: Int = 1
 
     // MARK: - Views
     private var dialogView: UIView!
@@ -30,26 +29,15 @@ open class DatePickerDialog: UIView {
     private var defaultDate: Date?
     private var datePickerMode: UIDatePicker.Mode?
     private var callback: DatePickerCallback?
-    var showCancelButton: Bool = false
-    var locale: Locale?
 
-    private var textColor: UIColor!
     private var buttonColor: UIColor!
     private var font: UIFont!
 
     // MARK: - Dialog initialization
-    @objc public init(textColor: UIColor = UIColor.black,
-                buttonColor: UIColor = UIColor.blue,
-                font: UIFont = .boldSystemFont(ofSize: 15),
-                locale: Locale? = nil,
-                showCancelButton: Bool = true) {
+    @objc public init(font: UIFont = .boldSystemFont(ofSize: 15)) {
         let size = UIScreen.main.bounds.size
         super.init(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-        self.textColor = textColor
-        self.buttonColor = buttonColor
         self.font = font
-        self.showCancelButton = showCancelButton
-        self.locale = locale
         setupView()
     }
 
@@ -100,7 +88,6 @@ open class DatePickerDialog: UIView {
     ) {
         self.titleLabel.text = title
         self.doneButton.setTitle(doneButtonTitle, for: .normal)
-        if showCancelButton { self.cancelButton.setTitle(cancelButtonTitle, for: .normal) }
         self.datePickerMode = datePickerMode
         self.callback = callback
         self.defaultDate = defaultDate
@@ -108,7 +95,6 @@ open class DatePickerDialog: UIView {
         self.datePicker.date = self.defaultDate ?? Date()
         self.datePicker.maximumDate = maximumDate
         self.datePicker.minimumDate = minimumDate
-        if let locale = self.locale { self.datePicker.locale = locale }
 
         /* Add dialog to main window */
         if let currentWindowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
@@ -187,9 +173,9 @@ open class DatePickerDialog: UIView {
         let gradient: CAGradientLayer = CAGradientLayer(layer: self.layer)
         gradient.frame = container.bounds
         gradient.colors = [
-            UIColor(red: 218/255, green: 218/255, blue: 218/255, alpha: 1).cgColor,
-            UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1).cgColor,
-            UIColor(red: 218/255, green: 218/255, blue: 218/255, alpha: 1).cgColor
+            UIColor(red: 18/255, green: 18/255, blue: 18/255, alpha: 1).cgColor,
+            UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 1).cgColor,
+            UIColor(red: 18/255, green: 18/255, blue: 18/255, alpha: 1).cgColor
         ]
 
         let cornerRadius = kCornerRadius
@@ -197,7 +183,7 @@ open class DatePickerDialog: UIView {
         container.layer.insertSublayer(gradient, at: 0)
 
         container.layer.cornerRadius = cornerRadius
-        container.layer.borderColor = UIColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1).cgColor
+        container.layer.borderColor = UIColor.secondarySystemBackground.cgColor
         container.layer.borderWidth = 1
         container.layer.shadowRadius = cornerRadius + 5
         container.layer.shadowOpacity = 0.1
@@ -217,13 +203,13 @@ open class DatePickerDialog: UIView {
             height: kDefaultButtonSpacerHeight
         ))
 
-        lineView.backgroundColor = UIColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1)
+        lineView.backgroundColor = .secondarySystemBackground
         container.addSubview(lineView)
 
         //Title
         self.titleLabel = UILabel(frame: CGRect(x: 10, y: 10, width: 280, height: 30))
         self.titleLabel.textAlignment = .center
-        self.titleLabel.textColor = self.textColor
+        self.titleLabel.textColor = .label
         self.titleLabel.font = self.font.withSize(17)
         container.addSubview(self.titleLabel)
 
@@ -238,13 +224,12 @@ open class DatePickerDialog: UIView {
 
     fileprivate func configuredDatePicker() -> UIDatePicker {
         let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 30, width: 0, height: 0))
-        // Broken on iOS14
-        //
-        // datePicker.setValue(self.textColor, forKeyPath: "textColor")
-        //
         datePicker.autoresizingMask = .flexibleRightMargin
         datePicker.frame.size.width = 300
         datePicker.frame.size.height = 216
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        }
         return datePicker
     }
 
@@ -264,33 +249,20 @@ open class DatePickerDialog: UIView {
             width: buttonWidth,
             height: kDefaultButtonHeight
         )
-        if showCancelButton == false {
-            buttonWidth = container.bounds.size.width
-            leftButtonFrame = CGRect()
-            rightButtonFrame = CGRect(
-                x: 0,
-                y: container.bounds.size.height - kDefaultButtonHeight,
-                width: buttonWidth,
-                height: kDefaultButtonHeight
-            )
-        }
+        buttonWidth = container.bounds.size.width
+        leftButtonFrame = CGRect()
+        rightButtonFrame = CGRect(
+            x: 0,
+            y: container.bounds.size.height - kDefaultButtonHeight,
+            width: buttonWidth,
+            height: kDefaultButtonHeight
+        )
+
         let interfaceLayoutDirection = UIApplication.shared.userInterfaceLayoutDirection
         let isLeftToRightDirection = interfaceLayoutDirection == .leftToRight
 
-        if showCancelButton {
-            self.cancelButton = UIButton(type: .custom) as UIButton
-            self.cancelButton.frame = isLeftToRightDirection ? leftButtonFrame : rightButtonFrame
-            self.cancelButton.setTitleColor(self.buttonColor, for: .normal)
-            self.cancelButton.setTitleColor(self.buttonColor, for: .highlighted)
-            self.cancelButton.titleLabel?.font = self.font.withSize(14)
-            self.cancelButton.layer.cornerRadius = kCornerRadius
-            self.cancelButton.addTarget(self, action: .buttonTapped, for: .touchUpInside)
-            container.addSubview(self.cancelButton)
-        }
-
         self.doneButton = UIButton(type: .custom) as UIButton
         self.doneButton.frame = isLeftToRightDirection ? rightButtonFrame : leftButtonFrame
-        self.doneButton.tag = kDoneButtonTag
         self.doneButton.setTitleColor(self.buttonColor, for: .normal)
         self.doneButton.setTitleColor(self.buttonColor, for: .highlighted)
         self.doneButton.titleLabel?.font = self.font.withSize(14)
@@ -300,12 +272,7 @@ open class DatePickerDialog: UIView {
     }
 
     @objc func buttonTapped(sender: UIButton) {
-        if sender.tag == kDoneButtonTag {
-            self.callback?(self.datePicker.date)
-        } else {
-            self.callback?(nil)
-        }
-
+        self.callback?(self.datePicker.date)
         close()
     }
 

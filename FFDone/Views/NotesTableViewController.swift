@@ -40,10 +40,7 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
             navigationItem.leftBarButtonItem = nil
             enableSearch(scopes: [])
         }
-        datePicker = DatePickerDialog(textColor: .darkText,
-                                      buttonColor: .tint,
-                                      font: .systemFont(ofSize: 15.0),
-                                      showCancelButton: false)
+        datePicker = DatePickerDialog(font: .systemFont(ofSize: 15.0))
     }
 
     private var tableModel: TableModel<NoteCell, NotesTableViewController>!

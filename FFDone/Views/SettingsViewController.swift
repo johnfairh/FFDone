@@ -35,6 +35,9 @@ class SettingsViewController: PresentableBasicTableVC<SettingsPresenterInterface
         super.viewDidLoad()
 
         edittingDate = false
+        if #available(iOS 14.0, *) {
+            epochStartDatePicker.preferredDatePickerStyle = .inline
+        }
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
 
