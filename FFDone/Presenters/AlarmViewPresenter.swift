@@ -21,6 +21,9 @@ protocol AlarmViewPresenterInterface {
 
     /// Edit the alarm
     func edit()
+
+    /// Duplicate the alarm
+    func dup()
 }
 
 // MARK: - Presenter
@@ -93,5 +96,10 @@ class AlarmViewPresenter: Presenter, AlarmViewPresenterInterface {
     /// Edit the alarm
     func edit() {
         director.request(.editAlarmAndThen(alarm, model, { [unowned self] _ in self.doRefresh() }))
+    }
+
+    /// Duplicate the alarm
+    func dup() {
+        director.request(.dupAlarm(alarm, model))
     }
 }

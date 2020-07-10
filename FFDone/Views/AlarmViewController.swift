@@ -15,7 +15,7 @@ class AlarmViewController: PresentableVC<AlarmViewPresenterInterface> {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var doneSwitch: UISwitch!
     @IBOutlet weak var notesTextView: UITextView!
-
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,5 +39,9 @@ class AlarmViewController: PresentableVC<AlarmViewPresenterInterface> {
 
     @IBAction func editAlarmTapped(_ sender: UIBarButtonItem) {
         presenter.edit()
+    }
+
+    @IBAction func dupAlarmTapped(_ sender: Any) {
+        presenter.dup()
     }
 }

@@ -621,11 +621,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="GhY-RQ-FfX">
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="ZiJ-Rh-VXy">
-                            <connections>
-                                <action selector="editAlarmTapped:" destination="EUr-gp-56p" id="Z6o-7q-IFe"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Edit" id="ZiJ-Rh-VXy">
+                                <connections>
+                                    <action selector="dupButtonTapped:" destination="EUr-gp-56p" id="iay-kt-dRC"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Dup" id="c8e-hQ-yOT">
+                                <connections>
+                                    <action selector="dupAlarmTapped:" destination="EUr-gp-56p" id="8fX-FV-XDu"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="alarmImage" destination="7Bb-RE-oYy" id="DyS-3P-4iE"/>

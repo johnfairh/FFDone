@@ -30,6 +30,19 @@ extension Alarm: ModelObject {
         
         return alarm
     }
+
+    /// Create an independent alarm that mimicks this one
+    func dup(model: Model) -> Alarm {
+        let alarm = Alarm.create(from: model)
+        alarm.sortOrder = Alarm.getNextSortOrderValue(Alarm.primarySortOrder, from: model)
+        alarm.name = name
+        alarm.kind = kind
+        alarm.icon = icon
+        alarm.activeNote = activeNote?.dup(model: model)
+        alarm.defaultNote = defaultNote?.dup(model: model)
+        alarm.activate()
+        return alarm
+    }
 }
 
 // MARK: - Alarm kinds

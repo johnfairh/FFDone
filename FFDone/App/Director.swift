@@ -40,6 +40,7 @@ enum DirectorRequest {
     case createAlarm(Model)
     case editAlarm(Alarm, Model)
     case editAlarmAndThen(Alarm, Model, (Alarm) -> Void)
+    case dupAlarm(Alarm, Model)
     case viewAlarm(Alarm, Model)
     case scheduleAlarmAndThen(Alarm, () -> Void)
     case cancelAlarm(String)
@@ -234,6 +235,12 @@ extension DirectorRequest {
         case let .createAlarm(model):
             services.createThing("AlarmEditViewController",
                                  model: model,
+                                 presenterFn: AlarmEditPresenter.init,
+                                 done: { _ in })
+        case let .dupAlarm(alarm, model):
+            services.createThing("AlarmEditViewController",
+                                 model: model,
+                                 from: alarm,
                                  presenterFn: AlarmEditPresenter.init,
                                  done: { _ in })
         case let .editAlarm(alarm, model):

@@ -61,12 +61,15 @@ class AlarmEditPresenter: EditablePresenter, AlarmEditPresenterInterface {
                   object: Alarm?,
                   mode: PresenterMode,
                   dismiss: @escaping PresenterDone<Alarm>) {
-        if let object = object {
-            Log.assert(mode.isSingleType(.edit))
-            alarm = object
-        } else {
-            Log.assert(mode.isSingleType(.create))
+        switch mode.singleType! {
+        case .create:
             alarm = Alarm.createWithDefaults(model: model)
+        case .edit:
+            alarm = object!
+        case .dup:
+            alarm = object!.dup(model: model)
+        default:
+            Log.fatal("Bad mode: \(mode)")
         }
 
         self.model     = model
