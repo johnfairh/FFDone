@@ -48,6 +48,7 @@ enum IconSourceBuilder {
     /// Dumb Swift mechanism to trigger one-time registration
     static private let sourceOnce: Void = {
         XivIconSources.install()
+        WowIconSources.install()
     }()
 
     /// Register a named icon source, called by sources at start-of-day [in theory]

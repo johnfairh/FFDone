@@ -59,6 +59,11 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
                 }
             }
         }
+        iconSourceControllers.suffix(iconSourceControllers.count - IconSourceBuilder.sources.count).forEach {
+            $0.label.text = ""
+            $0.textField.isHidden = true
+            $0.button.isHidden = true
+        }
 
         presenter.refresh = { [unowned self] m in
             self.nameTextField.text = m.icon.name ?? ""
