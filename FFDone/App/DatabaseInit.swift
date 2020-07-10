@@ -225,6 +225,15 @@ enum DatabaseObjects {
         }
     }
 
+    private static func createAlarmKinds() {
+        let defs = readYaml(file: "DefaultAlarmKinds")
+        defs.forEach {
+            if let alarmSet = AlarmSet(rawValue: $0.str("name")) {
+                AlarmSet.shared = alarmSet
+            }
+        }
+    }
+
     /// Create the global epoch we rely on having
     static func createGlobalEpoch(model: Model) {
         let epoch = Epoch.createWithDefaults(model: model)
@@ -248,6 +257,7 @@ enum DatabaseObjects {
     /// Entrypoint -- create objects etc. on every run
     static func createEachTime(model: Model, debugMode: Bool) {
         createIconSources()
+        createAlarmKinds()
         #if false
         createMissingIcons(model: model)
         #endif

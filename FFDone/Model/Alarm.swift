@@ -22,7 +22,7 @@ extension Alarm: ModelObject {
         let alarm = Alarm.create(from: model)
         alarm.sortOrder = Alarm.getNextSortOrderValue(primarySortOrder, from: model)
         alarm.name = ""
-        alarm.kind = .weekly(3)
+        alarm.kind = AlarmSet.shared.weeklyReset(day: 3)
         alarm.icon = Icon.getAlarmDefault(model: model)
         alarm.activeNote = Note.createWithDefaults(model: model)
         alarm.defaultNote = Note.createWithDefaults(model: model)
@@ -37,25 +37,42 @@ extension Alarm: ModelObject {
 extension Alarm {
     enum Kind {
         case oneShot
-        case dailyReset
-        case dailyGc
-        case weekly(Int)
+        case xivDaily
+        case xivDailyGc
+        case xivWeekly(Int)
+        case wowDaily
+        case wowWeekly(Int)
 
         var repeatText: String {
             switch self {
             case .oneShot: return "Never"
-            case .dailyReset: return "Daily Reset"
-            case .dailyGc: return "Daily GC Reset"
-            case .weekly(_): return "Weekly"
+            case .xivDaily, .wowDaily: return "Daily Reset"
+            case .xivDailyGc: return "Daily GC Reset"
+            case .xivWeekly(_), .wowWeekly(_): return "Weekly"
             }
         }
 
         var repeatDay: Int? {
-            if case let .weekly(day) = self {
+            switch self {
+            case .xivWeekly(let day), .wowWeekly(let day):
                 return day
+            default:
+                return nil
             }
-            return nil
         }
+
+        static let xivDefaults: [Kind] = [
+            .oneShot,
+            .xivWeekly(3),
+            .xivDaily,
+            .xivDailyGc,
+        ]
+
+        static let wowDefaults: [Kind] = [
+            .oneShot,
+            wowWeekly(3),
+            wowDaily
+        ]
     }
 
     var kind: Kind {
@@ -64,29 +81,58 @@ extension Alarm {
             case .oneShot:
                 cdType = 0
                 cdWeekDay = 1
-            case .dailyReset:
+            case .xivDaily:
                 cdType = 1
                 cdWeekDay = 1
-            case .weekly(let day):
-                cdType = 2;
+            case .xivWeekly(let day):
+                cdType = 2
                 cdWeekDay = Int16(day)
-            case .dailyGc:
-                cdType = 3;
+            case .xivDailyGc:
+                cdType = 3
                 cdWeekDay = 1;
+            case .wowDaily:
+                cdType = 4
+                cdWeekDay = 1
+            case .wowWeekly(let day):
+                cdType = 5
+                cdWeekDay = Int16(day)
             }
         }
         get {
             switch cdType {
             case 0: return .oneShot
-            case 1: return .dailyReset
-            case 2: return .weekly(Int(cdWeekDay))
-            case 3: return .dailyGc
+            case 1: return .xivDaily
+            case 2: return .xivWeekly(Int(cdWeekDay))
+            case 3: return .xivDailyGc
+            case 4: return .wowDaily
+            case 5: return .wowWeekly(Int(cdWeekDay))
             default:
                 // Let's not crash
                 return .oneShot
             }
         }
     }
+}
+
+enum AlarmSet: String {
+    case xiv
+    case wow
+
+    var kinds: [Alarm.Kind] {
+        switch self {
+        case .xiv: return Alarm.Kind.xivDefaults
+        case .wow: return Alarm.Kind.wowDefaults
+        }
+    }
+
+    func weeklyReset(day: Int) -> Alarm.Kind {
+        switch self {
+        case .xiv: return .xivWeekly(day)
+        case .wow: return .wowWeekly(day)
+        }
+    }
+
+    static var shared = AlarmSet.xiv
 }
 
 // MARK: - Alarm activeness
@@ -157,17 +203,23 @@ extension Alarm {
     var computedNextActiveDate: Date {
         let components: DateComponents
         switch kind {
-        case .dailyReset:
+        case .xivDaily:
             // Daily reset is 3PM GMT (midnight JST but I would get confused about which day it was)
             components = DateComponents(hour: 15, minute: 0)
             break
-        case .dailyGc:
+        case .xivDailyGc:
             // GC Daily reset is 2000 GMT for some reason
             components = DateComponents(hour: 20, minute: 0)
             break
-        case .weekly(let day):
+        case .xivWeekly(let day):
             // Weekly reset is 8AM GMT, assume that will do
             components = DateComponents(hour: 8, minute: 0, weekday: day)
+        case .wowDaily:
+            // Daily reset is 7AM GMT
+            components = DateComponents(hour: 7, minute: 0)
+        case .wowWeekly(let day):
+            // Weekly reset also 7AM GMT
+            components = DateComponents(hour: 7, minute: 0, weekday: day)
         case .oneShot:
             Log.fatal("Oneshot never next active")
         }
@@ -205,16 +257,16 @@ extension Alarm {
             switch kind {
             case .oneShot:
                 return ""
-            case .dailyReset, .dailyGc:
+            case .xivDaily, .xivDailyGc, .wowDaily:
                 return "Repeats daily"
-            case .weekly(let day):
+            case .xivWeekly(let day), .wowWeekly(let day):
                 return "Repeats every \(getWeekdayName(day: day))"
             }
         } else {
             var cap = dueDateString + ", then "
             switch kind {
-            case .dailyReset, .dailyGc: cap += "daily"
-            case .weekly(_): cap += "weekly"
+            case .xivDaily, .xivDailyGc, .wowDaily: cap += "daily"
+            case .xivWeekly(_), .wowWeekly(_): cap += "weekly"
             case .oneShot: Log.fatal("Inactive oneshot?")
             }
             return cap
@@ -224,9 +276,9 @@ extension Alarm {
     var notificationText: String {
         let frequency: String
         switch kind {
-        case .dailyReset, .dailyGc:
+        case .xivDaily, .xivDailyGc, .wowDaily:
             frequency = "daily"
-        case .weekly(_):
+        case .xivWeekly(_), .wowWeekly(_):
             frequency = "weekly"
         case .oneShot:
             Log.fatal("Can't notify oneShot alarms")

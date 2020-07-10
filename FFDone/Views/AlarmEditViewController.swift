@@ -129,7 +129,7 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
         if indexPath.isIconRow {
             presenter.pickIcon()
         } else if indexPath.isRepeatRow {
-            let kinds: [Alarm.Kind] = [.oneShot, .weekly(3), .dailyReset, .dailyGc]
+            let kinds: [Alarm.Kind] = AlarmSet.shared.kinds
             let choices = kinds.map { $0.repeatText }
             presentActionSheetChoice(choices: choices, results: kinds) { kind in
                 tableView.deselectRow(at: indexPath, animated: true)
@@ -143,7 +143,7 @@ class AlarmEditViewController: PresentableBasicTableVC<AlarmEditPresenterInterfa
             presentActionSheetChoice(choices: choices, results: results) { dayNumber in
                 tableView.deselectRow(at: indexPath, animated: true)
                 if let dayNumber = dayNumber {
-                    self.presenter.setKind(kind: .weekly(dayNumber))
+                    self.presenter.setKind(kind: AlarmSet.shared.weeklyReset(day: dayNumber))
                 }
             }
         } else if indexPath.isDefaultNotesRow {
