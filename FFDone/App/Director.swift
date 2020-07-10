@@ -28,6 +28,7 @@ enum DirectorRequest {
     case switchToGoals(GoalsTableInvocationData)
 
     case createIcon(Model)
+    case createIconAndThen(Model, (Icon) -> Void)
     case editIcon(Icon, Model)
     case pickIcon(Model, (Icon) -> Void)
 
@@ -192,10 +193,12 @@ extension DirectorRequest {
                                   invocationData: data as AnyObject)
 
         case let .createIcon(model):
+            DirectorRequest.createIconAndThen(model, { _ in }).handle(director: director)
+        case let .createIconAndThen(model, continuation):
             services.createThing("IconEditViewController",
                                  model: model,
                                  presenterFn: IconEditPresenter.init,
-                                 done: { _ in })
+                                 done: continuation)
 
         case let .editIcon(icon, model):
             services.editThing("IconEditViewController",

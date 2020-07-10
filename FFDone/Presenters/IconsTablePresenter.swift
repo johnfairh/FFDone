@@ -30,7 +30,17 @@ class IconsTablePresenter: TablePresenter<DirectorInterface>, Presenter, IconsTa
     }
 
     func createNewObject() {
-        director.request(.createIcon(model))
+        director.request(.createIconAndThen(model, { newIcon in
+            // Hack to allow selection from picker on icon creation.
+            // Without the hack delay we get ahead of the UI and it all
+            // goes wrong.  Attempting to interlock failed via NSFetchResultController,
+            // gave up then.
+            if !self.shouldEnableExtraControls {
+                Dispatch.toForegroundAfter(milliseconds: 500) {
+                    self.selectIcon(newIcon)
+                }
+            }
+        }))
     }
 
     func canDeleteIcon(_ icon: Icon) -> Bool {
