@@ -87,7 +87,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
         tagCloudViewHeightConstraint.constant = 0
 
-        let headingImageHeight = CGFloat(100.0) // sure
+        let headingImageHeight = CGFloat(Tweaks.shared.epochImageHeight)
         headingImageViewHeightConstraint.constant = headingImageHeight
 
         let topOfSpaceForPie = headingImageView.frame.origin.y + headingImageHeight
@@ -121,6 +121,11 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         tagCloudViewTopConstraint.constant =
             pieChartViewTopConstraint.constant + pieChartView.frame.height + tagCloudVMargin
 
+        // This makes it actually animate instead of blinking out
+        headingImageViewHeightConstraint.constant = 1
+    }
+
+    func finishLayoutChartAndTagsView() {
         headingImageViewHeightConstraint.constant = 0
     }
 
@@ -227,6 +232,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
             }
             self.view.layoutIfNeeded()
         }, completion: { _ in
+            self.finishLayoutChartAndTagsView()
             self.updateTagCloud()
         })
     }

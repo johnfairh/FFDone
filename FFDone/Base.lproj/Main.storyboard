@@ -1306,6 +1306,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FGM-PO-lUM">
+                                <rect key="frame" x="0.0" y="40" width="375" height="100"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="xUx-Cb-Mc6"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="tsT-fQ-2Ef" appends="YES" id="DAz-PH-a4m"/>
+                                </connections>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f9X-5D-kxz" userLabel="Tag cloud view" customClass="TagCloudView" customModule="FFDone" customModuleProvider="target">
                                 <rect key="frame" x="67.5" y="240" width="240" height="240"/>
                                 <constraints>
@@ -1343,16 +1353,6 @@
                                     <action selector="didTapNewAlarm:" destination="3i4-tO-qwZ" eventType="touchUpInside" id="z6f-aj-Ejw"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FGM-PO-lUM">
-                                <rect key="frame" x="0.0" y="40" width="375" height="100"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="xUx-Cb-Mc6"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="tsT-fQ-2Ef" appends="YES" id="DAz-PH-a4m"/>
-                                </connections>
-                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cGg-Bu-3Uw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

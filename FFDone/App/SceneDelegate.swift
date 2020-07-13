@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         var appSceneState = AppScene.State()
 
         if let userActivity = connectionOptions.userActivities.first ?? session.stateRestorationActivity,
-            userActivity.activityType == Strings.UserActivityType.stateRestoration {
+           userActivity.activityType == Tweaks.shared.stateRestorationKey {
             decode(activity: userActivity, to: &appSceneState)
         }
 
@@ -33,13 +33,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     /// Save away high-level scene state for later restoration
     func stateRestorationActivity(for scene: UIScene) -> NSUserActivity? {
-         guard let appScene = appScene else { return nil }
+        guard let appScene = appScene else { return nil }
 
-         let activity = NSUserActivity(activityType: Strings.UserActivityType.stateRestoration)
-         activity.title = "FFDone"
-         let userInfo = encode(sceneState: appScene.state)
-         activity.addUserInfoEntries(from: userInfo)
-         return activity
+        let activity = NSUserActivity(activityType: Tweaks.shared.stateRestorationKey)
+        activity.title = "FFDone"
+        let userInfo = encode(sceneState: appScene.state)
+        activity.addUserInfoEntries(from: userInfo)
+        return activity
      }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -99,8 +99,10 @@
 		02479E2C24BB120500DE978A /* DebugEpochs.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E2324BB120500DE978A /* DebugEpochs.yaml */; };
 		02479E2E24BB120500DE978A /* DebugNotes.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E2524BB120500DE978A /* DebugNotes.yaml */; };
 		02479E2F24BB120500DE978A /* DefaultAlarmKinds.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E2624BB120500DE978A /* DefaultAlarmKinds.yaml */; };
-		02479E3124BB149200DE978A /* FFStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02479E3024BB149200DE978A /* FFStrings.swift */; };
-		02479E3424BB14CF00DE978A /* WStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02479E3224BB14BE00DE978A /* WStrings.swift */; };
+		02479E3624BC761E00DE978A /* DefaultTweaks.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E3524BC761E00DE978A /* DefaultTweaks.yaml */; };
+		02479E3824BC767000DE978A /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02479E3724BC767000DE978A /* Tweaks.swift */; };
+		02479E3924BC767000DE978A /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02479E3724BC767000DE978A /* Tweaks.swift */; };
+		02479E3B24BC7AD600DE978A /* DefaultTweaks.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E3A24BC7AD600DE978A /* DefaultTweaks.yaml */; };
 		0252C9752144289B00DC6D64 /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252C9742144289B00DC6D64 /* DebugViewController.swift */; };
 		0252C977214428CD00DC6D64 /* DebugPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252C976214428CD00DC6D64 /* DebugPresenter.swift */; };
 		0253339F2112FE3D00AF8E7B /* TMLPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */; };
@@ -234,8 +236,9 @@
 		02479E2324BB120500DE978A /* DebugEpochs.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = DebugEpochs.yaml; sourceTree = "<group>"; };
 		02479E2524BB120500DE978A /* DebugNotes.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = DebugNotes.yaml; sourceTree = "<group>"; };
 		02479E2624BB120500DE978A /* DefaultAlarmKinds.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = DefaultAlarmKinds.yaml; sourceTree = "<group>"; };
-		02479E3024BB149200DE978A /* FFStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFStrings.swift; sourceTree = "<group>"; };
-		02479E3224BB14BE00DE978A /* WStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WStrings.swift; sourceTree = "<group>"; };
+		02479E3524BC761E00DE978A /* DefaultTweaks.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = DefaultTweaks.yaml; path = ../../../FFDoneResources/Resources/DefaultTweaks.yaml; sourceTree = "<group>"; };
+		02479E3724BC767000DE978A /* Tweaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweaks.swift; sourceTree = "<group>"; };
+		02479E3A24BC7AD600DE978A /* DefaultTweaks.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = DefaultTweaks.yaml; sourceTree = "<group>"; };
 		0252C9742144289B00DC6D64 /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		0252C976214428CD00DC6D64 /* DebugPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPresenter.swift; sourceTree = "<group>"; };
 		0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TMLPresentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -361,8 +364,7 @@
 				02E7A38A237F08FC003E2DF1 /* AppScene.swift */,
 				021309EF210A1D2E00410451 /* Director.swift */,
 				02D613172146BD9400BD9BA6 /* Strings.swift */,
-				02479E3024BB149200DE978A /* FFStrings.swift */,
-				02479E3224BB14BE00DE978A /* WStrings.swift */,
+				02479E3724BC767000DE978A /* Tweaks.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -419,6 +421,7 @@
 				02130A02210CD37600410451 /* DefaultIcons.yaml */,
 				02867EBC211F6397004D3122 /* DefaultIconSources.yaml */,
 				02479DC224B891C200DE978A /* DefaultAlarmKinds.yaml */,
+				02479E3524BC761E00DE978A /* DefaultTweaks.yaml */,
 				021309FA210B5E7200410451 /* DebugGoals.yaml */,
 				02867EA42119FC17004D3122 /* DebugNotes.yaml */,
 				02990A6D212C7C8B00BF1CEC /* DebugAlarms.yaml */,
@@ -440,13 +443,14 @@
 			isa = PBXGroup;
 			children = (
 				02479E2024BB120500DE978A /* Assets.xcassets */,
-				02479E1E24BB120500DE978A /* DefaultIconSources.yaml */,
-				02479E1F24BB120500DE978A /* DebugGoals.yaml */,
 				02479E2124BB120500DE978A /* DefaultIcons.yaml */,
+				02479E1E24BB120500DE978A /* DefaultIconSources.yaml */,
+				02479E2624BB120500DE978A /* DefaultAlarmKinds.yaml */,
+				02479E3A24BC7AD600DE978A /* DefaultTweaks.yaml */,
+				02479E1F24BB120500DE978A /* DebugGoals.yaml */,
 				02479E2224BB120500DE978A /* DebugAlarms.yaml */,
 				02479E2324BB120500DE978A /* DebugEpochs.yaml */,
 				02479E2524BB120500DE978A /* DebugNotes.yaml */,
-				02479E2624BB120500DE978A /* DefaultAlarmKinds.yaml */,
 			);
 			name = Resources;
 			path = ../../WDoneResources/Resources;
@@ -625,6 +629,7 @@
 				02479E2B24BB120500DE978A /* DebugAlarms.yaml in Resources */,
 				02479E1924BB0EBF00DE978A /* LaunchScreen.storyboard in Resources */,
 				02479E2824BB120500DE978A /* DebugGoals.yaml in Resources */,
+				02479E3B24BC7AD600DE978A /* DefaultTweaks.yaml in Resources */,
 				02479E2724BB120500DE978A /* DefaultIconSources.yaml in Resources */,
 				02479E2C24BB120500DE978A /* DebugEpochs.yaml in Resources */,
 				02479E2F24BB120500DE978A /* DefaultAlarmKinds.yaml in Resources */,
@@ -642,6 +647,7 @@
 				02990A6F212C7F2B00BF1CEC /* DebugAlarms.yaml in Resources */,
 				021309FD210B632400410451 /* DebugGoals.yaml in Resources */,
 				02130A03210CD37600410451 /* DefaultIcons.yaml in Resources */,
+				02479E3624BC761E00DE978A /* DefaultTweaks.yaml in Resources */,
 				02867EBD211F6398004D3122 /* DefaultIconSources.yaml in Resources */,
 				02867EA52119FC17004D3122 /* DebugNotes.yaml in Resources */,
 				02F85F6A2279BF4C00E34E2C /* DebugEpochs.yaml in Resources */,
@@ -735,6 +741,7 @@
 				02479DE624BB0CF900DE978A /* AppScene.swift in Sources */,
 				02479DFC24BB0CFE00DE978A /* GoalViewPresenter.swift in Sources */,
 				02479DF124BB0CFE00DE978A /* AlarmViewPresenter.swift in Sources */,
+				02479E3924BC767000DE978A /* Tweaks.swift in Sources */,
 				02479DEF24BB0CFE00DE978A /* GoalsTablePresenter.swift in Sources */,
 				02479DFE24BB0D0400DE978A /* IconEditViewController.swift in Sources */,
 				02479E0524BB0D0400DE978A /* GoalEditViewController.swift in Sources */,
@@ -743,7 +750,6 @@
 				02479DE224BB0CF900DE978A /* LogCache.swift in Sources */,
 				02479DEE24BB0CF900DE978A /* SceneDelegate.swift in Sources */,
 				02479DE324BB0CF900DE978A /* App.swift in Sources */,
-				02479E3424BB14CF00DE978A /* WStrings.swift in Sources */,
 				02479DE124BB0CF900DE978A /* IconSource.swift in Sources */,
 				02479DED24BB0CF900DE978A /* AlarmScheduler.swift in Sources */,
 				02479E0024BB0D0400DE978A /* IconsTableViewController.swift in Sources */,
@@ -795,6 +801,7 @@
 				021309F0210A1D2E00410451 /* Director.swift in Sources */,
 				02867EBF21209D18004D3122 /* GoalViewPresenter.swift in Sources */,
 				020825F621246F24007578C7 /* TagList.swift in Sources */,
+				02479E3824BC767000DE978A /* Tweaks.swift in Sources */,
 				021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */,
 				02130A09210E100D00410451 /* IconsTablePresenter.swift in Sources */,
 				021309E9210A13F700410451 /* DataModel.xcdatamodeld in Sources */,
@@ -818,7 +825,6 @@
 				02E7A389237EFB6A003E2DF1 /* SceneDelegate.swift in Sources */,
 				027F63752105FF93001C9738 /* AppDelegate.swift in Sources */,
 				02130A05210CD65F00410451 /* Icon.swift in Sources */,
-				02479E3124BB149200DE978A /* FFStrings.swift in Sources */,
 				02990A6621270F4C00BF1CEC /* TagCloudView.swift in Sources */,
 				023B69AD24A65C2D000D45A0 /* DatePickerDialog.swift in Sources */,
 				02C5870221A712BD00DF6C36 /* MappingModel45.xcmappingmodel in Sources */,
@@ -899,7 +905,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tml.WDone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -923,7 +929,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tml.WDone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1065,7 +1071,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tml.FFDone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1089,7 +1095,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = tml.FFDone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

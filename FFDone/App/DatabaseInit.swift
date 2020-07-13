@@ -10,7 +10,7 @@ import Yams
 
 // Utilities to decode and populate the database with objects
 
-private extension Dictionary where Key == String, Value == Any {
+extension Dictionary where Key == String, Value == Any {
     func str(_ key: String) -> String {
         guard let value = self[key] as? String else {
             return ""
@@ -232,6 +232,10 @@ enum DatabaseObjects {
                 AlarmSet.shared = alarmSet
             }
         }
+    }
+
+    static func readTweaks() -> [String: Any]? {
+        readYaml(file: "DefaultTweaks").first
     }
 
     /// Create the global epoch we rely on having
