@@ -110,6 +110,7 @@ extension Alarm {
                 cdType = 5
                 cdWeekDay = Int16(day)
             }
+            // Check the constraint in the core data model....
         }
         get {
             switch cdType {

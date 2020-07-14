@@ -99,6 +99,11 @@
 		02479E3824BC767000DE978A /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02479E3724BC767000DE978A /* Tweaks.swift */; };
 		02479E3924BC767000DE978A /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02479E3724BC767000DE978A /* Tweaks.swift */; };
 		02479E3B24BC7AD600DE978A /* DefaultTweaks.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E3A24BC7AD600DE978A /* DefaultTweaks.yaml */; };
+		02479E4124BDB2E000DE978A /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D61305214589EE00BD9BA6 /* UserNotifications.framework */; };
+		02479E4224BDB2E000DE978A /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D61307214589EE00BD9BA6 /* UserNotificationsUI.framework */; };
+		02479E4C24BDB2E000DE978A /* WDoneNF.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02479E4024BDB2E000DE978A /* WDoneNF.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		02479E5124BDB32500DE978A /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D6130A214589EE00BD9BA6 /* NotificationViewController.swift */; };
+		02479E5224BDB33000DE978A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02D6130C214589EE00BD9BA6 /* MainInterface.storyboard */; };
 		0252C9752144289B00DC6D64 /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252C9742144289B00DC6D64 /* DebugViewController.swift */; };
 		0252C977214428CD00DC6D64 /* DebugPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252C976214428CD00DC6D64 /* DebugPresenter.swift */; };
 		0253339F2112FE3D00AF8E7B /* TMLPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */; };
@@ -151,6 +156,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		02479E4A24BDB2E000DE978A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 027F63692105FF93001C9738 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 02479E3F24BDB2E000DE978A;
+			remoteInfo = WDoneNF;
+		};
 		02D61310214589EE00BD9BA6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 027F63692105FF93001C9738 /* Project object */;
@@ -170,6 +182,17 @@
 				02479E1724BB0E9400DE978A /* TMLPresentation.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02479E5024BDB2E000DE978A /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				02479E4C24BDB2E000DE978A /* WDoneNF.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		025333A12112FE3D00AF8E7B /* Embed Frameworks */ = {
@@ -231,6 +254,8 @@
 		02479E3524BC761E00DE978A /* DefaultTweaks.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = DefaultTweaks.yaml; path = ../../../FFDoneResources/Resources/DefaultTweaks.yaml; sourceTree = "<group>"; };
 		02479E3724BC767000DE978A /* Tweaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweaks.swift; sourceTree = "<group>"; };
 		02479E3A24BC7AD600DE978A /* DefaultTweaks.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = DefaultTweaks.yaml; sourceTree = "<group>"; };
+		02479E4024BDB2E000DE978A /* WDoneNF.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WDoneNF.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		02479E4924BDB2E000DE978A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0252C9742144289B00DC6D64 /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		0252C976214428CD00DC6D64 /* DebugPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPresenter.swift; sourceTree = "<group>"; };
 		0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TMLPresentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -300,6 +325,15 @@
 				02479E1124BB0D4C00DE978A /* PieCharts.framework in Frameworks */,
 				02479E1324BB0D5300DE978A /* TMLPersistentContainer.framework in Frameworks */,
 				02479E1024BB0D4800DE978A /* DBSphereTagCloud_Framework.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02479E3D24BDB2E000DE978A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02479E4224BDB2E000DE978A /* UserNotificationsUI.framework in Frameworks */,
+				02479E4124BDB2E000DE978A /* UserNotifications.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +478,14 @@
 			path = ../../WDoneResources/Resources;
 			sourceTree = "<group>";
 		};
+		02479E4324BDB2E000DE978A /* WDoneNF */ = {
+			isa = PBXGroup;
+			children = (
+				02479E4924BDB2E000DE978A /* Info.plist */,
+			);
+			path = WDoneNF;
+			sourceTree = "<group>";
+		};
 		025333992112FB9A00AF8E7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -460,6 +502,7 @@
 				027F63732105FF93001C9738 /* FFDone */,
 				02D61309214589EE00BD9BA6 /* FFDoneNF */,
 				02479DC924BB0CC300DE978A /* WDone */,
+				02479E4324BDB2E000DE978A /* WDoneNF */,
 				027F63722105FF93001C9738 /* Products */,
 				02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */,
 				020825ED2122E0BD007578C7 /* PieCharts.framework */,
@@ -475,6 +518,7 @@
 				027F63712105FF93001C9738 /* FFDone.app */,
 				02D61304214589EE00BD9BA6 /* FFDoneNF.appex */,
 				02479DC824BB0CC300DE978A /* WDone.app */,
+				02479E4024BDB2E000DE978A /* WDoneNF.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -518,15 +562,34 @@
 				02479DC624BB0CC300DE978A /* Resources */,
 				02479E1524BB0DE400DE978A /* ShellScript */,
 				02479E1824BB0E9400DE978A /* Embed Frameworks */,
+				02479E5024BDB2E000DE978A /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				02479E4B24BDB2E000DE978A /* PBXTargetDependency */,
 			);
 			name = WDone;
 			productName = WDone;
 			productReference = 02479DC824BB0CC300DE978A /* WDone.app */;
 			productType = "com.apple.product-type.application";
+		};
+		02479E3F24BDB2E000DE978A /* WDoneNF */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02479E4D24BDB2E000DE978A /* Build configuration list for PBXNativeTarget "WDoneNF" */;
+			buildPhases = (
+				02479E3C24BDB2E000DE978A /* Sources */,
+				02479E3D24BDB2E000DE978A /* Frameworks */,
+				02479E3E24BDB2E000DE978A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WDoneNF;
+			productName = WDoneNF;
+			productReference = 02479E4024BDB2E000DE978A /* WDoneNF.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		027F63702105FF93001C9738 /* FFDone */ = {
 			isa = PBXNativeTarget;
@@ -579,6 +642,9 @@
 					02479DC724BB0CC300DE978A = {
 						CreatedOnToolsVersion = 12.0;
 					};
+					02479E3F24BDB2E000DE978A = {
+						CreatedOnToolsVersion = 12.0;
+					};
 					027F63702105FF93001C9738 = {
 						CreatedOnToolsVersion = 10.0;
 						LastSwiftMigration = 1020;
@@ -605,6 +671,7 @@
 				027F63702105FF93001C9738 /* FFDone */,
 				02D61303214589EE00BD9BA6 /* FFDoneNF */,
 				02479DC724BB0CC300DE978A /* WDone */,
+				02479E3F24BDB2E000DE978A /* WDoneNF */,
 			);
 		};
 /* End PBXProject section */
@@ -621,6 +688,14 @@
 				02479E2924BB120500DE978A /* Assets.xcassets in Resources */,
 				02479E0E24BB0D0B00DE978A /* Main.storyboard in Resources */,
 				02479E2A24BB120500DE978A /* DefaultIcons.yaml in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02479E3E24BDB2E000DE978A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02479E5224BDB33000DE978A /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -763,6 +838,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		02479E3C24BDB2E000DE978A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02479E5124BDB32500DE978A /* NotificationViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		027F636D2105FF93001C9738 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -834,6 +917,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		02479E4B24BDB2E000DE978A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 02479E3F24BDB2E000DE978A /* WDoneNF */;
+			targetProxy = 02479E4A24BDB2E000DE978A /* PBXContainerItemProxy */;
+		};
 		02D61311214589EE00BD9BA6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 02D61303214589EE00BD9BA6 /* FFDoneNF */;
@@ -872,6 +960,7 @@
 		02479DDA24BB0CC500DE978A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = TintColour;
 				CODE_SIGN_STYLE = Automatic;
@@ -896,6 +985,7 @@
 		02479DDB24BB0CC500DE978A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = TintColour;
 				CODE_SIGN_STYLE = Automatic;
@@ -914,6 +1004,46 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		02479E4E24BDB2E000DE978A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D243YH28Y6;
+				INFOPLIST_FILE = WDoneNF/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = tml.WDone.WDoneNF;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		02479E4F24BDB2E000DE978A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D243YH28Y6;
+				INFOPLIST_FILE = WDoneNF/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = tml.WDone.WDoneNF;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1101,7 +1231,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1123,7 +1253,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1135,6 +1265,15 @@
 			buildConfigurations = (
 				02479DDA24BB0CC500DE978A /* Debug */,
 				02479DDB24BB0CC500DE978A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		02479E4D24BDB2E000DE978A /* Build configuration list for PBXNativeTarget "WDoneNF" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02479E4E24BDB2E000DE978A /* Debug */,
+				02479E4F24BDB2E000DE978A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

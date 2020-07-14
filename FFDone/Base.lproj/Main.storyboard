@@ -342,7 +342,7 @@
         <!--AlarmEditViewController-->
         <scene sceneID="b5O-ee-nXH">
             <objects>
-                <tableViewController storyboardIdentifier="AlarmEditViewController" title="AlarmEditViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="I9K-HS-ZgR" customClass="AlarmEditViewController" customModule="FFDone" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AlarmEditViewController" title="AlarmEditViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="I9K-HS-ZgR" customClass="AlarmEditViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="cch-BG-GY3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
