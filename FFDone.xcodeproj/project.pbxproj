@@ -92,12 +92,8 @@
 		02479E1924BB0EBF00DE978A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027F637D2105FF95001C9738 /* LaunchScreen.storyboard */; };
 		02479E1A24BB0EC500DE978A /* MappingModel45.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 02C5870121A712BD00DF6C36 /* MappingModel45.xcmappingmodel */; };
 		02479E2724BB120500DE978A /* DefaultIconSources.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E1E24BB120500DE978A /* DefaultIconSources.yaml */; };
-		02479E2824BB120500DE978A /* DebugGoals.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E1F24BB120500DE978A /* DebugGoals.yaml */; };
 		02479E2924BB120500DE978A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02479E2024BB120500DE978A /* Assets.xcassets */; };
 		02479E2A24BB120500DE978A /* DefaultIcons.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E2124BB120500DE978A /* DefaultIcons.yaml */; };
-		02479E2B24BB120500DE978A /* DebugAlarms.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E2224BB120500DE978A /* DebugAlarms.yaml */; };
-		02479E2C24BB120500DE978A /* DebugEpochs.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E2324BB120500DE978A /* DebugEpochs.yaml */; };
-		02479E2E24BB120500DE978A /* DebugNotes.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E2524BB120500DE978A /* DebugNotes.yaml */; };
 		02479E2F24BB120500DE978A /* DefaultAlarmKinds.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E2624BB120500DE978A /* DefaultAlarmKinds.yaml */; };
 		02479E3624BC761E00DE978A /* DefaultTweaks.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E3524BC761E00DE978A /* DefaultTweaks.yaml */; };
 		02479E3824BC767000DE978A /* Tweaks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02479E3724BC767000DE978A /* Tweaks.swift */; };
@@ -229,12 +225,8 @@
 		02479DC824BB0CC300DE978A /* WDone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WDone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02479DD824BB0CC500DE978A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		02479E1E24BB120500DE978A /* DefaultIconSources.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = DefaultIconSources.yaml; sourceTree = "<group>"; };
-		02479E1F24BB120500DE978A /* DebugGoals.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = DebugGoals.yaml; sourceTree = "<group>"; };
 		02479E2024BB120500DE978A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02479E2124BB120500DE978A /* DefaultIcons.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = DefaultIcons.yaml; sourceTree = "<group>"; };
-		02479E2224BB120500DE978A /* DebugAlarms.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = DebugAlarms.yaml; sourceTree = "<group>"; };
-		02479E2324BB120500DE978A /* DebugEpochs.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = DebugEpochs.yaml; sourceTree = "<group>"; };
-		02479E2524BB120500DE978A /* DebugNotes.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = DebugNotes.yaml; sourceTree = "<group>"; };
 		02479E2624BB120500DE978A /* DefaultAlarmKinds.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = DefaultAlarmKinds.yaml; sourceTree = "<group>"; };
 		02479E3524BC761E00DE978A /* DefaultTweaks.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = DefaultTweaks.yaml; path = ../../../FFDoneResources/Resources/DefaultTweaks.yaml; sourceTree = "<group>"; };
 		02479E3724BC767000DE978A /* Tweaks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tweaks.swift; sourceTree = "<group>"; };
@@ -447,10 +439,6 @@
 				02479E1E24BB120500DE978A /* DefaultIconSources.yaml */,
 				02479E2624BB120500DE978A /* DefaultAlarmKinds.yaml */,
 				02479E3A24BC7AD600DE978A /* DefaultTweaks.yaml */,
-				02479E1F24BB120500DE978A /* DebugGoals.yaml */,
-				02479E2224BB120500DE978A /* DebugAlarms.yaml */,
-				02479E2324BB120500DE978A /* DebugEpochs.yaml */,
-				02479E2524BB120500DE978A /* DebugNotes.yaml */,
 			);
 			name = Resources;
 			path = ../../WDoneResources/Resources;
@@ -626,16 +614,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02479E2B24BB120500DE978A /* DebugAlarms.yaml in Resources */,
 				02479E1924BB0EBF00DE978A /* LaunchScreen.storyboard in Resources */,
-				02479E2824BB120500DE978A /* DebugGoals.yaml in Resources */,
 				02479E3B24BC7AD600DE978A /* DefaultTweaks.yaml in Resources */,
 				02479E2724BB120500DE978A /* DefaultIconSources.yaml in Resources */,
-				02479E2C24BB120500DE978A /* DebugEpochs.yaml in Resources */,
 				02479E2F24BB120500DE978A /* DefaultAlarmKinds.yaml in Resources */,
 				02479E2924BB120500DE978A /* Assets.xcassets in Resources */,
 				02479E0E24BB0D0B00DE978A /* Main.storyboard in Resources */,
-				02479E2E24BB120500DE978A /* DebugNotes.yaml in Resources */,
 				02479E2A24BB120500DE978A /* DefaultIcons.yaml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
