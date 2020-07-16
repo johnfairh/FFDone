@@ -20,6 +20,10 @@ private extension IndexPath {
     var isDebugRow: Bool {
         return section == 1 && row == 0
     }
+
+    var isEpochsRow: Bool {
+        return section == 2 && row == 0
+    }
 }
 
 /// VC for settings window
@@ -86,7 +90,7 @@ class SettingsViewController: PresentableBasicTableVC<SettingsPresenterInterface
 
     // Allow rows to highlight if they do things
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return indexPath.isDebugRow || indexPath.isEpochDateRow
+        return indexPath.isDebugRow || indexPath.isEpochDateRow || indexPath.isEpochsRow
     }
 
     // Take the row action
@@ -102,6 +106,9 @@ class SettingsViewController: PresentableBasicTableVC<SettingsPresenterInterface
             Dispatch.toForegroundAfter(milliseconds: 100) {
                 self.tableView.clearSelection()
             }
+        }
+        else if indexPath.isEpochsRow {
+            presenter.showEpochs()
         }
     }
 }

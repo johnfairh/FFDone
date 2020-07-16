@@ -265,6 +265,31 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="9Df-jT-k9n">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="44" id="SgH-s2-SPv">
+                                        <rect key="frame" x="0.0" y="266" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SgH-s2-SPv" id="KsA-jx-rDO">
+                                            <rect key="frame" x="0.0" y="0.0" width="348" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Epochs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QLm-6h-waR">
+                                                    <rect key="frame" x="16" y="11" width="324" height="22"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="QLm-6h-waR" firstAttribute="top" secondItem="KsA-jx-rDO" secondAttribute="topMargin" id="2yu-ne-5TE"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="QLm-6h-waR" secondAttribute="trailing" id="SZn-Qx-RKW"/>
+                                                <constraint firstItem="QLm-6h-waR" firstAttribute="leading" secondItem="KsA-jx-rDO" secondAttribute="leadingMargin" id="dzy-8Q-d4N"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="QLm-6h-waR" secondAttribute="bottom" id="qSh-7z-QXj"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="xU6-0V-2nv" id="njA-N7-Bh7"/>
@@ -283,11 +308,38 @@
                         <outlet property="epochStartDatePicker" destination="zqL-C9-F0q" id="tsO-3g-8Qi"/>
                         <outlet property="epochStartLabel" destination="Zbv-1c-GLg" id="CUW-Bj-Pmm"/>
                         <segue destination="vZR-AE-2cT" kind="show" identifier="DummyDebugSegue" id="LPr-Qa-zOG"/>
+                        <segue destination="Q1I-fJ-WyD" kind="show" identifier="dummyepochs" id="qbT-ee-0LJ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aPL-Ai-L9J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-362" y="1881"/>
+        </scene>
+        <!--Epochs List View Controller-->
+        <scene sceneID="8yT-ht-1WL">
+            <objects>
+                <collectionViewController storyboardIdentifier="EpochsListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Q1I-fJ-WyD" customClass="EpochsListViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="HhR-At-yV3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZaI-Ab-w4O">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="Q1I-fJ-WyD" id="6T1-mi-EUI"/>
+                            <outlet property="delegate" destination="Q1I-fJ-WyD" id="1vg-CT-C17"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="11M-bj-e8G"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SUu-bP-LBG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-365" y="2547"/>
         </scene>
         <!--AlarmsTableViewController-->
         <scene sceneID="f7m-yy-PKL">

@@ -21,6 +21,9 @@ protocol SettingsPresenterInterface {
     /// Request debug window
     func showDebug()
 
+    /// Request epochs list
+    func showEpochs()
+
     /// Dismiss settings
     func close()
 }
@@ -94,6 +97,10 @@ class SettingsPresenter: Presenter, SettingsPresenterInterface {
     /// Request debug window
     func showDebug() {
         director.request(.showDebugConsole)
+    }
+
+    func showEpochs() {
+        director.request(.showEpochs)
     }
 
     func close() {

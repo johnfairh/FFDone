@@ -48,6 +48,7 @@ enum DirectorRequest {
 
     case showDebugConsole
     case showSettings
+    case showEpochs
 }
 
 protocol DirectorInterface {
@@ -283,6 +284,10 @@ extension DirectorRequest {
                                  model: director.rootModel,
                                  presenterFn: SettingsPresenter.init,
                                  done: {})
+        case .showEpochs:
+            services.showNormally("EpochsListViewController",
+                                  model: director.rootModel,
+                                  presenterFn: EpochsListPresenter.init)
         }
     }
 }
