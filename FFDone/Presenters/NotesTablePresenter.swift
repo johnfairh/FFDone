@@ -15,7 +15,7 @@ protocol NotesTablePresenterInterface: TablePresenterInterface {
     func updateSearchResults(text: String)
     func reverseNoteOrder()
 
-    func sectionIndexFor(date: Date) -> Int
+    func sectionIndexFor(date: Date) -> Int?
 }
 
 // MARK: - Presenter
@@ -64,10 +64,10 @@ class NotesTablePresenter: TablePresenter<DirectorInterface>, Presenter, NotesTa
 
     // MARK: - Jump-to-date
 
-    func sectionIndexFor(date: Date) -> Int {
+    func sectionIndexFor(date: Date) -> Int? {
         guard let sections = currentResults.sections,
             sections.count > 1 else {
-                return 0
+                return nil
         }
 
         let dayStamp = Note.dateToDayStamp(date: date)

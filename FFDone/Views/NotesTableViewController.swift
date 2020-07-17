@@ -92,8 +92,9 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
     }
 
     private func jumpTo(date: Date) {
-        let sectionIndex = presenter.sectionIndexFor(date: date)
-        tableView.scrollToRow(at: IndexPath(row: 0, section: sectionIndex), at: .top, animated: true)
+        if let sectionIndex = presenter.sectionIndexFor(date: date) {
+            tableView.scrollToRow(at: IndexPath(row: 0, section: sectionIndex), at: .top, animated: true)
+        }
     }
 
     @IBAction func didTapReverseButton(_ sender: UIBarButtonItem) {
