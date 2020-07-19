@@ -10,10 +10,14 @@
 struct Tweaks {
     let stateRestorationKey: String
     let epochImageHeight: Int
+    let globalEpochName: String
 
-    private init(stateRestorationKey: String = "", epochImageHeight: Int = 0) {
+    private init(stateRestorationKey: String = "",
+                 epochImageHeight: Int = 0,
+                 globalEpochName: String = "") {
         self.stateRestorationKey = stateRestorationKey
         self.epochImageHeight = epochImageHeight
+        self.globalEpochName = globalEpochName
     }
 
     static var shared = Tweaks()

@@ -211,7 +211,11 @@ enum DatabaseObjects {
         let defs = readYaml(file: "DebugEpochs")
 
         if let def = defs.first {
-            let epoch = Epoch.createWithDefaults(model: model)
+            let epoch = Epoch.create(model: model,
+                                     shortName: def.str("shortname"),
+                                     longName: def.str("longname"),
+                                     majorVersion: def.int("majorversion"),
+                                     minorVersion: def.int("minorversion"))
             epoch.startDate = def.date("startDate")
         }
     }
@@ -240,8 +244,7 @@ enum DatabaseObjects {
 
     /// Create the global epoch we rely on having
     static func createGlobalEpoch(model: Model) {
-        let epoch = Epoch.createWithDefaults(model: model)
-        epoch.startDate = .distantPast
+        let epoch = Epoch.createGlobal(model: model, longName: Tweaks.shared.globalEpochName)
         Log.assert(epoch.sortOrder == 1)
     }
 

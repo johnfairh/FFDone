@@ -9,7 +9,7 @@ import TMLPresentation
 
 extension Epoch : ModelObject {
     /// Framework default sort order for find/query
-    public static let defaultSortDescriptor = NSSortDescriptor(key: "cdStartDate", ascending: true)
+    public static let defaultSortDescriptor = NSSortDescriptor(key: #keyPath(cdStartDate), ascending: true)
 
     /// This is more of a uniquing key.
     static let primarySortOrder = ModelSortOrder(keyName: "sortOrder")
@@ -20,6 +20,23 @@ extension Epoch : ModelObject {
         epoch.startDate = Date()
         epoch.endDate = .distantFuture
         epoch.sortOrder = getNextSortOrderValue(primarySortOrder, from: model)
+        return epoch
+    }
+
+    /// Custom properties
+    static func create(model: Model, shortName: String, longName: String, majorVersion: Int, minorVersion: Int) -> Epoch {
+        let epoch = createWithDefaults(model: model)
+        epoch.cdShortName = shortName
+        epoch.cdLongName = longName
+        epoch.minorVersion = Int64(minorVersion)
+        epoch.majorVersion = Int64(majorVersion)
+        return epoch
+    }
+
+    /// Special global epoch
+    static func createGlobal(model: Model, longName: String) -> Epoch {
+        let epoch = create(model: model, shortName: "All", longName: longName, majorVersion: 1, minorVersion: 0)
+        epoch.startDate = .distantPast
         return epoch
     }
 }
@@ -48,10 +65,34 @@ extension Epoch {
     }
 }
 
-// MARK: - Name, kludge-o
+// MARK: - Version
 
 extension Epoch {
-    var name: String {
-        sortOrder == 1 ? "All" : "SHB"
+    var versionText: String {
+        "\(majorVersion).\(minorVersion)"
+    }
+}
+
+// MARK: - Names
+
+extension Epoch {
+    var shortName: String {
+        cdShortName ?? ""
+    }
+
+    var longName: String {
+        cdLongName ?? ""
+    }
+}
+
+// MARK: - Latest
+
+extension Epoch {
+    static func mostRecent(in model: Model) -> Epoch {
+        let results = createAllResults(model: model)
+        guard let epoch = results.fetchedObjects?.last as? Epoch else {
+            Log.fatal("Missing any epochs")
+        }
+        return epoch
     }
 }

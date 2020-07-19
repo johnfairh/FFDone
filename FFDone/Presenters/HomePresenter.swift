@@ -183,7 +183,7 @@ class HomePresenter: Presenter, HomePresenterInterface {
     func displayTag(_ tag: String) {
         let data = GoalsTableInvocationData(from: epoch.startDate,
                                             tagged: tag,
-                                            epochName: epoch.name)
+                                            epochName: epoch.shortName)
         director.request(.switchToGoals(data))
     }
 

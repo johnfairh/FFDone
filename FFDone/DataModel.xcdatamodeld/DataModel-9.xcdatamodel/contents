@@ -18,7 +18,11 @@
     </entity>
     <entity name="Epoch" representedClassName=".Epoch" syncable="YES" codeGenerationType="class">
         <attribute name="cdEndDate" attributeType="Date" usesScalarValueType="YES"/>
+        <attribute name="cdLongName" attributeType="String"/>
+        <attribute name="cdShortName" attributeType="String"/>
         <attribute name="cdStartDate" attributeType="Date" usesScalarValueType="YES"/>
+        <attribute name="majorVersion" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="minorVersion" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
         <fetchIndex name="BySortOrder">
             <fetchIndexElement property="cdStartDate" type="Binary" order="ascending"/>
@@ -65,7 +69,7 @@
     </entity>
     <elements>
         <element name="Alarm" positionX="-54" positionY="72" width="128" height="193"/>
-        <element name="Epoch" positionX="-54" positionY="108" width="128" height="90"/>
+        <element name="Epoch" positionX="-54" positionY="108" width="128" height="148"/>
         <element name="Goal" positionX="-63" positionY="-18" width="128" height="210"/>
         <element name="Icon" positionX="-54" positionY="36" width="128" height="135"/>
         <element name="Note" positionX="-54" positionY="63" width="128" height="150"/>
