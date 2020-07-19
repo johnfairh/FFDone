@@ -6,7 +6,7 @@
         <attribute name="cdWeekDay" attributeType="Integer 16" minValueString="1" maxValueString="7" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String" minValueString="1"/>
         <attribute name="notificationUid" optional="YES" attributeType="String"/>
-        <attribute name="sectionOrder" transient="YES" attributeType="String"/>
+        <attribute name="sectionOrder" optional="YES" transient="YES" attributeType="String"/>
         <attribute name="sortOrder" attributeType="Integer 64" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="activeNote" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Note" inverseName="activeAlarm" inverseEntity="Note"/>
         <relationship name="defaultNote" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Note" inverseName="defaultAlarm" inverseEntity="Note"/>

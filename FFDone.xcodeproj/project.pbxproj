@@ -28,6 +28,8 @@
 		02130A0B210E113600410451 /* IconsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A0A210E113600410451 /* IconsTableViewController.swift */; };
 		02130A0D210F773A00410451 /* GoalEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A0C210F773A00410451 /* GoalEditViewController.swift */; };
 		02130A0F210F777400410451 /* GoalEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A0E210F777400410451 /* GoalEditPresenter.swift */; };
+		0220241A24C447C100961DEC /* MappingModel89.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0220241924C447C100961DEC /* MappingModel89.xcmappingmodel */; };
+		0220241B24C447C100961DEC /* MappingModel89.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0220241924C447C100961DEC /* MappingModel89.xcmappingmodel */; };
 		023B69AD24A65C2D000D45A0 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023B69AC24A65C2D000D45A0 /* DatePickerDialog.swift */; };
 		02479DC124B8816D00DE978A /* WowIconSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02479DC024B8816D00DE978A /* WowIconSources.swift */; };
 		02479DC324B891C200DE978A /* DefaultAlarmKinds.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479DC224B891C200DE978A /* DefaultAlarmKinds.yaml */; };
@@ -246,6 +248,7 @@
 		02130A0C210F773A00410451 /* GoalEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditViewController.swift; sourceTree = "<group>"; };
 		02130A0E210F777400410451 /* GoalEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditPresenter.swift; sourceTree = "<group>"; };
 		0220241824C4391C00961DEC /* DataModel-9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-9.xcdatamodel"; sourceTree = "<group>"; };
+		0220241924C447C100961DEC /* MappingModel89.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MappingModel89.xcmappingmodel; sourceTree = "<group>"; };
 		023966D8227DC039000F647E /* DataModel-8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-8.xcdatamodel"; sourceTree = "<group>"; };
 		023B69AC24A65C2D000D45A0 /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
 		02479DC024B8816D00DE978A /* WowIconSources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WowIconSources.swift; sourceTree = "<group>"; };
@@ -542,6 +545,7 @@
 				027F63782105FF94001C9738 /* Main.storyboard */,
 				027F637D2105FF95001C9738 /* LaunchScreen.storyboard */,
 				02C5870121A712BD00DF6C36 /* MappingModel45.xcmappingmodel */,
+				0220241924C447C100961DEC /* MappingModel89.xcmappingmodel */,
 				021309E7210A13F700410451 /* DataModel.xcdatamodeld */,
 				021309F9210B5DF300410451 /* Resources */,
 				027F63802105FF95001C9738 /* Info.plist */,
@@ -832,6 +836,7 @@
 				02479DF924BB0CFE00DE978A /* DebugPresenter.swift in Sources */,
 				02479DE524BB0CF900DE978A /* AppDelegate.swift in Sources */,
 				02479DF324BB0CFE00DE978A /* AlarmEditPresenter.swift in Sources */,
+				0220241B24C447C100961DEC /* MappingModel89.xcmappingmodel in Sources */,
 				02479DEB24BB0CF900DE978A /* DatabaseInit.swift in Sources */,
 				02479DDC24BB0CF300DE978A /* Icon.swift in Sources */,
 				02479E0924BB0D0400DE978A /* HomeViewController.swift in Sources */,
@@ -902,6 +907,7 @@
 				020825EA2122C7AA007578C7 /* GoalNotesTableViewController.swift in Sources */,
 				02867EA32119ED7D004D3122 /* Note.swift in Sources */,
 				0270F7BE214D5563004BC1EF /* ColorHelpers.swift in Sources */,
+				0220241A24C447C100961DEC /* MappingModel89.xcmappingmodel in Sources */,
 				02E7A389237EFB6A003E2DF1 /* SceneDelegate.swift in Sources */,
 				027F63752105FF93001C9738 /* AppDelegate.swift in Sources */,
 				02130A05210CD65F00410451 /* Icon.swift in Sources */,

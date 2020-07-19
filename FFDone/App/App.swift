@@ -13,7 +13,7 @@ import TMLPresentation
 final class App {
 
     #if targetEnvironment(simulator)
-    static let debugMode = true
+    static let debugMode = false
     #else
     static let debugMode = false
     #endif

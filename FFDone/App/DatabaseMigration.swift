@@ -46,3 +46,40 @@ class AlarmMigrationPolicy4to5: NSEntityMigrationPolicy {
         return note
     }
 }
+
+// MARK: - 8->9
+
+// Version 9 adds full-fat epochs.  We hard-code the migration details here.
+
+class EpochMigrationPolicy8to9: NSEntityMigrationPolicy {
+    override func createRelationships(forDestination dInstance: NSManagedObject,
+                                      in mapping: NSEntityMapping,
+                                      manager: NSMigrationManager) throws {
+        try super.createRelationships(forDestination: dInstance, in: mapping, manager: manager)
+
+        let shortName: String
+        let longName: String
+        let majorVersion: Int64
+
+        guard let epochId = dInstance.value(forKey: #keyPath(Epoch.sortOrder)) as? Int64 else {
+            preconditionFailure("Missing epoch during migration: \(dInstance)")
+        }
+        switch epochId {
+        case 1:
+            shortName = "All"
+            longName = "Final Fantasy XIV"
+            majorVersion = 2
+        case 2:
+            shortName = "SHB"
+            longName = "Shadowbringers"
+            majorVersion = 5
+        default:
+            preconditionFailure("Bad epoch during migration: \(epochId)")
+        }
+
+        dInstance.setValue(shortName, forKey: #keyPath(Epoch.cdShortName))
+        dInstance.setValue(longName, forKey: #keyPath(Epoch.cdLongName))
+        dInstance.setValue(majorVersion, forKey: #keyPath(Epoch.majorVersion))
+        dInstance.setValue(0, forKey: #keyPath(Epoch.minorVersion))
+    }
+}
