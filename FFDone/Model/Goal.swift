@@ -364,36 +364,41 @@ extension Goal {
 
     /// Date filtering helpers
 
-    private static func findDateFilterPredicate(date: Date) -> NSPredicate {
-        NSPredicate(format: "\(#keyPath(cdCreationDate)) >= %@", date as NSDate)
+    private static func findEpochDateFilterPredicate(epoch: Epoch) -> NSPredicate {
+        NSCompoundPredicate(andPredicateWithSubpredicates: [
+            NSPredicate(format: "\(#keyPath(cdCreationDate)) >= %@", epoch.startDate as NSDate),
+            NSPredicate(format: "\(#keyPath(cdCreationDate)) < %@", epoch.endDate as NSDate)
+        ])
     }
 
-    private static func filter(predicate: NSPredicate, by date: Date?) -> NSPredicate {
-        guard let date = date else {
+    private static func filter(predicate: NSPredicate, by epoch: Epoch?) -> NSPredicate {
+        guard let epoch = epoch else {
             return predicate
         }
-        let datePredicate = findDateFilterPredicate(date: date)
-        return NSCompoundPredicate(andPredicateWithSubpredicates: [datePredicate, predicate])
+        return NSCompoundPredicate(andPredicateWithSubpredicates: [
+            predicate,
+            findEpochDateFilterPredicate(epoch: epoch)
+        ])
     }
 
     /// Query - search by name
-    static func searchByNameSortedResultsSet(model: Model, date: Date?, name: String) -> ModelResultsSet {
+    static func searchByNameSortedResultsSet(model: Model, epoch: Epoch?, name: String) -> ModelResultsSet {
         sectionatedResultsSet(model: model,
-                              predicate: filter(predicate: getNameMatchPredicate(name: name), by: date))
+                              predicate: filter(predicate: getNameMatchPredicate(name: name), by: epoch))
     }
 
     /// Query - search by tag
-    static func searchByTagSortedResultsSet(model: Model, date: Date?, tag: String) -> ModelResultsSet {
+    static func searchByTagSortedResultsSet(model: Model, epoch: Epoch?, tag: String) -> ModelResultsSet {
         sectionatedResultsSet(model: model,
-                              predicate: filter(predicate: getTagMatchPredicate(query: tag), by: date))
+                              predicate: filter(predicate: getTagMatchPredicate(query: tag), by: epoch))
     }
 
     /// Query - search by either
-    static func searchByAnythingSortedResultsSet(model: Model, date: Date?, text: String) -> ModelResultsSet {
+    static func searchByAnythingSortedResultsSet(model: Model, epoch: Epoch?, text: String) -> ModelResultsSet {
         let namePredicate = getNameMatchPredicate(name: text)
         let tagPredicate = getTagMatchPredicate(query: text)
         let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [namePredicate, tagPredicate])
-        return sectionatedResultsSet(model: model, predicate: filter(predicate: orPredicate, by: date))
+        return sectionatedResultsSet(model: model, predicate: filter(predicate: orPredicate, by: epoch))
     }
 
     /// Carefully sorted order to drive main table
@@ -420,11 +425,8 @@ extension Goal {
 
     private static func createTagsFieldFetchRequest(predicate: NSPredicate? = nil, in epoch: Epoch? = nil) -> ModelFieldFetchRequest {
         var pred = predicate
-        if let predicate = predicate {
-            if let epoch = epoch {
-                let terms = [predicate, findDateFilterPredicate(date: epoch.startDate)]
-                pred = NSCompoundPredicate.init(andPredicateWithSubpredicates: terms)
-            }
+        if let predicate = predicate, let epoch = epoch {
+            pred = filter(predicate: predicate, by: epoch)
         }
         return createFieldFetchRequest(predicate: pred, fields: [#keyPath(tag)], unique: true)
     }
@@ -475,7 +477,7 @@ extension Goal {
         let currentSumDescr = getSumExpressionDescription(keyPath: #keyPath(cdCurrentSteps),
                                                           sumFieldName: currentSumName)
 
-        return createFieldFetchRequest(predicate: findDateFilterPredicate(date: epoch.startDate),
+        return createFieldFetchRequest(predicate: findEpochDateFilterPredicate(epoch: epoch),
                                        fields: [totalSumDescr, currentSumDescr])
     }
 

@@ -150,8 +150,8 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
 
     /// The actual search prompt
     public override func updateTableForSearch(tokens: [UISearchToken], text: String, scopeIndex: Int) {
-        let date = tokens.first.flatMap { $0.representedDate }
-        presenter.updateSearchResults(date: date, text: text, type: GoalsTableSearchType(rawValue: scopeIndex) ?? .both)
+        let epoch = tokens.first.flatMap { $0.representedEpoch }
+        presenter.updateSearchResults(epoch: epoch, text: text, type: GoalsTableSearchType(rawValue: scopeIndex) ?? .both)
     }
 
     /// API up from `GoalTableCell` to implement the filter-by-tag usecase when a tag
@@ -161,19 +161,19 @@ class GoalsTableViewController: PresentableTableVC<GoalsTablePresenter>,
     }
 
     func doInvocationSearch(data: GoalsTableInvocationData) {
-        let token = UISearchToken(date: data.date, epochName: data.epochName)
+        let token = UISearchToken(epoch: data.epoch)
         invokeSearch(tokens: [token], text: Goal.queryStringForExactTag(data.tag), scopeIndex: GoalsTableSearchType.tag.rawValue)
     }
 }
 
 /// Helpers for our epoch search tokens.
 extension UISearchToken {
-    convenience init(date: Date, epochName: String) {
-        self.init(icon: UIImage(systemName: "calendar.circle"), text: epochName)
-        representedObject = date
+    convenience init(epoch: Epoch) {
+        self.init(icon: UIImage(systemName: "calendar.circle"), text: epoch.shortName)
+        representedObject = epoch
     }
 
-    var representedDate: Date {
-        representedObject as! Date
+    var representedEpoch: Epoch {
+        representedObject as! Epoch
     }
 }

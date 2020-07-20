@@ -22,7 +22,7 @@ protocol GoalsTablePresenterInterface: TablePresenterInterface {
     func swipeActionForGoal(_ goal: Goal) -> TableSwipeAction?
 
     var tags: [String] { get }
-    func updateSearchResults(date: Date?, text: String, type: GoalsTableSearchType)
+    func updateSearchResults(epoch: Epoch?, text: String, type: GoalsTableSearchType)
 
     var invokeSearch: (GoalsTableInvocationData) -> Void { get set }
 }
@@ -36,14 +36,12 @@ enum GoalsTableSearchType: Int {
 
 /// Packet passed from elsewhere to set the default search
 struct GoalsTableInvocationData {
-    let date: Date
+    let epoch: Epoch
     let tag: String
-    let epochName: String
 
-    init(from date: Date, tagged tag: String, epochName: String) {
-        self.date = date
+    init(epoch: Epoch, tagged tag: String) {
+        self.epoch = epoch
         self.tag = tag
-        self.epochName = epochName
     }
 }
 
@@ -158,15 +156,15 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
         return director.tags
     }
 
-    func updateSearchResults(date: Date?, text: String, type: GoalsTableSearchType) {
+    func updateSearchResults(epoch: Epoch?, text: String, type: GoalsTableSearchType) {
         handleSearchUpdate(text: text) {
             switch type {
             case .both:
-                return Goal.searchByAnythingSortedResultsSet(model: self.model, date: date, text: text)
+                return Goal.searchByAnythingSortedResultsSet(model: self.model, epoch: epoch, text: text)
             case .name:
-                return Goal.searchByNameSortedResultsSet(model: self.model, date: date, name: text)
+                return Goal.searchByNameSortedResultsSet(model: self.model, epoch: epoch, name: text)
             case .tag:
-                return Goal.searchByTagSortedResultsSet(model: self.model, date: date, tag: text)
+                return Goal.searchByTagSortedResultsSet(model: self.model, epoch: epoch, tag: text)
             }
         }
     }
