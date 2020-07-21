@@ -75,6 +75,9 @@ protocol HomePresenterInterface {
     /// Get the heading image ID
     var headingImageId: Int { get }
 
+    /// Get the heading overlay text
+    var headingOverlayText: String? { get }
+
     /// Drill down into a tag
     func displayTag(_ tag: String)
 
@@ -128,6 +131,10 @@ class HomePresenter: Presenter, HomePresenterInterface {
 
     var headingImageId: Int {
         return Int(epoch.sortOrder)
+    }
+
+    var headingOverlayText: String? {
+        epoch.isGlobal ? nil : epoch.versionText
     }
 
     // MARK: - Steps + Tags

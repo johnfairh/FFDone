@@ -34,10 +34,16 @@ extension Epoch : ModelObject {
     }
 
     /// Special global epoch
+    private static var globalShortName = "All"
+
     static func createGlobal(model: Model, longName: String) -> Epoch {
-        let epoch = create(model: model, shortName: "All", longName: longName, majorVersion: 1, minorVersion: 0)
+        let epoch = create(model: model, shortName: globalShortName, longName: longName, majorVersion: 1, minorVersion: 0)
         epoch.startDate = .distantPast
         return epoch
+    }
+
+    var isGlobal: Bool {
+        shortName == Epoch.globalShortName && sortOrder == 1
     }
 }
 
