@@ -30,6 +30,10 @@
 		02130A0F210F777400410451 /* GoalEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A0E210F777400410451 /* GoalEditPresenter.swift */; };
 		0220241A24C447C100961DEC /* MappingModel89.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0220241924C447C100961DEC /* MappingModel89.xcmappingmodel */; };
 		0220241B24C447C100961DEC /* MappingModel89.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0220241924C447C100961DEC /* MappingModel89.xcmappingmodel */; };
+		0220241D24C6E8C100961DEC /* EpochEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220241C24C6E8C100961DEC /* EpochEditViewController.swift */; };
+		0220241E24C6E8C100961DEC /* EpochEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220241C24C6E8C100961DEC /* EpochEditViewController.swift */; };
+		0220242024C6E98D00961DEC /* EpochEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220241F24C6E98D00961DEC /* EpochEditPresenter.swift */; };
+		0220242124C6E98D00961DEC /* EpochEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220241F24C6E98D00961DEC /* EpochEditPresenter.swift */; };
 		023B69AD24A65C2D000D45A0 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023B69AC24A65C2D000D45A0 /* DatePickerDialog.swift */; };
 		02479DC124B8816D00DE978A /* WowIconSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02479DC024B8816D00DE978A /* WowIconSources.swift */; };
 		02479DC324B891C200DE978A /* DefaultAlarmKinds.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479DC224B891C200DE978A /* DefaultAlarmKinds.yaml */; };
@@ -249,6 +253,8 @@
 		02130A0E210F777400410451 /* GoalEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditPresenter.swift; sourceTree = "<group>"; };
 		0220241824C4391C00961DEC /* DataModel-9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-9.xcdatamodel"; sourceTree = "<group>"; };
 		0220241924C447C100961DEC /* MappingModel89.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MappingModel89.xcmappingmodel; sourceTree = "<group>"; };
+		0220241C24C6E8C100961DEC /* EpochEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochEditViewController.swift; sourceTree = "<group>"; };
+		0220241F24C6E98D00961DEC /* EpochEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochEditPresenter.swift; sourceTree = "<group>"; };
 		023966D8227DC039000F647E /* DataModel-8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-8.xcdatamodel"; sourceTree = "<group>"; };
 		023B69AC24A65C2D000D45A0 /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
 		02479DC024B8816D00DE978A /* WowIconSources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WowIconSources.swift; sourceTree = "<group>"; };
@@ -420,6 +426,7 @@
 				02990A7221303A7F00BF1CEC /* AlarmEditPresenter.swift */,
 				02867EAF211C99A9004D3122 /* NoteEditPresenter.swift */,
 				02867EB6211F37E0004D3122 /* IconEditPresenter.swift */,
+				0220241F24C6E98D00961DEC /* EpochEditPresenter.swift */,
 				020825F12122E310007578C7 /* HomePresenter.swift */,
 				02F85F6722784D8F00E34E2C /* SettingsPresenter.swift */,
 				0252C976214428CD00DC6D64 /* DebugPresenter.swift */,
@@ -441,6 +448,7 @@
 				02990A7421303BEA00BF1CEC /* AlarmEditViewController.swift */,
 				02867EAD211C996F004D3122 /* NoteEditViewController.swift */,
 				02867EB4211F37B7004D3122 /* IconEditViewController.swift */,
+				0220241C24C6E8C100961DEC /* EpochEditViewController.swift */,
 				020825EF2122E2D8007578C7 /* HomeViewController.swift */,
 				02990A6521270F4C00BF1CEC /* TagCloudView.swift */,
 				02F85F6522784D2700E34E2C /* SettingsViewController.swift */,
@@ -802,6 +810,7 @@
 				02479DFF24BB0D0400DE978A /* GoalViewController.swift in Sources */,
 				02479E0724BB0D0400DE978A /* AlarmViewController.swift in Sources */,
 				02479DE724BB0CF900DE978A /* WowIconSources.swift in Sources */,
+				0220241E24C6E8C100961DEC /* EpochEditViewController.swift in Sources */,
 				02479E0224BB0D0400DE978A /* DatePickerDialog.swift in Sources */,
 				02479DF624BB0CFE00DE978A /* GoalNotesTablePresenter.swift in Sources */,
 				02479E0124BB0D0400DE978A /* NoteEditViewController.swift in Sources */,
@@ -842,6 +851,7 @@
 				02479E0924BB0D0400DE978A /* HomeViewController.swift in Sources */,
 				02479DF724BB0CFE00DE978A /* NoteEditPresenter.swift in Sources */,
 				02479DEC24BB0CF900DE978A /* Director.swift in Sources */,
+				0220242124C6E98D00961DEC /* EpochEditPresenter.swift in Sources */,
 				02479DF824BB0CFE00DE978A /* NotesTablePresenter.swift in Sources */,
 				02479E0C24BB0D0400DE978A /* DebugViewController.swift in Sources */,
 				02479E1A24BB0EC500DE978A /* MappingModel45.xcmappingmodel in Sources */,
@@ -873,6 +883,7 @@
 				02130A01210B6B7C00410451 /* DatabaseInit.swift in Sources */,
 				02479DC124B8816D00DE978A /* WowIconSources.swift in Sources */,
 				02130A0F210F777400410451 /* GoalEditPresenter.swift in Sources */,
+				0220241D24C6E8C100961DEC /* EpochEditViewController.swift in Sources */,
 				0252C977214428CD00DC6D64 /* DebugPresenter.swift in Sources */,
 				02867EAE211C996F004D3122 /* NoteEditViewController.swift in Sources */,
 				02F85F642278402E00E34E2C /* Epoch.swift in Sources */,
@@ -913,6 +924,7 @@
 				02130A05210CD65F00410451 /* Icon.swift in Sources */,
 				02990A6621270F4C00BF1CEC /* TagCloudView.swift in Sources */,
 				023B69AD24A65C2D000D45A0 /* DatePickerDialog.swift in Sources */,
+				0220242024C6E98D00961DEC /* EpochEditPresenter.swift in Sources */,
 				02C5870221A712BD00DF6C36 /* MappingModel45.xcmappingmodel in Sources */,
 				02990A71212DB74B00BF1CEC /* AlarmScheduler.swift in Sources */,
 				021309F6210A300B00410451 /* GoalsTableViewController.swift in Sources */,

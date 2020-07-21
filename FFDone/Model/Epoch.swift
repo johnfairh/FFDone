@@ -33,6 +33,10 @@ extension Epoch : ModelObject {
         return epoch
     }
 
+    var canSave: Bool {
+        !shortName.isEmpty && !longName.isEmpty && majorVersion > 0
+    }
+
     /// Special global epoch
     private static var globalShortName = "All"
 
@@ -84,11 +88,21 @@ extension Epoch {
 
 extension Epoch {
     var shortName: String {
-        cdShortName ?? ""
+        get {
+            cdShortName ?? ""
+        }
+        set {
+            cdShortName = newValue
+        }
     }
 
     var longName: String {
-        cdLongName ?? ""
+        get {
+            cdLongName ?? ""
+        }
+        set {
+            cdLongName = newValue
+        }
     }
 }
 

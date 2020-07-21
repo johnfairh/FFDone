@@ -335,11 +335,83 @@
                             <outlet property="delegate" destination="Q1I-fJ-WyD" id="1vg-CT-C17"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="11M-bj-e8G"/>
+                    <navigationItem key="navigationItem" id="11M-bj-e8G">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ZSf-uW-UqP">
+                            <connections>
+                                <action selector="addButtonTapped:" destination="Q1I-fJ-WyD" id="WE4-Rv-qGV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="vdf-pN-JQy" kind="show" identifier="dummyepochedit" id="Gmo-hh-TJa"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SUu-bP-LBG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-365" y="2547"/>
+            <point key="canvasLocation" x="-362" y="2583"/>
+        </scene>
+        <!--EpochEditViewController-->
+        <scene sceneID="zjr-wP-sst">
+            <objects>
+                <tableViewController storyboardIdentifier="EpochEditViewController" title="EpochEditViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vdf-pN-JQy" customClass="EpochEditViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="hwG-RV-rCq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <sections>
+                            <tableViewSection id="PAb-37-T4N">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="krg-Hv-Vcn">
+                                        <rect key="frame" x="0.0" y="18" width="375" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="krg-Hv-Vcn" id="XZj-Ba-8XY">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="f6O-TD-0k2">
+                                        <rect key="frame" x="0.0" y="61.5" width="375" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f6O-TD-0k2" id="k4a-Qo-nKN">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="OgD-fa-QkO">
+                                        <rect key="frame" x="0.0" y="105" width="375" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OgD-fa-QkO" id="PhD-9u-Fcd">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="vdf-pN-JQy" id="G4M-Sf-Dpe"/>
+                            <outlet property="delegate" destination="vdf-pN-JQy" id="etr-ze-y49"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Epoch" id="dC3-0w-dY2">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="YwU-fO-0gK">
+                            <connections>
+                                <action selector="cancelButtonDidTap:" destination="vdf-pN-JQy" id="iRo-Bk-467"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="s27-Rt-qEx">
+                            <connections>
+                                <action selector="doneButtonDidTap:" destination="vdf-pN-JQy" id="1yu-Xb-JGf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="doneButton" destination="s27-Rt-qEx" id="hqn-eI-0z3"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WCT-es-r6X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="409" y="2582"/>
         </scene>
         <!--AlarmsTableViewController-->
         <scene sceneID="f7m-yy-PKL">

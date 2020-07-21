@@ -8,4 +8,7 @@
 import TMLPresentation
 
 class EpochsListViewController: PresentableBasicCollectionVC<EpochsListPresenterInterface> {
+    @IBAction func addButtonTapped(_ sender: Any) {
+        presenter.addEpoch()
+    }
 }

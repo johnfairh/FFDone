@@ -46,6 +46,8 @@ enum DirectorRequest {
     case cancelAlarm(String)
     case setActiveAlarmCount(Int)
 
+    case createEpoch(Model)
+
     case showDebugConsole
     case showSettings
     case showEpochs
@@ -274,6 +276,12 @@ extension DirectorRequest {
         case let .setActiveAlarmCount(count):
             services.setTabBadge(tab: Director.Tab.alarms.rawValue, badge: (count == 0) ? nil : String(count))
             alarmScheduler.activeAlarmCount = count
+
+        case let .createEpoch(model):
+            services.createThing("EpochEditViewController",
+                                 model: model,
+                                 presenterFn: EpochEditPresenter.init,
+                                 done: { _ in })
 
         case .showDebugConsole:
             services.showNormally("DebugViewController",
