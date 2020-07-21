@@ -15,7 +15,7 @@ protocol EpochEditPresenterInterface {
     /// Properties - will likely cause `refresh` reentrantly
     func set(shortName: String)
     func set(longName: String)
-    func set(version: String)
+    func set(versionString: String)
 
     /// Dismiss the view without committing and changes
     func cancel()
@@ -77,7 +77,7 @@ class EpochEditPresenter: EditablePresenter, EpochEditPresenterInterface {
         doRefresh()
     }
 
-    func set(version: String) {
+    func set(versionString: String) {
 
     }
 

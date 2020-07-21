@@ -74,6 +74,17 @@ extension Epoch {
             cdEndDate = newValue.timeIntervalSinceReferenceDate
         }
     }
+
+    private static var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .full
+        return formatter
+    }()
+
+    var startDateText: String {
+        Epoch.dateFormatter.string(from: startDate)
+    }
 }
 
 // MARK: - Version
