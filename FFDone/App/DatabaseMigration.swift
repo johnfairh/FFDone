@@ -68,7 +68,7 @@ class EpochMigrationPolicy8to9: NSEntityMigrationPolicy {
         case 1:
             shortName = "All"
             longName = "Final Fantasy XIV"
-            majorVersion = 2
+            majorVersion = 1
         case 2:
             shortName = "SHB"
             longName = "Shadowbringers"

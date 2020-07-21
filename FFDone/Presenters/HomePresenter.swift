@@ -73,7 +73,7 @@ protocol HomePresenterInterface {
     var refresh: (HomeData) -> Void { get set }
 
     /// Get the heading image ID
-    var headingImageId: Int { get }
+    var headingImage: UIImage? { get }
 
     /// Get the heading overlay text
     var headingOverlayText: String? { get }
@@ -129,8 +129,8 @@ class HomePresenter: Presenter, HomePresenterInterface {
         }
     }
 
-    var headingImageId: Int {
-        return Int(epoch.sortOrder)
+    var headingImage: UIImage? {
+        return epoch.image
     }
 
     var headingOverlayText: String? {

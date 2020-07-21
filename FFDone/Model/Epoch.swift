@@ -37,7 +37,8 @@ extension Epoch : ModelObject {
     private static var globalShortName = "All"
 
     static func createGlobal(model: Model, longName: String) -> Epoch {
-        let epoch = create(model: model, shortName: globalShortName, longName: longName, majorVersion: 1, minorVersion: 0)
+        let epoch = create(model: model, shortName: globalShortName, longName: longName,
+                           majorVersion: 1, minorVersion: 0)
         epoch.startDate = .distantPast
         return epoch
     }
@@ -100,5 +101,13 @@ extension Epoch {
             Log.fatal("Missing any epochs")
         }
         return epoch
+    }
+}
+
+// MARK: - Logo image
+
+extension Epoch {
+    var image: UIImage? {
+        UIImage(named: "EpochHeading_\(majorVersion)") ?? UIImage(named: "EpochHeading_1")
     }
 }

@@ -134,7 +134,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
     private func refreshData(_ homeData: HomeData) {
         self.homeData = homeData
-        headingImageView.image = UIImage(named: "EpochHeading_\(presenter.headingImageId)")
+        headingImageView.image = presenter.headingImage
 
         recalculateSlices(toDo: homeData.dataForSide(.incomplete).steps,
                           done: homeData.dataForSide(.complete).steps)
