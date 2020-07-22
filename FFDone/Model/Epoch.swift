@@ -93,6 +93,15 @@ extension Epoch {
     var versionText: String {
         "\(majorVersion).\(minorVersion)"
     }
+
+    func parse(version: String) -> Bool {
+        guard let match = version.re_match(#"^(\d+)\.(\d+)$"#) else {
+            return false
+        }
+        majorVersion = Int64(match[1])!
+        minorVersion = Int64(match[2])!
+        return true
+    }
 }
 
 // MARK: - Names

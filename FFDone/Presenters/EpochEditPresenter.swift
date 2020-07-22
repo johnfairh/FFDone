@@ -78,7 +78,9 @@ class EpochEditPresenter: EditablePresenter, EpochEditPresenterInterface {
     }
 
     func set(versionString: String) {
-
+        if epoch.parse(version: versionString) {
+            doRefresh()
+        }
     }
 
     func cancel() {

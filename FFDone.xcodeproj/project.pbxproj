@@ -34,6 +34,8 @@
 		0220241E24C6E8C100961DEC /* EpochEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220241C24C6E8C100961DEC /* EpochEditViewController.swift */; };
 		0220242024C6E98D00961DEC /* EpochEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220241F24C6E98D00961DEC /* EpochEditPresenter.swift */; };
 		0220242124C6E98D00961DEC /* EpochEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220241F24C6E98D00961DEC /* EpochEditPresenter.swift */; };
+		0220242324C8BB4100961DEC /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220242224C8BB4100961DEC /* Regex.swift */; };
+		0220242424C8BB4100961DEC /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220242224C8BB4100961DEC /* Regex.swift */; };
 		023B69AD24A65C2D000D45A0 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023B69AC24A65C2D000D45A0 /* DatePickerDialog.swift */; };
 		02479DC124B8816D00DE978A /* WowIconSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02479DC024B8816D00DE978A /* WowIconSources.swift */; };
 		02479DC324B891C200DE978A /* DefaultAlarmKinds.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479DC224B891C200DE978A /* DefaultAlarmKinds.yaml */; };
@@ -255,6 +257,7 @@
 		0220241924C447C100961DEC /* MappingModel89.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MappingModel89.xcmappingmodel; sourceTree = "<group>"; };
 		0220241C24C6E8C100961DEC /* EpochEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochEditViewController.swift; sourceTree = "<group>"; };
 		0220241F24C6E98D00961DEC /* EpochEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochEditPresenter.swift; sourceTree = "<group>"; };
+		0220242224C8BB4100961DEC /* Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		023966D8227DC039000F647E /* DataModel-8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-8.xcdatamodel"; sourceTree = "<group>"; };
 		023B69AC24A65C2D000D45A0 /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
 		02479DC024B8816D00DE978A /* WowIconSources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WowIconSources.swift; sourceTree = "<group>"; };
@@ -407,6 +410,7 @@
 				021309EF210A1D2E00410451 /* Director.swift */,
 				02D613172146BD9400BD9BA6 /* Strings.swift */,
 				02479E3724BC767000DE978A /* Tweaks.swift */,
+				0220242224C8BB4100961DEC /* Regex.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -834,6 +838,7 @@
 				02479DE324BB0CF900DE978A /* App.swift in Sources */,
 				02479DE124BB0CF900DE978A /* IconSource.swift in Sources */,
 				02479DED24BB0CF900DE978A /* AlarmScheduler.swift in Sources */,
+				0220242424C8BB4100961DEC /* Regex.swift in Sources */,
 				02479E0024BB0D0400DE978A /* IconsTableViewController.swift in Sources */,
 				02479DDD24BB0CF300DE978A /* Note.swift in Sources */,
 				02479DF424BB0CFE00DE978A /* GoalEditPresenter.swift in Sources */,
@@ -907,6 +912,7 @@
 				0252C9752144289B00DC6D64 /* DebugViewController.swift in Sources */,
 				02130A0B210E113600410451 /* IconsTableViewController.swift in Sources */,
 				020825EC2122CC53007578C7 /* GoalNotesTablePresenter.swift in Sources */,
+				0220242324C8BB4100961DEC /* Regex.swift in Sources */,
 				02F85F1C22720DB800E34E2C /* XivIconSources.swift in Sources */,
 				02F85F6622784D2700E34E2C /* SettingsViewController.swift in Sources */,
 				02990A68212C682300BF1CEC /* Alarm.swift in Sources */,
