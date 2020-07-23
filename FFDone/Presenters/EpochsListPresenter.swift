@@ -10,6 +10,7 @@ import TMLPresentation
 /// Presenter inputs, commands, outputs
 protocol EpochsListPresenterInterface {
     func addEpoch()
+    func showDebug()
 }
 
 class EpochsListPresenter: Presenter, EpochsListPresenterInterface {
@@ -31,5 +32,9 @@ class EpochsListPresenter: Presenter, EpochsListPresenterInterface {
 
     func addEpoch() {
         director.request(.createEpoch(model))
+    }
+
+    func showDebug() {
+        director.request(.showDebugConsole)
     }
 }

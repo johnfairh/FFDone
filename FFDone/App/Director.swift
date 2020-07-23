@@ -49,7 +49,6 @@ enum DirectorRequest {
     case createEpoch(Model)
 
     case showDebugConsole
-    case showSettings
     case showEpochs
 }
 
@@ -287,15 +286,11 @@ extension DirectorRequest {
             services.showNormally("DebugViewController",
                                   model: director.rootModel,
                                   presenterFn: DebugPresenter.init)
-        case .showSettings:
-            services.showModally("SettingsViewController",
-                                 model: director.rootModel,
-                                 presenterFn: SettingsPresenter.init,
-                                 done: {})
         case .showEpochs:
-            services.showNormally("EpochsListViewController",
-                                  model: director.rootModel,
-                                  presenterFn: EpochsListPresenter.init)
+            services.showModally("EpochsListViewController",
+                                 model: director.rootModel,
+                                 presenterFn: EpochsListPresenter.init,
+                                 done: {})
         }
     }
 }

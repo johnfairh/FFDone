@@ -87,8 +87,8 @@ protocol HomePresenterInterface {
     /// New alarm
     func createAlarm()
 
-    /// Show the settings window
-    func showSettings()
+    /// Show the epochs manager
+    func showEpochs()
 }
 
 class HomePresenter: Presenter, HomePresenterInterface {
@@ -200,7 +200,7 @@ class HomePresenter: Presenter, HomePresenterInterface {
         director.request(.createAlarm(model))
     }
 
-    func showSettings() {
-        director.request(.showSettings)
+    func showEpochs() {
+        director.request(.showEpochs)
     }
 }

@@ -75,7 +75,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         guard sender.view != nil && sender.state == .ended else {
             return
         }
-        presenter.showSettings()
+        presenter.showEpochs()
     }
     
     @IBAction func didTapNewAlarm(_ sender: UIButton) {

@@ -70,7 +70,6 @@
 		02479DF824BB0CFE00DE978A /* NotesTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EA6211AD3EF004D3122 /* NotesTablePresenter.swift */; };
 		02479DF924BB0CFE00DE978A /* DebugPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252C976214428CD00DC6D64 /* DebugPresenter.swift */; };
 		02479DFA24BB0CFE00DE978A /* AlarmsTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A69212C737200BF1CEC /* AlarmsTablePresenter.swift */; };
-		02479DFB24BB0CFE00DE978A /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F6722784D8F00E34E2C /* SettingsPresenter.swift */; };
 		02479DFC24BB0CFE00DE978A /* GoalViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EBE21209D18004D3122 /* GoalViewPresenter.swift */; };
 		02479DFD24BB0D0400DE978A /* GoalNotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825E92122C7AA007578C7 /* GoalNotesTableViewController.swift */; };
 		02479DFE24BB0D0400DE978A /* IconEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EB4211F37B7004D3122 /* IconEditViewController.swift */; };
@@ -85,7 +84,6 @@
 		02479E0724BB0D0400DE978A /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025A3742220AEE0600865733 /* AlarmViewController.swift */; };
 		02479E0824BB0D0400DE978A /* AlarmEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A7421303BEA00BF1CEC /* AlarmEditViewController.swift */; };
 		02479E0924BB0D0400DE978A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825EF2122E2D8007578C7 /* HomeViewController.swift */; };
-		02479E0A24BB0D0400DE978A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F6522784D2700E34E2C /* SettingsViewController.swift */; };
 		02479E0B24BB0D0400DE978A /* ColorHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0270F7BD214D5563004BC1EF /* ColorHelpers.swift */; };
 		02479E0C24BB0D0400DE978A /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252C9742144289B00DC6D64 /* DebugViewController.swift */; };
 		02479E0D24BB0D0400DE978A /* TagCloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A6521270F4C00BF1CEC /* TagCloudView.swift */; };
@@ -162,8 +160,6 @@
 		02F85F18226F589800E34E2C /* LogCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F17226F589800E34E2C /* LogCache.swift */; };
 		02F85F1C22720DB800E34E2C /* XivIconSources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F1B22720DB800E34E2C /* XivIconSources.swift */; };
 		02F85F642278402E00E34E2C /* Epoch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F632278402E00E34E2C /* Epoch.swift */; };
-		02F85F6622784D2700E34E2C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F6522784D2700E34E2C /* SettingsViewController.swift */; };
-		02F85F6822784D8F00E34E2C /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F6722784D8F00E34E2C /* SettingsPresenter.swift */; };
 		02F85F6A2279BF4C00E34E2C /* DebugEpochs.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02F85F692279BF4C00E34E2C /* DebugEpochs.yaml */; };
 /* End PBXBuildFile section */
 
@@ -329,8 +325,6 @@
 		02F85F17226F589800E34E2C /* LogCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCache.swift; sourceTree = "<group>"; };
 		02F85F1B22720DB800E34E2C /* XivIconSources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XivIconSources.swift; sourceTree = "<group>"; };
 		02F85F632278402E00E34E2C /* Epoch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Epoch.swift; sourceTree = "<group>"; };
-		02F85F6522784D2700E34E2C /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		02F85F6722784D8F00E34E2C /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		02F85F692279BF4C00E34E2C /* DebugEpochs.yaml */ = {isa = PBXFileReference; lastKnownFileType = text; name = DebugEpochs.yaml; path = ../../../FFDoneResources/Resources/DebugEpochs.yaml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -432,7 +426,6 @@
 				02867EB6211F37E0004D3122 /* IconEditPresenter.swift */,
 				0220241F24C6E98D00961DEC /* EpochEditPresenter.swift */,
 				020825F12122E310007578C7 /* HomePresenter.swift */,
-				02F85F6722784D8F00E34E2C /* SettingsPresenter.swift */,
 				0252C976214428CD00DC6D64 /* DebugPresenter.swift */,
 			);
 			path = Presenters;
@@ -455,7 +448,6 @@
 				0220241C24C6E8C100961DEC /* EpochEditViewController.swift */,
 				020825EF2122E2D8007578C7 /* HomeViewController.swift */,
 				02990A6521270F4C00BF1CEC /* TagCloudView.swift */,
-				02F85F6522784D2700E34E2C /* SettingsViewController.swift */,
 				0252C9742144289B00DC6D64 /* DebugViewController.swift */,
 				02B3E80124C0429600D301ED /* EpochsListViewController.swift */,
 				0270F7BD214D5563004BC1EF /* ColorHelpers.swift */,
@@ -845,7 +837,6 @@
 				02B3E80024C040F300D301ED /* EpochsListPresenter.swift in Sources */,
 				02479DEA24BB0CF900DE978A /* Strings.swift in Sources */,
 				02479DF224BB0CFE00DE978A /* IconEditPresenter.swift in Sources */,
-				02479E0A24BB0D0400DE978A /* SettingsViewController.swift in Sources */,
 				02479DFA24BB0CFE00DE978A /* AlarmsTablePresenter.swift in Sources */,
 				02479DF924BB0CFE00DE978A /* DebugPresenter.swift in Sources */,
 				02479DE524BB0CF900DE978A /* AppDelegate.swift in Sources */,
@@ -864,7 +855,6 @@
 				02479E0424BB0D0400DE978A /* AlarmsTableViewController.swift in Sources */,
 				02479DDF24BB0CF300DE978A /* Epoch.swift in Sources */,
 				02479E0F24BB0D1000DE978A /* DataModel.xcdatamodeld in Sources */,
-				02479DFB24BB0CFE00DE978A /* SettingsPresenter.swift in Sources */,
 				02479E0B24BB0D0400DE978A /* ColorHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -895,7 +885,6 @@
 				021309EB210A162500410451 /* Goal.swift in Sources */,
 				02867EB0211C99A9004D3122 /* NoteEditPresenter.swift in Sources */,
 				02990A7521303BEA00BF1CEC /* AlarmEditViewController.swift in Sources */,
-				02F85F6822784D8F00E34E2C /* SettingsPresenter.swift in Sources */,
 				025A3741220AECEE00865733 /* AlarmViewPresenter.swift in Sources */,
 				021309F0210A1D2E00410451 /* Director.swift in Sources */,
 				02867EBF21209D18004D3122 /* GoalViewPresenter.swift in Sources */,
@@ -914,7 +903,6 @@
 				020825EC2122CC53007578C7 /* GoalNotesTablePresenter.swift in Sources */,
 				0220242324C8BB4100961DEC /* Regex.swift in Sources */,
 				02F85F1C22720DB800E34E2C /* XivIconSources.swift in Sources */,
-				02F85F6622784D2700E34E2C /* SettingsViewController.swift in Sources */,
 				02990A68212C682300BF1CEC /* Alarm.swift in Sources */,
 				02B3E7FF24C040F300D301ED /* EpochsListPresenter.swift in Sources */,
 				02990A6A212C737200BF1CEC /* AlarmsTablePresenter.swift in Sources */,
