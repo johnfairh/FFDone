@@ -130,8 +130,8 @@ extension Epoch {
 
 extension Epoch {
     static func mostRecent(in model: Model) -> Epoch {
-        let results = createAllResults(model: model)
-        guard let epoch = results.fetchedObjects?.last as? Epoch else {
+        let results = findAll(model: model)
+        guard let epoch = results.last else {
             Log.fatal("Missing any epochs")
         }
         return epoch

@@ -30,6 +30,7 @@ class EpochEditPresenter: EditablePresenter, EpochEditPresenterInterface {
 
     typealias ViewInterfaceType = EpochEditPresenterInterface
 
+    private let previousEpoch: Epoch
     private let epoch: Epoch
     private let model: Model
     private let director: DirectorInterface
@@ -55,6 +56,7 @@ class EpochEditPresenter: EditablePresenter, EpochEditPresenterInterface {
                   dismiss: @escaping PresenterDone<Epoch>) {
         Log.assert(mode.isSingleType(.create))
         Log.assert(object == nil)
+        self.previousEpoch = Epoch.mostRecent(in: model)
         self.epoch     = Epoch.createWithDefaults(model: model)
         self.model     = model
         self.director  = director
@@ -88,7 +90,9 @@ class EpochEditPresenter: EditablePresenter, EpochEditPresenterInterface {
     }
 
     func save() {
-        // Shenanigans to come about updating the endDate for the previous epoch
+        if !previousEpoch.isGlobal {
+            previousEpoch.endDate = epoch.startDate
+        }
         model.save {
             self.dismissFn(self.epoch)
         }
