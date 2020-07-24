@@ -33,7 +33,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
     @IBOutlet weak var headingImageViewHeightConstraint: NSLayoutConstraint!
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         presenter.refresh = { [unowned self] data in
             self.refreshData(data)
         }
@@ -134,7 +134,26 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
 
     private func refreshData(_ homeData: HomeData) {
         self.homeData = homeData
-        headingImageView.image = presenter.headingImage
+
+        // Image shenanigans.
+        // Do the aspect-fit scaling manually so we can composite in the patch number text
+        // *after* the scaling.
+        if let originalImage = presenter.headingImage {
+            let xScale = headingImageView.bounds.width / originalImage.size.width
+            let yScale = CGFloat(Tweaks.shared.epochImageHeight) / originalImage.size.height
+            let scale  = min(xScale, yScale)
+            let size  = CGSize(width: originalImage.size.width * scale,
+                               height: originalImage.size.height * scale)
+
+            UIImage.badgeColor = .secondaryLabel
+            UIImage.badgeFont = UIFont(name: "Copperplate", size: 18)!
+            defer {
+                UIImage.badgeColor = nil
+                UIImage.badgeFont = nil
+            }
+
+            headingImageView.image = originalImage.imageWithSize(size, andBadge: presenter.headingOverlayText)
+        }
 
         recalculateSlices(toDo: homeData.dataForSide(.incomplete).steps,
                           done: homeData.dataForSide(.complete).steps)
@@ -163,7 +182,7 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
             let donePercent = (stepsDone * 100) / (stepsDone + stepsToDo)
             progressLabel.text = "\(donePercent)%"
         } else {
-            progressLabel.text = "DONE"
+            progressLabel.text = ""
         }
 
         pieChartView.clear()
