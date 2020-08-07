@@ -630,7 +630,7 @@
                         <rightBarButtonItems>
                             <barButtonItem title="Edit" id="ZiJ-Rh-VXy">
                                 <connections>
-                                    <action selector="dupButtonTapped:" destination="EUr-gp-56p" id="iay-kt-dRC"/>
+                                    <action selector="editAlarmTapped:" destination="EUr-gp-56p" id="syg-LL-3s3"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Dup" id="c8e-hQ-yOT">
