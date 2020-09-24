@@ -1,4 +1,4 @@
 github "apparition47/DBSphereTagCloudSwift" "4d6578f3f2b068b3ec7502b9ae1a9164c5e766d9"
 github "i-schuetz/PieCharts" "0.0.7"
-github "johnfairh/TMLPersistentContainer" "4.1.0"
-github "jpsim/Yams" "2.0.0"
+github "johnfairh/TMLPersistentContainer" "5.0.1"
+github "jpsim/Yams" "4.0.0"

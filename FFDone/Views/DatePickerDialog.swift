@@ -38,6 +38,7 @@ open class DatePickerDialog: UIView {
         let size = UIScreen.main.bounds.size
         super.init(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         self.font = font
+        self.buttonColor = .tint
         setupView()
     }
 
