@@ -141,10 +141,10 @@
 		02990A71212DB74B00BF1CEC /* AlarmScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A70212DB74B00BF1CEC /* AlarmScheduler.swift */; };
 		02990A7321303A8000BF1CEC /* AlarmEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A7221303A7F00BF1CEC /* AlarmEditPresenter.swift */; };
 		02990A7521303BEA00BF1CEC /* AlarmEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A7421303BEA00BF1CEC /* AlarmEditViewController.swift */; };
-		02B3E7FF24C040F300D301ED /* EpochsListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B3E7FE24C040F300D301ED /* EpochsListPresenter.swift */; };
-		02B3E80024C040F300D301ED /* EpochsListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B3E7FE24C040F300D301ED /* EpochsListPresenter.swift */; };
-		02B3E80224C0429600D301ED /* EpochsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B3E80124C0429600D301ED /* EpochsListViewController.swift */; };
-		02B3E80324C0429600D301ED /* EpochsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B3E80124C0429600D301ED /* EpochsListViewController.swift */; };
+		02B3E7FF24C040F300D301ED /* EpochsTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B3E7FE24C040F300D301ED /* EpochsTablePresenter.swift */; };
+		02B3E80024C040F300D301ED /* EpochsTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B3E7FE24C040F300D301ED /* EpochsTablePresenter.swift */; };
+		02B3E80224C0429600D301ED /* EpochsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B3E80124C0429600D301ED /* EpochsTableViewController.swift */; };
+		02B3E80324C0429600D301ED /* EpochsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B3E80124C0429600D301ED /* EpochsTableViewController.swift */; };
 		02B3E80424C0441C00D301ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027F63782105FF94001C9738 /* Main.storyboard */; };
 		02C5870221A712BD00DF6C36 /* MappingModel45.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 02C5870121A712BD00DF6C36 /* MappingModel45.xcmappingmodel */; };
 		02C5870421A714A000DF6C36 /* DatabaseMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C5870321A714A000DF6C36 /* DatabaseMigration.swift */; };
@@ -305,8 +305,8 @@
 		02990A7221303A7F00BF1CEC /* AlarmEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditPresenter.swift; sourceTree = "<group>"; };
 		02990A7421303BEA00BF1CEC /* AlarmEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditViewController.swift; sourceTree = "<group>"; };
 		02990A762130575F00BF1CEC /* DataModel-4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-4.xcdatamodel"; sourceTree = "<group>"; };
-		02B3E7FE24C040F300D301ED /* EpochsListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochsListPresenter.swift; sourceTree = "<group>"; };
-		02B3E80124C0429600D301ED /* EpochsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochsListViewController.swift; sourceTree = "<group>"; };
+		02B3E7FE24C040F300D301ED /* EpochsTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochsTablePresenter.swift; sourceTree = "<group>"; };
+		02B3E80124C0429600D301ED /* EpochsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochsTableViewController.swift; sourceTree = "<group>"; };
 		02BEE27221A721CB009B8844 /* DataModel-6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-6.xcdatamodel"; sourceTree = "<group>"; };
 		02C5870121A712BD00DF6C36 /* MappingModel45.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MappingModel45.xcmappingmodel; sourceTree = "<group>"; };
 		02C5870321A714A000DF6C36 /* DatabaseMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseMigration.swift; sourceTree = "<group>"; };
@@ -417,7 +417,7 @@
 				02990A69212C737200BF1CEC /* AlarmsTablePresenter.swift */,
 				02130A08210E100D00410451 /* IconsTablePresenter.swift */,
 				020825EB2122CC53007578C7 /* GoalNotesTablePresenter.swift */,
-				02B3E7FE24C040F300D301ED /* EpochsListPresenter.swift */,
+				02B3E7FE24C040F300D301ED /* EpochsTablePresenter.swift */,
 				02867EBE21209D18004D3122 /* GoalViewPresenter.swift */,
 				02130A0E210F777400410451 /* GoalEditPresenter.swift */,
 				025A3740220AECEE00865733 /* AlarmViewPresenter.swift */,
@@ -439,6 +439,7 @@
 				02990A6B212C76F100BF1CEC /* AlarmsTableViewController.swift */,
 				02130A0A210E113600410451 /* IconsTableViewController.swift */,
 				020825E92122C7AA007578C7 /* GoalNotesTableViewController.swift */,
+				02B3E80124C0429600D301ED /* EpochsTableViewController.swift */,
 				02867EC021209EAF004D3122 /* GoalViewController.swift */,
 				02130A0C210F773A00410451 /* GoalEditViewController.swift */,
 				025A3742220AEE0600865733 /* AlarmViewController.swift */,
@@ -449,7 +450,6 @@
 				020825EF2122E2D8007578C7 /* HomeViewController.swift */,
 				02990A6521270F4C00BF1CEC /* TagCloudView.swift */,
 				0252C9742144289B00DC6D64 /* DebugViewController.swift */,
-				02B3E80124C0429600D301ED /* EpochsListViewController.swift */,
 				0270F7BD214D5563004BC1EF /* ColorHelpers.swift */,
 				023B69AC24A65C2D000D45A0 /* DatePickerDialog.swift */,
 			);
@@ -818,7 +818,7 @@
 				02479DE624BB0CF900DE978A /* AppScene.swift in Sources */,
 				02479DFC24BB0CFE00DE978A /* GoalViewPresenter.swift in Sources */,
 				02479DF124BB0CFE00DE978A /* AlarmViewPresenter.swift in Sources */,
-				02B3E80324C0429600D301ED /* EpochsListViewController.swift in Sources */,
+				02B3E80324C0429600D301ED /* EpochsTableViewController.swift in Sources */,
 				02479E3924BC767000DE978A /* Tweaks.swift in Sources */,
 				02479DEF24BB0CFE00DE978A /* GoalsTablePresenter.swift in Sources */,
 				02479DFE24BB0D0400DE978A /* IconEditViewController.swift in Sources */,
@@ -834,7 +834,7 @@
 				02479E0024BB0D0400DE978A /* IconsTableViewController.swift in Sources */,
 				02479DDD24BB0CF300DE978A /* Note.swift in Sources */,
 				02479DF424BB0CFE00DE978A /* GoalEditPresenter.swift in Sources */,
-				02B3E80024C040F300D301ED /* EpochsListPresenter.swift in Sources */,
+				02B3E80024C040F300D301ED /* EpochsTablePresenter.swift in Sources */,
 				02479DEA24BB0CF900DE978A /* Strings.swift in Sources */,
 				02479DF224BB0CFE00DE978A /* IconEditPresenter.swift in Sources */,
 				02479DFA24BB0CFE00DE978A /* AlarmsTablePresenter.swift in Sources */,
@@ -889,7 +889,7 @@
 				021309F0210A1D2E00410451 /* Director.swift in Sources */,
 				02867EBF21209D18004D3122 /* GoalViewPresenter.swift in Sources */,
 				020825F621246F24007578C7 /* TagList.swift in Sources */,
-				02B3E80224C0429600D301ED /* EpochsListViewController.swift in Sources */,
+				02B3E80224C0429600D301ED /* EpochsTableViewController.swift in Sources */,
 				02479E3824BC767000DE978A /* Tweaks.swift in Sources */,
 				021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */,
 				02130A09210E100D00410451 /* IconsTablePresenter.swift in Sources */,
@@ -904,7 +904,7 @@
 				0220242324C8BB4100961DEC /* Regex.swift in Sources */,
 				02F85F1C22720DB800E34E2C /* XivIconSources.swift in Sources */,
 				02990A68212C682300BF1CEC /* Alarm.swift in Sources */,
-				02B3E7FF24C040F300D301ED /* EpochsListPresenter.swift in Sources */,
+				02B3E7FF24C040F300D301ED /* EpochsTablePresenter.swift in Sources */,
 				02990A6A212C737200BF1CEC /* AlarmsTablePresenter.swift in Sources */,
 				02D613182146BD9400BD9BA6 /* Strings.swift in Sources */,
 				02867EB5211F37B7004D3122 /* IconEditViewController.swift in Sources */,

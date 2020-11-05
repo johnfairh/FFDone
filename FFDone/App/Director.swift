@@ -287,9 +287,9 @@ extension DirectorRequest {
                                   model: director.rootModel,
                                   presenterFn: DebugPresenter.init)
         case .showEpochs:
-            services.showModally("EpochsListViewController",
+            services.showModally("EpochsTableViewController",
                                  model: director.rootModel,
-                                 presenterFn: EpochsListPresenter.init,
+                                 presenterFn: EpochsTablePresenter.init,
                                  done: {})
         }
     }

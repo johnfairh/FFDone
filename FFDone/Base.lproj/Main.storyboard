@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17147" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17120"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -71,11 +71,11 @@
             <objects>
                 <viewController storyboardIdentifier="DebugViewController" title="DebugViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vZR-AE-2cT" customClass="DebugViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HeA-ru-cKQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Q3o-3e-0gg">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="48.5"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="48.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="IY0-Ps-3nj">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
@@ -111,7 +111,7 @@
                                 </subviews>
                             </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lX5-WF-rqx">
-                                <rect key="frame" x="0.0" y="56.5" width="375" height="590.5"/>
+                                <rect key="frame" x="0.0" y="100.5" width="375" height="468.5"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -141,43 +141,41 @@
             <point key="canvasLocation" x="409" y="1881"/>
         </scene>
         <!--Epochs-->
-        <scene sceneID="8yT-ht-1WL">
+        <scene sceneID="oIq-45-OPa">
             <objects>
-                <collectionViewController storyboardIdentifier="EpochsListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Q1I-fJ-WyD" customClass="EpochsListViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="HhR-At-yV3">
+                <tableViewController storyboardIdentifier="EpochsTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YDe-X0-hrt" customClass="EpochsTableViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="SD1-14-g0C">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZaI-Ab-w4O">
-                            <size key="itemSize" width="128" height="128"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EpochCell" id="Dhn-JD-jLX" customClass="EpochCell" customModule="FFDone" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Dhn-JD-jLX" id="4NR-Qa-aSl">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="Q1I-fJ-WyD" id="6T1-mi-EUI"/>
-                            <outlet property="delegate" destination="Q1I-fJ-WyD" id="1vg-CT-C17"/>
+                            <outlet property="dataSource" destination="YDe-X0-hrt" id="eUf-2s-xtt"/>
+                            <outlet property="delegate" destination="YDe-X0-hrt" id="S4T-gt-VGq"/>
                         </connections>
-                    </collectionView>
-                    <navigationItem key="navigationItem" title="Epochs" id="11M-bj-e8G">
-                        <barButtonItem key="leftBarButtonItem" image="text.alignleft" catalog="system" id="Oa8-yD-0Q4">
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Epochs" id="yXi-if-sCb">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="text.alignright" catalog="system" id="DOC-zk-h75">
                             <connections>
-                                <action selector="debugButtonTapped:" destination="Q1I-fJ-WyD" id="G42-bK-C5r"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ZSf-uW-UqP">
-                            <connections>
-                                <action selector="addButtonTapped:" destination="Q1I-fJ-WyD" id="WE4-Rv-qGV"/>
+                                <action selector="debugButtonTapped:" destination="YDe-X0-hrt" id="P0s-2L-cBv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="vdf-pN-JQy" kind="show" identifier="dummyepochedit" id="Gmo-hh-TJa"/>
-                        <segue destination="vZR-AE-2cT" kind="showDetail" identifier="DebugDummySegue" id="zq8-98-vlS"/>
+                        <segue destination="vdf-pN-JQy" kind="show" identifier="dummyepoch2-1" id="Pa3-qr-quN"/>
+                        <segue destination="vZR-AE-2cT" kind="show" identifier="dummyepoch2-3" id="ndD-OD-3VV"/>
                     </connections>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SUu-bP-LBG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cV4-3w-za4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-362" y="1881"/>
         </scene>
@@ -1297,7 +1295,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="55r-Pa-JyC" kind="show" identifier="DummySegue2" id="tdN-NL-wqK"/>
-                        <segue destination="Q1I-fJ-WyD" kind="show" identifier="DummyEpochsSegue" id="346-el-06B"/>
+                        <segue destination="YDe-X0-hrt" kind="show" identifier="dummyepoch2-2" id="KSl-xx-adY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LC8-1n-oYq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1426,7 +1424,7 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GgJ-VC-nP8">
-                                        <rect key="frame" x="28" y="0.0" width="223" height="24"/>
+                                        <rect key="frame" x="28" y="0.0" width="223.5" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="2"/>
                                         <state key="normal" title="Goal">
@@ -1437,7 +1435,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="400" verticalHuggingPriority="251" text="25 augh 2323" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yso-VE-8iY">
-                                        <rect key="frame" x="257" y="2.5" width="102" height="19.5"/>
+                                        <rect key="frame" x="257.5" y="2.5" width="101.5" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1779,7 +1777,7 @@
         <image name="TabIconsIcon" width="30" height="30"/>
         <image name="arrow.2.squarepath" catalog="system" width="128" height="89"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
-        <image name="text.alignleft" catalog="system" width="128" height="100"/>
+        <image name="text.alignright" catalog="system" width="128" height="100"/>
         <namedColor name="TextColour">
             <color red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
