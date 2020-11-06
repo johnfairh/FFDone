@@ -144,18 +144,56 @@
         <scene sceneID="oIq-45-OPa">
             <objects>
                 <tableViewController storyboardIdentifier="EpochsTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YDe-X0-hrt" customClass="EpochsTableViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="SD1-14-g0C">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="SD1-14-g0C">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="EpochCell" id="Dhn-JD-jLX" customClass="EpochCell" customModule="FFDone" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="79"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Dhn-JD-jLX" id="4NR-Qa-aSl">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pgx-RS-XHc">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="71"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fux-aC-4Zt">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="55.5"/>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="4CF-B5-ZUl">
+                                                    <rect key="frame" x="0.0" y="56.5" width="343" height="14.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="8.8" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UIa-0C-Zsi">
+                                                            <rect key="frame" x="0.0" y="0.0" width="104.5" height="14.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5th November 2018 - 4th October 2016" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYq-W5-awp">
+                                                            <rect key="frame" x="118.5" y="0.0" width="224.5" height="14.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                            <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Pgx-RS-XHc" firstAttribute="leading" secondItem="4NR-Qa-aSl" secondAttribute="leadingMargin" id="BQT-MJ-IeK"/>
+                                        <constraint firstAttribute="bottom" secondItem="Pgx-RS-XHc" secondAttribute="bottom" constant="8" id="FVV-X1-fgA"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Pgx-RS-XHc" secondAttribute="trailing" id="acz-1n-GC0"/>
+                                        <constraint firstItem="Pgx-RS-XHc" firstAttribute="top" secondItem="4NR-Qa-aSl" secondAttribute="top" id="fKG-SA-v4m"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="epochImage" destination="fux-aC-4Zt" id="Ke2-eY-eHz"/>
+                                    <outlet property="epochPatchLabel" destination="UIa-0C-Zsi" id="uWQ-D1-znU"/>
+                                    <outlet property="epochPeriodLabel" destination="NYq-W5-awp" id="6Tl-xW-Wds"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -177,7 +215,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cV4-3w-za4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-362" y="1881"/>
+            <point key="canvasLocation" x="-362.39999999999998" y="1880.5097451274364"/>
         </scene>
         <!--EpochEditViewController-->
         <scene sceneID="zjr-wP-sst">

@@ -8,14 +8,19 @@
 import TMLPresentation
 
 class EpochCell: UITableViewCell, TableCell {
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        imageView?.enableRoundCorners()
-    }
+    @IBOutlet weak var epochImage: UIImageView!
+    @IBOutlet weak var epochPatchLabel: UILabel!
+    @IBOutlet weak var epochPeriodLabel: UILabel!
 
     func configure(_ modelObject: Epoch) {
-        textLabel?.text  = modelObject.longName
-        imageView?.image = modelObject.image
+        epochPatchLabel.text = modelObject.versionText
+        epochPeriodLabel.text = modelObject.dateIntervalText
+        // If I let this scale automatically then the cell ends up with
+        // vertical padding around the image.
+        let newWidth = epochImage.frame.width
+        let imageSize = modelObject.image.size
+        let newHeight = (newWidth * imageSize.height) / imageSize.width
+        epochImage.image = modelObject.image.imageWithSize(CGSize(width: newWidth, height: newHeight))
     }
 }
 

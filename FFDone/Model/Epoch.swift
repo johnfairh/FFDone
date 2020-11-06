@@ -78,12 +78,29 @@ extension Epoch {
     private static var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.timeStyle = .none
-        formatter.dateStyle = .full
+        formatter.dateStyle = .long
         return formatter
     }()
 
     var startDateText: String {
         Epoch.dateFormatter.string(from: startDate)
+    }
+
+    private static var dateIntervalFormatter: DateIntervalFormatter = {
+        let formatter = DateIntervalFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .long
+        return formatter
+    }()
+
+    var dateIntervalText: String {
+        if startDate == .distantPast {
+            return ""
+        }
+        if endDate == .distantFuture {
+            return startDateText
+        }
+        return Epoch.dateIntervalFormatter.string(from: startDate, to: endDate)
     }
 }
 
@@ -141,7 +158,7 @@ extension Epoch {
 // MARK: - Logo image
 
 extension Epoch {
-    var image: UIImage? {
-        UIImage(named: "EpochHeading_\(majorVersion)") ?? UIImage(named: "EpochHeading_1")
+    var image: UIImage {
+        UIImage(named: "EpochHeading_\(majorVersion)") ?? UIImage(named: "EpochHeading_1")!
     }
 }
