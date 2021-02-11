@@ -147,6 +147,8 @@
 		02E3BD8B25D53C6B005E6C8F /* PieCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 02E3BD8A25D53C6B005E6C8F /* PieCharts */; };
 		02E3BD8D25D53EA5005E6C8F /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 02E3BD8C25D53EA5005E6C8F /* Yams */; };
 		02E3BD8F25D53EA8005E6C8F /* PieCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 02E3BD8E25D53EA8005E6C8F /* PieCharts */; };
+		02E3BD9125D542D1005E6C8F /* TMLPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E3BD9025D542D1005E6C8F /* TMLPresentation.framework */; };
+		02E3BD9225D542D1005E6C8F /* TMLPresentation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 02E3BD9025D542D1005E6C8F /* TMLPresentation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		02E7A389237EFB6A003E2DF1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E7A388237EFB6A003E2DF1 /* SceneDelegate.swift */; };
 		02E7A38B237F08FC003E2DF1 /* AppScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E7A38A237F08FC003E2DF1 /* AppScene.swift */; };
 		02F85F18226F589800E34E2C /* LogCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F17226F589800E34E2C /* LogCache.swift */; };
@@ -203,6 +205,17 @@
 				02D61312214589EE00BD9BA6 /* FFDoneNF.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02E3BD9325D542D1005E6C8F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				02E3BD9225D542D1005E6C8F /* TMLPresentation.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -295,6 +308,7 @@
 		02D613172146BD9400BD9BA6 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		02D992E3215CCC3900693F63 /* DataModel-5.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-5.xcdatamodel"; sourceTree = "<group>"; };
 		02DA5F2E21AC537B00C88120 /* DataModel-7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-7.xcdatamodel"; sourceTree = "<group>"; };
+		02E3BD9025D542D1005E6C8F /* TMLPresentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TMLPresentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E7A388237EFB6A003E2DF1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		02E7A38A237F08FC003E2DF1 /* AppScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScene.swift; sourceTree = "<group>"; };
 		02F85F17226F589800E34E2C /* LogCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogCache.swift; sourceTree = "<group>"; };
@@ -327,6 +341,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02E3BD8825D53A09005E6C8F /* Yams in Frameworks */,
+				02E3BD9125D542D1005E6C8F /* TMLPresentation.framework in Frameworks */,
 				02E3BD8B25D53C6B005E6C8F /* PieCharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -474,6 +489,7 @@
 		025333992112FB9A00AF8E7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				02E3BD9025D542D1005E6C8F /* TMLPresentation.framework */,
 				02D61305214589EE00BD9BA6 /* UserNotifications.framework */,
 				02D61307214589EE00BD9BA6 /* UserNotificationsUI.framework */,
 			);
@@ -583,6 +599,7 @@
 				027F636E2105FF93001C9738 /* Frameworks */,
 				027F636F2105FF93001C9738 /* Resources */,
 				02D61316214589EE00BD9BA6 /* Embed App Extensions */,
+				02E3BD9325D542D1005E6C8F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
