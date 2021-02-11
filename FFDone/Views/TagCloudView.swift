@@ -24,11 +24,8 @@
 // in terms of unregistering `CADisplayLink`s and changing the tag cloud without
 // creating a new view.  The animations are also changed.  These changes are not
 // really in a form for recontribution right now.
-//
-// We still import the framework for the pieces of SwiftNum that are embedded.
 
 import TMLPresentation
-import DBSphereTagCloud_Framework
 
 private struct TagPoint {
     let x: CGFloat
@@ -258,5 +255,74 @@ extension TagCloudView {
         }
 
         return TagPoint(x: CGFloat(result[0,0]), y: CGFloat(result[0,1]), z: CGFloat(result[0,2]))
+    }
+}
+
+// A chunk of https://github.com/donald-pinckney/SwiftNum (no longer updated) to provide
+// the Matrix stuff used by the above.
+//
+// MIT License
+//
+// Copyright (c) 2017 Donald Pinckney
+
+import Accelerate
+
+public struct Matrix {
+
+    public var data: [Double] // Don't mess with this unless you know what you are doing
+    public let width: Int
+    public let height: Int
+
+    public init(rowMajorData: [Double], width: Int) {
+        precondition(rowMajorData.count % width == 0)
+
+        data = rowMajorData
+        self.width = width
+        self.height = rowMajorData.count / width
+    }
+
+    public init(_ rows: [[Double]]) {
+        height = rows.count
+        if height > 0 {
+            width = rows[0].count
+        } else {
+            width = 0
+        }
+
+        data = []
+        for r in rows {
+            assert(r.count == width)
+            data.append(contentsOf: r)
+        }
+    }
+
+    subscript(row: Int, column: Int) -> Double {
+        get {
+            return data[width*row + column]
+        }
+        set(val) {
+            data[width*row + column] = val
+        }
+    }
+
+    static func *(lhs: Matrix, rhs: Matrix) -> Matrix {
+        precondition(lhs.width == rhs.height)
+
+        var res = Matrix.zeros(lhs.height, rhs.width)
+
+        vDSP_mmulD(lhs.data, 1, rhs.data, 1, &res.data, 1, vDSP_Length(lhs.height), vDSP_Length(rhs.width), vDSP_Length(lhs.width))
+
+        return res
+    }
+    static func *=(lhs: inout Matrix, rhs: Matrix) {
+        lhs = lhs * rhs
+    }
+
+    static func zeros(_ height: Int, _ width: Int) -> Matrix {
+        return fill(height, width, value: 0)
+    }
+
+    static func fill(_ height: Int, _ width: Int, value: Double) -> Matrix {
+        return Matrix(rowMajorData: [Double](repeating: value, count: width*height), width: width)
     }
 }

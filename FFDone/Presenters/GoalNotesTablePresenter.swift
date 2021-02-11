@@ -18,7 +18,7 @@ protocol GoalNotesTablePresenterInterface: TablePresenterInterface {
 }
 
 /// Interface from the GoalNotes TablePresenter to its parent presenter
-protocol GoalNotesTablePresenterDelegate: class {
+protocol GoalNotesTablePresenterDelegate: AnyObject {
     /// A note has been deleted - do whatever should be done.
     func didDeleteNote()
 }

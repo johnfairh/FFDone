@@ -3,13 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		020825EA2122C7AA007578C7 /* GoalNotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825E92122C7AA007578C7 /* GoalNotesTableViewController.swift */; };
 		020825EC2122CC53007578C7 /* GoalNotesTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825EB2122CC53007578C7 /* GoalNotesTablePresenter.swift */; };
-		020825EE2122E0BE007578C7 /* PieCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020825ED2122E0BD007578C7 /* PieCharts.framework */; };
 		020825F02122E2D8007578C7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825EF2122E2D8007578C7 /* HomeViewController.swift */; };
 		020825F22122E310007578C7 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825F12122E310007578C7 /* HomePresenter.swift */; };
 		020825F621246F24007578C7 /* TagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020825F521246F24007578C7 /* TagList.swift */; };
@@ -20,7 +19,6 @@
 		021309F4210A2F0300410451 /* GoalsTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309F3210A2F0300410451 /* GoalsTablePresenter.swift */; };
 		021309F6210A300B00410451 /* GoalsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021309F5210A300B00410451 /* GoalsTableViewController.swift */; };
 		021309FD210B632400410451 /* DebugGoals.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 021309FA210B5E7200410451 /* DebugGoals.yaml */; };
-		021309FF210B686700410451 /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021309FE210B686600410451 /* Yams.framework */; };
 		02130A01210B6B7C00410451 /* DatabaseInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A00210B6B7C00410451 /* DatabaseInit.swift */; };
 		02130A03210CD37600410451 /* DefaultIcons.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02130A02210CD37600410451 /* DefaultIcons.yaml */; };
 		02130A05210CD65F00410451 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02130A04210CD65F00410451 /* Icon.swift */; };
@@ -89,12 +87,6 @@
 		02479E0D24BB0D0400DE978A /* TagCloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A6521270F4C00BF1CEC /* TagCloudView.swift */; };
 		02479E0E24BB0D0B00DE978A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027F63782105FF94001C9738 /* Main.storyboard */; };
 		02479E0F24BB0D1000DE978A /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 021309E7210A13F700410451 /* DataModel.xcdatamodeld */; };
-		02479E1024BB0D4800DE978A /* DBSphereTagCloud_Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */; };
-		02479E1124BB0D4C00DE978A /* PieCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020825ED2122E0BD007578C7 /* PieCharts.framework */; };
-		02479E1224BB0D4F00DE978A /* Yams.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021309FE210B686600410451 /* Yams.framework */; };
-		02479E1324BB0D5300DE978A /* TMLPersistentContainer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027F63A221065271001C9738 /* TMLPersistentContainer.framework */; };
-		02479E1624BB0E9400DE978A /* TMLPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */; };
-		02479E1724BB0E9400DE978A /* TMLPresentation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		02479E1924BB0EBF00DE978A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027F637D2105FF95001C9738 /* LaunchScreen.storyboard */; };
 		02479E1A24BB0EC500DE978A /* MappingModel45.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 02C5870121A712BD00DF6C36 /* MappingModel45.xcmappingmodel */; };
 		02479E2724BB120500DE978A /* DefaultIconSources.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E1E24BB120500DE978A /* DefaultIconSources.yaml */; };
@@ -112,15 +104,12 @@
 		02479E5224BDB33000DE978A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02D6130C214589EE00BD9BA6 /* MainInterface.storyboard */; };
 		0252C9752144289B00DC6D64 /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252C9742144289B00DC6D64 /* DebugViewController.swift */; };
 		0252C977214428CD00DC6D64 /* DebugPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252C976214428CD00DC6D64 /* DebugPresenter.swift */; };
-		0253339F2112FE3D00AF8E7B /* TMLPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */; };
-		025333A02112FE3D00AF8E7B /* TMLPresentation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		025A3741220AECEE00865733 /* AlarmViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025A3740220AECEE00865733 /* AlarmViewPresenter.swift */; };
 		025A3743220AEE0600865733 /* AlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025A3742220AEE0600865733 /* AlarmViewController.swift */; };
 		0270F7BE214D5563004BC1EF /* ColorHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0270F7BD214D5563004BC1EF /* ColorHelpers.swift */; };
 		027F63752105FF93001C9738 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027F63742105FF93001C9738 /* AppDelegate.swift */; };
 		027F637C2105FF95001C9738 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027F637B2105FF95001C9738 /* Assets.xcassets */; };
 		027F637F2105FF95001C9738 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027F637D2105FF95001C9738 /* LaunchScreen.storyboard */; };
-		027F63A321065271001C9738 /* TMLPersistentContainer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027F63A221065271001C9738 /* TMLPersistentContainer.framework */; };
 		02867EA32119ED7D004D3122 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EA22119ED7D004D3122 /* Note.swift */; };
 		02867EA52119FC17004D3122 /* DebugNotes.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02867EA42119FC17004D3122 /* DebugNotes.yaml */; };
 		02867EA7211AD3EF004D3122 /* NotesTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EA6211AD3EF004D3122 /* NotesTablePresenter.swift */; };
@@ -148,13 +137,16 @@
 		02B3E80424C0441C00D301ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027F63782105FF94001C9738 /* Main.storyboard */; };
 		02C5870221A712BD00DF6C36 /* MappingModel45.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 02C5870121A712BD00DF6C36 /* MappingModel45.xcmappingmodel */; };
 		02C5870421A714A000DF6C36 /* DatabaseMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C5870321A714A000DF6C36 /* DatabaseMigration.swift */; };
-		02C61D9F2125EAD500073B7D /* DBSphereTagCloud_Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */; };
 		02D61306214589EE00BD9BA6 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D61305214589EE00BD9BA6 /* UserNotifications.framework */; };
 		02D61308214589EE00BD9BA6 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D61307214589EE00BD9BA6 /* UserNotificationsUI.framework */; };
 		02D6130B214589EE00BD9BA6 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D6130A214589EE00BD9BA6 /* NotificationViewController.swift */; };
 		02D6130E214589EE00BD9BA6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02D6130C214589EE00BD9BA6 /* MainInterface.storyboard */; };
 		02D61312214589EE00BD9BA6 /* FFDoneNF.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02D61304214589EE00BD9BA6 /* FFDoneNF.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		02D613182146BD9400BD9BA6 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D613172146BD9400BD9BA6 /* Strings.swift */; };
+		02E3BD8825D53A09005E6C8F /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 02E3BD8725D53A09005E6C8F /* Yams */; };
+		02E3BD8B25D53C6B005E6C8F /* PieCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 02E3BD8A25D53C6B005E6C8F /* PieCharts */; };
+		02E3BD8D25D53EA5005E6C8F /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 02E3BD8C25D53EA5005E6C8F /* Yams */; };
+		02E3BD8F25D53EA8005E6C8F /* PieCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 02E3BD8E25D53EA8005E6C8F /* PieCharts */; };
 		02E7A389237EFB6A003E2DF1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E7A388237EFB6A003E2DF1 /* SceneDelegate.swift */; };
 		02E7A38B237F08FC003E2DF1 /* AppScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E7A38A237F08FC003E2DF1 /* AppScene.swift */; };
 		02F85F18226F589800E34E2C /* LogCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F85F17226F589800E34E2C /* LogCache.swift */; };
@@ -187,7 +179,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				02479E1724BB0E9400DE978A /* TMLPresentation.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -201,17 +192,6 @@
 				02479E4C24BDB2E000DE978A /* WDoneNF.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		025333A12112FE3D00AF8E7B /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				025333A02112FE3D00AF8E7B /* TMLPresentation.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		02D61316214589EE00BD9BA6 /* Embed App Extensions */ = {
@@ -230,7 +210,6 @@
 /* Begin PBXFileReference section */
 		020825E92122C7AA007578C7 /* GoalNotesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalNotesTableViewController.swift; sourceTree = "<group>"; };
 		020825EB2122CC53007578C7 /* GoalNotesTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalNotesTablePresenter.swift; sourceTree = "<group>"; };
-		020825ED2122E0BD007578C7 /* PieCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PieCharts.framework; path = Carthage/Build/iOS/PieCharts.framework; sourceTree = "<group>"; };
 		020825EF2122E2D8007578C7 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		020825F12122E310007578C7 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		020825F521246F24007578C7 /* TagList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagList.swift; sourceTree = "<group>"; };
@@ -241,7 +220,6 @@
 		021309F3210A2F0300410451 /* GoalsTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsTablePresenter.swift; sourceTree = "<group>"; };
 		021309F5210A300B00410451 /* GoalsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalsTableViewController.swift; sourceTree = "<group>"; };
 		021309FA210B5E7200410451 /* DebugGoals.yaml */ = {isa = PBXFileReference; lastKnownFileType = text; path = DebugGoals.yaml; sourceTree = "<group>"; };
-		021309FE210B686600410451 /* Yams.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Yams.framework; path = Carthage/Build/iOS/Yams.framework; sourceTree = "<group>"; };
 		02130A00210B6B7C00410451 /* DatabaseInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseInit.swift; sourceTree = "<group>"; };
 		02130A02210CD37600410451 /* DefaultIcons.yaml */ = {isa = PBXFileReference; lastKnownFileType = text; path = DefaultIcons.yaml; sourceTree = "<group>"; };
 		02130A04210CD65F00410451 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
@@ -271,7 +249,6 @@
 		02479E4924BDB2E000DE978A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0252C9742144289B00DC6D64 /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		0252C976214428CD00DC6D64 /* DebugPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPresenter.swift; sourceTree = "<group>"; };
-		0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TMLPresentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		025A3740220AECEE00865733 /* AlarmViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewPresenter.swift; sourceTree = "<group>"; };
 		025A3742220AEE0600865733 /* AlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewController.swift; sourceTree = "<group>"; };
 		0270F7BD214D5563004BC1EF /* ColorHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHelpers.swift; sourceTree = "<group>"; };
@@ -281,7 +258,6 @@
 		027F637B2105FF95001C9738 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		027F637E2105FF95001C9738 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		027F63802105FF95001C9738 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		027F63A221065271001C9738 /* TMLPersistentContainer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TMLPersistentContainer.framework; path = Carthage/Build/iOS/TMLPersistentContainer.framework; sourceTree = "<group>"; };
 		02867EA22119ED7D004D3122 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		02867EA42119FC17004D3122 /* DebugNotes.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DebugNotes.yaml; path = ../../../FFDoneResources/Resources/DebugNotes.yaml; sourceTree = "<group>"; };
 		02867EA6211AD3EF004D3122 /* NotesTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTablePresenter.swift; sourceTree = "<group>"; };
@@ -310,7 +286,6 @@
 		02BEE27221A721CB009B8844 /* DataModel-6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-6.xcdatamodel"; sourceTree = "<group>"; };
 		02C5870121A712BD00DF6C36 /* MappingModel45.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = MappingModel45.xcmappingmodel; sourceTree = "<group>"; };
 		02C5870321A714A000DF6C36 /* DatabaseMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseMigration.swift; sourceTree = "<group>"; };
-		02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DBSphereTagCloud_Framework.framework; path = Carthage/Build/iOS/DBSphereTagCloud_Framework.framework; sourceTree = "<group>"; };
 		02D61304214589EE00BD9BA6 /* FFDoneNF.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FFDoneNF.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		02D61305214589EE00BD9BA6 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		02D61307214589EE00BD9BA6 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
@@ -333,11 +308,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02479E1224BB0D4F00DE978A /* Yams.framework in Frameworks */,
-				02479E1624BB0E9400DE978A /* TMLPresentation.framework in Frameworks */,
-				02479E1124BB0D4C00DE978A /* PieCharts.framework in Frameworks */,
-				02479E1324BB0D5300DE978A /* TMLPersistentContainer.framework in Frameworks */,
-				02479E1024BB0D4800DE978A /* DBSphereTagCloud_Framework.framework in Frameworks */,
+				02E3BD8F25D53EA8005E6C8F /* PieCharts in Frameworks */,
+				02E3BD8D25D53EA5005E6C8F /* Yams in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,11 +326,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				021309FF210B686700410451 /* Yams.framework in Frameworks */,
-				020825EE2122E0BE007578C7 /* PieCharts.framework in Frameworks */,
-				0253339F2112FE3D00AF8E7B /* TMLPresentation.framework in Frameworks */,
-				027F63A321065271001C9738 /* TMLPersistentContainer.framework in Frameworks */,
-				02C61D9F2125EAD500073B7D /* DBSphereTagCloud_Framework.framework in Frameworks */,
+				02E3BD8825D53A09005E6C8F /* Yams in Frameworks */,
+				02E3BD8B25D53C6B005E6C8F /* PieCharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,7 +474,6 @@
 		025333992112FB9A00AF8E7B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0253339A2112FB9A00AF8E7B /* TMLPresentation.framework */,
 				02D61305214589EE00BD9BA6 /* UserNotifications.framework */,
 				02D61307214589EE00BD9BA6 /* UserNotificationsUI.framework */,
 			);
@@ -520,10 +488,6 @@
 				02479DC924BB0CC300DE978A /* WDone */,
 				02479E4324BDB2E000DE978A /* WDoneNF */,
 				027F63722105FF93001C9738 /* Products */,
-				02C61D9E2125EAD400073B7D /* DBSphereTagCloud_Framework.framework */,
-				020825ED2122E0BD007578C7 /* PieCharts.framework */,
-				021309FE210B686600410451 /* Yams.framework */,
-				027F63A221065271001C9738 /* TMLPersistentContainer.framework */,
 				025333992112FB9A00AF8E7B /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -577,7 +541,6 @@
 				02479DC424BB0CC300DE978A /* Sources */,
 				02479DC524BB0CC300DE978A /* Frameworks */,
 				02479DC624BB0CC300DE978A /* Resources */,
-				02479E1524BB0DE400DE978A /* ShellScript */,
 				02479E1824BB0E9400DE978A /* Embed Frameworks */,
 				02479E5024BDB2E000DE978A /* Embed App Extensions */,
 			);
@@ -587,6 +550,10 @@
 				02479E4B24BDB2E000DE978A /* PBXTargetDependency */,
 			);
 			name = WDone;
+			packageProductDependencies = (
+				02E3BD8C25D53EA5005E6C8F /* Yams */,
+				02E3BD8E25D53EA8005E6C8F /* PieCharts */,
+			);
 			productName = WDone;
 			productReference = 02479DC824BB0CC300DE978A /* WDone.app */;
 			productType = "com.apple.product-type.application";
@@ -615,8 +582,6 @@
 				027F636D2105FF93001C9738 /* Sources */,
 				027F636E2105FF93001C9738 /* Frameworks */,
 				027F636F2105FF93001C9738 /* Resources */,
-				027F63AA210652BC001C9738 /* ShellScript */,
-				025333A12112FE3D00AF8E7B /* Embed Frameworks */,
 				02D61316214589EE00BD9BA6 /* Embed App Extensions */,
 			);
 			buildRules = (
@@ -625,6 +590,10 @@
 				02D61311214589EE00BD9BA6 /* PBXTargetDependency */,
 			);
 			name = FFDone;
+			packageProductDependencies = (
+				02E3BD8725D53A09005E6C8F /* Yams */,
+				02E3BD8A25D53C6B005E6C8F /* PieCharts */,
+			);
 			productName = FFDone;
 			productReference = 027F63712105FF93001C9738 /* FFDone.app */;
 			productType = "com.apple.product-type.application";
@@ -681,6 +650,10 @@
 				Base,
 			);
 			mainGroup = 027F63682105FF93001C9738;
+			packageReferences = (
+				02E3BD8625D53A09005E6C8F /* XCRemoteSwiftPackageReference "yams" */,
+				02E3BD8925D53C6B005E6C8F /* XCRemoteSwiftPackageReference "PieCharts" */,
+			);
 			productRefGroup = 027F63722105FF93001C9738 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -743,56 +716,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		02479E1524BB0DE400DE978A /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/TMLPersistentContainer.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Yams.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/PieCharts.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/DBSphereTagCloud_Framework.framework",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-		027F63AA210652BC001C9738 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/TMLPersistentContainer.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Yams.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/PieCharts.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/DBSphereTagCloud_Framework.framework",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/TMLPersistentContainer.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Yams.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/DatePickerDialog.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PieCharts.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/DBSphereTagCloud_Framework.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		02479DC424BB0CC300DE978A /* Sources */ = {
@@ -990,10 +913,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = TintColour;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D243YH28Y6;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = WDone/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1015,10 +935,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = TintColour;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D243YH28Y6;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = WDone/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1197,10 +1114,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D243YH28Y6;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = FFDone/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1221,10 +1135,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D243YH28Y6;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = FFDone/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1331,6 +1242,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		02E3BD8625D53A09005E6C8F /* XCRemoteSwiftPackageReference "yams" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jpsim/yams";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.4;
+			};
+		};
+		02E3BD8925D53C6B005E6C8F /* XCRemoteSwiftPackageReference "PieCharts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnfairh/PieCharts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.8;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		02E3BD8725D53A09005E6C8F /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02E3BD8625D53A09005E6C8F /* XCRemoteSwiftPackageReference "yams" */;
+			productName = Yams;
+		};
+		02E3BD8A25D53C6B005E6C8F /* PieCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02E3BD8925D53C6B005E6C8F /* XCRemoteSwiftPackageReference "PieCharts" */;
+			productName = PieCharts;
+		};
+		02E3BD8C25D53EA5005E6C8F /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02E3BD8625D53A09005E6C8F /* XCRemoteSwiftPackageReference "yams" */;
+			productName = Yams;
+		};
+		02E3BD8E25D53EA8005E6C8F /* PieCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02E3BD8925D53C6B005E6C8F /* XCRemoteSwiftPackageReference "PieCharts" */;
+			productName = PieCharts;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		021309E7210A13F700410451 /* DataModel.xcdatamodeld */ = {
