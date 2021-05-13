@@ -12,11 +12,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Home-->
+        <!--Home Pager View Controller-->
         <scene sceneID="aH7-gj-PYa">
             <objects>
                 <pageViewController storyboardIdentifier="HomePagerViewController" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="jt9-rc-xhL" customClass="HomePagerViewController" customModule="FFDone" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="TabHomeIcon" id="hfY-fg-nzN"/>
+                    <tabBarItem key="tabBarItem" title="" image="house.fill" catalog="system" id="hfY-fg-nzN"/>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jzj-Bp-O7t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1537,7 +1537,9 @@
         <scene sceneID="mgA-19-4FI">
             <objects>
                 <navigationController title="Goals Tab" id="8kL-Rh-YRf" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Goals" image="TabGoalsIcon" id="4t2-rd-y77"/>
+                    <tabBarItem key="tabBarItem" title="" image="list.bullet.rectangle" catalog="system" id="4t2-rd-y77">
+                        <inset key="imageInsets" minX="0.0" minY="2" maxX="0.0" maxY="-2"/>
+                    </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="Xbs-9k-dVV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1554,7 +1556,7 @@
         <scene sceneID="MYJ-oP-SLe">
             <objects>
                 <navigationController title="Icons Tab" automaticallyAdjustsScrollViewInsets="NO" id="t9e-FB-5qQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Icons" image="TabIconsIcon" id="Aoy-QT-dO9"/>
+                    <tabBarItem key="tabBarItem" title="" image="photo.on.rectangle" catalog="system" id="Aoy-QT-dO9"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="ClZ-qd-Ut8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
@@ -1573,7 +1575,7 @@
         <scene sceneID="PrS-Cp-Ima">
             <objects>
                 <navigationController title="Notes Tab" automaticallyAdjustsScrollViewInsets="NO" id="Qhz-hz-oV4" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="history" id="xoj-aj-02U"/>
+                    <tabBarItem key="tabBarItem" image="books.vertical.fill" catalog="system" id="xoj-aj-02U"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="b2g-pq-SXu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
@@ -1798,7 +1800,7 @@
         <scene sceneID="6qr-zo-yHc">
             <objects>
                 <navigationController title="Alarms Tab" automaticallyAdjustsScrollViewInsets="NO" id="uKO-of-IH4" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Alarms" image="TabAlarmsIcon" id="p3z-4U-gWH"/>
+                    <tabBarItem key="tabBarItem" title="" image="alarm.fill" catalog="system" id="p3z-4U-gWH"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="LTb-as-iDV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
@@ -1819,13 +1821,15 @@
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="TintColour"/>
     <resources>
-        <image name="TabAlarmsIcon" width="30" height="30"/>
-        <image name="TabGoalsIcon" width="30" height="30"/>
         <image name="TabHomeIcon" width="30" height="30"/>
-        <image name="TabIconsIcon" width="30" height="30"/>
+        <image name="alarm.fill" catalog="system" width="124" height="128"/>
         <image name="arrow.2.squarepath" catalog="system" width="128" height="89"/>
+        <image name="books.vertical.fill" catalog="system" width="128" height="100"/>
         <image name="calendar" catalog="system" width="128" height="106"/>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
+        <image name="list.bullet.rectangle" catalog="system" width="128" height="93"/>
         <image name="moon" catalog="system" width="128" height="121"/>
+        <image name="photo.on.rectangle" catalog="system" width="128" height="96"/>
         <image name="text.alignright" catalog="system" width="128" height="100"/>
         <namedColor name="TextColour">
             <color red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -89,7 +89,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         scan() // this runs async, not finished by time next line runs
-        completionHandler(.alert)
+        completionHandler(.banner)
     }
 
     // MARK: - Alert database inteface
