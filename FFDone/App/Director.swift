@@ -109,14 +109,9 @@ class Director {
 
         initTab(.goals,
                 queryResults: Goal.allSortedResultsSet(model: model),
-                presenterFn: GoalsTablePresenter.init) {
+                presenterFn: GoalsTablePresenter.init,
+                image: UIImage(systemName: "list.bullet.rectangle")!.withBaselineOffset(fromBottom: 7)) {
                     [unowned self] goal in self.request(.viewGoal(goal!, model))
-        }
-
-        initTab(.notes,
-                queryResults: Note.allSortedResultsSet(model: model),
-                presenterFn: NotesTablePresenter.init) {
-                    [unowned self] note in self.request(.editNote(note!, model))
         }
 
         initTab(.alarms,
@@ -125,9 +120,17 @@ class Director {
                     [unowned self] alarm in self.request(.viewAlarm(alarm!, model))
         }
 
+        initTab(.notes,
+                queryResults: Note.allSortedResultsSet(model: model),
+                presenterFn: NotesTablePresenter.init,
+                image: UIImage(systemName: "books.vertical.fill")!.withBaselineOffset(fromBottom: 5.5)) {
+            [unowned self] note in self.request(.editNote(note!, model))
+        }
+
         initTab(.icons,
                 queryResults: Icon.createAllResultsSet(model: model),
-                presenterFn: IconsTablePresenter.init) {
+                presenterFn: IconsTablePresenter.init,
+                image: UIImage(systemName: "photo.on.rectangle")!.withBaselineOffset(fromBottom: 7)) {
                     [unowned self] icon in self.request(.editIcon(icon!, model))
         }
 
@@ -139,6 +142,7 @@ class Director {
     private func initTab<ModelObjectType, PresenterType>(_ tab: Tab,
                                                          queryResults: ModelResultsSet,
                                                          presenterFn: MultiPresenterFn<DirectorInterface, ModelObjectType, PresenterType>,
+                                                         image: UIImage? = nil,
                                                          picked: @escaping PresenterDone<ModelObjectType> = { _ in })
         where ModelObjectType: ModelObject,PresenterType: Presenter {
             services.initTab(tabIndex: tab.rawValue,
@@ -146,6 +150,9 @@ class Director {
                              queryResults: queryResults,
                              presenterFn: presenterFn,
                              picked: picked)
+        if let image = image {
+            services.setTabImage(tab: tab.rawValue, image: image)
+        }
     }
 
     private func initTab<PresenterType>(_ tab: Tab,
