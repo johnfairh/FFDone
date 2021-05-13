@@ -74,8 +74,8 @@ class Director {
     enum Tab: Int {
         case home = 0
         case goals = 1
-        case notes = 2
-        case alarms = 3
+        case alarms = 2
+        case notes = 3
         case icons = 4
     }
 
