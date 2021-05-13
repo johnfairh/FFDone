@@ -52,7 +52,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
 
         /// Called from App when we are ready to go.
         app.notifyWhenReady { model in
-            self.model = model.createChildModel(background: true)
+            self.model = model
             self.scan()
         }
     }
@@ -74,49 +74,9 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                 Log.log("AlarmScheduler: Auth OK but alerts disabled?  Continuing.")
             }
 
-            let content = UNMutableNotificationContent()
-            content.title = "Not done yet"
-            content.body = text
-            // Calculating the badge at this point is tricky - we have to examine the entire
-            // pending list and insert this new guy (which will require the tail of said list
-            // to also be updated).  So instead we set an arbitrary value and wait for the DB
-            // update that will follow this schedule() that will update the `activeAlarmCount`
-            // variable to keep the app and tab badges in sync.
-            content.badge = 1
-            content.categoryIdentifier = Strings.Notification.Category
-
-            // Try to add the alert's image to the notification.  The UN system moves
-            // the file over into the notifications area, so don't delete it.
-            let imageFileUrl = FileManager.default.temporaryFileURL(extension: "png")
-            Log.log("Orig: \(imageFileUrl.path)")
-            if let pngImageData = image.pngData() {
-                do {
-                    try pngImageData.write(to: imageFileUrl)
-
-                    let attachment = try UNNotificationAttachment(identifier: UUID().uuidString, url: imageFileUrl)
-                    content.attachments = [attachment]
-                } catch {
-                    Log.log("Failed to create notification PNG, pressing on - \(error)")
-                }
-            }
-
-            let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
-            let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-
-            let uid = UUID().uuidString
-            let request = UNNotificationRequest(identifier: uid, content: content, trigger: trigger)
-
-            self.center.add(request) { error in
-                Log.log("Notification added OK")
-                Dispatch.toForeground {
-                    if let error = error {
-                        Log.log("AlarmScheduler: add request failed: \(error)")
-                        callback(nil)
-                    } else {
-                        callback(uid)
-                    }
-                }
-            }
+            let content = UNMutableNotificationContent(text: text, image: image)
+            let request = UNNotificationRequest(content: content, date: date)
+            self.center.addNotifyIdentifier(request, callback: callback)
         }
     }
 
@@ -158,89 +118,154 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
     // This might be racy -- it's not clear whether calls to `getPendingNotificationRequests`
     // are serialized.  Probably would be better to bounce back onto the private queue.
     var activeAlarmCount: Int {
-        get {
-            return UIApplication.shared.applicationIconBadgeNumber
-        }
-        set {
-            guard newValue != activeAlarmCount else {
-                Log.log("SetActiveAlarmCount \(newValue): skipping, same")
-                return
-            }
-            UIApplication.shared.applicationIconBadgeNumber = newValue
+        UIApplication.shared.applicationIconBadgeNumber
+    }
 
-            center.getPendingNotificationRequests { [activeAlarmCount] requests in
-                guard requests.count > 0 else {
+    func setActiveAlarmCount(_ newCount: Int) {
+        guard newCount != activeAlarmCount else {
+            Log.log("SetActiveAlarmCount \(newCount): skipping, same")
+            return
+        }
+        UIApplication.shared.applicationIconBadgeNumber = newCount
+
+        center.getPendingNotificationRequests { requests in
+            Log.log("Scanning notifications")
+
+            requests.sortedByCalendarTrigger.enumerated().forEach { index, request in
+                // When this, the Nth nf, fires, badge should be the current value
+                // (number of active alarms) plus N.
+                let newBadge = newCount + index + 1
+                let currentBadge = (request.content.badge as? Int) ?? Int.max
+
+                guard currentBadge != newBadge else {
+                    Log.log("Request already has the right badge")
                     return
                 }
 
-                Log.log("Scanning notifications")
+                Log.log("Adding replacement notification, \(currentBadge) -> \(newBadge)")
+                self.center.addNotifyIdentifier(request.clone(badge: newBadge))
+            }
+        }
+    }
+}
 
-                // Get notifications into the order they will fire
-                let sortedRequests = requests.sorted { left, right in
-                    guard let leftTrigger = left.trigger,
-                        let leftCalendarTrigger = leftTrigger as? UNCalendarNotificationTrigger,
-                        let leftTriggerDate = leftCalendarTrigger.nextTriggerDate(),
-                        let rightTrigger = right.trigger,
-                        let rightCalendarTrigger = rightTrigger as? UNCalendarNotificationTrigger,
-                        let rightTriggerDate = rightCalendarTrigger.nextTriggerDate() else {
-                            Log.fatal("Weird notification in the queue: \(left), \(right)")
-                    }
+// MARK: NotificationCenter helpers
 
-                    return leftTriggerDate < rightTriggerDate
-                }
-
-                // Get the list of badges in the same order
-                let badgeNumbers = (activeAlarmCount+1)...(activeAlarmCount + sortedRequests.count)
-
-                // Look for things that need changing
-                zip(sortedRequests, badgeNumbers).forEach { request, newBadge in
-                    guard let currentBadgeValue = request.content.badge,
-                        let currentBadge = currentBadgeValue as? Int else {
-                            Log.log("Weird notification in the queue: \(request), pressing on...")
-                            return
-                    }
-
-                    guard currentBadge != newBadge else {
-                        Log.log("Request already has the right badge")
-                        return
-                    }
-
-                    // Replace the notification
-                    let newContent = UNMutableNotificationContent()
-                    newContent.title = request.content.title
-                    newContent.body = request.content.body
-                    newContent.badge = newBadge as NSNumber
-                    if let oldAttachment = request.content.attachments.first {
-                        let oldUrl = oldAttachment.url
-                        let tmpUrl = FileManager.default.temporaryFileURL(extension: "png")
-                        Log.log("Previous url: \(oldUrl.path)")
-                        Log.log("New tmp url: \(tmpUrl.path)")
-                        if oldUrl.startAccessingSecurityScopedResource() {
-                            defer { oldUrl.stopAccessingSecurityScopedResource() }
-                            do {
-                                try FileManager.default.copyItem(at: oldUrl, to: tmpUrl)
-                                let newAttachment = try UNNotificationAttachment(identifier: UUID().uuidString, url: tmpUrl)
-                                newContent.attachments = [newAttachment]
-                            } catch {
-                                Log.log("Copying up attachment failed: \(error)")
-                            }
-                        } else {
-                            Log.log("Can't get security access to copy up attachment")
-                        }
-                    }
-                    newContent.categoryIdentifier = Strings.Notification.Category
-
-                    Log.log("Adding replacement notification, \(currentBadge) -> \(newBadge)")
-
-                    let newRequest = UNNotificationRequest(identifier: request.identifier, content: newContent, trigger: request.trigger)
-                    self.center.add(newRequest) { error in
-                        Log.log("Replacement notification added")
-                        if let error = error {
-                            Log.log("Error trying to replace notification: \(error), pressing on...")
-                        }
-                    }
+extension UNUserNotificationCenter {
+    /// Add a notification, optionally call back with identifier on FG queue, log
+    func addNotifyIdentifier(_ request: UNNotificationRequest, callback: ((String?) -> Void)? = nil) {
+        add(request) { error in
+            Log.log("Notification added OK")
+            Dispatch.toForeground {
+                if let error = error {
+                    Log.log("AlarmScheduler: add request failed: \(error)")
+                    callback?(nil)
+                } else {
+                    callback?(request.identifier)
                 }
             }
+        }
+
+    }
+}
+
+// MARK: Notification creation and cloing
+
+extension UNNotificationContent {
+    /// Get a version of the content with a different `badge` value
+    func clone(badge: Int? = nil) -> UNMutableNotificationContent {
+        let newContent = UNMutableNotificationContent()
+        newContent.title = title
+        newContent.body = body
+        newContent.badge = badge.flatMap { $0 as NSNumber }
+        if let oldAttachment = attachments.first {
+            let oldUrl = oldAttachment.url
+            let tmpUrl = FileManager.default.temporaryFileURL(extension: "png")
+            Log.log("Previous url: \(oldUrl.path)")
+            Log.log("New tmp url: \(tmpUrl.path)")
+            if oldUrl.startAccessingSecurityScopedResource() {
+                defer { oldUrl.stopAccessingSecurityScopedResource() }
+                do {
+                    try FileManager.default.copyItem(at: oldUrl, to: tmpUrl)
+                    let newAttachment = try UNNotificationAttachment(identifier: UUID().uuidString, url: tmpUrl)
+                    newContent.attachments = [newAttachment]
+                } catch {
+                    Log.log("Copying up attachment failed: \(error)")
+                }
+            } else {
+                Log.log("Can't get security access to copy up attachment")
+            }
+        }
+        newContent.categoryIdentifier = Strings.Notification.Category
+        return newContent
+    }
+}
+
+extension UNMutableNotificationContent {
+    /// New FFDone notification content, badge '1'
+    convenience init(text: String, image: UIImage) {
+        self.init()
+
+        title = "Not done yet"
+        body = text
+        // Calculating the badge at this point is too hard: we'd have to examine the entire
+        // pending list and insert this new guy, updating the badge count of those that
+        // follow. Instead we set an arbitrary value and wait for the DB update that will
+        // follow and that will call `setActiveAlarmCount()` to keep the app and tab badges
+        // in sync.  Relying on the only code path getting here being moving an existing
+        // Alarm object from active to scheduled.
+        badge = 1
+        categoryIdentifier = Strings.Notification.Category
+
+        // Try to add the alert's image to the notification.  The UN system moves
+        // the file over into the notifications area, so don't delete it.
+        let imageFileUrl = FileManager.default.temporaryFileURL(extension: "png")
+        Log.log("Orig: \(imageFileUrl.path)")
+        if let pngImageData = image.pngData() {
+            do {
+                try pngImageData.write(to: imageFileUrl)
+                let attachment = try UNNotificationAttachment(identifier: UUID().uuidString, url: imageFileUrl)
+                attachments = [attachment]
+            } catch {
+                Log.log("Failed to create notification PNG, pressing on - \(error)")
+            }
+        }
+    }
+}
+
+
+extension UNNotificationRequest {
+    /// New one-shot notification with content
+    convenience init(content: UNNotificationContent, date: Date) {
+        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        self.init(identifier: UUID().uuidString, content: content, trigger: trigger)
+    }
+
+    /// Get a version of the request with a different `content.badge` value
+    func clone(badge: Int? = nil) -> UNNotificationRequest {
+        UNNotificationRequest(identifier: identifier,
+                              content: content.clone(badge: badge),
+                              trigger: trigger)
+    }
+}
+
+// MARK: Notification sorting
+
+extension Array where Element == UNNotificationRequest {
+    /// Sorted in order that the notifications will fire
+    var sortedByCalendarTrigger: Self {
+        sorted { left, right in
+            guard let leftTrigger = left.trigger,
+                let leftCalendarTrigger = leftTrigger as? UNCalendarNotificationTrigger,
+                let leftTriggerDate = leftCalendarTrigger.nextTriggerDate(),
+                let rightTrigger = right.trigger,
+                let rightCalendarTrigger = rightTrigger as? UNCalendarNotificationTrigger,
+                let rightTriggerDate = rightCalendarTrigger.nextTriggerDate() else {
+                    Log.fatal("Weird notification in the queue: \(left), \(right)")
+            }
+
+            return leftTriggerDate < rightTriggerDate
         }
     }
 }

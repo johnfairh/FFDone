@@ -274,7 +274,7 @@ extension DirectorRequest {
             alarmScheduler.cancelAlarm(uid: uid)
         case let .setActiveAlarmCount(count):
             services.setTabBadge(tab: Director.Tab.alarms.rawValue, badge: (count == 0) ? nil : String(count))
-            alarmScheduler.activeAlarmCount = count
+            alarmScheduler.setActiveAlarmCount(count)
 
         case let .createEpoch(model):
             services.createThing("EpochEditViewController",
