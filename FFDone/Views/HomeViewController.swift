@@ -178,10 +178,15 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
             stepsDone = done
         }
 
+        var donePercent: Int
         if stepsToDo > 0 {
-            let donePercent = (stepsDone * 100) / (stepsDone + stepsToDo)
+            donePercent = (stepsDone * 100) / (stepsDone + stepsToDo)
+            if donePercent == 0 && done != 0 {
+                donePercent = 1
+            }
             progressLabel.text = "\(donePercent)%"
         } else {
+            donePercent = 100
             progressLabel.text = ""
         }
 
@@ -190,10 +195,17 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
         pieChartView.animDuration = 0
         defer { pieChartView.animDuration = oldAnimDuration }
 
+        // Adjust values to avoid giving tiny touch-targets
+        switch donePercent {
+        case 1..<10: donePercent = 10
+        case 90..<100: donePercent = 90
+        default: break
+        }
+
         // Add slices
         pieChartView.models =
-            [PieSliceModel(value: Double(stepsDone), color: .pieComplete),  // TagType.complete.rawValue
-             PieSliceModel(value: Double(stepsToDo), color: .pieIncomplete)]// TagType.incomplete.rawValue
+            [PieSliceModel(value: Double(donePercent), color: .pieComplete),  // TagType.complete.rawValue
+             PieSliceModel(value: Double(100 - donePercent), color: .pieIncomplete)]// TagType.incomplete.rawValue
 
         // Configure how far out the slice pops when clicked
         pieChartView.slices.forEach { $0.view.selectedOffset = CGFloat(5.0) }
