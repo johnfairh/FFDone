@@ -111,18 +111,18 @@ extension Note {
 
     /// For the main history view -- all notes.
     static func allSortedResultsSet(model: Model) -> ModelResultsSet {
-        return sectionatedResultsSet(model: model, predicate: nil, latestFirst: false)
+        return sectionatedResultsSet(model: model, predicate: nil, latestFirst: true)
     }
 
     static func allReverseSortedResultsSet(model: Model) -> ModelResultsSet {
-        return sectionatedResultsSet(model: model, predicate: nil, latestFirst: true)
+        return sectionatedResultsSet(model: model, predicate: nil, latestFirst: false)
     }
 
     /// For the search view -- search note text content.
     static func searchByTextSortedResultsSet(model: Model, str: String) -> ModelResultsSet {
         let textMatchPredicate = NSPredicate(format: "\(#keyPath(text)) CONTAINS[cd] \"\(str)\"")
 
-        return sectionatedResultsSet(model: model, predicate: textMatchPredicate, latestFirst: false)
+        return sectionatedResultsSet(model: model, predicate: textMatchPredicate, latestFirst: true)
     }
 
     /// For the per-note view.

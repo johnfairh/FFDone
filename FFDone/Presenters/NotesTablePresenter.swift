@@ -47,7 +47,7 @@ class NotesTablePresenter: TablePresenter<DirectorInterface>, Presenter, NotesTa
         }
     }
 
-    // MARK: - Reverse button, luckily inaccessible in search mode!
+    // MARK: - Reverse button, inaccessible in search mode that always operates 'non-reversed'
 
     func reverseNoteOrder() {
         if filteredResults != nil {
@@ -57,7 +57,7 @@ class NotesTablePresenter: TablePresenter<DirectorInterface>, Presenter, NotesTa
         }
     }
 
-    /// Normally table is old->new.  Reversed means new->old, newest at the top.
+    /// Normally table is new->old.  Reversed means old->new, oldest at the top.
     private var isReverseOrder: Bool {
         return filteredResults != nil
     }
@@ -85,18 +85,18 @@ class NotesTablePresenter: TablePresenter<DirectorInterface>, Presenter, NotesTa
             case .orderedAscending:
                 if !isReverseOrder {
                     Log.debugLog("  Try smaller than sought, !reversed, going up")
-                    lower = mid + 1
+                    upper = mid - 1
                 } else {
                     Log.debugLog("  Try smaller than sought, reversed, going down")
-                    upper = mid - 1
+                    lower = mid + 1
                 }
             case .orderedDescending:
                 if !isReverseOrder {
                     Log.debugLog("  Try bigger than sought, !reversed, going down")
-                    upper = mid - 1
+                    lower = mid + 1
                 } else {
                     Log.debugLog("  Try bigger than sought, reversed, going up")
-                    lower = mid + 1
+                    upper = mid - 1
                 }
             case .orderedSame:
                 Log.debugLog("  Found it, stopping")
