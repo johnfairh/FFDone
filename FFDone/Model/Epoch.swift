@@ -24,13 +24,22 @@ extension Epoch : ModelObject {
     }
 
     /// Custom properties
-    static func create(model: Model, shortName: String, longName: String, majorVersion: Int, minorVersion: Int) -> Epoch {
+    static func create(model: Model, shortName: String, longName: String, majorVersion: Int64, minorVersion: Int64) -> Epoch {
         let epoch = createWithDefaults(model: model)
         epoch.cdShortName = shortName
         epoch.cdLongName = longName
         epoch.minorVersion = Int64(minorVersion)
         epoch.majorVersion = Int64(majorVersion)
         return epoch
+    }
+
+    /// Defaults to next patch
+    static func createFrom(previous: Epoch, in model: Model) -> Epoch {
+        create(model: model,
+               shortName: previous.shortName,
+               longName: previous.longName,
+               majorVersion: previous.majorVersion,
+               minorVersion: previous.minorVersion + 1)
     }
 
     var canSave: Bool {
@@ -160,5 +169,21 @@ extension Epoch {
 extension Epoch {
     var image: UIImage {
         UIImage(named: "EpochHeading_\(majorVersion)") ?? UIImage(named: "EpochHeading_1")!
+    }
+}
+
+// MARK: - Merge
+
+extension Epoch {
+    static func merge(major: Int64, in model: Model) {
+        let predicate = NSPredicate(format: "\(#keyPath(Epoch.majorVersion)) == %@", argumentArray: [major])
+        let allInMajor = findAll(model: model, predicate: predicate, sortedBy: [defaultSortDescriptor])
+        guard let first = allInMajor.first, let last = allInMajor.last, allInMajor.count > 1 else {
+            return
+        }
+        first.endDate = last.endDate
+        allInMajor[1...].forEach {
+            model.delete($0)
+        }
     }
 }

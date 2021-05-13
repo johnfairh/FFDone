@@ -214,8 +214,8 @@ enum DatabaseObjects {
             let epoch = Epoch.create(model: model,
                                      shortName: def.str("shortname"),
                                      longName: def.str("longname"),
-                                     majorVersion: def.int("majorversion"),
-                                     minorVersion: def.int("minorversion"))
+                                     majorVersion: Int64(def.int("majorversion")),
+                                     minorVersion: Int64(def.int("minorversion")))
             epoch.startDate = def.date("startDate")
         }
     }

@@ -47,6 +47,10 @@ class EpochsTableViewController: PresentableTableVC<EpochsTablePresenter>,
         tableModel.start()
     }
 
+    func leadingSwipeActionsForObject(_ epoch: Epoch) -> TableSwipeAction? {
+        return presenter.swipeActionFor(epoch: epoch)
+    }
+
     @IBAction func debugButtonTapped(_ sender: UIBarButtonItem) {
         presenter.showDebug()
     }

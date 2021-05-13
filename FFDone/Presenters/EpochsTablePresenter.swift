@@ -10,6 +10,7 @@ import TMLPresentation
 /// Presenter inputs, commands, outputs
 protocol EpochsTablePresenterInterface: TablePresenterInterface {
     func showDebug()
+    func swipeActionFor(epoch: Epoch) -> TableSwipeAction?
 }
 
 /// Epochs are pretty bare-bones, read-only presentational interface only
@@ -36,5 +37,18 @@ class EpochsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Epochs
 
     func showDebug() {
         director.request(.showDebugConsole)
+    }
+
+    func swipeActionFor(epoch: Epoch) -> TableSwipeAction? {
+        guard !epoch.isGlobal else {
+            return nil
+        }
+
+        let major = epoch.majorVersion
+
+        return TableSwipeAction(text: "Merge \(major).X", color: .tableLeadingSwipe, action: {
+            Epoch.merge(major: major, in: self.model)
+            self.model.save()
+        })
     }
 }

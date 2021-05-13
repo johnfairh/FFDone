@@ -57,7 +57,7 @@ class EpochEditPresenter: EditablePresenter, EpochEditPresenterInterface {
         Log.assert(mode.isSingleType(.create))
         Log.assert(object == nil)
         self.previousEpoch = Epoch.mostRecent(in: model)
-        self.epoch     = Epoch.createWithDefaults(model: model)
+        self.epoch     = Epoch.createFrom(previous: previousEpoch, in: model)
         self.model     = model
         self.director  = director
         self.dismissFn = dismiss
