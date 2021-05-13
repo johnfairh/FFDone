@@ -122,8 +122,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
     }
 
     func setActiveAlarmCount(_ newCount: Int) {
-        guard newCount != activeAlarmCount else {
-            Log.log("SetActiveAlarmCount \(newCount): skipping, same")
+        guard badgesEnabled, newCount != activeAlarmCount else {
             return
         }
         UIApplication.shared.applicationIconBadgeNumber = newCount
@@ -147,6 +146,20 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
             }
         }
     }
+
+    func hideBadges() {
+        Log.assert(!badgesEnabled)
+        UIApplication.shared.applicationIconBadgeNumber = 0 // disabled
+        center.getPendingNotificationRequests { requests in
+            requests.forEach { request in
+                self.center.addNotifyIdentifier(request.clone(badge: nil))
+            }
+        }
+    }
+}
+
+fileprivate var badgesEnabled: Bool {
+    Prefs.subbed
 }
 
 // MARK: NotificationCenter helpers
@@ -208,13 +221,15 @@ extension UNMutableNotificationContent {
 
         title = "Not done yet"
         body = text
-        // Calculating the badge at this point is too hard: we'd have to examine the entire
-        // pending list and insert this new guy, updating the badge count of those that
-        // follow. Instead we set an arbitrary value and wait for the DB update that will
-        // follow and that will call `setActiveAlarmCount()` to keep the app and tab badges
-        // in sync.  Relying on the only code path getting here being moving an existing
-        // Alarm object from active to scheduled.
-        badge = 1
+        if badgesEnabled {
+            // Calculating the badge at this point is too hard: we'd have to examine the entire
+            // pending list and insert this new guy, updating the badge count of those that
+            // follow. Instead we set an arbitrary value and wait for the DB update that will
+            // follow and that will call `setActiveAlarmCount()` to keep the app and tab badges
+            // in sync.  Relying on the only code path getting here being moving an existing
+            // Alarm object from active to scheduled.
+            badge = 1
+        }
         categoryIdentifier = Strings.Notification.Category
 
         // Try to add the alert's image to the notification.  The UN system moves
@@ -232,7 +247,6 @@ extension UNMutableNotificationContent {
         }
     }
 }
-
 
 extension UNNotificationRequest {
     /// New one-shot notification with content

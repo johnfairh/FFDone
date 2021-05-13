@@ -23,11 +23,16 @@ class AlarmCell: UITableViewCell, TableCell {
 class AlarmsTableViewController: PresentableTableVC<AlarmsTablePresenter>,
 TableModelDelegate {
 
+    @IBOutlet weak var toggleSubbedButton: UIBarButtonItem!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         presenter.reload = { [weak self] queryResults in
             self?.reloadTable(queryResults: queryResults)
+        }
+        presenter.refresh = { subscribed in
+            self.toggleSubbedButton.image = UIImage(systemName: subscribed ? "moon" : "moon.zzz.fill")
         }
 
         enablePullToCreate()
@@ -89,5 +94,9 @@ TableModelDelegate {
 
     func leadingSwipeActionsForObject(_ alarm: Alarm) -> TableSwipeAction? {
         return presenter.swipeActionForAlarm(alarm)
+    }
+
+    @IBAction func subbedButtonPressed(_ sender: Any) {
+        presenter.toggleSubscription()
     }
 }

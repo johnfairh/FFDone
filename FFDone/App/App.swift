@@ -131,4 +131,22 @@ extension Prefs {
             return Prefs.string("DefAlarmIcon")
         }
     }
+
+    static var unsubbed: Bool {
+        set {
+            Prefs.set("Unsubbed", to: newValue)
+        }
+        get {
+            return Prefs.bool("Unsubbed")
+        }
+    }
+
+    static var subbed: Bool {
+        set {
+            unsubbed = !newValue
+        }
+        get {
+            !unsubbed
+        }
+    }
 }

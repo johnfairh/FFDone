@@ -46,6 +46,8 @@ enum DirectorRequest {
     case cancelAlarm(String)
     case setActiveAlarmCount(Int)
 
+    case toggleSubscriptionAndThen(() -> Void)
+
     case createEpoch(Model)
 
     case showDebugConsole
@@ -275,6 +277,12 @@ extension DirectorRequest {
         case let .setActiveAlarmCount(count):
             services.setTabBadge(tab: Director.Tab.alarms.rawValue, badge: (count == 0) ? nil : String(count))
             alarmScheduler.setActiveAlarmCount(count)
+        case let .toggleSubscriptionAndThen(callback):
+            Prefs.subbed = !Prefs.subbed
+            if Prefs.unsubbed {
+                alarmScheduler.hideBadges()
+            }
+            callback()
 
         case let .createEpoch(model):
             services.createThing("EpochEditViewController",

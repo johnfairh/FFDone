@@ -20,6 +20,9 @@ protocol AlarmsTablePresenterInterface: TablePresenterInterface {
     func selectAlarm(_ alarm: Alarm)
 
     func swipeActionForAlarm(_ alarm: Alarm) -> TableSwipeAction?
+
+    func toggleSubscription()
+    var refresh: (Bool) -> Void { get set }
 }
 
 // MARK: - Presenter
@@ -31,6 +34,12 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
 
     private var listener: NotificationListener?
 
+    var refresh: (Bool) -> Void = { _ in } {
+        didSet {
+            refreshUI()
+        }
+    }
+
     required init(director: DirectorInterface, model: Model, object: ModelResultsSet?, mode: PresenterMode, dismiss: @escaping PresenterDone<Alarm>) {
         self.selectedCallback = dismiss
         super.init(director: director, model: model, object: object, mode: mode)
@@ -38,11 +47,16 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
             [weak self] _ in self?.refreshAlarmCount()
         }
         refreshAlarmCount()
+        refreshUI()
     }
 
     deinit {
         listener?.stopListening()
         listener = nil
+    }
+
+    func refreshUI() {
+        refresh(Prefs.subbed)
     }
 
     func refreshAlarmCount() {
@@ -107,5 +121,14 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
                 self.director.request(.scheduleAlarmAndThen(alarm, { self.model.save() }))
             }
         })
+    }
+
+    // MARK: Subscription
+
+    func toggleSubscription() {
+        self.director.request(.toggleSubscriptionAndThen({
+            self.refreshAlarmCount()
+            self.refreshUI()
+        }))
     }
 }
