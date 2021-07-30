@@ -10,6 +10,7 @@ import TMLPresentation
 ///
 /// Per-window (per-scene) user-interface object
 ///
+@MainActor
 struct AppScene {
     private let window: UIWindow
     private let director: Director

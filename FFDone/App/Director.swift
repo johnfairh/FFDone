@@ -65,11 +65,12 @@ protocol DirectorInterface {
     var debugLogCache: LogCache { get }
 
     /// Save/Restore the home page index [state save empire goes here]
-    var homePageIndex: Int { get set }
+    //var homePageIndex: Int { get set }
 }
 
 // MARK: - Concrete director class
 
+@MainActor
 class Director {
     enum Tab: Int {
         case home = 0
@@ -167,6 +168,7 @@ class Director {
 // MARK: - DirectorRequest processing
 
 extension DirectorRequest {
+    @MainActor
     func handle(director: Director) {
         let services = director.services!
         let alarmScheduler = director.alarmScheduler
@@ -312,21 +314,26 @@ extension DirectorRequest {
 
 extension Director: DirectorInterface {
     /// Called from presenters to begin a new use-case
-    func request(_ request: DirectorRequest) {
+    nonisolated func request(_ request: DirectorRequest) {
         // We add a fibre break here to avoid very odd behaviours, eg.
         // multi-second delays on selecting a table row.
-        Dispatch.toForeground {
-            request.handle(director: self)
+        // iOS15 - used to have Dispatch.toForeground, not sure if this
+        // is enough for the "fibre break" (if that is even needed any more)
+        // but we have to flip over to the right actor.
+        Task {
+            await MainActor.run {
+                request.handle(director: self)
+            }
         }
     }
 
     /// Call from presenter to query list of user-defined goal tags
-    var tags: [String] {
+    nonisolated var tags: [String] {
         return tagList.tags
     }
 
     /// Debug log
-    var debugLogCache: LogCache {
+    nonisolated var debugLogCache: LogCache {
         return logCache
     }
 }

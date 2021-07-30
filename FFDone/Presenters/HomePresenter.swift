@@ -27,10 +27,10 @@ final class HomePagerPresenter: PagerPresenter<DirectorInterface, Epoch, HomePre
 
     public var pageIndex: Int {
         get {
-            return director.homePageIndex
+            0//return director.homePageIndex
         }
         set {
-            director.homePageIndex = newValue
+            //director.homePageIndex = newValue
         }
     }
 }
