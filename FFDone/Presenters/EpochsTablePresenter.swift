@@ -8,6 +8,7 @@
 import TMLPresentation
 
 /// Presenter inputs, commands, outputs
+@MainActor
 protocol EpochsTablePresenterInterface: TablePresenterInterface {
     func showDebug()
     func swipeActionFor(epoch: Epoch) -> TableSwipeAction?
@@ -32,11 +33,11 @@ class EpochsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Epochs
     }
 
     func createNewObject() {
-        director.request(.createEpoch(model))
+        Task { await director.request(.createEpoch(model)) }
     }
 
     func showDebug() {
-        director.request(.showDebugConsole)
+        Task { await director.request(.showDebugConsole) }
     }
 
     func swipeActionFor(epoch: Epoch) -> TableSwipeAction? {

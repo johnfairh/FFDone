@@ -27,10 +27,10 @@ final class HomePagerPresenter: PagerPresenter<DirectorInterface, Epoch, HomePre
 
     public var pageIndex: Int {
         get {
-            0//return director.homePageIndex
+            director.homePageIndex
         }
         set {
-            //director.homePageIndex = newValue
+            director.homePageIndex = newValue
         }
     }
 }
@@ -67,8 +67,8 @@ extension Dictionary where Key == HomeSideType, Value == HomeSideData {
 }
 
 /// Presenter inputs, commands, outputs
+@MainActor
 protocol HomePresenterInterface {
-
     /// Get told about data model changes
     var refresh: (HomeData) -> Void { get set }
 
@@ -189,18 +189,18 @@ class HomePresenter: Presenter, HomePresenterInterface {
     // user clicks tag
     func displayTag(_ tag: String) {
         let data = GoalsTableInvocationData(epoch: epoch, tagged: tag)
-        director.request(.switchToGoals(data))
+        Task { await director.request(.switchToGoals(data)) }
     }
 
     func createGoal() {
-        director.request(.createGoal(model))
+        Task { await director.request(.createGoal(model)) }
     }
 
     func createAlarm() {
-        director.request(.createAlarm(model))
+        Task { await director.request(.createAlarm(model)) }
     }
 
     func showEpochs() {
-        director.request(.showEpochs)
+        Task { await director.request(.showEpochs) }
     }
 }

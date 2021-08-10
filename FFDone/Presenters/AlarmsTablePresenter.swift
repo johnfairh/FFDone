@@ -8,8 +8,8 @@
 import TMLPresentation
 
 /// Interface from the Alarms Table VC to presenter -- requirements unique to alarms table.
+@MainActor
 protocol AlarmsTablePresenterInterface: TablePresenterInterface {
-
     func canMoveAlarm(_ alarm: Alarm) -> Bool
     func canMoveAlarmTo(_ alarm: Alarm, toSection: Alarm.Section, toRowInSection: Int) -> Bool
     func moveAlarm(_ alarm: Alarm, fromRowInSection: Int, toSection: Alarm.Section, toRowInSection: Int, tableView: UITableView)
@@ -21,7 +21,7 @@ protocol AlarmsTablePresenterInterface: TablePresenterInterface {
 
     func swipeActionForAlarm(_ alarm: Alarm) -> TableSwipeAction?
 
-    func toggleSubscription()
+    func toggleSubscription() async
     var refresh: (Bool) -> Void { get set }
 }
 
@@ -61,7 +61,7 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
 
     func refreshAlarmCount() {
         let count = Alarm.getActiveAlarmCount(model: model)
-        director.request(.setActiveAlarmCount(count))
+        Task { await director.request(.setActiveAlarmCount(count)) }
     }
 
     // MARK: - Move
@@ -90,7 +90,7 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
     func deleteAlarm(_ alarm: Alarm) {
         if !alarm.isActive {
             if let uid = alarm.notificationUid {
-                director.request(.cancelAlarm(uid))
+                Task { await director.request(.cancelAlarm(uid)) }
             }
         }
         alarm.delete(from: model)
@@ -102,7 +102,7 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
     }
 
     func createNewObject() {
-        director.request(.createAlarm(model))
+        Task { await director.request(.createAlarm(model)) }
     }
 
     // MARK: - Swipe
@@ -113,12 +113,15 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
         }
 
         return TableSwipeAction(text: "Done", color: .tableLeadingSwipe, action: {
-            if case .oneShot = alarm.kind {
-                alarm.delete(from: self.model)
-                self.model.save()
-            } else {
-                alarm.debugDeactivate()
-                self.director.request(.scheduleAlarmAndThen(alarm, { self.model.save() }))
+            Task {
+                if case .oneShot = alarm.kind {
+                    alarm.delete(from: self.model)
+                    self.model.save()
+                } else {
+                    alarm.debugDeactivate()
+                    await self.director.request(.scheduleAlarm(alarm))
+                    self.model.save()
+                }
             }
         })
     }
@@ -126,9 +129,10 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
     // MARK: Subscription
 
     func toggleSubscription() {
-        self.director.request(.toggleSubscriptionAndThen({
-            self.refreshAlarmCount()
-            self.refreshUI()
-        }))
+        Task {
+            await director.request(.toggleSubscription)
+            refreshAlarmCount()
+            refreshUI()
+        }
     }
 }

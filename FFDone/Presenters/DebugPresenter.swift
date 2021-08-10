@@ -13,6 +13,7 @@ struct DebugData {
 }
 
 /// Presenter inputs, commands, outputs
+@MainActor
 protocol DebugPresenterInterface {
     /// Get told about data changes
     var refresh: (DebugData) -> Void { get set }

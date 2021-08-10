@@ -8,6 +8,7 @@
 import TMLPresentation
 
 /// Interface from the Goal Table VC to presenter -- requirements unique to goal table.
+@MainActor
 protocol GoalsTablePresenterInterface: TablePresenterInterface {
     var isSearchable: Bool { get }
 
@@ -132,7 +133,7 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
     }
 
     func createNewObject() {
-        director.request(.createGoal(model))
+        Task { await director.request(.createGoal(model)) }
     }
 
     // MARK: - Swipe

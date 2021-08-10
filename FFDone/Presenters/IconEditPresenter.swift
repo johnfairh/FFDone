@@ -15,8 +15,9 @@ struct IconEditViewModel {
     let isAlarmDefault: Bool
     let canSave: Bool
 }
-protocol IconEditPresenterInterface {
 
+@MainActor
+protocol IconEditPresenterInterface {
     /// Callback to refresh the view
     var refresh: (IconEditViewModel) -> () { get set }
 

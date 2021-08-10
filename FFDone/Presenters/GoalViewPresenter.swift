@@ -8,8 +8,8 @@
 import TMLPresentation
 
 /// Presenter inputs, commands, outputs
+@MainActor
 protocol GoalViewPresenterInterface {
-
     /// Callback to refresh the view
     var refresh: (Goal) -> () { get set }
 
@@ -78,10 +78,11 @@ class GoalViewPresenter: Presenter, GoalViewPresenterInterface, GoalNotesTablePr
 
     /// Let the user add a new note
     func addNote() {
-        director.request(.createNoteAndThen(goal, model, { [unowned self] _ in
+        Task {
+            await director.request(.createNote(goal, model))
             self.model.save()
             self.doRefresh()
-        }))
+        }
     }
 
     /// Callback a note has been deleted from the table.
@@ -92,12 +93,15 @@ class GoalViewPresenter: Presenter, GoalViewPresenterInterface, GoalNotesTablePr
 
     /// Duplicate the goal.
     func dup() {
-        director.request(.dupGoal(goal, model))
+        Task { await director.request(.dupGoal(goal, model)) }
     }
 
     /// Edit this goal.
     func edit() {
-        director.request(.editGoalAndThen(goal, model, { [unowned self] _ in self.doRefresh() }))
+        Task {
+            await director.request(.editGoal(goal, model))
+            doRefresh()
+        }
     }
 
     /// Create the notes table presenter
@@ -106,7 +110,7 @@ class GoalViewPresenter: Presenter, GoalViewPresenterInterface, GoalNotesTablePr
             director: director,
             model: model,
             object: goal.notesResults(model: model),
-            mode: .multi(.embed)) { note in self.director.request(.editNote(note!, self.model))}
+            mode: .multi(.embed)) { note in Task { await self.director.request(.editNote(note!, self.model))}}
         presenter.delegate = self
         return presenter
     }

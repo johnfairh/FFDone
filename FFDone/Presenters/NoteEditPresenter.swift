@@ -8,8 +8,8 @@
 import TMLPresentation
 
 /// Presenter inputs, commands, outputs
+@MainActor
 protocol NoteEditPresenterInterface {
-
     /// Initial text to edit
     var text: String { get set }
 
@@ -102,7 +102,9 @@ class NoteEditPresenter: EditablePresenter, NoteEditPresenterInterface {
 
     func showOwner() {
         if let goal = note.goal {
-            director.request(.viewGoal(goal, model))
+            Task {
+                await director.request(.viewGoal(goal, model))
+            }
         }
         // choosing to do nothing for alarms, can only make loops....
     }

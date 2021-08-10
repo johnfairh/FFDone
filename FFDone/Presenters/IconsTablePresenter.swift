@@ -8,6 +8,7 @@
 import TMLPresentation
 
 /// Interface from the Icons Table VC to presenter -- requirements unique to icons table.
+@MainActor
 protocol IconsTablePresenterInterface: TablePresenterInterface {
     func canDeleteIcon(_ icon: Icon) -> Bool
     func deleteIcon(_ icon: Icon)
@@ -30,17 +31,18 @@ class IconsTablePresenter: TablePresenter<DirectorInterface>, Presenter, IconsTa
     }
 
     func createNewObject() {
-        director.request(.createIconAndThen(model, { newIcon in
+        Task {
+            let newIcon = await director.request(.createIcon(model))
             // Hack to allow selection from picker on icon creation.
             // Without the hack delay we get ahead of the UI and it all
             // goes wrong.  Attempting to interlock failed via NSFetchResultController,
             // gave up then.
-            if !self.shouldEnableExtraControls {
+            if !shouldEnableExtraControls {
                 Dispatch.toForegroundAfter(milliseconds: 500) {
-                    self.selectIcon(newIcon)
+                    self.selectIcon(newIcon.icon)
                 }
             }
-        }))
+        }
     }
 
     func canDeleteIcon(_ icon: Icon) -> Bool {

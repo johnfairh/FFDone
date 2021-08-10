@@ -8,6 +8,7 @@
 import TMLPresentation
 
 /// Presenter inputs, commands, outputs
+@MainActor
 protocol AlarmEditPresenterInterface {
     /// Callback to refresh the view
     var refresh: (Alarm, Bool) -> () { get set }
@@ -94,10 +95,11 @@ class AlarmEditPresenter: EditablePresenter, AlarmEditPresenterInterface {
 
     /// Let the user choose the icon
     func pickIcon() {
-        director.request(.pickIcon(model, { newIcon in
-            self.alarm.icon = newIcon
-            self.doRefresh()
-        }))
+        Task {
+            let newIcon = await director.request(.pickIcon(model))
+            alarm.icon = newIcon.icon
+            doRefresh()
+        }
     }
 
     /// Let the user edit the active notes
@@ -105,7 +107,10 @@ class AlarmEditPresenter: EditablePresenter, AlarmEditPresenterInterface {
         guard let note = alarm.activeNote else {
             Log.fatal("Missing active note for alarm \(alarm)")
         }
-        director.request(.editNoteAndThen(note, model, { _ in self.doRefresh() }))
+        Task {
+            await director.request(.editNote(note, model))
+            doRefresh()
+        }
     }
 
     /// Let the user edit the default notes
@@ -113,7 +118,7 @@ class AlarmEditPresenter: EditablePresenter, AlarmEditPresenterInterface {
         guard let note = alarm.defaultNote else {
             Log.fatal("Missing default note for alarm \(alarm)")
         }
-        director.request(.editNote(note, model))
+        Task { await director.request(.editNote(note, model)) }
     }
 
     func cancel() {

@@ -8,6 +8,7 @@
 import TMLPresentation
 
 /// Presenter inputs, commands, outputs
+@MainActor
 protocol EpochEditPresenterInterface {
     /// Callback to refresh the view
     var refresh: (Epoch, Bool) -> () { get set }

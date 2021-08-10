@@ -8,6 +8,7 @@
 import TMLPresentation
 
 /// Interface from the Notes Table VC to presenter -- requirements unique to notes table.
+@MainActor
 protocol NotesTablePresenterInterface: TablePresenterInterface {
     func selectNote(_ note: Note)
     func deleteNote(_ note: Note)

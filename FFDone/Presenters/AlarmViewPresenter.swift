@@ -8,8 +8,8 @@
 import TMLPresentation
 
 /// Presenter inputs, commands, outputs
+@MainActor
 protocol AlarmViewPresenterInterface {
-
     /// Callback to refresh the view
     var refresh: (Alarm) -> () { get set }
 
@@ -74,11 +74,12 @@ class AlarmViewPresenter: Presenter, AlarmViewPresenterInterface {
             model.save()
         } else {
             alarm.debugDeactivate()
-            self.director.request(.scheduleAlarmAndThen(alarm, {
-                self.model.save()
-                self.doRefresh()
-                self.dismissFn(self.alarm)
-            }))
+            Task {
+                await director.request(.scheduleAlarm(alarm))
+                model.save()
+                doRefresh()
+                dismissFn(self.alarm)
+            }
         }
     }
 
@@ -87,19 +88,23 @@ class AlarmViewPresenter: Presenter, AlarmViewPresenterInterface {
         guard let note = alarm.activeNote else {
             Log.fatal("Missing active note for alarm \(alarm)")
         }
-        director.request(.editNoteAndThen(note, model, { _ in
-            self.model.save()
-            self.doRefresh()
-        }))
+        Task {
+            await director.request(.editNote(note, model))
+            model.save()
+            doRefresh()
+        }
     }
 
     /// Edit the alarm
     func edit() {
-        director.request(.editAlarmAndThen(alarm, model, { [unowned self] _ in self.doRefresh() }))
+        Task {
+            await director.request(.editAlarm(alarm, model))
+            doRefresh()
+        }
     }
 
     /// Duplicate the alarm
     func dup() {
-        director.request(.dupAlarm(alarm, model))
+        Task { await director.request(.dupAlarm(alarm, model)) }
     }
 }

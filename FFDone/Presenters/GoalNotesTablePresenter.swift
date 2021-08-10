@@ -12,12 +12,14 @@ import TMLPresentation
 /// and goal-view 'main' presenters.
 
 /// Interface from the Notes Table VC to presenter -- requirements unique to notes table.
+@MainActor
 protocol GoalNotesTablePresenterInterface: TablePresenterInterface {
     func selectNote(_ note: Note)
     func deleteNote(_ note: Note)
 }
 
 /// Interface from the GoalNotes TablePresenter to its parent presenter
+@MainActor
 protocol GoalNotesTablePresenterDelegate: AnyObject {
     /// A note has been deleted - do whatever should be done.
     func didDeleteNote()
