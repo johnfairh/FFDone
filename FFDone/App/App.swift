@@ -10,6 +10,7 @@ import TMLPresentation
 /// Top-level container for app singletons.
 ///
 /// Most of the code here is to do with the initialization dance.
+@MainActor
 final class App {
 
     #if targetEnvironment(simulator)
@@ -66,7 +67,9 @@ final class App {
         Log.enableDebugLogs = App.debugMode
 
         Log.log("App.init loading model and store")
-        modelProvider.load(createFreshStore: App.debugMode, initModelLoaded)
+        modelProvider.load(createFreshStore: App.debugMode) {
+            Task { await MainActor.run { self.initModelLoaded() } }
+        }
     }
 
     func initModelLoaded() {

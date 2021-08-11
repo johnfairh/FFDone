@@ -118,7 +118,7 @@ class AlarmEditPresenter: EditablePresenter, AlarmEditPresenterInterface {
         guard let note = alarm.defaultNote else {
             Log.fatal("Missing default note for alarm \(alarm)")
         }
-        Task { await director.request(.editNote(note, model)) }
+        director.request(.editNote(note, model))
     }
 
     func cancel() {

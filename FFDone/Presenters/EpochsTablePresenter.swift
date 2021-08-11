@@ -33,11 +33,11 @@ class EpochsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Epochs
     }
 
     func createNewObject() {
-        Task { await director.request(.createEpoch(model)) }
+        director.request(.createEpoch(model))
     }
 
     func showDebug() {
-        Task { await director.request(.showDebugConsole) }
+        director.request(.showDebugConsole)
     }
 
     func swipeActionFor(epoch: Epoch) -> TableSwipeAction? {

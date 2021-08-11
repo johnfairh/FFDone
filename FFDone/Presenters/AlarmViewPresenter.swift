@@ -105,6 +105,6 @@ class AlarmViewPresenter: Presenter, AlarmViewPresenterInterface {
 
     /// Duplicate the alarm
     func dup() {
-        Task { await director.request(.dupAlarm(alarm, model)) }
+        director.request(.dupAlarm(alarm, model))
     }
 }

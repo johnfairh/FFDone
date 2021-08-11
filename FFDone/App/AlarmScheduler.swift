@@ -23,6 +23,7 @@ import UserNotifications
 /// We don't bother with any local timers so if notifications are disabled
 /// then alarms will stop reactivating.  Oh well.
 ///
+@MainActor
 final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
     private let center: UNUserNotificationCenter
     private var model: Model?
@@ -64,20 +65,19 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
 
     /// Called when an Alarm is deactivated and we know when to reactivate it.
     /// Callback is made with the string uuid of the alarm or `nil` if it didn't work.
-    func scheduleAlarm(text: String, image: UIImage, for date: Date, callback: @escaping (String?) -> Void) {
-        center.getNotificationSettings { settings in
-            guard settings.authorizationStatus == .authorized else {
-                Log.log("AlarmScheduler: Not authorized to schedule, bailing")
-                return
-            }
-            if settings.alertSetting != .enabled {
-                Log.log("AlarmScheduler: Auth OK but alerts disabled?  Continuing.")
-            }
-
-            let content = UNMutableNotificationContent(text: text, image: image)
-            let request = UNNotificationRequest(content: content, date: date)
-            self.center.addNotifyIdentifier(request, callback: callback)
+    func scheduleAlarm(text: String, image: UIImage, for date: Date) async -> String? {
+        let settings = await center.notificationSettings()
+        guard settings.authorizationStatus == .authorized else {
+            Log.log("AlarmScheduler: Not authorized to schedule, bailing")
+            return nil
         }
+        if settings.alertSetting != .enabled {
+            Log.log("AlarmScheduler: Auth OK but alerts disabled?  Continuing.")
+        }
+
+        let content = UNMutableNotificationContent(text: text, image: image)
+        let request = UNNotificationRequest(content: content, date: date)
+        return await center.addNotifyIdentifier(request)
     }
 
     /// Called when a deactivated alarm is deleted.  Best effort, asynchronous, etc.
@@ -121,39 +121,37 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
         UIApplication.shared.applicationIconBadgeNumber
     }
 
-    func setActiveAlarmCount(_ newCount: Int) {
+    func setActiveAlarmCount(_ newCount: Int) async {
         guard badgesEnabled, newCount != activeAlarmCount else {
             return
         }
         UIApplication.shared.applicationIconBadgeNumber = newCount
 
-        center.getPendingNotificationRequests { requests in
-            Log.log("Scanning notifications")
+        let requests = await center.pendingNotificationRequests()
+        Log.log("Scanning notifications")
 
-            requests.sortedByCalendarTrigger.enumerated().forEach { index, request in
-                // When this, the Nth nf, fires, badge should be the current value
-                // (number of active alarms) plus N.
-                let newBadge = newCount + index + 1
-                let currentBadge = (request.content.badge as? Int) ?? Int.max
+        for (index, request) in requests.sortedByCalendarTrigger.enumerated() {
+            // When this, the Nth nf, fires, badge should be the current value
+            // (number of active alarms) plus N.
+            let newBadge = newCount + index + 1
+            let currentBadge = (request.content.badge as? Int) ?? Int.max
 
-                guard currentBadge != newBadge else {
-                    Log.log("Request already has the right badge")
-                    return
-                }
-
-                Log.log("Adding replacement notification, \(currentBadge) -> \(newBadge)")
-                self.center.addNotifyIdentifier(request.clone(badge: newBadge))
+            guard currentBadge != newBadge else {
+                Log.log("Request already has the right badge")
+                return
             }
+
+            Log.log("Adding replacement notification, \(currentBadge) -> \(newBadge)")
+            await center.addNotifyIdentifier(request.clone(badge: newBadge))
         }
     }
 
-    func hideBadges() {
+    func hideBadges() async {
         Log.assert(!badgesEnabled)
         UIApplication.shared.applicationIconBadgeNumber = 0 // disabled
-        center.getPendingNotificationRequests { requests in
-            requests.forEach { request in
-                self.center.addNotifyIdentifier(request.clone(badge: nil))
-            }
+        let requests = await center.pendingNotificationRequests()
+        for request in requests {
+            await center.addNotifyIdentifier(request.clone(badge: nil))
         }
     }
 }
@@ -166,19 +164,15 @@ fileprivate var badgesEnabled: Bool {
 
 extension UNUserNotificationCenter {
     /// Add a notification, optionally call back with identifier on FG queue, log
-    func addNotifyIdentifier(_ request: UNNotificationRequest, callback: ((String?) -> Void)? = nil) {
-        add(request) { error in
-            Log.log("Notification added OK")
-            Dispatch.toForeground {
-                if let error = error {
-                    Log.log("AlarmScheduler: add request failed: \(error)")
-                    callback?(nil)
-                } else {
-                    callback?(request.identifier)
-                }
-            }
+    @discardableResult
+    func addNotifyIdentifier(_ request: UNNotificationRequest) async -> String? {
+        do {
+            try await add(request)
+            return request.identifier
+        } catch {
+            Log.log("AlarmScheduler: add request failed: \(error)")
+            return nil
         }
-
     }
 }
 

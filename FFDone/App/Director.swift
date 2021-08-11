@@ -24,10 +24,7 @@ enum DirectorResult {
     case icon(Icon)
     case note(Note)
     case alarm(Alarm)
-    init(goal: Goal) { self = .goal(goal) }
-    init(icon: Icon) { self = .icon(icon) }
-    init(note: Note) { self = .note(note) }
-    init(alarm: Alarm) { self = .alarm(alarm) }
+    case epoch(Epoch)
 
     var goal: Goal {
         guard case let .goal(goal) = self else { Log.fatal("not goal") }
@@ -97,6 +94,15 @@ protocol DirectorInterface {
     var homePageIndex: Int { get set }
 }
 
+extension DirectorInterface {
+    /// Fire and forget request, no sync/feedback
+    func request(_ request: DirectorRequest) {
+        Task {
+            await self.request(request)
+        }
+    }
+}
+
 // MARK: - Concrete director class
 
 @MainActor
@@ -141,27 +147,27 @@ class Director {
                 queryResults: Goal.allSortedResultsSet(model: model),
                 presenterFn: GoalsTablePresenter.init,
                 image: UIImage(systemName: "list.bullet.rectangle")!.withBaselineOffset(fromBottom: 7)) {
-                    [unowned self] goal in Task { await self.request(.viewGoal(goal!, model)) }
+                    [unowned self] goal in self.request(.viewGoal(goal!, model))
         }
 
         initTab(.alarms,
                 queryResults: Alarm.sectionatedResultsSet(model: model),
                 presenterFn: AlarmsTablePresenter.init) {
-                    [unowned self] alarm in Task { await self.request(.viewAlarm(alarm!, model)) }
+                    [unowned self] alarm in self.request(.viewAlarm(alarm!, model))
         }
 
         initTab(.notes,
                 queryResults: Note.allSortedResultsSet(model: model),
                 presenterFn: NotesTablePresenter.init,
                 image: UIImage(systemName: "books.vertical.fill")!.withBaselineOffset(fromBottom: 5.5)) {
-                    [unowned self] note in Task { await self.request(.editNote(note!, model)) }
+                    [unowned self] note in self.request(.editNote(note!, model))
         }
 
         initTab(.icons,
                 queryResults: Icon.createAllResultsSet(model: model),
                 presenterFn: IconsTablePresenter.init,
                 image: UIImage(systemName: "photo.on.rectangle")!.withBaselineOffset(fromBottom: 7)) {
-                    [unowned self] icon in Task { await self.request(.editIcon(icon!, model)) }
+                    [unowned self] icon in self.request(.editIcon(icon!, model))
         }
 
         // Turn on the actual UI replacing the loading screen
@@ -197,147 +203,136 @@ class Director {
 // MARK: - DirectorRequest processing
 
 extension DirectorRequest {
+
     @MainActor
-    func handle(director: Director, done: @escaping (DirectorResult) -> Void) {
+    func handle(director: Director) async -> DirectorResult {
         let services = director.services!
         let alarmScheduler = director.alarmScheduler
 
         switch self {
-        case let .editGoal(goal, model):
-            services.editThing("GoalEditViewController",
-                               model: model,
-                               object: goal,
-                               presenterFn: GoalEditPresenter.init,
-                               done: { _ in done(.none) })
+        // Goal
+        case let .createGoal(model):
+            return .goal(await services.createThing("GoalEditViewController",
+                                                    model: model,
+                                                    presenterFn: GoalEditPresenter.init))
 
         case let .dupGoal(goal, model):
-            services.createThing("GoalEditViewController",
-                                 model: model,
-                                 from: goal,
-                                 presenterFn: GoalEditPresenter.init,
-                                 done: { _ in done(.none) })
+            return .goal(await services.createThing("GoalEditViewController",
+                                                    model: model,
+                                                    from: goal,
+                                                    presenterFn: GoalEditPresenter.init))
+
+        case let .editGoal(goal, model):
+            await services.editThing("GoalEditViewController",
+                                     model: model,
+                                     object: goal,
+                                     presenterFn: GoalEditPresenter.init)
 
         case let .viewGoal(goal, model):
             services.viewThing("GoalViewController",
                                model: model,
                                object: goal,
                                presenterFn: GoalViewPresenter.init)
-            done(.none)
-
-        case let .createGoal(model):
-            services.createThing("GoalEditViewController",
-                                 model: model,
-                                 presenterFn: GoalEditPresenter.init,
-                                 done: { _ in done(.none) })
 
         case let .switchToGoals(data):
             services.animateToTab(tabIndex: Director.Tab.goals.rawValue,
                                   invocationData: data as AnyObject)
-            done(.none)
 
+        // Icon
         case let .createIcon(model):
-            services.createThing("IconEditViewController",
-                                 model: model,
-                                 presenterFn: IconEditPresenter.init,
-                                 done: { done(.icon($0)) })
+            return .icon(await services.createThing("IconEditViewController",
+                                                    model: model,
+                                                    presenterFn: IconEditPresenter.init))
 
         case let .editIcon(icon, model):
-            services.editThing("IconEditViewController",
-                               model: model,
-                               object: icon,
-                               presenterFn: IconEditPresenter.init,
-                               done: { _ in done(.none) })
+            await services.editThing("IconEditViewController",
+                                     model: model,
+                                     object: icon,
+                                     presenterFn: IconEditPresenter.init)
 
         case let .pickIcon(model):
-            services.pickThing("IconsTableViewController",
-                               model: model,
-                               results: Icon.createAllResults(model: model),
-                               presenterFn: IconsTablePresenter.init,
-                               done: { done(.icon($0)) })
+            return .icon(await services.pickThing("IconsTableViewController",
+                                                  model: model,
+                                                  results: Icon.createAllResults(model: model),
+                                                  presenterFn: IconsTablePresenter.init))
+
+        // Note
+        case let .createNote(goal, model):
+            let note = await services.createThing("NoteEditViewController",
+                                                  model: model,
+                                                  presenterFn: NoteEditPresenter.init)
+            goal.add(note: note)
+            return .note(note)
 
         case let .editNote(note, model):
-            services.editThing("NoteEditViewController",
-                               model: model,
-                               object: note,
-                               presenterFn: NoteEditPresenter.init,
-                               done: { _ in done(.none) })
+            await services.editThing("NoteEditViewController",
+                                     model: model,
+                                     object: note,
+                                     presenterFn: NoteEditPresenter.init)
 
-        case let .createNote(goal, model):
-            services.createThing("NoteEditViewController",
-                                 model: model,
-                                 presenterFn: NoteEditPresenter.init,
-                                 done: { note in
-                                     goal.add(note: note)
-                                     done(.note(note))
-                                 })
-
+        // Alarm - object
         case let .createAlarm(model):
-            services.createThing("AlarmEditViewController",
-                                 model: model,
-                                 presenterFn: AlarmEditPresenter.init,
-                                 done: { _ in done(.none) })
+            return .alarm(await services.createThing("AlarmEditViewController",
+                                                     model: model,
+                                                     presenterFn: AlarmEditPresenter.init))
+
         case let .dupAlarm(alarm, model):
-            services.createThing("AlarmEditViewController",
-                                 model: model,
-                                 from: alarm,
-                                 presenterFn: AlarmEditPresenter.init,
-                                 done: { _ in done(.none) })
+            return .alarm(await services.createThing("AlarmEditViewController",
+                                                     model: model,
+                                                     from: alarm,
+                                                     presenterFn: AlarmEditPresenter.init))
+
         case let .editAlarm(alarm, model):
-            services.editThing("AlarmEditViewController",
-                               model: model,
-                               object: alarm,
-                               presenterFn: AlarmEditPresenter.init,
-                               done: { _ in done(.none) })
+            await services.editThing("AlarmEditViewController",
+                                     model: model,
+                                     object: alarm,
+                                     presenterFn: AlarmEditPresenter.init)
 
         case let .viewAlarm(alarm, model):
             services.viewThing("AlarmViewController",
                                model: model,
                                object: alarm,
                                presenterFn: AlarmViewPresenter.init)
-            done(.none)
 
+        // Alarm - scheduling
         case let .scheduleAlarm(alarm):
-            alarmScheduler.scheduleAlarm(text: alarm.notificationText,
-                                         image: alarm.nativeImage,
-                                         for: alarm.nextActiveDate) { uid in
-                                            if let uid = uid {
-                                                alarm.notificationUid = uid
-                                            }
-                                            done(.none)
-                                         }
+            if let uid = await alarmScheduler.scheduleAlarm(text: alarm.notificationText,
+                                                            image: alarm.nativeImage,
+                                                            for: alarm.nextActiveDate) {
+                alarm.notificationUid = uid
+            }
 
         case let .cancelAlarm(uid):
             alarmScheduler.cancelAlarm(uid: uid)
-            done(.none)
+
         case let .setActiveAlarmCount(count):
             services.setTabBadge(tab: Director.Tab.alarms.rawValue, badge: (count == 0) ? nil : String(count))
-            alarmScheduler.setActiveAlarmCount(count)
-            done(.none)
+            await alarmScheduler.setActiveAlarmCount(count)
+
+        // Epoch
+        case let .createEpoch(model):
+            return .epoch(await services.createThing("EpochEditViewController",
+                                                     model: model,
+                                                     presenterFn: EpochEditPresenter.init))
+
+        case .showEpochs:
+            await services.showModally("EpochsTableViewController",
+                                       model: director.rootModel,
+                                       presenterFn: EpochsTablePresenter.init)
+
+        // Misc
         case .toggleSubscription:
             Prefs.subbed = !Prefs.subbed
             if Prefs.unsubbed {
-                alarmScheduler.hideBadges()
+                await alarmScheduler.hideBadges()
             }
-            done(.none)
-
-        case let .createEpoch(model):
-            services.createThing("EpochEditViewController",
-                                 model: model,
-                                 presenterFn: EpochEditPresenter.init,
-                                 done: { _ in done(.none)})
 
         case .showDebugConsole:
             services.showNormally("DebugViewController",
                                   model: director.rootModel,
                                   presenterFn: DebugPresenter.init)
-            done(.none)
-
-        case .showEpochs:
-            services.showModally("EpochsTableViewController",
-                                 model: director.rootModel,
-                                 presenterFn: EpochsTablePresenter.init,
-                                 done: { done(.none) })
         }
+        return .none
     }
 }
 
@@ -350,16 +345,12 @@ extension Director: DirectorInterface {
         // iOS15 async - it all seems OK now, suspect original issue was
         // an 'accidentally not on the main queue' problem now fixed by the
         // @MainActor enforcement stuff.
-        await withCheckedContinuation { continuation in
-            request.handle(director: self) {
-                continuation.resume(returning: $0)
-            }
-        }
+        await request.handle(director: self)
     }
 
     /// Call from presenter to query list of user-defined goal tags
     var tags: [String] {
-        return tagList.tags
+        tagList.tags
     }
 
     /// Debug log

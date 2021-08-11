@@ -93,7 +93,7 @@ class GoalViewPresenter: Presenter, GoalViewPresenterInterface, GoalNotesTablePr
 
     /// Duplicate the goal.
     func dup() {
-        Task { await director.request(.dupGoal(goal, model)) }
+        director.request(.dupGoal(goal, model))
     }
 
     /// Edit this goal.
@@ -110,7 +110,7 @@ class GoalViewPresenter: Presenter, GoalViewPresenterInterface, GoalNotesTablePr
             director: director,
             model: model,
             object: goal.notesResults(model: model),
-            mode: .multi(.embed)) { note in Task { await self.director.request(.editNote(note!, self.model))}}
+            mode: .multi(.embed)) { note in self.director.request(.editNote(note!, self.model)) }
         presenter.delegate = self
         return presenter
     }

@@ -189,18 +189,18 @@ class HomePresenter: Presenter, HomePresenterInterface {
     // user clicks tag
     func displayTag(_ tag: String) {
         let data = GoalsTableInvocationData(epoch: epoch, tagged: tag)
-        Task { await director.request(.switchToGoals(data)) }
+        director.request(.switchToGoals(data))
     }
 
     func createGoal() {
-        Task { await director.request(.createGoal(model)) }
+        director.request(.createGoal(model))
     }
 
     func createAlarm() {
-        Task { await director.request(.createAlarm(model)) }
+        director.request(.createAlarm(model))
     }
 
     func showEpochs() {
-        Task { await director.request(.showEpochs) }
+        director.request(.showEpochs)
     }
 }

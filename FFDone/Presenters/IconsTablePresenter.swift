@@ -38,9 +38,8 @@ class IconsTablePresenter: TablePresenter<DirectorInterface>, Presenter, IconsTa
             // goes wrong.  Attempting to interlock failed via NSFetchResultController,
             // gave up then.
             if !shouldEnableExtraControls {
-                Dispatch.toForegroundAfter(milliseconds: 500) {
-                    self.selectIcon(newIcon.icon)
-                }
+                try? await Task.sleep(nanoseconds: 500 * 1000 * 1000)
+                selectIcon(newIcon.icon)
             }
         }
     }

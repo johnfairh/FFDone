@@ -172,7 +172,7 @@ class GoalEditPresenter: EditablePresenter, GoalEditPresenterInterface, GoalNote
             director: director,
             model: model,
             object: goal.notesResults(model: model),
-            mode: .multi(.embed)) { note in Task { await self.director.request(.editNote(note!, self.model))} }
+            mode: .multi(.embed)) { note in self.director.request(.editNote(note!, self.model)) }
         presenter.delegate = self
         return presenter
     }

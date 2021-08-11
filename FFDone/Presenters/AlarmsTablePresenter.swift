@@ -61,7 +61,7 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
 
     func refreshAlarmCount() {
         let count = Alarm.getActiveAlarmCount(model: model)
-        Task { await director.request(.setActiveAlarmCount(count)) }
+        director.request(.setActiveAlarmCount(count))
     }
 
     // MARK: - Move
@@ -90,7 +90,7 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
     func deleteAlarm(_ alarm: Alarm) {
         if !alarm.isActive {
             if let uid = alarm.notificationUid {
-                Task { await director.request(.cancelAlarm(uid)) }
+                director.request(.cancelAlarm(uid))
             }
         }
         alarm.delete(from: model)
@@ -102,7 +102,7 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
     }
 
     func createNewObject() {
-        Task { await director.request(.createAlarm(model)) }
+        director.request(.createAlarm(model))
     }
 
     // MARK: - Swipe

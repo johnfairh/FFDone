@@ -102,9 +102,7 @@ class NoteEditPresenter: EditablePresenter, NoteEditPresenterInterface {
 
     func showOwner() {
         if let goal = note.goal {
-            Task {
-                await director.request(.viewGoal(goal, model))
-            }
+            director.request(.viewGoal(goal, model))
         }
         // choosing to do nothing for alarms, can only make loops....
     }

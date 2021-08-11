@@ -133,7 +133,7 @@ class GoalsTablePresenter: TablePresenter<DirectorInterface>, Presenter, GoalsTa
     }
 
     func createNewObject() {
-        Task { await director.request(.createGoal(model)) }
+        director.request(.createGoal(model))
     }
 
     // MARK: - Swipe
