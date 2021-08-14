@@ -48,13 +48,14 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
             ui.label.text = source.name
             ui.textField.placeholder = source.inputDescription
             ui.textEntryCallback = { text in
-                source.cancel()
-                source.findIcon(name: text) { result in
-                    switch result {
-                    case .success(let image):
-                        self.setIconImage(image: image, name: ui.text)
-                    case .failure(let error):
-                        self.setIconError(message: error.text)
+                Task { [weak self] in
+                    do {
+                        let image = try await source.findIcon(name: text)
+                        if !Task.isCancelled {
+                            self?.setIconImage(image: image, name: ui.text)
+                        }
+                    } catch {
+                        self?.setIconError(message: "\(error)")
                     }
                 }
             }
@@ -124,12 +125,10 @@ class IconEditViewController: PresentableVC<IconEditPresenterInterface>,
     // MARK: - Bar buttons
 
     @IBAction func didTapCancelButton(_ sender: UIBarButtonItem) {
-        IconSourceBuilder.cancelAll()
         presenter.cancel()
     }
 
     @IBAction func didTapDoneButton(_ sender: UIBarButtonItem) {
-        IconSourceBuilder.cancelAll()
         presenter.save()
     }
 }

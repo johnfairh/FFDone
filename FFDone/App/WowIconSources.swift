@@ -5,6 +5,8 @@
 //  Distributed under the MIT license, see LICENSE.
 //
 
+import TMLPresentation
+
 //
 // Icon sources for World of Warcraft
 //
@@ -15,8 +17,8 @@ fileprivate final class WowheadIconSource: BaseNetworkIconSource, IconSource {
 
     var inputDescription = "Icon Name"
 
-    func findIcon(name: String, client: @escaping (IconSourceResult) -> Void) {
-        fetchIcon(at: "https://wow.zamimg.com/images/wow/icons/large/\(name.lowercased()).jpg", client: client)
+    func findIcon(name: String) async throws -> UIImage {
+        try await fetchIcon(at: "https://wow.zamimg.com/images/wow/icons/large/\(name.lowercased()).jpg")
     }
 }
 

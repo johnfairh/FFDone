@@ -31,10 +31,7 @@ protocol IconSource {
     var inputDescription: String { get }
 
     /// Kick off an async request to fetch an image.
-    func findIcon(name: String, client: @escaping IconSourceClient)
-
-    /// Cancel any pending request.
-    func cancel()
+    func findIcon(name: String) async throws -> UIImage
 }
 
 /// Namespace to handle the double-sided pub-sub.
@@ -67,34 +64,16 @@ enum IconSourceBuilder {
         }
         sources.append(source)
     }
-
-    /// Cancel any background activity
-    static func cancelAll() {
-        sources.forEach { $0.cancel() }
-    }
 }
 
 /// Helper class for sources that access icons via http.
 class BaseNetworkIconSource {
-    /// HTTP wrapper
-    var fetcher: URLFetcher?
-
-    /// Typically witnesses `IconSource.cancel()`
-    func cancel() {
-        fetcher?.cancel()
-        fetcher = nil
-    }
-
     /// Helper - get + return an icon at an URL
-    func fetchIcon(at urlString: String, client: @escaping IconSourceClient) {
-        fetcher = URLFetcher(url: urlString) { result in
-            client(result.flatMap { data in
-                if let image = UIImage(data: data, scale: 1.0) {
-                    return .success(image)
-                } else {
-                    return .failure("Bad image data.")
-                }
-            })
+    func fetchIcon(at urlString: String) async throws -> UIImage {
+        let data = try await URLFetcher(url: urlString).fetch()
+        guard let image = UIImage(data: data, scale: 1.0) else {
+            throw TMLError("Bad image data.")
         }
+        return image
     }
 }

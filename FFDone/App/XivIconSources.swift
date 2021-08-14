@@ -17,8 +17,8 @@ fileprivate final class GarlandDbIconSource: BaseNetworkIconSource, IconSource {
 
     var inputDescription = "Icon ID"
 
-    func findIcon(name: String, client: @escaping (IconSourceResult) -> Void) {
-        fetchIcon(at: "https://www.garlandtools.org/files/icons/item/\(name).png", client: client)
+    func findIcon(name: String) async throws -> UIImage {
+        try await fetchIcon(at: "https://www.garlandtools.org/files/icons/item/\(name).png")
     }
 }
 
@@ -28,41 +28,34 @@ fileprivate final class XivApiIconSource: BaseNetworkIconSource, IconSource {
 
     var inputDescription = "Item name"
 
-    func findIcon(name: String, client: @escaping (IconSourceResult) -> Void) {
+    func findIcon(name: String) async throws -> UIImage {
         guard let encoded = name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-            client(.failure("Can't encode the text"))
-            return
+            throw TMLError("Can't encode the text")
         }
         let base = "https://xivapi.com/"
         let searchUrl = "\(base)search?indexes=Item&string=\(encoded)"
 
-        fetcher = URLFetcher(url: searchUrl) { result in
-            switch (result.flatMap { data -> TMLResult<String> in
-                guard let jsonObject = try? JSONSerialization.jsonObject(with: data) else {
-                    return .failure(TMLError("Can't decode as JSON: \(data)"))
-                }
-                guard let topDict = jsonObject as? NSDictionary,
-                    let resultsList = topDict["Results"] as? NSArray else {
-                    return .failure(TMLError("Can't decode top-level JSON format: \(jsonObject)"))
-                }
+        let data = try await URLFetcher(url: searchUrl).fetch()
 
-                guard resultsList.count > 0 else {
-                    return .failure("No matches found.")
-                }
-
-                guard let firstResultsDict = resultsList[0] as? NSDictionary,
-                    let iconUrlPath = firstResultsDict["Icon"] as? String else {
-                    return .failure(TMLError("Can't decode 2nd-level JSON format: \(resultsList[0])"))
-                }
-
-                return .success(iconUrlPath)
-            }) {
-            case .failure(let error):
-                client(.failure(error))
-            case .success(let iconUrlPath):
-                self.fetchIcon(at: "\(base)\(iconUrlPath)", client: client)
-            }
+        guard let jsonObject = try? JSONSerialization.jsonObject(with: data) else {
+            throw TMLError("Can't decode as JSON: \(data)")
         }
+
+        guard let topDict = jsonObject as? NSDictionary,
+            let resultsList = topDict["Results"] as? NSArray else {
+                throw TMLError("Can't decode top-level JSON format: \(jsonObject)")
+        }
+
+        guard resultsList.count > 0 else {
+            throw TMLError("No matches found.")
+        }
+
+        guard let firstResultsDict = resultsList[0] as? NSDictionary,
+            let iconUrlPath = firstResultsDict["Icon"] as? String else {
+            throw TMLError("Can't decode 2nd-level JSON format: \(resultsList[0])")
+        }
+
+        return try await fetchIcon(at: "\(base)\(iconUrlPath)")
     }
 }
 
