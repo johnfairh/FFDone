@@ -99,9 +99,7 @@ class HomePresenter: Presenter, HomePresenterInterface {
 
     private let epoch: Epoch
 
-    private let stepsFieldWatcher: ModelFieldWatcher
-    private let completeTagsFieldWatcher: ModelFieldWatcher
-    private let incompleteTagsFieldWatcher: ModelFieldWatcher
+    private var tasks: [Task<Void, Never>] = []
 
     required init(director: DirectorInterface, model: Model, object: Epoch?, mode: PresenterMode, dismiss: @escaping PresenterDone<Epoch>) {
         Log.assert(mode.isSingleType(.edit))
@@ -112,27 +110,27 @@ class HomePresenter: Presenter, HomePresenterInterface {
         self.director = director
         self.epoch = object
 
-//        self.stepsFieldTask = Task { [weak self] in
-//            for await results in model.createFieldWatcher(fetchRequest: Goal.stepsSummaryFieldFetchRequest(in: object)) {
-//                self?.updateStepsQueryResults(results: results)
-//            }
-//        }
+        tasks.append(Task { [weak self] in
+            for await results in model.fieldResultsSequence(Goal.stepsSummaryFieldFetchRequest(in: epoch)) {
+                self?.updateStepsQueryResults(results: results)
+            }
+        })
 
-        self.stepsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.stepsSummaryFieldFetchRequest(in: self.epoch))
-        self.completeTagsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.completeTagsFieldFetchRequest(in: self.epoch))
-        self.incompleteTagsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.incompleteTagsFieldFetchRequest(in: self.epoch))
+        tasks.append(Task { [weak self] in
+            for await results in model.fieldResultsSequence(Goal.completeTagsFieldFetchRequest(in: epoch)) {
+                self?.updateTags(.complete, results: results)
+            }
+        })
 
-        self.stepsFieldWatcher.callback = { [weak self] results in
-            self?.updateStepsQueryResults(results: results)
-        }
+        tasks.append(Task { [weak self] in
+            for await results in model.fieldResultsSequence(Goal.incompleteTagsFieldFetchRequest(in: epoch)) {
+                self?.updateTags(.incomplete, results: results)
+            }
+        })
+    }
 
-        self.completeTagsFieldWatcher.callback = { [weak self] results in
-            self?.updateTags(.complete, results: results)
-        }
-
-        self.incompleteTagsFieldWatcher.callback = { [weak self] results in
-            self?.updateTags(.incomplete, results: results)
-        }
+    deinit {
+        tasks.forEach { $0.cancel() }
     }
 
     var headingImage: UIImage? {

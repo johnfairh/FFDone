@@ -12,13 +12,13 @@ import TMLPresentation
 @MainActor
 final class TagList {
     var tags: [String] = []
-    private var runner: ModelFieldWatcher!
 
     init(app: App) {
         app.notifyWhenReady { model in
-            self.runner = model.createFieldWatcher(fetchRequest: Goal.allTagsFieldFetchRequest)
-            self.runner.callback = { [unowned self] results in
-                self.tags = Goal.decodeTagsResults(results: results)
+            Task {
+                for await results in model.fieldResultsSequence(Goal.allTagsFieldFetchRequest) {
+                    self.tags = Goal.decodeTagsResults(results: results)
+                }
             }
         }
     }
