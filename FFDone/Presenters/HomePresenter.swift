@@ -112,6 +112,12 @@ class HomePresenter: Presenter, HomePresenterInterface {
         self.director = director
         self.epoch = object
 
+//        self.stepsFieldTask = Task { [weak self] in
+//            for await results in model.createFieldWatcher(fetchRequest: Goal.stepsSummaryFieldFetchRequest(in: object)) {
+//                self?.updateStepsQueryResults(results: results)
+//            }
+//        }
+
         self.stepsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.stepsSummaryFieldFetchRequest(in: self.epoch))
         self.completeTagsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.completeTagsFieldFetchRequest(in: self.epoch))
         self.incompleteTagsFieldWatcher = model.createFieldWatcher(fetchRequest: Goal.incompleteTagsFieldFetchRequest(in: self.epoch))

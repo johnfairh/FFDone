@@ -37,7 +37,7 @@ class IconsTablePresenter: TablePresenter<DirectorInterface>, Presenter, IconsTa
             // Without the hack delay we get ahead of the UI and it all
             // goes wrong.  Attempting to interlock failed via NSFetchResultController,
             // gave up then.
-            if !shouldEnableExtraControls {
+            if !newIcon.none && !shouldEnableExtraControls {
                 try? await Task.sleep(nanoseconds: 500 * 1000 * 1000)
                 selectIcon(newIcon.icon)
             }

@@ -26,6 +26,29 @@ enum DirectorResult {
     case alarm(Alarm)
     case epoch(Epoch)
 
+    init(_ goal: Goal?) {
+        self = goal.flatMap { .goal($0) } ?? .none
+    }
+
+    init(_ icon: Icon?) {
+        self = icon.flatMap { .icon($0) } ?? .none
+    }
+
+    init(_ alarm: Alarm?) {
+        self = alarm.flatMap { .alarm($0) } ?? .none
+    }
+
+    init(_ epoch: Epoch?) {
+        self = epoch.flatMap { .epoch($0) } ?? .none
+    }
+
+    var none: Bool {
+        switch self {
+        case .none: return true
+        default: return false
+        }
+    }
+
     var goal: Goal {
         guard case let .goal(goal) = self else { Log.fatal("not goal") }
         return goal
@@ -212,12 +235,12 @@ extension DirectorRequest {
         switch self {
         // Goal
         case let .createGoal(model):
-            return .goal(await services.createThing("GoalEditViewController",
+            return .init(await services.createThing("GoalEditViewController",
                                                     model: model,
                                                     presenterFn: GoalEditPresenter.init))
 
         case let .dupGoal(goal, model):
-            return .goal(await services.createThing("GoalEditViewController",
+            return .init(await services.createThing("GoalEditViewController",
                                                     model: model,
                                                     from: goal,
                                                     presenterFn: GoalEditPresenter.init))
@@ -240,7 +263,7 @@ extension DirectorRequest {
 
         // Icon
         case let .createIcon(model):
-            return .icon(await services.createThing("IconEditViewController",
+            return .init(await services.createThing("IconEditViewController",
                                                     model: model,
                                                     presenterFn: IconEditPresenter.init))
 
@@ -258,9 +281,11 @@ extension DirectorRequest {
 
         // Note
         case let .createNote(goal, model):
-            let note = await services.createThing("NoteEditViewController",
-                                                  model: model,
-                                                  presenterFn: NoteEditPresenter.init)
+            guard let note = await services.createThing("NoteEditViewController",
+                                                        model: model,
+                                                        presenterFn: NoteEditPresenter.init) else {
+                return .none
+            }
             goal.add(note: note)
             return .note(note)
 
@@ -272,15 +297,15 @@ extension DirectorRequest {
 
         // Alarm - object
         case let .createAlarm(model):
-            return .alarm(await services.createThing("AlarmEditViewController",
-                                                     model: model,
-                                                     presenterFn: AlarmEditPresenter.init))
+            return .init(await services.createThing("AlarmEditViewController",
+                                                    model: model,
+                                                    presenterFn: AlarmEditPresenter.init))
 
         case let .dupAlarm(alarm, model):
-            return .alarm(await services.createThing("AlarmEditViewController",
-                                                     model: model,
-                                                     from: alarm,
-                                                     presenterFn: AlarmEditPresenter.init))
+            return .init(await services.createThing("AlarmEditViewController",
+                                                    model: model,
+                                                    from: alarm,
+                                                    presenterFn: AlarmEditPresenter.init))
 
         case let .editAlarm(alarm, model):
             await services.editThing("AlarmEditViewController",
@@ -311,9 +336,9 @@ extension DirectorRequest {
 
         // Epoch
         case let .createEpoch(model):
-            return .epoch(await services.createThing("EpochEditViewController",
-                                                     model: model,
-                                                     presenterFn: EpochEditPresenter.init))
+            return .init(await services.createThing("EpochEditViewController",
+                                                    model: model,
+                                                    presenterFn: EpochEditPresenter.init))
 
         case .showEpochs:
             await services.showModally("EpochsTableViewController",
