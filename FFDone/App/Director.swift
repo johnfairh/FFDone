@@ -19,35 +19,11 @@ import TMLPresentation
 // MARK: - Use-case request interface
 
 enum DirectorResult {
-    case none
     case goal(Goal)
     case icon(Icon)
     case note(Note)
     case alarm(Alarm)
     case epoch(Epoch)
-
-    init(_ goal: Goal?) {
-        self = goal.flatMap { .goal($0) } ?? .none
-    }
-
-    init(_ icon: Icon?) {
-        self = icon.flatMap { .icon($0) } ?? .none
-    }
-
-    init(_ alarm: Alarm?) {
-        self = alarm.flatMap { .alarm($0) } ?? .none
-    }
-
-    init(_ epoch: Epoch?) {
-        self = epoch.flatMap { .epoch($0) } ?? .none
-    }
-
-    var none: Bool {
-        switch self {
-        case .none: return true
-        default: return false
-        }
-    }
 
     var goal: Goal {
         guard case let .goal(goal) = self else { Log.fatal("not goal") }
@@ -105,7 +81,7 @@ enum DirectorRequest {
 protocol DirectorInterface {
     /// Start a new usecase
     @discardableResult
-    func request(_ request: DirectorRequest) async -> DirectorResult
+    func request(_ request: DirectorRequest) async -> DirectorResult?
     
     /// What tags are defined?
     var tags: [String] { get }
@@ -228,22 +204,22 @@ class Director {
 extension DirectorRequest {
 
     @MainActor
-    func handle(director: Director) async -> DirectorResult {
+    func handle(director: Director) async -> DirectorResult? {
         let services = director.services!
         let alarmScheduler = director.alarmScheduler
 
         switch self {
         // Goal
         case let .createGoal(model):
-            return .init(await services.createThing("GoalEditViewController",
-                                                    model: model,
-                                                    presenterFn: GoalEditPresenter.init))
+            return await services.createThing("GoalEditViewController",
+                                              model: model,
+                                              presenterFn: GoalEditPresenter.init).flatMap { .goal($0) }
 
         case let .dupGoal(goal, model):
-            return .init(await services.createThing("GoalEditViewController",
-                                                    model: model,
-                                                    from: goal,
-                                                    presenterFn: GoalEditPresenter.init))
+            return await services.createThing("GoalEditViewController",
+                                              model: model,
+                                              from: goal,
+                                              presenterFn: GoalEditPresenter.init).flatMap { .goal($0) }
 
         case let .editGoal(goal, model):
             await services.editThing("GoalEditViewController",
@@ -263,9 +239,9 @@ extension DirectorRequest {
 
         // Icon
         case let .createIcon(model):
-            return .init(await services.createThing("IconEditViewController",
-                                                    model: model,
-                                                    presenterFn: IconEditPresenter.init))
+            return await services.createThing("IconEditViewController",
+                                              model: model,
+                                              presenterFn: IconEditPresenter.init).flatMap { .icon($0) }
 
         case let .editIcon(icon, model):
             await services.editThing("IconEditViewController",
@@ -274,20 +250,19 @@ extension DirectorRequest {
                                      presenterFn: IconEditPresenter.init)
 
         case let .pickIcon(model):
-            return .init(await services.pickThing("IconsTableViewController",
-                                                  model: model,
-                                                  results: Icon.createAllResults(model: model),
-                                                  presenterFn: IconsTablePresenter.init))
+            return await services.pickThing("IconsTableViewController",
+                                            model: model,
+                                            results: Icon.createAllResults(model: model),
+                                            presenterFn: IconsTablePresenter.init).flatMap { .icon($0) }
 
         // Note
         case let .createNote(goal, model):
-            guard let note = await services.createThing("NoteEditViewController",
-                                                        model: model,
-                                                        presenterFn: NoteEditPresenter.init) else {
-                return .none
+            return await services.createThing("NoteEditViewController",
+                                              model: model,
+                                              presenterFn: NoteEditPresenter.init).flatMap {
+                goal.add(note: $0)
+                return .note($0)
             }
-            goal.add(note: note)
-            return .note(note)
 
         case let .editNote(note, model):
             await services.editThing("NoteEditViewController",
@@ -297,15 +272,15 @@ extension DirectorRequest {
 
         // Alarm - object
         case let .createAlarm(model):
-            return .init(await services.createThing("AlarmEditViewController",
-                                                    model: model,
-                                                    presenterFn: AlarmEditPresenter.init))
+            return await services.createThing("AlarmEditViewController",
+                                              model: model,
+                                              presenterFn: AlarmEditPresenter.init).flatMap { .alarm($0) }
 
         case let .dupAlarm(alarm, model):
-            return .init(await services.createThing("AlarmEditViewController",
-                                                    model: model,
-                                                    from: alarm,
-                                                    presenterFn: AlarmEditPresenter.init))
+            return await services.createThing("AlarmEditViewController",
+                                              model: model,
+                                              from: alarm,
+                                              presenterFn: AlarmEditPresenter.init).flatMap { .alarm($0) }
 
         case let .editAlarm(alarm, model):
             await services.editThing("AlarmEditViewController",
@@ -336,9 +311,9 @@ extension DirectorRequest {
 
         // Epoch
         case let .createEpoch(model):
-            return .init(await services.createThing("EpochEditViewController",
-                                                    model: model,
-                                                    presenterFn: EpochEditPresenter.init))
+            return await services.createThing("EpochEditViewController",
+                                              model: model,
+                                              presenterFn: EpochEditPresenter.init).flatMap { .epoch($0) }
 
         case .showEpochs:
             await services.showModally("EpochsTableViewController",
@@ -364,7 +339,7 @@ extension DirectorRequest {
 extension Director: DirectorInterface {
     /// Called from presenters to begin a new use-case
     @discardableResult
-    func request(_ request: DirectorRequest) async -> DirectorResult {
+    func request(_ request: DirectorRequest) async -> DirectorResult? {
         // We add a fibre break here to avoid very odd behaviours, eg.
         // multi-second delays on selecting a table row.
         // iOS15 async - it all seems OK now, suspect original issue was

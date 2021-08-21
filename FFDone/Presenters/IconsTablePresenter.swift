@@ -37,12 +37,8 @@ class IconsTablePresenter: TablePresenter<DirectorInterface>, Presenter, IconsTa
 
     func createNewObject() {
         Task {
-            let newIcon = await director.request(.createIcon(model))
-            // Hack to allow selection from picker on icon creation.
-            // Without the hack delay we get ahead of the UI and it all
-            // goes wrong.  Attempting to interlock failed via NSFetchResultController,
-            // gave up then.
-            if !newIcon.none && !shouldEnableExtraControls {
+            if let newIcon = await director.request(.createIcon(model)),
+               !shouldEnableExtraControls {
                 try? await Task.sleep(nanoseconds: 500 * 1000 * 1000)
                 selectIcon(newIcon.icon)
             }

@@ -137,8 +137,7 @@ class GoalEditPresenter: EditablePresenter, GoalEditPresenterInterface, GoalNote
     /// Let the user choose the icon
     func pickIcon() {
         Task {
-            let newIcon = await director.request(.pickIcon(model))
-            if !newIcon.none {
+            if let newIcon = await director.request(.pickIcon(model)) {
                 goal.icon = newIcon.icon
                 doRefresh()
             }

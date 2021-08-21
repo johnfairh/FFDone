@@ -34,8 +34,8 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
     public override func viewDidLoad() {
         super.viewDidLoad()
 
-        presenter.refresh = { [unowned self] data in
-            self.refreshData(data)
+        presenter.refresh = { [weak self] data in
+            self?.refreshData(data)
         }
 
         // 1-time pie view configuration

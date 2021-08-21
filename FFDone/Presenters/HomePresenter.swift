@@ -176,7 +176,8 @@ class HomePresenter: Presenter, HomePresenterInterface {
     private func doRefresh() {
         if !refreshDeglitching {
             refreshDeglitching = true
-            Dispatch.toForegroundAfter(milliseconds: 20) {
+            Task {
+                try? await Task.sleep(nanoseconds: 20 * 1000 * 1000)
                 self.refreshDeglitching = false
                 var homeData = HomeData()
                 homeData[.complete] = HomeSideData(tags: self.tagLists[.complete] ?? [],
