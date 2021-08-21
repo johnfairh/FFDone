@@ -97,8 +97,10 @@ class AlarmEditPresenter: EditablePresenter, AlarmEditPresenterInterface {
     func pickIcon() {
         Task {
             let newIcon = await director.request(.pickIcon(model))
-            alarm.icon = newIcon.icon
-            doRefresh()
+            if !newIcon.none {
+                alarm.icon = newIcon.icon
+                doRefresh()
+            }
         }
     }
 

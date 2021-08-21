@@ -274,7 +274,7 @@ extension DirectorRequest {
                                      presenterFn: IconEditPresenter.init)
 
         case let .pickIcon(model):
-            return .icon(await services.pickThing("IconsTableViewController",
+            return .init(await services.pickThing("IconsTableViewController",
                                                   model: model,
                                                   results: Icon.createAllResults(model: model),
                                                   presenterFn: IconsTablePresenter.init))

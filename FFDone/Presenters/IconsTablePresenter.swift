@@ -23,7 +23,12 @@ protocol IconsTablePresenterInterface: TablePresenterInterface {
 class IconsTablePresenter: TablePresenter<DirectorInterface>, Presenter, IconsTablePresenterInterface {
     typealias ViewInterfaceType = IconsTablePresenter//Interface --- XXX weird swift generics vs. protocols runtime crash workaround XXX
 
-    private let selectedCallback: PresenterDone<Icon>
+    // Optional callback + `cancel` for 'once' behaviour on pickIcon used as a directorrequest
+    // Should factor out somehow (yet another superclass?) if used elsewhere.
+    private var selectedCallback: PresenterDone<Icon>?
+    public func cancel() {
+        doSelectIcon(nil)
+    }
 
     required init(director: DirectorInterface, model: Model, object: ModelResultsSet?, mode: PresenterMode, dismiss: @escaping PresenterDone<Icon>) {
         self.selectedCallback = dismiss
@@ -63,7 +68,11 @@ class IconsTablePresenter: TablePresenter<DirectorInterface>, Presenter, IconsTa
     }
 
     func selectIcon(_ icon: Icon) {
-        selectedCallback(icon)
+        doSelectIcon(icon)
+    }
+    private func doSelectIcon(_ icon: Icon?) {
+        selectedCallback?(icon)
+        selectedCallback = nil
     }
 
     func updateSearchResults(text: String) {
