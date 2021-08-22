@@ -47,22 +47,15 @@ extension Note: ModelObject {
 
     // For core data section-sorting we have to maintain a separate day timestamp field,
     // stored as a string.  We have to convert it to user-readable later on.
-    // Use a couple of formatters and some kludging.
+    // Use a formatter and some kludging.
 
+    /// Can't figure out how to get this out of the new iOS15 stuff
     private static var dayStampFormatter: DateFormatter = {
         // because timezones and leap seconds and suchlike this is technically wrong,
         // but it is good enough for our purposes.
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyyMMdd"
-        return formatter
-    }()
-
-    private static var userDayStampFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
         return formatter
     }()
 
@@ -84,19 +77,19 @@ extension Note: ModelObject {
             return "Another mystery date (\(dayStamp))"
         }
 
-        return Note.userDayStampFormatter.string(from: date)
+        return date.formatted(date: .long, time: .omitted)
     }
 
     /// Convert a `Date` to an 8-char datestamp
     static func dateToDayStamp(date: Date) -> String {
-        return dayStampFormatter.string(from: date)
+        dayStampFormatter.string(from: date)
     }
 
     /// Full timestamp associated with the date - used mostly for sorting.
     /// As a side effect, update the daystamp.
     var creationDate: Date {
         get {
-            return Date(timeIntervalSinceReferenceDate: cdCreationDate)
+            Date(timeIntervalSinceReferenceDate: cdCreationDate)
         }
         set {
             cdCreationDate = newValue.timeIntervalSinceReferenceDate
@@ -108,14 +101,13 @@ extension Note: ModelObject {
 // MARK: - Queries
 
 extension Note {
-
     /// For the main history view -- all notes.
     static func allSortedResultsSet(model: Model) -> ModelResultsSet {
-        return sectionatedResultsSet(model: model, predicate: nil, latestFirst: true)
+        sectionatedResultsSet(model: model, predicate: nil, latestFirst: true)
     }
 
     static func allReverseSortedResultsSet(model: Model) -> ModelResultsSet {
-        return sectionatedResultsSet(model: model, predicate: nil, latestFirst: false)
+        sectionatedResultsSet(model: model, predicate: nil, latestFirst: false)
     }
 
     /// For the search view -- search note text content.
@@ -157,6 +149,6 @@ extension Note {
 
 extension Goal {
     func notesResults(model: Model) -> ModelResultsSet {
-        return Note.perGoalResultsSet(model: model, goal: self)
+        Note.perGoalResultsSet(model: model, goal: self)
     }
 }

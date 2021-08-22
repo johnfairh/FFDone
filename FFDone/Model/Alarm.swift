@@ -256,12 +256,6 @@ extension Alarm {
         return name ?? "(no title)"
     }
 
-    var dueDateString: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE MMM dd"
-        return dateFormatter.string(from: nextActiveDate)
-    }
-
     func getWeekdayName(day: Int) -> String {
         return Calendar.current.weekdaySymbols[day - 1 ]
     }
@@ -277,7 +271,7 @@ extension Alarm {
                 return "Repeats every \(getWeekdayName(day: day))"
             }
         } else {
-            var cap = dueDateString + ", then "
+            var cap = nextActiveDate.formatted(date: .long, time: .omitted) + ", then "
             switch kind {
             case .xivDaily, .xivDailyGc, .wowDaily: cap += "daily"
             case .xivWeekly(_), .wowWeekly(_): cap += "weekly"

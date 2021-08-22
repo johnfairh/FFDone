@@ -77,30 +77,16 @@ extension Epoch {
     /// When the epoch ends
     var endDate: Date {
         get {
-            return Date(timeIntervalSinceReferenceDate: cdEndDate)
+            Date(timeIntervalSinceReferenceDate: cdEndDate)
         }
         set {
             cdEndDate = newValue.timeIntervalSinceReferenceDate
         }
     }
 
-    private static var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .none
-        formatter.dateStyle = .long
-        return formatter
-    }()
-
     var startDateText: String {
-        Epoch.dateFormatter.string(from: startDate)
+        startDate.formatted(date: .long, time: .omitted)
     }
-
-    private static var dateIntervalFormatter: DateIntervalFormatter = {
-        let formatter = DateIntervalFormatter()
-        formatter.timeStyle = .none
-        formatter.dateStyle = .long
-        return formatter
-    }()
 
     var dateIntervalText: String {
         if startDate == .distantPast {
@@ -109,7 +95,7 @@ extension Epoch {
         if endDate == .distantFuture {
             return startDateText
         }
-        return Epoch.dateIntervalFormatter.string(from: startDate, to: endDate)
+        return (startDate..<endDate).formatted(date: .long, time: .omitted)
     }
 }
 

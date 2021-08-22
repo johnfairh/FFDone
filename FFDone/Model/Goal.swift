@@ -175,10 +175,7 @@ extension Goal {
     }
 
     private func getFormattedDate(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        return dateFormatter.string(from: date)
+        date.formatted(date: .abbreviated, time: .omitted)
     }
 
     private var creationTimeText: String {
@@ -190,10 +187,7 @@ extension Goal {
     }
 
     private var durationTimeText: String {
-        let dateIntervalFormatter = DateIntervalFormatter()
-        dateIntervalFormatter.dateStyle = .medium
-        dateIntervalFormatter.timeStyle = .none
-        return dateIntervalFormatter.string(from: creationDate, to: completionDate)
+        (creationDate..<completionDate).formatted(date: .long, time: .omitted)
     }
 
     var debugText: String {
@@ -354,13 +348,6 @@ extension Goal {
     public static func queryStringForExactTag(_ tag: String) -> String {
         return "=\(tag)"
     }
-
-    private static let sinceQueryDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
-        formatter.locale = Locale.current
-        return formatter
-    }()
 
     /// Date filtering helpers
 
