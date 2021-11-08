@@ -66,9 +66,12 @@ class IconsTablePresenter: TablePresenter<DirectorInterface>, Presenter, IconsTa
     func selectIcon(_ icon: Icon) {
         doSelectIcon(icon)
     }
+
     private func doSelectIcon(_ icon: Icon?) {
         selectedCallback?(icon)
-        selectedCallback = nil
+        if !shouldEnableExtraControls {
+            selectedCallback = nil
+        }
     }
 
     func updateSearchResults(text: String) {
