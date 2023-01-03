@@ -106,9 +106,18 @@ class NoteEditPresenter: EditablePresenter, NoteEditPresenterInterface {
         }
         // choosing to do nothing for alarms, can only make loops....
     }
-    
+
+    // Double-check cancel button if there's text entered
     func cancel() {
-        dismissFn(nil)
+        guard hasChanges else {
+            dismissFn(nil)
+            return
+        }
+        Task {
+            if let discard = await director.request(.checkDiscardChanges), discard.bool {
+                dismissFn(nil)
+            }
+        }
     }
 
     func save() {

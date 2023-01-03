@@ -24,6 +24,7 @@ enum DirectorResult {
     case note(Note)
     case alarm(Alarm)
     case epoch(Epoch)
+    case bool(Bool)
 
     var goal: Goal {
         guard case let .goal(goal) = self else { Log.fatal("not goal") }
@@ -43,6 +44,11 @@ enum DirectorResult {
     var alarm: Alarm {
         guard case let .alarm(alarm) = self else { Log.fatal("not alarm") }
         return alarm
+    }
+
+    var bool: Bool {
+        guard case let .bool(bool) = self else { Log.fatal("not bool") }
+        return bool
     }
 }
 
@@ -75,6 +81,8 @@ enum DirectorRequest {
 
     case showDebugConsole
     case showEpochs
+
+    case checkDiscardChanges
 }
 
 @MainActor
@@ -331,6 +339,9 @@ extension DirectorRequest {
             services.showNormally("DebugViewController",
                                   model: director.rootModel,
                                   presenterFn: DebugPresenter.init)
+
+        case .checkDiscardChanges:
+            return .bool(await services.checkDiscardChanges())
         }
         return .none
     }
