@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 /// Full-fat database migrations.
 
@@ -81,5 +82,26 @@ class EpochMigrationPolicy8to9: NSEntityMigrationPolicy {
         dInstance.setValue(longName, forKey: #keyPath(Epoch.cdLongName))
         dInstance.setValue(majorVersion, forKey: #keyPath(Epoch.majorVersion))
         dInstance.setValue(0, forKey: #keyPath(Epoch.minorVersion))
+    }
+}
+
+// MARK: - 9->10
+
+// Version 10 gets rid of the Transformable attribute as a transition to SwiftData.
+
+class IconMigrationPolicy9to10: NSEntityMigrationPolicy {
+    override func createDestinationInstances(forSource sInstance: NSManagedObject, in mapping: NSEntityMapping, manager: NSMigrationManager) throws {
+
+        let dInstance = NSEntityDescription.insertNewObject(forEntityName: "Icon", into: manager.destinationContext)
+        manager.associate(sourceInstance: sInstance, withDestinationInstance: dInstance, for: mapping)
+
+        // Copy easy ones
+        for keyPath in [#keyPath(Icon.sortOrder), #keyPath(Icon.name), #keyPath(Icon.isBuiltin)] {
+            dInstance.setValue(sInstance.value(forKey: keyPath), forKey: keyPath)
+        }
+
+        let image = sInstance.value(forKey: #keyPath(Icon.imageData)) as! UIImage
+        let data = image.pngData()!
+        dInstance.setValue(data, forKey: #keyPath(Icon.imageData))
     }
 }

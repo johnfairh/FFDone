@@ -111,19 +111,19 @@ class HomePresenter: Presenter, HomePresenterInterface {
         self.epoch = object
 
         tasks.append(Task { [weak self] in
-            for await results in model.fieldResultsSequence(Goal.stepsSummaryFieldFetchRequest(in: epoch)) {
+            for await results in model.fieldResultsSequence(Goal.stepsSummaryFieldFetchRequest(in: object)) {
                 self?.updateStepsQueryResults(results: results)
             }
         })
 
         tasks.append(Task { [weak self] in
-            for await results in model.fieldResultsSequence(Goal.completeTagsFieldFetchRequest(in: epoch)) {
+            for await results in model.fieldResultsSequence(Goal.completeTagsFieldFetchRequest(in: object)) {
                 self?.updateTags(.complete, results: results)
             }
         })
 
         tasks.append(Task { [weak self] in
-            for await results in model.fieldResultsSequence(Goal.incompleteTagsFieldFetchRequest(in: epoch)) {
+            for await results in model.fieldResultsSequence(Goal.incompleteTagsFieldFetchRequest(in: object)) {
                 self?.updateTags(.incomplete, results: results)
             }
         })

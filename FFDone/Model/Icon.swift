@@ -7,6 +7,8 @@
 
 import TMLPresentation
 
+var imageCache: [Int64:UIImage] = [:]
+
 extension Icon : ModelObject {
     /// Framework default sort order for find/query
     public static let defaultSortDescriptor = NSSortDescriptor(key: "sortOrder", ascending: true)
@@ -26,10 +28,15 @@ extension Icon : ModelObject {
     /// The Icon's image at its native size.
     var nativeImage: UIImage {
         get {
-            return imageData as! UIImage
+            if let image = imageCache[sortOrder] {
+                return image
+            }
+            let image = UIImage(data: imageData!)!
+            imageCache[sortOrder] = image
+            return image
         }
         set {
-            imageData = newValue
+            imageData = newValue.pngData()
         }
     }
 
