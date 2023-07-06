@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -100,7 +100,7 @@
 		02479E3B24BC7AD600DE978A /* DefaultTweaks.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02479E3A24BC7AD600DE978A /* DefaultTweaks.yaml */; };
 		02479E4124BDB2E000DE978A /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D61305214589EE00BD9BA6 /* UserNotifications.framework */; };
 		02479E4224BDB2E000DE978A /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D61307214589EE00BD9BA6 /* UserNotificationsUI.framework */; };
-		02479E4C24BDB2E000DE978A /* WDoneNF.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02479E4024BDB2E000DE978A /* WDoneNF.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		02479E4C24BDB2E000DE978A /* WDoneNF.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 02479E4024BDB2E000DE978A /* WDoneNF.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		02479E5124BDB32500DE978A /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D6130A214589EE00BD9BA6 /* NotificationViewController.swift */; };
 		02479E5224BDB33000DE978A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02D6130C214589EE00BD9BA6 /* MainInterface.storyboard */; };
 		0252C9752144289B00DC6D64 /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252C9742144289B00DC6D64 /* DebugViewController.swift */; };
@@ -142,7 +142,7 @@
 		02D61308214589EE00BD9BA6 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D61307214589EE00BD9BA6 /* UserNotificationsUI.framework */; };
 		02D6130B214589EE00BD9BA6 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D6130A214589EE00BD9BA6 /* NotificationViewController.swift */; };
 		02D6130E214589EE00BD9BA6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02D6130C214589EE00BD9BA6 /* MainInterface.storyboard */; };
-		02D61312214589EE00BD9BA6 /* FFDoneNF.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02D61304214589EE00BD9BA6 /* FFDoneNF.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		02D61312214589EE00BD9BA6 /* FFDoneNF.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 02D61304214589EE00BD9BA6 /* FFDoneNF.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		02D613182146BD9400BD9BA6 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D613172146BD9400BD9BA6 /* Strings.swift */; };
 		02E3BD8825D53A09005E6C8F /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 02E3BD8725D53A09005E6C8F /* Yams */; };
 		02E3BD8B25D53C6B005E6C8F /* PieCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 02E3BD8A25D53C6B005E6C8F /* PieCharts */; };
@@ -186,26 +186,26 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		02479E5024BDB2E000DE978A /* Embed App Extensions */ = {
+		02479E5024BDB2E000DE978A /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				02479E4C24BDB2E000DE978A /* WDoneNF.appex in Embed App Extensions */,
+				02479E4C24BDB2E000DE978A /* WDoneNF.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		02D61316214589EE00BD9BA6 /* Embed App Extensions */ = {
+		02D61316214589EE00BD9BA6 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				02D61312214589EE00BD9BA6 /* FFDoneNF.appex in Embed App Extensions */,
+				02D61312214589EE00BD9BA6 /* FFDoneNF.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		02E3BD9325D542D1005E6C8F /* Embed Frameworks */ = {
@@ -562,7 +562,7 @@
 				02479DC524BB0CC300DE978A /* Frameworks */,
 				02479DC624BB0CC300DE978A /* Resources */,
 				02479E1824BB0E9400DE978A /* Embed Frameworks */,
-				02479E5024BDB2E000DE978A /* Embed App Extensions */,
+				02479E5024BDB2E000DE978A /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -602,7 +602,7 @@
 				027F636D2105FF93001C9738 /* Sources */,
 				027F636E2105FF93001C9738 /* Frameworks */,
 				027F636F2105FF93001C9738 /* Resources */,
-				02D61316214589EE00BD9BA6 /* Embed App Extensions */,
+				02D61316214589EE00BD9BA6 /* Embed Foundation Extensions */,
 				02E3BD9325D542D1005E6C8F /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -642,8 +642,9 @@
 		027F63692105FF93001C9738 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "Too Many Ladybirds";
 				TargetAttributes = {
 					02479DC724BB0CC300DE978A = {
