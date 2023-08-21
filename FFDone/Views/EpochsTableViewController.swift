@@ -54,4 +54,8 @@ class EpochsTableViewController: PresentableTableVC<EpochsTablePresenter>,
     @IBAction func debugButtonTapped(_ sender: UIBarButtonItem) {
         presenter.showDebug()
     }
+
+    @IBAction func exportButtonTapped(_ sender: UIBarButtonItem) {
+        App.shared.importExport.export()
+    }
 }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -297,6 +297,8 @@
 		02990A7221303A7F00BF1CEC /* AlarmEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditPresenter.swift; sourceTree = "<group>"; };
 		02990A7421303BEA00BF1CEC /* AlarmEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditViewController.swift; sourceTree = "<group>"; };
 		02990A762130575F00BF1CEC /* DataModel-4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-4.xcdatamodel"; sourceTree = "<group>"; };
+		02B24FD22A8BA28700CC445E /* FFDone.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FFDone.entitlements; sourceTree = "<group>"; };
+		02B24FD32A8BA37E00CC445E /* FFDoneNF.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FFDoneNF.entitlements; sourceTree = "<group>"; };
 		02B3E7FE24C040F300D301ED /* EpochsTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochsTablePresenter.swift; sourceTree = "<group>"; };
 		02B3E80124C0429600D301ED /* EpochsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochsTableViewController.swift; sourceTree = "<group>"; };
 		02BEE27221A721CB009B8844 /* DataModel-6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "DataModel-6.xcdatamodel"; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 		027F63732105FF93001C9738 /* FFDone */ = {
 			isa = PBXGroup;
 			children = (
+				02B24FD22A8BA28700CC445E /* FFDone.entitlements */,
 				021309E6210A13CC00410451 /* Model */,
 				021309EC210A171300410451 /* App */,
 				021309F1210A2ECD00410451 /* Presenters */,
@@ -544,6 +547,7 @@
 		02D61309214589EE00BD9BA6 /* FFDoneNF */ = {
 			isa = PBXGroup;
 			children = (
+				02B24FD32A8BA37E00CC445E /* FFDoneNF.entitlements */,
 				02D6130A214589EE00BD9BA6 /* NotificationViewController.swift */,
 				02D6130C214589EE00BD9BA6 /* MainInterface.storyboard */,
 				02D6130F214589EE00BD9BA6 /* Info.plist */,
@@ -644,7 +648,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				ORGANIZATIONNAME = "Too Many Ladybirds";
 				TargetAttributes = {
 					02479DC724BB0CC300DE978A = {
@@ -1050,6 +1054,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1112,6 +1117,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1135,6 +1141,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FFDone/FFDone.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D243YH28Y6;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1156,6 +1163,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FFDone/FFDone.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D243YH28Y6;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1175,6 +1183,7 @@
 		02D61313214589EE00BD9BA6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FFDoneNF/FFDoneNF.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D243YH28Y6;
@@ -1197,6 +1206,7 @@
 		02D61314214589EE00BD9BA6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FFDoneNF/FFDoneNF.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D243YH28Y6;
