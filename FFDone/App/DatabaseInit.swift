@@ -41,6 +41,7 @@ extension Dictionary where Key == String, Value == Any {
 }
 
 /// Namespace
+@MainActor
 enum DatabaseObjects {
 
     /// Grab a yaml file and decode it

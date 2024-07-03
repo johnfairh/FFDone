@@ -223,26 +223,29 @@ class HomeViewController: PresentableVC<HomePresenterInterface>, PieChartDelegat
     // have to ignore it....
     var ignoreNextOnSelected = false
 
-    func onSelected(slice: PieSlice, selected: Bool) {
-        guard !ignoreNextOnSelected else {
-            ignoreNextOnSelected = false
-            return
-        }
-
-        guard let sliceSide = HomeSideType(rawValue: slice.data.id) else {
-            Log.fatal("Bad ID on slice: \(slice)")
-        }
-
-        if selected && isTagCloudVisible {
-            ignoreNextOnSelected = true
-            Dispatch.toForeground {
-                self.pieChartView.slices[sliceSide.other.rawValue].view.selected = false
+    nonisolated func onSelected(slice: PieSlice, selected: Bool) {
+        let sliceID = slice.data.id
+        MainActor.assumeIsolated {
+            guard !ignoreNextOnSelected else {
+                ignoreNextOnSelected = false
+                return
             }
-        }
-        if selected {
-            animateOpen(side: sliceSide)
-        } else {
-            animateClosed()
+
+            guard let sliceSide = HomeSideType(rawValue: sliceID) else {
+                Log.fatal("Bad ID on slice: \(sliceID)")
+            }
+
+            if selected && isTagCloudVisible {
+                ignoreNextOnSelected = true
+                Dispatch.toForeground {
+                    self.pieChartView.slices[sliceSide.other.rawValue].view.selected = false
+                }
+            }
+            if selected {
+                animateOpen(side: sliceSide)
+            } else {
+                animateClosed()
+            }
         }
     }
 

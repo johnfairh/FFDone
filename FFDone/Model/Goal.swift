@@ -7,6 +7,9 @@
 
 import TMLPresentation
 
+// XXX
+extension NSSortDescriptor: @retroactive @unchecked Sendable {}
+
 extension Goal: ModelObject {
     /// Framework default sort order for find/query
     public static let defaultSortDescriptor = NSSortDescriptor(key: #keyPath(sortOrder), ascending: true)
@@ -226,16 +229,19 @@ extension Goal {
     }
 
     /// Image for table use representing the goal & its status, including badges
+    @MainActor
     var badgedImage: UIImage {
         return icon!.getStandardImage(withBadge: imageAnnotationText)
     }
 
     /// Just the image, no annotations, may need scaling
+    @MainActor
     var nativeImage: UIImage {
         return icon!.nativeImage
     }
 
     /// Image with annotation at some size
+    @MainActor
     func getBadgedImage(size: CGSize) -> UIImage {
         return icon!.getBadgedImage(size: size, badge: imageAnnotationText)
     }
@@ -258,7 +264,7 @@ extension Goal {
         case active = "1"
         case complete = "2"
 
-        static var titleMap: [String : String] =
+        static let titleMap: [String : String] =
             ["0" : "Favourites",
              "1" : "Active",
              "2" : "Complete"]

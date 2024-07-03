@@ -7,7 +7,7 @@
 
 import TMLPresentation
 
-final class LogCache: LogBuffer {
+final class LogCache: LogBuffer, @unchecked Sendable {
     var log = "" {
         didSet {
             refresh()
@@ -25,9 +25,7 @@ final class LogCache: LogBuffer {
     }
 
     private func refresh() {
-        if let notify = notify {
-            notify(log)
-        }
+        notify?(log)
     }
 
     /// Record a log line in our buffer, trim if too big, push to UI.

@@ -7,7 +7,7 @@
 
 // Misc things that diverge between game configs.
 
-struct Tweaks {
+struct Tweaks: Sendable {
     let stateRestorationKey: String
     let epochImageHeight: Int
     let globalEpochName: String
@@ -20,8 +20,10 @@ struct Tweaks {
         self.globalEpochName = globalEpochName
     }
 
+    nonisolated(unsafe)
     static var shared = Tweaks()
 
+    @MainActor
     static func globalInit() {
         guard let tweaks = DatabaseObjects.readTweaks() else {
             return

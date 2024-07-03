@@ -7,6 +7,7 @@
 
 import TMLPresentation
 
+@MainActor
 var imageCache: [Int64:UIImage] = [:]
 
 extension Icon : ModelObject {
@@ -26,6 +27,7 @@ extension Icon : ModelObject {
     }
 
     /// The Icon's image at its native size.
+    @MainActor
     var nativeImage: UIImage {
         get {
             if let image = imageCache[sortOrder] {
@@ -54,10 +56,12 @@ extension Icon : ModelObject {
     static let standardSize = CGSize(width: 43, height: 43)
 
     /// Badging is optional and puts a nice small label on top of the image.
+    @MainActor
     func getStandardImage(withBadge badge: String? = nil) -> UIImage {
         return nativeImage.imageWithSize(Icon.standardSize, andBadge: badge)
     }
 
+    @MainActor
     func getBadgedImage(size: CGSize, badge: String? = nil) -> UIImage {
         return nativeImage.imageWithSize(size, andBadge: badge)
     }

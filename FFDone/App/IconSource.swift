@@ -37,9 +37,11 @@ protocol IconSource {
 /// Namespace to handle the double-sided pub-sub.
 enum IconSourceBuilder {
     /// All sources
+    nonisolated(unsafe)
     static private var allSources: [String : IconSource] = [:]
 
     /// Active sources
+    nonisolated(unsafe)
     static private(set) var sources: [IconSource] = []
 
     /// Dumb Swift mechanism to trigger one-time registration

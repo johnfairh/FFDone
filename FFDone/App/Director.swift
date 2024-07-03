@@ -90,7 +90,7 @@ protocol DirectorInterface {
     /// Start a new usecase
     @discardableResult
     func request(_ request: DirectorRequest) async -> DirectorResult?
-    
+
     /// What tags are defined?
     var tags: [String] { get }
 
@@ -104,8 +104,8 @@ protocol DirectorInterface {
 extension DirectorInterface {
     /// Fire and forget request, no sync/feedback
     func request(_ request: DirectorRequest) {
-        Task {
-            await self.request(request)
+        Task { @MainActor in
+            _ = await self.request(request)
         }
     }
 }

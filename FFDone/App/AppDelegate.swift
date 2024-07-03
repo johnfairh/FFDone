@@ -7,7 +7,7 @@
 
 import TMLPresentation
 
-@UIApplicationMain
+@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var app: App!

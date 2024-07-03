@@ -29,6 +29,7 @@ extension UITableViewHeaderFooterView {
     }
 }
 
+@MainActor
 enum ColorScheme {
     static func globalInit() {
         // stuff bizarrely unaffected by 'global' tint

@@ -32,6 +32,7 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
 
     private let selectedCallback: PresenterDone<Alarm>
 
+    private var listenTask: Task<Void,Never>?
     private var listener: NotificationListener?
 
     var refresh: (Bool) -> Void = { _ in } {
@@ -43,16 +44,20 @@ class AlarmsTablePresenter: TablePresenter<DirectorInterface>, Presenter, Alarms
     required init(director: DirectorInterface, model: Model, object: ModelResultsSet?, mode: PresenterMode, dismiss: @escaping PresenterDone<Alarm>) {
         self.selectedCallback = dismiss
         super.init(director: director, model: model, object: object, mode: mode)
-        listener = model.createListener(name: .NSManagedObjectContextDidSave) {
-            [weak self] _ in self?.refreshAlarmCount()
+
+        let didSaveNotifications = model.notifications(name: .NSManagedObjectContextDidSave)
+        listenTask = Task.detached { [weak self] in
+            for await _ in didSaveNotifications {
+                await self?.refreshAlarmCount()
+            }
         }
         refreshAlarmCount()
         refreshUI()
     }
 
     deinit {
-        listener?.stopListening()
-        listener = nil
+        listenTask?.cancel()
+        listenTask = nil
     }
 
     func refreshUI() {

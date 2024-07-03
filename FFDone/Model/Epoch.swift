@@ -47,7 +47,7 @@ extension Epoch : ModelObject {
     }
 
     /// Special global epoch
-    private static var globalShortName = "All"
+    private static let globalShortName = "All"
 
     static func createGlobal(model: Model, longName: String) -> Epoch {
         let epoch = create(model: model, shortName: globalShortName, longName: longName,

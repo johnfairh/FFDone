@@ -146,6 +146,7 @@ enum AlarmSet: String {
         }
     }
 
+    nonisolated(unsafe)
     static var shared = AlarmSet.xiv
 }
 
@@ -170,7 +171,7 @@ extension Alarm {
         case active = "0"
         case inactive = "1"
 
-        static var titleMap: [String : String] =
+        static let titleMap: [String : String] =
             ["0" : "Active",
              "1" : "Scheduled"]
     }
@@ -298,10 +299,12 @@ extension Alarm {
 // MARK: - Image
 
 extension Alarm {
+    @MainActor
     var mainTableImage: UIImage {
         return icon!.getStandardImage()
     }
 
+    @MainActor
     var nativeImage: UIImage {
         return icon!.nativeImage
     }

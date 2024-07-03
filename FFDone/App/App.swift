@@ -14,9 +14,9 @@ import TMLPresentation
 final class App {
 
     #if targetEnvironment(simulator)
-    static let debugMode = true
+    nonisolated static let debugMode = true
     #else
-    static let debugMode = false
+    nonisolated static let debugMode = false
     #endif
 
     // App-wide shared stuff that we own
@@ -55,7 +55,7 @@ final class App {
         }
     }
 
-    init() {
+    init(){
         if App.debugMode {
             Log.log("App launching **** IN DEBUG MODE **** RESETTING DATABASE ***")
             Prefs.runBefore = false

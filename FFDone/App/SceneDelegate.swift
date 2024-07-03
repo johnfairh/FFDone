@@ -85,7 +85,7 @@ fileprivate enum SceneStateKey: String {
     case homePageIndex
 }
 
-fileprivate struct SceneStateRule<T> {
+fileprivate struct SceneStateRule<T>: @unchecked Sendable {
     let key: SceneStateKey
     let fromVersion: Int
     let keyPath: WritableKeyPath<AppScene.State, T>

@@ -6,7 +6,7 @@
 //
 
 import TMLPresentation
-import UserNotifications
+@preconcurrency import UserNotifications
 
 /// This is the interface to UserNotifications that is used to generate local notifications
 /// for alarms as well as actually make the alarmed events activate.
@@ -35,14 +35,22 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
 
         center.delegate = self
 
-        center.requestAuthorization(options: [.alert, .badge]) { granted, error in
-            if !granted {
-                Log.log("Notification authorization denied")
-                if let error = error {
-                    Log.log("  error report: \(error)")
-                }
+        /// Called from App when we are ready to go.
+        app.notifyWhenReady { model in
+            Task { @MainActor in
+                await self.init2(model: model)
             }
-            self.authorized = granted
+        }
+    }
+
+    private func init2(model: Model) async {
+        do {
+            authorized = try await center.requestAuthorization(options: [.alert, .badge])
+            if !authorized {
+                Log.log("Notification authorization denied")
+            }
+        } catch {
+            Log.log("Notification authorization denied with error: \(error)")
         }
 
         let category = UNNotificationCategory(identifier: Strings.Notification.Category,
@@ -50,12 +58,8 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
                                               intentIdentifiers: [],
                                               hiddenPreviewsBodyPlaceholder: "%u alarms")
         center.setNotificationCategories([category])
-
-        /// Called from App when we are ready to go.
-        app.notifyWhenReady { model in
-            self.model = model
-            self.scan()
-        }
+        self.model = model
+        self.scan()
     }
 
     /// Called from App when we are about to come into the foreground having been away for a while

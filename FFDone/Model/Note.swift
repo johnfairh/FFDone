@@ -50,7 +50,7 @@ extension Note: ModelObject {
     // Use a formatter and some kludging.
 
     /// Can't figure out how to get this out of the new iOS15 stuff
-    private static var dayStampFormatter: DateFormatter = {
+    private static let dayStampFormatter: DateFormatter = {
         // because timezones and leap seconds and suchlike this is technically wrong,
         // but it is good enough for our purposes.
         let formatter = DateFormatter()

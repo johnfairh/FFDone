@@ -46,6 +46,7 @@ private struct RegexCache {
     }
 }
 
+nonisolated(unsafe)
 private var cache = RegexCache()
 
 extension String {
