@@ -1260,7 +1260,7 @@
 			repositoryURL = "https://github.com/jpsim/yams";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.4;
+				minimumVersion = 6.2.2;
 			};
 		};
 		02E3BD8925D53C6B005E6C8F /* XCRemoteSwiftPackageReference "PieCharts" */ = {
