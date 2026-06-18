@@ -98,14 +98,16 @@ class DebugPresenter: Presenter, DebugPresenterInterface {
     /// Show notifications status
     func showNotifications() {
         showingLog = false
-        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+        Task {
+            let requests = await UNUserNotificationCenter.current().pendingNotificationRequests()
+
             guard requests.count > 0 else {
                 self.data = DebugData(text: "No pending notifications")
                 return
             }
 
             var str = ""
-            requests.forEach { request in
+            for request in requests {
                 let name = request.content.body
                 let badge: String
                 if let badgeNum = request.content.badge,
@@ -133,6 +135,5 @@ class DebugPresenter: Presenter, DebugPresenterInterface {
 
     /// Custom command
     func doCommand(cmd: String) {
-        
     }
 }

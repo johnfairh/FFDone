@@ -17,16 +17,18 @@ class GoalCell: UITableViewCell, TableCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        customTagTextLabel?.backgroundColor = .tagBubble
-        customTagTextLabel?.layer.cornerCurve = .continuous
-        customTagTextLabel?.layer.cornerRadius = 6
-        customTagTextLabel?.layer.masksToBounds = true
-        customTagTextLabel?.isUserInteractionEnabled = true
+        MainActor.assumeIsolated {
+            customTagTextLabel?.backgroundColor = .tagBubble
+            customTagTextLabel?.layer.cornerCurve = .continuous
+            customTagTextLabel?.layer.cornerRadius = 6
+            customTagTextLabel?.layer.masksToBounds = true
+            customTagTextLabel?.isUserInteractionEnabled = true
 
-        let tagGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTagTextLabel(_:)))
-        customTagTextLabel.addGestureRecognizer(tagGestureRecognizer)
+            let tagGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTagTextLabel(_:)))
+            customTagTextLabel.addGestureRecognizer(tagGestureRecognizer)
 
-        customImageView.enableRoundCorners()
+            customImageView.enableRoundCorners()
+        }
     }
 
     @IBAction func didTapTagTextLabel(_ sender: UIGestureRecognizer) {

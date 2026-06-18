@@ -81,7 +81,7 @@ class NoteEditViewController: PresentableVC<NoteEditPresenterInterface>, UITextV
         }
 
         let kbRect = kbRectValue.cgRectValue
-        let kbHeight = UIScreen.main.bounds.size.height - kbRect.origin.y
+        let kbHeight = view.window!.windowScene!.screen.bounds.size.height - kbRect.origin.y
 
         let newInsets = UIEdgeInsets(top: 0, left: 0, bottom: kbHeight, right: 0)
         textView.contentInset = newInsets

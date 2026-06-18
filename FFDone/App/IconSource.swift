@@ -23,6 +23,7 @@ typealias IconSourceResult = TMLResult<UIImage>
 typealias IconSourceClient = (IconSourceResult) -> Void
 
 /// Model a service that asynchronously provides images in response to string keys.
+@MainActor
 protocol IconSource {
     /// Human-readable name for the service, used as a label.
     var name: String { get }

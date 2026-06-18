@@ -33,13 +33,18 @@ open class DatePickerDialog: UIView {
     private var buttonColor: UIColor!
     private var font: UIFont!
 
+    private var window2: UIWindow!
+    private var screen: UIScreen {
+        let scene: UIWindowScene = window2.windowScene!
+        let screen: UIScreen = scene.screen
+        return screen
+    }
+
     // MARK: - Dialog initialization
     @objc public init(font: UIFont = .boldSystemFont(ofSize: 15)) {
-        let size = UIScreen.main.bounds.size
-        super.init(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        super.init(frame: .zero)
         self.font = font
         self.buttonColor = .tint
-        setupView()
     }
 
     @objc required public init?(coder aDecoder: NSCoder) {
@@ -47,13 +52,16 @@ open class DatePickerDialog: UIView {
     }
 
     func setupView() {
+        let size = screen.bounds.size
+        self.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+
         dialogView = createContainerView()
 
         dialogView?.layer.shouldRasterize = true
-        dialogView?.layer.rasterizationScale = UIScreen.main.scale
+        dialogView?.layer.rasterizationScale = screen.scale
 
         layer.shouldRasterize = true
-        layer.rasterizationScale = UIScreen.main.scale
+        layer.rasterizationScale = screen.scale
 
         dialogView?.layer.opacity = 0.5
         dialogView?.layer.transform = CATransform3DMakeScale(1.3, 1.3, 1)
@@ -67,11 +75,11 @@ open class DatePickerDialog: UIView {
 
     /// Handle device orientation changes
     @objc func deviceOrientationDidChange(_ notification: Notification) {
-        self.frame = UIScreen.main.bounds
+        self.frame = screen.bounds
         let dialogSize = CGSize(width: 300, height: 230 + kDefaultButtonHeight + kDefaultButtonSpacerHeight)
         dialogView.frame = CGRect(
-            x: (UIScreen.main.bounds.size.width - dialogSize.width) / 2,
-            y: (UIScreen.main.bounds.size.height - dialogSize.height) / 2,
+            x: (screen.bounds.size.width - dialogSize.width) / 2,
+            y: (screen.bounds.size.height - dialogSize.height) / 2,
             width: dialogSize.width,
             height: dialogSize.height
         )
@@ -87,6 +95,12 @@ open class DatePickerDialog: UIView {
         datePickerMode: UIDatePicker.Mode = .dateAndTime,
         callback: @escaping DatePickerCallback
     ) {
+        if let currentWindowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            guard let window = currentWindowScene.windows.first else { fatalError() }
+            window2 = window
+        }
+        setupView()
+
         self.titleLabel.text = title
         self.doneButton.setTitle(doneButtonTitle, for: .normal)
         self.datePickerMode = datePickerMode
@@ -98,12 +112,9 @@ open class DatePickerDialog: UIView {
         self.datePicker.minimumDate = minimumDate
 
         /* Add dialog to main window */
-        if let currentWindowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-            guard let window = currentWindowScene.windows.first else { fatalError() }
-            window.addSubview(self)
-            window.bringSubviewToFront(self)
-            window.endEditing(true)
-        }
+        window2.addSubview(self)
+        window2.bringSubviewToFront(self)
+        window2.endEditing(true)
 
         NotificationCenter.default.addObserver(
             self,
@@ -156,7 +167,7 @@ open class DatePickerDialog: UIView {
 
     /// Creates the container view here: create the dialog, then add the custom content and buttons
     private func createContainerView() -> UIView {
-        let screenSize = UIScreen.main.bounds.size
+        let screenSize = screen.bounds.size
         let dialogSize = CGSize(width: 300, height: 230 + kDefaultButtonHeight + kDefaultButtonSpacerHeight)
 
         // For the black background

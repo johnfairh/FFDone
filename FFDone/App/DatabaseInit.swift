@@ -1,3 +1,4 @@
+
 //
 //  DatabaseInit.swift
 //  FFDone
@@ -47,7 +48,7 @@ enum DatabaseObjects {
     /// Grab a yaml file and decode it
     private static func readYaml(file: String) -> [[String: Any]] {
         guard let pathname = Bundle.main.path(forResource: file, ofType: "yaml"),
-            let contents = try? String(contentsOfFile: pathname) else {
+            let contents = try? String(contentsOfFile: pathname, encoding: .utf8) else {
                 Log.log("Can't load \(file).yaml in the main bundle")
                 return []
         }
@@ -271,3 +272,4 @@ enum DatabaseObjects {
         #endif
     }
 }
+

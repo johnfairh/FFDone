@@ -37,7 +37,7 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
 
         /// Called from App when we are ready to go.
         app.notifyWhenReady { model in
-            Task { @MainActor in
+            Task {// @MainActor in
                 await self.init2(model: model)
             }
         }
@@ -90,10 +90,9 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
     }
 
     nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                            willPresent notification: UNNotification,
-                                            withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        Task { await scan() }
-        completionHandler(.banner)
+                                            willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+        await scan()
+        return .banner
     }
 
     // MARK: - Alert database inteface
@@ -121,15 +120,12 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
     //
     // This might be racy -- it's not clear whether calls to `getPendingNotificationRequests`
     // are serialized.  Probably would be better to bounce back onto the private queue.
-    var activeAlarmCount: Int {
-        UIApplication.shared.applicationIconBadgeNumber
-    }
 
     func setActiveAlarmCount(_ newCount: Int) async {
-        guard badgesEnabled, newCount != activeAlarmCount else {
+        guard badgesEnabled else {
             return
         }
-        UIApplication.shared.applicationIconBadgeNumber = newCount
+        try? await center.setBadgeCount(newCount)
 
         let requests = await center.pendingNotificationRequests()
         Log.log("Scanning notifications")
@@ -152,15 +148,14 @@ final class AlarmScheduler: NSObject, UNUserNotificationCenterDelegate {
 
     func hideBadges() async {
         Log.assert(!badgesEnabled)
-        UIApplication.shared.applicationIconBadgeNumber = 0 // disabled
-        let requests = await center.pendingNotificationRequests()
-        for request in requests {
+        try? await center.setBadgeCount(0) // disabled
+        for request in await center.pendingNotificationRequests() {
             await center.addNotifyIdentifier(request.clone(badge: nil))
         }
     }
 }
 
-fileprivate var badgesEnabled: Bool {
+private var badgesEnabled: Bool {
     Prefs.subbed
 }
 

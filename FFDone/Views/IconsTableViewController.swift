@@ -10,7 +10,9 @@ import TMLPresentation
 class IconCell: UITableViewCell, TableCell {
     override func awakeFromNib() {
         super.awakeFromNib()
-        imageView?.enableRoundCorners()
+        MainActor.assumeIsolated {
+            imageView?.enableRoundCorners()
+        }
     }
 
     func configure(_ modelObject: Icon) {
