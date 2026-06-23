@@ -84,7 +84,8 @@ class NotesTableViewController: PresentableTableVC<NotesTablePresenter>,
         datePicker.show("Skip to date",
                         doneButtonTitle: "OK",
                         defaultDate: Date(),
-                        datePickerMode: .date) { [weak self] newDate in
+                        datePickerMode: .date,
+                        window: view.window!) { [weak self] newDate in
                             if let newDate = newDate {
                                 self?.jumpTo(date: newDate)
                             }
