@@ -105,6 +105,7 @@ enum DatabaseObjects {
 
             let icon = Icon.createWithDefaults(model: model)
             icon.nativeImage = image
+            icon.isBuiltin = true
             icon.name = name
         }
     }

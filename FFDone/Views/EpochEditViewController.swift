@@ -6,7 +6,7 @@
 //
 import TMLPresentation
 
-/// VC for alarm create/edit
+/// VC for epoch create/edit
 class EpochEditViewController: PresentableBasicTableVC<EpochEditPresenterInterface>, UITextFieldDelegate {
 
     // MARK: Controls
