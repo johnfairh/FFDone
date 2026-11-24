@@ -123,6 +123,7 @@
 		02867EBD211F6398004D3122 /* DefaultIconSources.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 02867EBC211F6397004D3122 /* DefaultIconSources.yaml */; };
 		02867EBF21209D18004D3122 /* GoalViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EBE21209D18004D3122 /* GoalViewPresenter.swift */; };
 		02867EC121209EAF004D3122 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02867EC021209EAF004D3122 /* GoalViewController.swift */; };
+		028DC18E30B59AE2001A4977 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 028DC18D30B59AE2001A4977 /* AppIcon.icon */; };
 		02990A6621270F4C00BF1CEC /* TagCloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A6521270F4C00BF1CEC /* TagCloudView.swift */; };
 		02990A68212C682300BF1CEC /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A67212C682300BF1CEC /* Alarm.swift */; };
 		02990A6A212C737200BF1CEC /* AlarmsTablePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02990A69212C737200BF1CEC /* AlarmsTablePresenter.swift */; };
@@ -288,6 +289,7 @@
 		02867EBC211F6397004D3122 /* DefaultIconSources.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DefaultIconSources.yaml; path = ../../../FFDoneResources/Resources/DefaultIconSources.yaml; sourceTree = "<group>"; };
 		02867EBE21209D18004D3122 /* GoalViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewPresenter.swift; sourceTree = "<group>"; };
 		02867EC021209EAF004D3122 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
+		028DC18D30B59AE2001A4977 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		02990A6521270F4C00BF1CEC /* TagCloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCloudView.swift; sourceTree = "<group>"; };
 		02990A67212C682300BF1CEC /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
 		02990A69212C737200BF1CEC /* AlarmsTablePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmsTablePresenter.swift; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 			isa = PBXGroup;
 			children = (
 				02B24FD22A8BA28700CC445E /* FFDone.entitlements */,
+				028DC18D30B59AE2001A4977 /* AppIcon.icon */,
 				021309E6210A13CC00410451 /* Model */,
 				021309EC210A171300410451 /* App */,
 				021309F1210A2ECD00410451 /* Presenters */,
@@ -648,7 +651,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 2700;
+				LastUpgradeCheck = 2720;
 				ORGANIZATIONNAME = "Too Many Ladybirds";
 				TargetAttributes = {
 					02479DC724BB0CC300DE978A = {
@@ -723,6 +726,7 @@
 				021309FD210B632400410451 /* DebugGoals.yaml in Resources */,
 				02130A03210CD37600410451 /* DefaultIcons.yaml in Resources */,
 				02479E3624BC761E00DE978A /* DefaultTweaks.yaml in Resources */,
+				028DC18E30B59AE2001A4977 /* AppIcon.icon in Resources */,
 				02867EBD211F6398004D3122 /* DefaultIconSources.yaml in Resources */,
 				02B3E80424C0441C00D301ED /* Main.storyboard in Resources */,
 				02867EA52119FC17004D3122 /* DebugNotes.yaml in Resources */,

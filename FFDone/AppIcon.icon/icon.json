@@ -1,0 +1,35 @@
+{
+  "fill" : "system-dark",
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "glass" : true,
+          "image-name" : "ffxivmeteo-svgrepo-com.svg",
+          "name" : "ffxivmeteo-svgrepo-com",
+          "position" : {
+            "scale" : 1.15,
+            "translation-in-points" : [
+              24,
+              -31
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.3
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}
